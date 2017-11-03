@@ -1,0 +1,8 @@
+/**
+ * 
+ */
+/**
+ * @author Fauconnier
+ *
+ */
+package scrabble;
