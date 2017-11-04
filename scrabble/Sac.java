@@ -8,14 +8,28 @@ package scrabble;
  *
  */
 public class Sac {
-
+	
+	private Lettre[] sac = new Lettre[102];
+	
+	/**
+	 * @return le sac
+	 */
+	public Lettre[] getSac() {
+		return sac;
+	}
+	/**
+	 * @param ajoute les lettres au sac 
+	 */
+	public void setSac(Lettre[] sac) {
+		this.sac = sac;
+	}
 	/**
 	 * Méthode lié à la méthode pioche du joueur 
 	 * en vue de lui compléter sa main ou de la lui remplir complètement
 	 */
 	public void pioche() {
 		/*
-		 * ajout de lettresdans la main de joueur de tel sorte que nmbre de lettre
+		 * ajout de lettres dans la main de joueur de tel sorte que nmbre de lettre
 		 * dans sa main soit égal à 0 et pioche de lettre random
 		 */
 	}
