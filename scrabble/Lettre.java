@@ -34,6 +34,10 @@ public class Lettre {
 		this.nom = nom;
 		this.valeur = valeur;
 		this.instance = instance;
+		
+		for(int i = 0; i < this.instance; i ++) {
+			Sac.contenuSac.add(this);
+		}
 	}
 	
 	/**
@@ -43,14 +47,6 @@ public class Lettre {
 		this.nom = 'a';
 		this.valeur = 0;
 		this.instance = 0;
-	}
-
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
 	}
 
 }

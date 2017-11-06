@@ -2,6 +2,8 @@
  * 
  */
 package scrabble;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Fauconnier/Henriquet
@@ -9,43 +11,48 @@ package scrabble;
  */
 public class Sac {
 	
-	private Lettre[] sac = new Lettre[102];
+	//private Lettre[] sac = new Lettre[102];
+	static List<Lettre> contenuSac = new ArrayList<Lettre>();
 	
 	/**
 	 * @return le sac
 	 */
-	public Lettre[] getSac() {
-		return sac;
+	//public Lettre[] getSac() {
+	public List<Lettre> getSac() {
+		return contenuSac;
 	}
 	/**
 	 * @param ajoute les lettres au sac 
 	 */
-	public void setSac(Lettre[] sac) {
+	/*public void setSac(Lettre[] sac) {
+	public List<Lettre> setSac() {
 		this.sac = sac;
-	}
+	}*/
+	
 	/**
-	 * Méthode lié à la méthode pioche du joueur 
-	 * en vue de lui compléter sa main ou de la lui remplir complètement
+	 * Mï¿½thode liï¿½ ï¿½ la mï¿½thode pioche du joueur 
+	 * en vue de lui complï¿½ter sa main ou de la lui remplir complï¿½tement
 	 */
 	public void pioche() {
 		/*
 		 * ajout de lettres dans la main de joueur de tel sorte que nmbre de lettre
-		 * dans sa main soit égal à 0 et pioche de lettre random
+		 * dans sa main soit ï¿½gal ï¿½ 0 et pioche de lettre random
 		 */
 	}
 	/**
-	 * Méthode en vue du remplissage du sac avec un nombre cohérent des différentes lettres
+	 * Mï¿½thode en vue du remplissage du sac avec un nombre cohï¿½rent des diffï¿½rentes lettres
 	 * utilisation de ... pour le remplissage
 	 */
-	public void remplissageSac() {
+	public void remplissageSac(Lettre l) {
 		/*
 		 * chercher comment remplir automatique le sac
 		 */
+		contenuSac.add(l);
 	}
 	/**
-	 * Méthode lié a la méthode remelange de joueur
+	 * Mï¿½thode liï¿½ a la mï¿½thode remelange de joueur
 	 * pour pouvoir changer certaines lettres
-	 * Appel de la méthode pioche
+	 * Appel de la mï¿½thode pioche
 	 */
 	public void melangeMain() {
 		
