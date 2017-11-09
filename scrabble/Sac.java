@@ -62,16 +62,7 @@ public class Sac {
 		 * dans sa main soit égal é 0 et pioche de lettre random
 		 */
 	}
-	/**
-	 * Méthode en vue du remplissage du sac avec un nombre cohérent des différentes lettres
-	 * utilisation de ... pour le remplissage
-	 */
-	public void remplissageSac(Lettre l) {
-		/*
-		 * chercher comment remplir automatique le sac
-		 */
-		contenuSac.add(l);
-	}
+	
 	/**
 	 * Méthode lié a la méthode remelange de joueur
 	 * pour pouvoir changer certaines lettres
@@ -81,7 +72,11 @@ public class Sac {
 		
 	}
 
-	public static void recupLettre() throws XPathExpressionException {
+	/**
+	 * Récupère les donnees des lettre dans le fichier dataLettre.XML et remplis la variable sac
+	 * @throws XPathExpressionException
+	 */
+	public static void remplissageSac() throws XPathExpressionException {
 	      DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 	      factory.setIgnoringElementContentWhitespace(true);
 
@@ -112,14 +107,14 @@ public class Sac {
 	            XPath path = xpf.newXPath();
 	             
 	            for (int i = 1; i < 27; i++){
-	            		String expressionNom = "/alphabet/lettre[" + i + "]/nom";
+	            		String expressionlabel = "/alphabet/lettre[" + i + "]/label";
 	            		String expressionValeur = "/alphabet/lettre[" + i + "]/valeur";
 	            		String expressionInstance = "/alphabet/lettre[" + i + "]/instance";
-	            		//String str = (String)path.evaluate(expressionNom, root);
+	            		//String str = (String)path.evaluate(expressionlabel, root);
 	            		//System.out.println(str);
 	            		
-	            		String nomLettre = (String)path.evaluate(expressionNom, root);
-	            		//System.out.println(nomLettre);
+	            		char labelLettre = ((String)path.evaluate(expressionlabel, root)).charAt(0);
+	            		//System.out.println(labelLettre);
 	            		
 	            		int valeurLettre = ((Double)path.evaluate(expressionValeur, root, XPathConstants.NUMBER)).intValue();
 	            		//System.out.println(valeurLettre);
@@ -128,7 +123,7 @@ public class Sac {
 	            		//System.out.println(instanceLettre);
 	            		
 	            		
-	            		Lettre lettre = new Lettre(nomLettre, valeurLettre, instanceLettre);
+	            		Lettre lettre = new Lettre(labelLettre, valeurLettre, instanceLettre);
 	            		
 	            }
 	            
@@ -146,10 +141,6 @@ public class Sac {
 	      }      
 	   }
 
-	
-	public static void main(String[] args) throws XPathExpressionException {
-		
-	}
 	
 }
 

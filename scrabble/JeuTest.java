@@ -21,11 +21,11 @@ public class JeuTest {
 		//Lettre a = new Lettre('a', 1, 2);
 		//Lettre b = new Lettre('b', 1, 2);
 		
-		sac.recupLettre();
+		sac.remplissageSac();
 		
 		for(int i = 0; i < sac.contenuSac.size(); i++)
 	    {
-	      System.out.println(i + " = " + sac.contenuSac.get(i));
+	      System.out.println(i + " = " + sac.contenuSac.get(i).label);
 	    }
 		
 	}
