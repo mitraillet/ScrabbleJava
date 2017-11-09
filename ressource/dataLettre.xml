@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE alphabet SYSTEM "./dataLettreDTD.dtd">
+<alphabet>
+	<lettre>
+		<label>a</label>
+		<valeur>1</valeur>
+		<instance>9</instance>
+	</lettre>
+	
+	<lettre>
+		<label>b</label>
+		<valeur>3</valeur>
+		<instance>2</instance>
+	</lettre>
+	
+	<lettre>
+		<label>c</label>
+		<valeur>3</valeur>
+		<instance>2</instance>
+	</lettre>
+	<lettre>
+		<label>d</label>
+		<valeur>2</valeur>
+		<instance>3</instance>
+	</lettre>
+	
+	<lettre>
+		<label>e</label>
+		<valeur>1</valeur>
+		<instance>15</instance>
+	</lettre>
+	
+	<lettre>
+		<label>f</label>
+		<valeur>4</valeur>
+		<instance>2</instance>
+	</lettre>
+	
+	<lettre>
+		<label>g</label>
+		<valeur>2</valeur>
+		<instance>2</instance>
+	</lettre>
+	
+	<lettre>
+		<label>h</label>
+		<valeur>4</valeur>
+		<instance>Z</instance>
+	</lettre>
+	
+	<lettre>
+		<label>i</label>
+		<valeur>1</valeur>
+		<instance>8</instance>
+	</lettre>
+	
+	<lettre>
+		<label>j</label>
+		<valeur>8</valeur>
+		<instance>1</instance>
+	</lettre>
+	
+	<lettre>
+		<label>k</label>
+		<valeur>10</valeur>
+		<instance>1</instance>
+	</lettre>
+	
+	<lettre>
+		<label>l</label>
+		<valeur>1</valeur>
+		<instance>5</instance>
+	</lettre>
+	
+	<lettre>
+		<label>m</label>
+		<valeur>2</valeur>
+		<instance>3</instance>
+	</lettre>
+	
+	<lettre>
+		<label>n</label>
+		<valeur>1</valeur>
+		<instance>6</instance>
+	</lettre>
+	
+	<lettre>
+		<label>o</label>
+		<valeur>1</valeur>
+		<instance>6</instance>
+	</lettre>
+	
+	<lettre>
+		<label>p</label>
+		<valeur>3</valeur>
+		<instance>2</instance>
+	</lettre>
+	
+	<lettre>
+		<label>q</label>
+		<valeur>8</valeur>
+		<instance>1</instance>
+	</lettre>
+	
+	<lettre>
+		<label>r</label>
+		<valeur>1</valeur>
+		<instance>6</instance>
+	</lettre>
+	
+	<lettre>
+		<label>s</label>
+		<valeur>1</valeur>
+		<instance>6</instance>
+	</lettre>
+	
+	<lettre>
+		<label>t</label>
+		<valeur>1</valeur>
+		<instance>6</instance>
+	</lettre>
+	
+	<lettre>
+		<label>u</label>
+		<valeur>1</valeur>
+		<instance>6</instance>
+	</lettre>
+	
+	<lettre>
+		<label>v</label>
+		<valeur>4</valeur>
+		<instance>2</instance>
+	</lettre>
+	
+	<lettre>
+		<label>w</label>
+		<valeur>10</valeur>
+		<instance>1</instance>
+	</lettre>
+	
+	<lettre>
+		<label>x</label>
+		<valeur>10</valeur>
+		<instance>1</instance>
+	</lettre>
+	
+	<lettre>
+		<label>y</label>
+		<valeur>10</valeur>
+		<instance>1</instance>
+	</lettre>
+	
+	<lettre>
+		<label>z</label>
+		<valeur>10</valeur>
+		<instance>1</instance>
+	</lettre>
+</alphabet>
