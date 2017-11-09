@@ -12,17 +12,17 @@ public class Lettre {
 	/**
 	 * Le libellé du caractère
 	 */
-	char label;
+	protected char label;
 	
 	/**
 	 * La valeur de la lettre (score)
 	 */
-	int valeur;
+	protected int valeur;
 	
 	/**
 	 * Le nombre d'instance de la lettre dans le sac
 	 */
-	int instance;
+	protected int instance;
 	
 	/**
 	 * Constructeur

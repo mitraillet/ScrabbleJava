@@ -12,17 +12,17 @@ public class Joueur {
 	/**
 	 * Score total du joueur
 	 */
-	private int score;
+	protected int score;
 	
 	/**
 	 * True si c'est le tour du joueur, sinon False
 	 */
-	private boolean doitJouer = false;
+	protected boolean doitJouer = false;
 	
 	/**
 	 * Tableau de Lettre représentant les Lettres du joueur
 	 */
-	private Lettre[] mainJoueur = new Lettre[3];
+	protected Lettre[] mainJoueur = new Lettre[3];
 	
 	/**
 	 * @param actualise le score du joueur
