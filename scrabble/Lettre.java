@@ -12,7 +12,7 @@ public class Lettre {
 	/**
 	 * Le libellé du caractère
 	 */
-	char nom;
+	String nom;
 	
 	/**
 	 * La valeur de la lettre (score)
@@ -30,7 +30,7 @@ public class Lettre {
 	 * @param valeur la valeur de la lettre
 	 * @param instance le nombre d'instance dans le sac
 	 */
-	public Lettre(char nom, int valeur, int instance) {
+	public Lettre(String nom, int valeur, int instance) {
 		this.nom = nom;
 		this.valeur = valeur;
 		this.instance = instance;
@@ -44,7 +44,7 @@ public class Lettre {
 	 * Constructeur par défaut
 	 */
 	public Lettre() {
-		this.nom = 'a';
+		this.nom = "a";
 		this.valeur = 0;
 		this.instance = 0;
 	}
