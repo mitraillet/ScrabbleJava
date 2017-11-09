@@ -1,157 +1,157 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE alphabet SYSTEM "./dataLettreDTD.dtd">
 <alphabet>
-	<lettre label="A">
-		<nom>a</nom>
+	<lettre>
+		<label>a</label>
 		<valeur>1</valeur>
 		<instance>9</instance>
 	</lettre>
 	
-	<lettre label="B">
-		<nom>b</nom>
+	<lettre>
+		<label>b</label>
 		<valeur>3</valeur>
 		<instance>2</instance>
 	</lettre>
 	
-	<lettre label="C">
-		<nom>c</nom>
+	<lettre>
+		<label>c</label>
 		<valeur>3</valeur>
 		<instance>2</instance>
 	</lettre>
-	<lettre label="D">
-		<nom>d</nom>
+	<lettre>
+		<label>d</label>
 		<valeur>2</valeur>
 		<instance>3</instance>
 	</lettre>
 	
-	<lettre label="E">
-		<nom>e</nom>
+	<lettre>
+		<label>e</label>
 		<valeur>1</valeur>
 		<instance>15</instance>
 	</lettre>
 	
-	<lettre label="F">
-		<nom>f</nom>
+	<lettre>
+		<label>f</label>
 		<valeur>4</valeur>
 		<instance>2</instance>
 	</lettre>
 	
-	<lettre label="G">
-		<nom>g</nom>
+	<lettre>
+		<label>g</label>
 		<valeur>2</valeur>
 		<instance>2</instance>
 	</lettre>
 	
-	<lettre label="H">
-		<nom>h</nom>
+	<lettre>
+		<label>h</label>
 		<valeur>4</valeur>
 		<instance>Z</instance>
 	</lettre>
 	
-	<lettre label="I">
-		<nom>i</nom>
+	<lettre>
+		<label>i</label>
 		<valeur>1</valeur>
 		<instance>8</instance>
 	</lettre>
 	
-	<lettre label="J">
-		<nom>j</nom>
+	<lettre>
+		<label>j</label>
 		<valeur>8</valeur>
 		<instance>1</instance>
 	</lettre>
 	
-	<lettre label="K">
-		<nom>k</nom>
+	<lettre>
+		<label>k</label>
 		<valeur>10</valeur>
 		<instance>1</instance>
 	</lettre>
 	
-	<lettre label="L">
-		<nom>l</nom>
+	<lettre>
+		<label>l</label>
 		<valeur>1</valeur>
 		<instance>5</instance>
 	</lettre>
 	
-	<lettre label="M">
-		<nom>m</nom>
+	<lettre>
+		<label>m</label>
 		<valeur>2</valeur>
 		<instance>3</instance>
 	</lettre>
 	
-	<lettre label="N">
-		<nom>n</nom>
+	<lettre>
+		<label>n</label>
 		<valeur>1</valeur>
 		<instance>6</instance>
 	</lettre>
 	
-	<lettre label="O">
-		<nom>o</nom>
+	<lettre>
+		<label>o</label>
 		<valeur>1</valeur>
 		<instance>6</instance>
 	</lettre>
 	
-	<lettre label="P">
-		<nom>p</nom>
+	<lettre>
+		<label>p</label>
 		<valeur>3</valeur>
 		<instance>2</instance>
 	</lettre>
 	
-	<lettre label="Q">
-		<nom>q</nom>
+	<lettre>
+		<label>q</label>
 		<valeur>8</valeur>
 		<instance>1</instance>
 	</lettre>
 	
-	<lettre label="R">
-		<nom>r</nom>
+	<lettre>
+		<label>r</label>
 		<valeur>1</valeur>
 		<instance>6</instance>
 	</lettre>
 	
-	<lettre label="S">
-		<nom>s</nom>
+	<lettre>
+		<label>s</label>
 		<valeur>1</valeur>
 		<instance>6</instance>
 	</lettre>
 	
-	<lettre label="T">
-		<nom>t</nom>
+	<lettre>
+		<label>t</label>
 		<valeur>1</valeur>
 		<instance>6</instance>
 	</lettre>
 	
-	<lettre label="U">
-		<nom>u</nom>
+	<lettre>
+		<label>u</label>
 		<valeur>1</valeur>
 		<instance>6</instance>
 	</lettre>
 	
-	<lettre label="V">
-		<nom>v</nom>
+	<lettre>
+		<label>v</label>
 		<valeur>4</valeur>
 		<instance>2</instance>
 	</lettre>
 	
-	<lettre label="W">
-		<nom>w</nom>
+	<lettre>
+		<label>w</label>
 		<valeur>10</valeur>
 		<instance>1</instance>
 	</lettre>
 	
-	<lettre label="X">
-		<nom>x</nom>
+	<lettre>
+		<label>x</label>
 		<valeur>10</valeur>
 		<instance>1</instance>
 	</lettre>
 	
-	<lettre label="Y">
-		<nom>y</nom>
+	<lettre>
+		<label>y</label>
 		<valeur>10</valeur>
 		<instance>1</instance>
 	</lettre>
 	
-	<lettre label="Z">
-		<nom>z</nom>
+	<lettre>
+		<label>z</label>
 		<valeur>10</valeur>
 		<instance>1</instance>
 	</lettre>

@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!ELEMENT alphabet (lettre)+ >
 
-<!ELEMENT lettre (nom+, valeur+, instance+) >
-<!ATTLIST lettre label ID #REQUIRED>
+<!ELEMENT lettre (label+, valeur+, instance+) >
 
-<!ELEMENT nom (#PCDATA) >
+<!ELEMENT label (#PCDATA) >
 <!ELEMENT valeur (#PCDATA) >
 <!ELEMENT instance (#PCDATA) >
