@@ -74,15 +74,17 @@ public class Joueur {
 	 */
 	public void pioche() {
 		System.out.println("Pioche");
-		
-		for(int i = 0; i < 7; i++) {
-			
-			int positionSac =generateNumber(0, Sac.contenuSac.size());
-			mainJoueur.add(Sac.contenuSac.get(positionSac));
-			Sac.contenuSac.remove(positionSac);
+		if(mainJoueur.size() < 7 ) {
+			int nombrePieceAPrendre = 7 - mainJoueur.size();
+			for(int i = 0; i < nombrePieceAPrendre; i++) {
+				int positionSac =generateNumber(0, Sac.contenuSac.size());
+				mainJoueur.add(Sac.contenuSac.get(positionSac));
+				Sac.contenuSac.remove(positionSac);
+			}
 		}
-		
-		
+		else{
+			System.out.println("Pioche impossible");
+		}	
 	}
 	
 	/**
