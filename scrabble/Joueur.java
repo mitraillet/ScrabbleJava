@@ -25,7 +25,7 @@ public class Joueur {
 	/**
 	 * Tableau de Lettre reprÃ©sentant les Lettres du joueur
 	 */
-	protected  List<Lettre> mainJoueur = new ArrayList<Lettre>(7);
+	protected  List<Lettre> mainJoueur = new ArrayList<Lettre>();
 	
 	/**
 	 * Génération d'un nombre random compris entre deux chiffres
@@ -74,13 +74,18 @@ public class Joueur {
 	 */
 	public void pioche() {
 		System.out.println("Pioche");
+		
 		if(mainJoueur.size() < 7 ) {
+			
 			int nombrePieceAPrendre = 7 - mainJoueur.size();
+			
 			for(int i = 0; i < nombrePieceAPrendre; i++) {
+				
 				int positionSac =generateNumber(0, Sac.contenuSac.size());
 				mainJoueur.add(Sac.contenuSac.get(positionSac));
 				Sac.contenuSac.remove(positionSac);
 			}
+			
 		}
 		else{
 			System.out.println("Pioche impossible");
@@ -90,8 +95,18 @@ public class Joueur {
 	/**
 	 * RemÃ©lange les lettres dans le sac
 	 */
-	public void melanger() {
+	public void melanger(String [] args) {
 		System.out.println("Melange");
+		Lettre obj = new Lettre();
+		 for(int i = 0; i < 7 ; i++) {
+			 for(int j = 0; j < args.length; j++)
+					if(args[j] != null && mainJoueur.get(i).label == args[j].charAt(0)) {
+						obj = mainJoueur.get(i);
+						args[j] = null;
+						mainJoueur.remove(mainJoueur.indexOf(obj));
+					}
+		 }
+		 this.pioche();
 	}
 	
 	/**
