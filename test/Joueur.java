@@ -28,7 +28,7 @@ public class Joueur {
 	protected  List<Lettre> mainJoueur = new ArrayList<Lettre>();
 	
 	/**
-	 * G�n�ration d'un nombre random compris entre deux chiffres
+	 * Génération d'un nombre random compris entre deux chiffres
 	 * @param minNum le nombre min
 	 * @param maxNum le nombre max
 	 * @return le nombre random
@@ -95,7 +95,6 @@ public class Joueur {
 	public void pioche() {
 		System.out.println("Pioche");
 		
-			
 		int nombrePieceAPrendre =  7 - this.mainJoueur.size();
 			
 		for(int i = 0; i < nombrePieceAPrendre; i++) {
@@ -125,13 +124,20 @@ public class Joueur {
 		 }
 		 this.pioche();
 	}*/
-	public void melanger() {
+	public void melanger(List<Lettre> exitLettre) {
 		System.out.println("Melange");
-		 for(int i = 0; i < this.mainJoueur.size() ; i++) {
-			 Sac.contenuSac.add(this.mainJoueur.get(i));
-			 this.mainJoueur.remove(i);
+		if (exitLettre.size() == 0) {
+			for(int i = 0; i < this.mainJoueur.size() ; i++) {
+				Sac.contenuSac.add(this.mainJoueur.get(i));
+				this.mainJoueur.remove(i);
+			}
+		 } else {
+			 for(int i = 0; i < exitLettre.size() ; i++) {
+					Sac.contenuSac.add(exitLettre.get(i));
+					this.mainJoueur.remove(exitLettre.get(i));
+				} 
 		 }
-		 this.pioche();
+		 this.pioche(); 
 	}
 	
 	/**
