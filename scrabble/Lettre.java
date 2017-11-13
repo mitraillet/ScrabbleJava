@@ -20,6 +20,34 @@ public class Lettre {
 	int valeur;
 	
 	/**
+	 * @return la label
+	 */
+	public char getLabel() {
+		return label;
+	}
+
+	/**
+	 * @param label le label à initialiser
+	 */
+	public void setLabel(char label) {
+		this.label = label;
+	}
+
+	/**
+	 * @return la valeur
+	 */
+	public int getValeur() {
+		return valeur;
+	}
+
+	/**
+	 * @param valeur la valeur à initialiser
+	 */
+	public void setValeur(int valeur) {
+		this.valeur = valeur;
+	}
+
+	/**
 	 * Constructeur
 	 * @param label le label de la lettre
 	 * @param valeur la valeur de la lettre

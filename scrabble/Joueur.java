@@ -28,7 +28,7 @@ public class Joueur {
 	protected  List<Lettre> mainJoueur = new ArrayList<Lettre>();
 	
 	/**
-	 * GÈnÈration d'un nombre random compris entre deux chiffres
+	 * G√©n√©ration d'un nombre random compris entre deux chiffres
 	 * @param minNum le nombre min
 	 * @param maxNum le nombre max
 	 * @return le nombre random
@@ -92,6 +92,8 @@ public class Joueur {
 		}	
 	}
 	
+	
+	
 	/**
 	 * Rem√©lange les lettres dans le sac
 	 */
@@ -103,6 +105,7 @@ public class Joueur {
 					if(args[j] != null && mainJoueur.get(i).label == args[j].charAt(0)) {
 						obj = mainJoueur.get(i);
 						args[j] = null;
+						Sac.contenuSac.add(mainJoueur.get(i));
 						mainJoueur.remove(mainJoueur.indexOf(obj));
 					}
 		 }

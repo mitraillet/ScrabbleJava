@@ -23,7 +23,7 @@ public class JeuTest {
 		
 		sac.remplissageSac();
 		
-		 for(int i = 0; i < sac.contenuSac.size(); i++)
+		 /*for(int i = 0; i < sac.contenuSac.size(); i++)
 		    {
 		      System.out.println(i + " = " + sac.contenuSac.get(i).label);
 		    }
@@ -38,7 +38,23 @@ public class JeuTest {
 		 for(int i = 0; i < sac.contenuSac.size(); i++)
 		    {
 		      System.out.println(i + " = " + sac.contenuSac.get(i).label);
-		    }
+		    }*/
+		
+
+		System.out.println(sac.contenuSac.size());
+		joueur.pioche();
+		for (int i = 0; i < 7; i++) {
+			System.out.println(joueur.mainJoueur.get(i).label);
+		}
+		System.out.println(sac.contenuSac.size());
+		System.out.println("---------------------------------------------------------");
+		String[] testChar = {"e"};
+		joueur.melanger(testChar);
+		for (int i = 0; i < 7; i++) {
+			System.out.println(joueur.mainJoueur.get(i).label);
+		}
+		System.out.println(sac.contenuSac.size());
+		
 	}
 
 }
