@@ -3,33 +3,52 @@
  */
 package scrabble;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+import java.util.HashSet;
+
 /**
  * @author Fauconnier/Henriquet
  *
  */
 public class Plateau {
 
+	HashSet<String> dictionnaire = new HashSet<String>();
 	
 	/**
-	 * ItÈration d'un dictionnaire pour trouver concordance 
-	 * avec le mot entrÈ par le joueur et vÈrifier s'il existe
+	 * It√©ration d'un dictionnaire pour trouver concordance 
+	 * avec le mot entr√© par le joueur et v√©rifier s'il existe
 	 */
 	public void verification() {
-		/* parcourir un dictionnaire 
-		 * et voir s'il y a correspondance avec le mot Ècrit 
-		 * par le joueur.
-		 */
+		try {
+			File dico = new File("ressource/dictionnaire.txt"); //Path du dictionnaire.txt
+			BufferedReader br = new BufferedReader(new FileReader(dico)); //Cr√©tation du buffer
+			String line; //Variable pour les lignes
+			while ((line = br.readLine()) != null) { //Pour chaque ligne √©x√©cute la boucle
+					this.dictionnaire.add(line);
+			}
+			System.out.println(this.dictionnaire.size());
+			br.close(); //Ferme le fichier
+		} catch(FileNotFoundException e) {
+			e.printStackTrace();
+		} catch(IOException e) {
+			e.printStackTrace();
+		}	
 	}
 	/**
-	 * Recherche des mots pÈriphÈriques ‡ celui placÈ par le joueur
-	 * qui se seraient crÈÈs et appel de la mÈthode vÈrification
+	 * Recherche des mots p√©riph√©riques √© celui plac√© par le joueur
+	 * qui se seraient cr√©√©s et appel de la m√©thode v√©rification
 	 */
 	public void verificationPeripherique() {
-		// nom ‡ changer surement
+		// nom √† changer surement
 	}
 	/**
 	 * Calcul du score en prenant compte les bonus
-	 * Utilisation des valeurs de chaques lettres pondÈrÈes avec le bonus
+	 * Utilisation des valeurs de chaques lettres pond√©r√©es avec le bonus
 	 * et ajout dans la classe Joueur.score 
 	 */
 	public void calculScore() {
