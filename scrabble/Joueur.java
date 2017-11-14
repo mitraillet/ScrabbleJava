@@ -80,7 +80,6 @@ public class Joueur {
 			int nombrePieceAPrendre = 7 - mainJoueur.size();
 			
 			for(int i = 0; i < nombrePieceAPrendre; i++) {
-				
 				int positionSac = generateNumber(0, Sac.contenuSac.size());
 				mainJoueur.add(Sac.contenuSac.get(positionSac));
 				Sac.contenuSac.remove(positionSac);
@@ -101,8 +100,8 @@ public class Joueur {
 	public void melanger(List<Lettre> exitLettre) {
 		System.out.println("Melange");
 		for(int i = 0; i < exitLettre.size(); i++) {
-			Sac.contenuSac.add(exitLettre.get(i));
-			mainJoueur.remove(exitLettre.get(i));
+				Sac.contenuSac.add(exitLettre.get(i));
+				mainJoueur.remove(exitLettre.get(i));
 		}
 		this.pioche();
 	}

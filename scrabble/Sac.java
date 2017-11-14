@@ -40,11 +40,16 @@ public class Sac {
 	}
 	/**
 	 * @param ajoute les lettres au sac 
+	 * @throws XPathExpressionException 
 	 */
-	/*public void setSac(Lettre[] sac) {
-	public List<Lettre> setSac() {
-		this.sac = sac;
-	}*/
+	public Sac() throws XPathExpressionException {
+		this.remplissageSac();
+		Joker joker1 = new Joker();
+		Joker joker2 = new Joker();
+		contenuSac.add(joker1);
+		contenuSac.add(joker2);
+		
+	}
 	
 	/**
 	 * Méthode lié é la méthode pioche du joueur 
@@ -70,7 +75,7 @@ public class Sac {
 	 * Récupère les donnees des lettre dans le fichier dataLettre.XML et remplis la variable sac
 	 * @throws XPathExpressionException
 	 */
-	public static void remplissageSac() throws XPathExpressionException {
+	public void remplissageSac() throws XPathExpressionException {
 	      DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 	      factory.setIgnoringElementContentWhitespace(true);
 
