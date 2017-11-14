@@ -10,6 +10,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import java.util.HashSet;
+import java.util.*;
 
 /**
  * @author Fauconnier/Henriquet
@@ -17,13 +18,16 @@ import java.util.HashSet;
  */
 public class Plateau {
 
-	HashSet<String> dictionnaire = new HashSet<String>();
+	public HashSet<String> dictionnaire = new HashSet<String>();
+	
+	public Plateau(){
+		this.construireDico();
+	}
 	
 	/**
-	 * Itération d'un dictionnaire pour trouver concordance 
-	 * avec le mot entré par le joueur et vérifier s'il existe
+	 * Construis le dictionnaire sur base du fichier dictionnaire.txt
 	 */
-	public void verification() {
+	private void construireDico() {
 		try {
 			File dico = new File("ressource/dictionnaire.txt"); //Path du dictionnaire.txt
 			BufferedReader br = new BufferedReader(new FileReader(dico)); //Crétation du buffer
@@ -37,8 +41,25 @@ public class Plateau {
 			e.printStackTrace();
 		} catch(IOException e) {
 			e.printStackTrace();
-		}	
+		}
 	}
+	
+	/**
+	 * Itération d'un dictionnaire pour trouver concordance 
+	 * avec le mot entré par le joueur et vérifier s'il existe
+	 * @return true si mot est dans le dictionnaire sinon false
+	 */
+	public boolean verification(String mot) {
+		Iterator<String> checkMot = dictionnaire.iterator(); //Création iterator de liste
+		while (checkMot.hasNext()){ //Test tous les mots du dictionnaire
+			if(mot.equals(checkMot.next())){ //Si mot égale mot dans dictionnaire
+				return true;
+			} 
+		}
+		return false;
+	}
+	
+	
 	/**
 	 * Recherche des mots périphériques é celui placé par le joueur
 	 * qui se seraient créés et appel de la méthode vérification
@@ -46,6 +67,8 @@ public class Plateau {
 	public void verificationPeripherique() {
 		// nom à changer surement
 	}
+	
+	
 	/**
 	 * Calcul du score en prenant compte les bonus
 	 * Utilisation des valeurs de chaques lettres pondérées avec le bonus
