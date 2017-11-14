@@ -29,7 +29,7 @@ import javax.xml.xpath.XPathFactory;
 public class Sac {
 	
 	//private Lettre[] sac = new Lettre[102];
-	protected static List<Lettre> contenuSac = new ArrayList<Lettre>();
+	private final List<Lettre> contenuSac;
 	
 	/**
 	 * @return le sac
@@ -43,6 +43,7 @@ public class Sac {
 	 * @throws XPathExpressionException 
 	 */
 	public Sac() throws XPathExpressionException {
+		this.contenuSac = new ArrayList<Lettre>();
 		this.remplissageSac();
 		Joker joker1 = new Joker();
 		Joker joker2 = new Joker();
@@ -75,7 +76,7 @@ public class Sac {
 	 * Récupère les donnees des lettre dans le fichier dataLettre.XML et remplis la variable sac
 	 * @throws XPathExpressionException
 	 */
-	public void remplissageSac() throws XPathExpressionException {
+	private void remplissageSac() throws XPathExpressionException {
 	      DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 	      factory.setIgnoringElementContentWhitespace(true);
 
@@ -120,9 +121,10 @@ public class Sac {
 	            		
 	            		int instanceLettre = ((Double)path.evaluate(expressionInstance, root, XPathConstants.NUMBER)).intValue();
 	            		//System.out.println(instanceLettre);
-	            		
-	            		
-	            		Lettre lettre = new Lettre(labelLettre, valeurLettre, instanceLettre);
+	            		Lettre addLettre = new Lettre(labelLettre, valeurLettre);
+	            		for(int j = 0; j < instanceLettre; j ++) {
+	            			contenuSac.add(addLettre);
+	            		}
 	            		
 	            }
 	            

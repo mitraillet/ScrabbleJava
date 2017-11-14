@@ -27,6 +27,7 @@ public class Joueur {
 	 */
 	protected  List<Lettre> mainJoueur;
 	
+	
 	/**
 	 * G√©n√©ration d'un nombre random compris entre deux chiffres
 	 * @param minNum le nombre min
@@ -46,9 +47,7 @@ public class Joueur {
 	}
 
 	public Joueur(){
-		this.score = 0;
-		this.doitJouer = true;
-		this.mainJoueur = new ArrayList<Lettre>();
+		this(0, true);
 	}
 	/**
 	 * Constructeur du joueur
@@ -58,10 +57,17 @@ public class Joueur {
 	public Joueur(int score, boolean tour) {
 		this.score = score;
 		this.doitJouer = tour;
-		((Joueur) this.mainJoueur).pioche();
+		this.mainJoueur = new ArrayList<Lettre>();
 	}
 
 	
+	/**
+	 * @return the mainJoueur
+	 */
+	protected List<Lettre> getMainJoueur() {
+		return mainJoueur;
+	}
+
 	/**
 	 * Permet de placer un mot sur le plateau
 	 */
@@ -72,7 +78,7 @@ public class Joueur {
 	/**
 	 * Permet de piocher des lettres
 	 */
-	public void pioche() {
+	public void pioche(Sac sac) {
 		System.out.println("Pioche");
 		
 		if(mainJoueur.size() < 7 ) {
@@ -80,9 +86,9 @@ public class Joueur {
 			int nombrePieceAPrendre = 7 - mainJoueur.size();
 			
 			for(int i = 0; i < nombrePieceAPrendre; i++) {
-				int positionSac = generateNumber(0, Sac.contenuSac.size());
-				mainJoueur.add(Sac.contenuSac.get(positionSac));
-				Sac.contenuSac.remove(positionSac);
+				int positionSac = generateNumber(0, sac.getSac().size());
+				mainJoueur.add(sac.getSac().get(positionSac)); // faire mÈthode dans Sac pour encapsulation 
+				sac.getSac().remove(positionSac); // faire mÈthode dans Sac pour encapsulation 
 			}
 			
 		}
@@ -90,20 +96,18 @@ public class Joueur {
 			System.out.println("Pioche impossible");
 		}
 	}
-	
-	
-	
-	
+
+
 	/**
 	 * Rem√©lange les lettres dans le sac
 	 */
-	public void melanger(List<Lettre> exitLettre) {
+	public void melanger(List<Lettre> exitLettre, Sac sac) {
 		System.out.println("Melange");
 		for(int i = 0; i < exitLettre.size(); i++) {
-				Sac.contenuSac.add(exitLettre.get(i));
+				sac.getSac().add(exitLettre.get(i)); //faire mÈthode dans Sac pour encapsulation
 				mainJoueur.remove(exitLettre.get(i));
 		}
-		this.pioche();
+		this.pioche(sac);
 	}
 	/**
 	 * Permet au joueur de passer le tour

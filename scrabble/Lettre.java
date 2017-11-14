@@ -12,12 +12,12 @@ public class Lettre {
 	/**
 	 * Le libellé du caractère
 	 */
-	char label;
+	private char label;
 	
 	/**
 	 * La valeur de la lettre (score)
 	 */
-	int valeur;
+	private int valeur;
 	
 	/**
 	 * @return la label
@@ -53,13 +53,9 @@ public class Lettre {
 	 * @param valeur la valeur de la lettre
 	 * @param instance le nombre de fois que la lettre se trouve dans le sac
 	 */
-	public Lettre(char label, int valeur, int instance) {
+	public Lettre(char label, int valeur) {
 		this.label = label;
 		this.valeur = valeur;
-		
-		for(int i = 0; i < instance; i ++) {
-			Sac.contenuSac.add(this);
-		}
 	}
 	
 	/**

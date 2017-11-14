@@ -28,7 +28,6 @@ public class Case {
 	 */
 	public Case() {
 		this.lettre = null;
-		// je ne vois pas comment inclure la lettre car elle ne vient pas tout de suite à l'initialisation
 		this.bonus = 0;
 	}
 	/**
@@ -37,7 +36,6 @@ public class Case {
 	 */
 	public Case(int bonus) {
 		this.lettre = null;
-		// je ne vois pas comment inclure la lettre car elle ne vient pas tout de suite à l'initialisation
 		this.bonus = bonus;
 	}
 	/**

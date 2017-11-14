@@ -12,13 +12,13 @@ public class Joker extends Lettre {
 	/**
 	 * Permet de définir la valeur du libellé
 	 */
-	public void setJoker() {
-		this.label = 'h';
+	public void setJoker(char label) {
+		this.setLabel(label);
 	}
 	
-	public Joker(char nom, int valeur, int instance) {
+	public Joker() {
 		super();
-		this.valeur = 0;
+		this.setValeur(0);
 	}
 
 }

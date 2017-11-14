@@ -50,13 +50,15 @@ public class Plateau {
 	 * @return true si mot est dans le dictionnaire sinon false
 	 */
 	public boolean verification(String mot) {
-		Iterator<String> checkMot = dictionnaire.iterator(); //Création iterator de liste
+		/*Iterator<String> checkMot = dictionnaire.iterator(); //Création iterator de liste
 		while (checkMot.hasNext()){ //Test tous les mots du dictionnaire
 			if(mot.equals(checkMot.next())){ //Si mot égale mot dans dictionnaire
 				return true;
 			} 
 		}
-		return false;
+		return false;*/
+		return dictionnaire.contains(mot);
+		
 	}
 	
 	
