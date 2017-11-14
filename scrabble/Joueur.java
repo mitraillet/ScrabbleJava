@@ -25,7 +25,7 @@ public class Joueur {
 	/**
 	 * Tableau de Lettre représentant les Lettres du joueur
 	 */
-	protected  List<Lettre> mainJoueur = new ArrayList<Lettre>();
+	protected  List<Lettre> mainJoueur;
 	
 	/**
 	 * Génération d'un nombre random compris entre deux chiffres
@@ -48,7 +48,7 @@ public class Joueur {
 	public Joueur(){
 		this.score = 0;
 		this.doitJouer = true;
-		this.mainJoueur.removeAll(mainJoueur);
+		this.mainJoueur = new ArrayList<Lettre>();
 	}
 	/**
 	 * Constructeur du joueur
@@ -81,7 +81,7 @@ public class Joueur {
 			
 			for(int i = 0; i < nombrePieceAPrendre; i++) {
 				
-				int positionSac =generateNumber(0, Sac.contenuSac.size());
+				int positionSac = generateNumber(0, Sac.contenuSac.size());
 				mainJoueur.add(Sac.contenuSac.get(positionSac));
 				Sac.contenuSac.remove(positionSac);
 			}
@@ -89,29 +89,23 @@ public class Joueur {
 		}
 		else{
 			System.out.println("Pioche impossible");
-		}	
+		}
 	}
+	
 	
 	
 	
 	/**
 	 * Remélange les lettres dans le sac
 	 */
-	public void melanger(String [] args) {
+	public void melanger(List<Lettre> exitLettre) {
 		System.out.println("Melange");
-		Lettre obj = new Lettre();
-		 for(int i = 0; i < 7 ; i++) {
-			 for(int j = 0; j < args.length; j++)
-					if(args[j] != null && mainJoueur.get(i).label == args[j].charAt(0)) {
-						obj = mainJoueur.get(i);
-						args[j] = null;
-						Sac.contenuSac.add(mainJoueur.get(i));
-						mainJoueur.remove(mainJoueur.indexOf(obj));
-					}
-		 }
-		 this.pioche();
+		for(int i = 0; i < exitLettre.size(); i++) {
+			Sac.contenuSac.add(exitLettre.get(i));
+			mainJoueur.remove(exitLettre.get(i));
+		}
+		this.pioche();
 	}
-	
 	/**
 	 * Permet au joueur de passer le tour
 	 */
