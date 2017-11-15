@@ -96,11 +96,16 @@ public class Plateau {
 	            
 	            XPathFactory xpf = XPathFactory.newInstance();
 	            XPath path = xpf.newXPath();
-	             
-	            for (int i = 1; i < 225; i++){
-	            		String expressionX = "/plateau/ligne/case[" + i + "]/x";
-	            		String expressionY = "/plateau/ligne/case[" + i + "]/y";
-	            		String expressionBonus = "/plateau/ligne/case[" + i + "]/bonus";
+	            
+	            int j = 0;
+	            
+	            for (int i = 1; i < 226; i++){
+	            		if(i%15 == 0) {
+	            			j++;
+	            		}
+	            		String expressionX = "/plateau/ligne[" + j + "]/case[" + i + "]/x";
+	            		String expressionY = "/plateau/ligne[" + j + "]/case[" + i + "]/y";
+	            		String expressionBonus = "/plateau/ligne[" + j + "]/case[" + i + "]/bonus";
 	            		
 	            		int x = ((Double)path.evaluate(expressionX, root, XPathConstants.NUMBER)).intValue();
 	            		
