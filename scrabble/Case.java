@@ -52,44 +52,8 @@ public class Case {
 	/**
 	 * @return la valeur du bonus 
 	 */
-	protected int getBonus() {
-		/**
-		 * bonus == 0 donc case normal
-		 */
-		if(bonus == 0) {
-			return 1;
-		}
-		/**
-		 * bonus == 1 donc case lettre compte double 
-		 */
-		else if (bonus == 1) {
-			return 2;
-		}
-		/**
-		 * bonus == 2 donc case lettre compte triple 
-		 */
-		else if (bonus == 2) {
-			return 3;
-		}
-		/**
-		 * bonus == 3 donc case mot compte double 
-		 */
-		else if (bonus == 3) {
-			return 2;
-		}
-		/**
-		 * bonus == 4 donc case mot compte triple 
-		 */
-		else if (bonus == 4) {
-			return 3;
-		}
-		/**
-		 * bonus == 5 donc première case mot compte double
-		 */
-		else if (bonus == 5) {
-			return 2;
-		}
-		return 1;
+	public int getBonus() {
+		return this.bonus;
 	}
 	/**
 	 * @param bonus le chiffre du bonus pour la case
