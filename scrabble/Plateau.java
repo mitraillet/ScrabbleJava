@@ -39,6 +39,7 @@ public class Plateau {
 	
 	public Plateau() throws XPathExpressionException {
 		this.construireDico();
+		this.plateau = new Case [15][15];
 		this.initPlateau();
 	}
 	
@@ -97,12 +98,10 @@ public class Plateau {
 	            XPathFactory xpf = XPathFactory.newInstance();
 	            XPath path = xpf.newXPath();
 	            
-	            int j = 0;
+	            int j = 1;
 	            
-	            for (int i = 1; i < 226; i++){
-	            		if(i%15 == 0) {
-	            			j++;
-	            		}
+	            for (int i = 1; i < 16; i++){
+	            		
 	            		String expressionX = "/plateau/ligne[" + j + "]/case[" + i + "]/x";
 	            		String expressionY = "/plateau/ligne[" + j + "]/case[" + i + "]/y";
 	            		String expressionBonus = "/plateau/ligne[" + j + "]/case[" + i + "]/bonus";
@@ -115,6 +114,10 @@ public class Plateau {
 	            		
 	            		Case caseNouvelle = new Case(bonus);
 	            		this.initCasePlateau(caseNouvelle, x, y);
+	            		
+	            		if(i%15 == 0) {
+	            			j++;
+	            		}
 	            }
 	         } catch (SAXParseException e){}  
 	      } catch (ParserConfigurationException e) {
