@@ -38,6 +38,21 @@ public class Sac {
 	public List<Lettre> getSac() {
 		return contenuSac;
 	}
+	
+	public Lettre getPositionLettreDansSac(int positionSac) {
+		return this.contenuSac.get(positionSac);
+	}
+	
+	public void removeLettreDuSac(int positionSac) {
+		this.contenuSac.remove(positionSac);
+	}
+	public void addLettreAuSac(Lettre lettre) {
+		this.contenuSac.add(lettre);
+	}
+	public int tailleContenuSac() {
+		return this.contenuSac.size();
+	}
+	
 	/**
 	 * @param ajoute les lettres au sac 
 	 * @throws XPathExpressionException 
@@ -121,7 +136,9 @@ public class Sac {
 	            		
 	            		int instanceLettre = ((Double)path.evaluate(expressionInstance, root, XPathConstants.NUMBER)).intValue();
 	            		//System.out.println(instanceLettre);
+	            		
 	            		Lettre addLettre = new Lettre(labelLettre, valeurLettre);
+	            		
 	            		for(int j = 0; j < instanceLettre; j ++) {
 	            			contenuSac.add(addLettre);
 	            		}

@@ -27,8 +27,7 @@ public class Case {
 	 * Constructeur de Case par défaut
 	 */
 	public Case() {
-		this.lettre = null;
-		this.bonus = 0;
+		this(0);
 	}
 	/**
 	 * Constructeur de Case

@@ -62,8 +62,7 @@ public class Lettre {
 	 * Constructeur par défaut
 	 */
 	public Lettre() {
-		this.label = 'a';
-		this.valeur = 0;
+		this('?',0);
 	}
 
 }

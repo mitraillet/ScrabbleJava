@@ -18,7 +18,6 @@ public class Joker extends Lettre {
 	
 	public Joker() {
 		super();
-		this.setValeur(0);
 	}
 
 }

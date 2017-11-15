@@ -3,6 +3,9 @@
  */
 package scrabble;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.xml.xpath.XPathExpressionException;
 /**
  * @author Fauconnier
@@ -20,8 +23,6 @@ public class JeuTest {
 		Joueur joueur = new Joueur();
 		//Lettre a = new Lettre('a', 1, 2);
 		//Lettre b = new Lettre('b', 1, 2);
-		
-		sac.remplissageSac();
 		
 		 /*for(int i = 0; i < sac.contenuSac.size(); i++)
 		    {
@@ -41,19 +42,25 @@ public class JeuTest {
 		    }*/
 		
 
-		System.out.println(sac.contenuSac.size());
-		joueur.pioche();
+		System.out.println(sac.getSac().size());
+		joueur.pioche(sac);
 		for (int i = 0; i < 7; i++) {
-			System.out.println(joueur.mainJoueur.get(i).label);
+			System.out.println(joueur.getLabelLettreMain(i));
 		}
-		System.out.println(sac.contenuSac.size());
+		System.out.println(sac.getSac().size());
 		System.out.println("---------------------------------------------------------");
-		String[] testChar = {"e"};
-		joueur.melanger(testChar);
+		List<Lettre> testChar = new ArrayList<Lettre>(7);
+		testChar.add(sac.getSac().get(18));
+		System.out.println(sac.getSac().get(18).getLabel());
+		joueur.melanger(testChar, sac);
 		for (int i = 0; i < 7; i++) {
-			System.out.println(joueur.mainJoueur.get(i).label);
+			System.out.println(joueur.getLabelLettreMain(i));
 		}
-		System.out.println(sac.contenuSac.size());
+		System.out.println(sac.getSac().size());
+		
+		Plateau plateau = new Plateau();
+		System.out.println(plateau.verification("mlsqhdfmql"));
+		System.out.println(plateau.verification("bete"));
 		
 	}
 

@@ -60,6 +60,13 @@ public class Joueur {
 		this.mainJoueur = new ArrayList<Lettre>();
 	}
 
+	public Lettre getLettreMain(int positionMain) {
+		return this.mainJoueur.get(positionMain);
+	}
+	
+	public char getLabelLettreMain(int positionMain) {
+		return getLettreMain(positionMain).getLabel();
+	}
 	
 	/**
 	 * @return the mainJoueur
@@ -86,9 +93,9 @@ public class Joueur {
 			int nombrePieceAPrendre = 7 - mainJoueur.size();
 			
 			for(int i = 0; i < nombrePieceAPrendre; i++) {
-				int positionSac = generateNumber(0, sac.getSac().size());
-				mainJoueur.add(sac.getSac().get(positionSac)); // faire méthode dans Sac pour encapsulation 
-				sac.getSac().remove(positionSac); // faire méthode dans Sac pour encapsulation 
+				int positionSac = generateNumber(0, sac.tailleContenuSac());
+				mainJoueur.add(sac.getPositionLettreDansSac(positionSac));
+				sac.removeLettreDuSac(positionSac);
 			}
 			
 		}
@@ -104,7 +111,7 @@ public class Joueur {
 	public void melanger(List<Lettre> exitLettre, Sac sac) {
 		System.out.println("Melange");
 		for(int i = 0; i < exitLettre.size(); i++) {
-				sac.getSac().add(exitLettre.get(i)); //faire méthode dans Sac pour encapsulation
+				sac.addLettreAuSac(exitLettre.get(i)); //faire méthode dans Sac pour encapsulation
 				mainJoueur.remove(exitLettre.get(i));
 		}
 		this.pioche(sac);
