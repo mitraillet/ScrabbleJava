@@ -10,6 +10,21 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import java.util.HashSet;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.xml.sax.ErrorHandler;
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
+
 import java.util.*;
 
 /**
@@ -20,8 +35,15 @@ public class Plateau {
 
 	public HashSet<String> dictionnaire = new HashSet<String>();
 	
-	public Plateau(){
+	public Case[][] plateau;
+	
+	public Plateau() throws XPathExpressionException {
 		this.construireDico();
+		this.initPlateau();
+	}
+	
+	public void initCasePlateau(Case caseSet, int x, int y) {
+		this.plateau[x][y] = caseSet;
 	}
 	
 	/**
@@ -42,6 +64,61 @@ public class Plateau {
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	
+	private void initPlateau() throws XPathExpressionException {
+	      DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+	      factory.setIgnoringElementContentWhitespace(true);
+
+	      try {
+	         //Méthode qui permet d'activer la vérification du fichier
+	         factory.setValidating(true);
+	         
+	         DocumentBuilder builder = factory.newDocumentBuilder();
+	         
+	         //création de notre objet d'erreurs
+	         ErrorHandler errHandler = new SimpleErrorHandler();
+	         //Affectation de notre objet au document pour interception des erreurs éventuelles
+	         builder.setErrorHandler(errHandler);
+	         
+	         // Parsing d'un XML via une URI
+	         String uri = "./ressource/dataCase.xml";
+	         
+	         //On rajoute un bloc de capture
+	         //pour intercepter les erreurs au cas où il y en a
+	         try {
+	            //Document xml = builder.parse(fileXML);
+	        	 	Document xml = builder.parse(uri);
+	            Element root = xml.getDocumentElement();
+	            
+	            System.out.println(root.getNodeName());
+	            
+	            XPathFactory xpf = XPathFactory.newInstance();
+	            XPath path = xpf.newXPath();
+	             
+	            for (int i = 1; i < 225; i++){
+	            		String expressionX = "/plateau/ligne/case[" + i + "]/x";
+	            		String expressionY = "/plateau/ligne/case[" + i + "]/y";
+	            		String expressionBonus = "/plateau/ligne/case[" + i + "]/bonus";
+	            		
+	            		int x = ((Double)path.evaluate(expressionX, root, XPathConstants.NUMBER)).intValue();
+	            		
+	            		int y = ((Double)path.evaluate(expressionY, root, XPathConstants.NUMBER)).intValue();
+	            		
+	            		int bonus = ((Double)path.evaluate(expressionBonus, root, XPathConstants.NUMBER)).intValue();
+	            		
+	            		Case caseNouvelle = new Case(bonus);
+	            		this.initCasePlateau(caseNouvelle, x, y);
+	            }
+	         } catch (SAXParseException e){}  
+	      } catch (ParserConfigurationException e) {
+	         e.printStackTrace();
+	      } catch (SAXException e) {
+	         e.printStackTrace();
+	      } catch (IOException e) {
+	         e.printStackTrace();
+	      } 
 	}
 	
 	/**
