@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!ELEMENT plateau (ligne)+ >
+
+<!ELEMENT ligne (case)+ >
+
+<!ELEMENT case (x+, y+, bonus+) >
+
+<!ELEMENT x (#PCDATA) >
+<!ELEMENT y (#PCDATA) >
+<!ELEMENT bonus (#PCDATA) >
