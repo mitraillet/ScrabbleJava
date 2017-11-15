@@ -98,13 +98,15 @@ public class Plateau {
 	            XPathFactory xpf = XPathFactory.newInstance();
 	            XPath path = xpf.newXPath();
 	            
-	            int j = 1;
+	            int j = 1;  //Variable pour incrémenter les lignes
+	            int c = 0; //Variable pour incrémenter les cases
 	            
-	            for (int i = 1; i < 16; i++){
-	            		
-	            		String expressionX = "/plateau/ligne[" + j + "]/case[" + i + "]/x";
-	            		String expressionY = "/plateau/ligne[" + j + "]/case[" + i + "]/y";
-	            		String expressionBonus = "/plateau/ligne[" + j + "]/case[" + i + "]/bonus";
+	            for (int i = 1; i < 226; i++){
+	            		c++;
+	            	
+	            		String expressionX = "/plateau/ligne[" + j + "]/case[" + c + "]/x";
+	            		String expressionY = "/plateau/ligne[" + j + "]/case[" + c + "]/y";
+	            		String expressionBonus = "/plateau/ligne[" + j + "]/case[" + c + "]/bonus";
 	            		
 	            		int x = ((Double)path.evaluate(expressionX, root, XPathConstants.NUMBER)).intValue();
 	            		
@@ -113,12 +115,14 @@ public class Plateau {
 	            		int bonus = ((Double)path.evaluate(expressionBonus, root, XPathConstants.NUMBER)).intValue();
 	            		
 	            		Case caseNouvelle = new Case(bonus);
-	            		this.initCasePlateau(caseNouvelle, x, y);
+	            		this.initCasePlateau(caseNouvelle, x, y);	            	
 	            		
 	            		if(i%15 == 0) {
 	            			j++;
+	            			c = 0;
 	            		}
 	            }
+	                  
 	         } catch (SAXParseException e){}  
 	      } catch (ParserConfigurationException e) {
 	         e.printStackTrace();
@@ -155,5 +159,17 @@ public class Plateau {
 	 */
 	public void calculScore() {
 		// Enorme point d'interrogation sur ce que l'on doit faire et comment on peut le calculer
+	}
+	
+	public void plateauConsole() {
+		int j = 0;
+		for(int i = 0; i < 15; i++) {
+			for(int h = 0; h < 15; h++) {
+				System.out.print(plateau[h][j].getBonus());
+			}
+			System.out.print("\n");
+			j++;
+			//System.out.print(j);
+		}
 	}
 }
