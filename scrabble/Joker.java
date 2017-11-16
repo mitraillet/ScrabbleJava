@@ -1,5 +1,5 @@
 /**
- * 
+ * Instanciation du joker objet étendu de Lettre
  */
 package scrabble;
 
