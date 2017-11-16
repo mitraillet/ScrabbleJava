@@ -3,6 +3,7 @@
  */
 package scrabble;
 
+<<<<<<< HEAD
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -27,12 +28,15 @@ import org.xml.sax.SAXParseException;
 
 import java.util.*;
 
+=======
+>>>>>>> 0a29c43b46fce9f32066a17a4a4198a6bb298234
 /**
  * @author Fauconnier/Henriquet
  *
  */
 public class Plateau {
 
+<<<<<<< HEAD
 	public HashSet<String> dictionnaire = new HashSet<String>();
 	
 	public Case[][] plateau;
@@ -155,11 +159,35 @@ public class Plateau {
 	/**
 	 * Calcul du score en prenant compte les bonus
 	 * Utilisation des valeurs de chaques lettres pondÃ©rÃ©es avec le bonus
+=======
+	
+	/**
+	 * Itération d'un dictionnaire pour trouver concordance 
+	 * avec le mot entré par le joueur et vérifier s'il existe
+	 */
+	public void verification() {
+		/* parcourir un dictionnaire 
+		 * et voir s'il y a correspondance avec le mot écrit 
+		 * par le joueur.
+		 */
+	}
+	/**
+	 * Recherche des mots périphériques à celui placé par le joueur
+	 * qui se seraient créés et appel de la méthode vérification
+	 */
+	public void verificationPeripherique() {
+		// nom à changer surement
+	}
+	/**
+	 * Calcul du score en prenant compte les bonus
+	 * Utilisation des valeurs de chaques lettres pondérées avec le bonus
+>>>>>>> 0a29c43b46fce9f32066a17a4a4198a6bb298234
 	 * et ajout dans la classe Joueur.score 
 	 */
 	public void calculScore() {
 		// Enorme point d'interrogation sur ce que l'on doit faire et comment on peut le calculer
 	}
+<<<<<<< HEAD
 	
 	/**
 	 * Affiche le plateau en console
@@ -175,3 +203,6 @@ public class Plateau {
 		}
 	}
 }
+=======
+}
+>>>>>>> 0a29c43b46fce9f32066a17a4a4198a6bb298234

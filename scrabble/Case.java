@@ -27,7 +27,13 @@ public class Case {
 	 * Constructeur de Case par défaut
 	 */
 	public Case() {
+<<<<<<< HEAD
 		this(0);
+=======
+		this.lettre = null;
+		// je ne vois pas comment inclure la lettre car elle ne vient pas tout de suite à l'initialisation
+		this.bonus = 0;
+>>>>>>> 0a29c43b46fce9f32066a17a4a4198a6bb298234
 	}
 	/**
 	 * Constructeur de Case
@@ -35,6 +41,10 @@ public class Case {
 	 */
 	public Case(int bonus) {
 		this.lettre = null;
+<<<<<<< HEAD
+=======
+		// je ne vois pas comment inclure la lettre car elle ne vient pas tout de suite à l'initialisation
+>>>>>>> 0a29c43b46fce9f32066a17a4a4198a6bb298234
 		this.bonus = bonus;
 	}
 	/**
@@ -52,8 +62,49 @@ public class Case {
 	/**
 	 * @return la valeur du bonus 
 	 */
+<<<<<<< HEAD
 	public int getBonus() {
 		return this.bonus;
+=======
+	protected int getBonus() {
+		/**
+		 * bonus == 0 donc case normal
+		 */
+		if(bonus == 0) {
+			return 1;
+		}
+		/**
+		 * bonus == 1 donc case lettre compte double 
+		 */
+		else if (bonus == 1) {
+			return 2;
+		}
+		/**
+		 * bonus == 2 donc case lettre compte triple 
+		 */
+		else if (bonus == 2) {
+			return 3;
+		}
+		/**
+		 * bonus == 3 donc case mot compte double 
+		 */
+		else if (bonus == 3) {
+			return 2;
+		}
+		/**
+		 * bonus == 4 donc case mot compte triple 
+		 */
+		else if (bonus == 4) {
+			return 3;
+		}
+		/**
+		 * bonus == 5 donc première case mot compte double
+		 */
+		else if (bonus == 5) {
+			return 2;
+		}
+		return 1;
+>>>>>>> 0a29c43b46fce9f32066a17a4a4198a6bb298234
 	}
 	/**
 	 * @param bonus le chiffre du bonus pour la case

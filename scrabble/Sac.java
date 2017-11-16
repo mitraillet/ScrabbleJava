@@ -5,6 +5,10 @@ package scrabble;
 import java.util.ArrayList;
 import java.util.List;
 
+<<<<<<< HEAD
+=======
+import java.io.File;
+>>>>>>> 0a29c43b46fce9f32066a17a4a4198a6bb298234
 import java.io.IOException;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -17,6 +21,14 @@ import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
+<<<<<<< HEAD
+=======
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+>>>>>>> 0a29c43b46fce9f32066a17a4a4198a6bb298234
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
@@ -29,7 +41,11 @@ import javax.xml.xpath.XPathFactory;
 public class Sac {
 	
 	//private Lettre[] sac = new Lettre[102];
+<<<<<<< HEAD
 	private final List<Lettre> contenuSac;
+=======
+	static List<Lettre> contenuSac = new ArrayList<Lettre>();
+>>>>>>> 0a29c43b46fce9f32066a17a4a4198a6bb298234
 	
 	/**
 	 * @return le sac
@@ -38,6 +54,7 @@ public class Sac {
 	public List<Lettre> getSac() {
 		return contenuSac;
 	}
+<<<<<<< HEAD
 	
 	public Lettre getPositionLettreDansSac(int positionSac) {
 		return this.contenuSac.get(positionSac);
@@ -66,6 +83,15 @@ public class Sac {
 		contenuSac.add(joker2);
 		
 	}
+=======
+	/**
+	 * @param ajoute les lettres au sac 
+	 */
+	/*public void setSac(Lettre[] sac) {
+	public List<Lettre> setSac() {
+		this.sac = sac;
+	}*/
+>>>>>>> 0a29c43b46fce9f32066a17a4a4198a6bb298234
 	
 	/**
 	 * Méthode lié é la méthode pioche du joueur 
@@ -91,7 +117,11 @@ public class Sac {
 	 * Récupère les donnees des lettre dans le fichier dataLettre.XML et remplis la variable sac
 	 * @throws XPathExpressionException
 	 */
+<<<<<<< HEAD
 	private void remplissageSac() throws XPathExpressionException {
+=======
+	public static void remplissageSac() throws XPathExpressionException {
+>>>>>>> 0a29c43b46fce9f32066a17a4a4198a6bb298234
 	      DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 	      factory.setIgnoringElementContentWhitespace(true);
 
@@ -137,11 +167,16 @@ public class Sac {
 	            		int instanceLettre = ((Double)path.evaluate(expressionInstance, root, XPathConstants.NUMBER)).intValue();
 	            		//System.out.println(instanceLettre);
 	            		
+<<<<<<< HEAD
 	            		Lettre addLettre = new Lettre(labelLettre, valeurLettre);
 	            		
 	            		for(int j = 0; j < instanceLettre; j ++) {
 	            			contenuSac.add(addLettre);
 	            		}
+=======
+	            		
+	            		Lettre lettre = new Lettre(labelLettre, valeurLettre, instanceLettre);
+>>>>>>> 0a29c43b46fce9f32066a17a4a4198a6bb298234
 	            		
 	            }
 	            
