@@ -10,7 +10,7 @@ package scrabble;
 public class Case {
 	
 	/**
-	 * Objet Lettre à importer  et surtout mettre à jour dans la case
+	 * Objet Lettre Ã  importer  et surtout mettre Ã  jour dans la case
 	 */
 	private Lettre lettre;
 	/** bonus serait un chiffre entre 0 et 5 pour chaque "bonus" 
@@ -19,32 +19,22 @@ public class Case {
 	 *  2 = lettre triple
 	 *  3 = mot double
 	 *  4 = mot triple
-	 *  5 = unique la première case par où doit passer le premier mot
+	 *  5 = unique la premiÃ¨re case par oÃ¹ doit passer le premier mot
 	 */
 	private int bonus;	
 	
 	/**
-	 * Constructeur de Case par défaut
+	 * Constructeur de Case par dÃ©faut
 	 */
 	public Case() {
-<<<<<<< HEAD
 		this(0);
-=======
-		this.lettre = null;
-		// je ne vois pas comment inclure la lettre car elle ne vient pas tout de suite à l'initialisation
-		this.bonus = 0;
->>>>>>> 0a29c43b46fce9f32066a17a4a4198a6bb298234
 	}
 	/**
 	 * Constructeur de Case
-	 * @param bonus associé à la case
+	 * @param bonus associÃ© Ã  la case
 	 */
 	public Case(int bonus) {
 		this.lettre = null;
-<<<<<<< HEAD
-=======
-		// je ne vois pas comment inclure la lettre car elle ne vient pas tout de suite à l'initialisation
->>>>>>> 0a29c43b46fce9f32066a17a4a4198a6bb298234
 		this.bonus = bonus;
 	}
 	/**
@@ -54,7 +44,7 @@ public class Case {
 		return lettre;
 	}
 	/**
-	 * @param lettre l'objet à mettre dans la case 
+	 * @param lettre l'objet Ã  mettre dans la case 
 	 */
 	protected void setLettre(Lettre lettre) {
 		this.lettre = lettre;
@@ -62,49 +52,8 @@ public class Case {
 	/**
 	 * @return la valeur du bonus 
 	 */
-<<<<<<< HEAD
 	public int getBonus() {
 		return this.bonus;
-=======
-	protected int getBonus() {
-		/**
-		 * bonus == 0 donc case normal
-		 */
-		if(bonus == 0) {
-			return 1;
-		}
-		/**
-		 * bonus == 1 donc case lettre compte double 
-		 */
-		else if (bonus == 1) {
-			return 2;
-		}
-		/**
-		 * bonus == 2 donc case lettre compte triple 
-		 */
-		else if (bonus == 2) {
-			return 3;
-		}
-		/**
-		 * bonus == 3 donc case mot compte double 
-		 */
-		else if (bonus == 3) {
-			return 2;
-		}
-		/**
-		 * bonus == 4 donc case mot compte triple 
-		 */
-		else if (bonus == 4) {
-			return 3;
-		}
-		/**
-		 * bonus == 5 donc première case mot compte double
-		 */
-		else if (bonus == 5) {
-			return 2;
-		}
-		return 1;
->>>>>>> 0a29c43b46fce9f32066a17a4a4198a6bb298234
 	}
 	/**
 	 * @param bonus le chiffre du bonus pour la case
