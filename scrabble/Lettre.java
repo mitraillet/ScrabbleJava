@@ -10,20 +10,13 @@ package scrabble;
 public class Lettre {
 
 	/**
-<<<<<<< HEAD
 	 * Le libellé du caractère
 	 */
 	private char label;
-=======
-	 * Le libellÃ© du caractÃ¨re
-	 */
-	char label;
->>>>>>> 0a29c43b46fce9f32066a17a4a4198a6bb298234
 	
 	/**
 	 * La valeur de la lettre (score)
 	 */
-<<<<<<< HEAD
 	private int valeur;
 	
 	/**
@@ -54,24 +47,6 @@ public class Lettre {
 	}
 
 	/**
-	 * Constructeur de la classe Lettre
-=======
-	int valeur;
-	
-	/**
-	 * Constructeur
->>>>>>> 0a29c43b46fce9f32066a17a4a4198a6bb298234
-	 * @param label le label de la lettre
-	 * @param valeur la valeur de la lettre
-	 * @param instance le nombre de fois que la lettre se trouve dans le sac
-	 */
-<<<<<<< HEAD
-	public Lettre(char label, int valeur) {
-		this.label = label;
-		this.valeur = valeur;
-	}
-	
-	/**
 	 * Constructeur par dÃ©faut de la classe Lettre
 	 * instancie directement la valeur à 0 
 	 * et un charactère invalide pour la création de mot
@@ -79,23 +54,16 @@ public class Lettre {
 	 */
 	public Lettre() {
 		this('?',0);
-=======
-	public Lettre(char label, int valeur, int instance) {
-		this.label = label;
-		this.valeur = valeur;
-		
-		for(int i = 0; i < instance; i ++) {
-			Sac.contenuSac.add(this);
-		}
-	}
-	
-	/**
-	 * Constructeur par dÃ©faut
-	 */
-	public Lettre() {
-		this.label = 'a';
-		this.valeur = 0;
->>>>>>> 0a29c43b46fce9f32066a17a4a4198a6bb298234
 	}
 
+	/**
+	 * Constructeur de la classe Lettre
+	 * @param label le label de la lettre
+	 * @param valeur la valeur de la lettre
+	 * @param instance le nombre de fois que la lettre se trouve dans le sac
+	 */
+	public Lettre(char label, int valeur) {
+		this.label = label;
+		this.valeur = valeur;
+	}
 }
