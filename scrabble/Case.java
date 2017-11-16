@@ -29,14 +29,14 @@ public class Case {
 	/**
 	 * @return lettre la lettre contenue dans la case
 	 */
-	private Lettre getLettre() {
+	public Lettre getLettre() {
 		return lettre;
 	}
 	
 	/**
 	 * @param lettre l'objet lettre à mettre dans la case 
 	 */
-	protected void setLettre(Lettre lettre) {
+	public void setLettre(Lettre lettre) {
 		this.lettre = lettre;
 	}
 	
@@ -50,7 +50,7 @@ public class Case {
 	/**
 	 * @param bonus le chiffre du bonus pour la case
 	 */
-	protected void setBonus(int bonus) {
+	public void setBonus(int bonus) {
 		this.bonus = bonus;
 	}
 	
