@@ -47,17 +47,6 @@ public class Lettre {
 	}
 
 	/**
-	 * Constructeur de la classe Lettre
-	 * @param label le label de la lettre
-	 * @param valeur la valeur de la lettre
-	 * @param instance le nombre de fois que la lettre se trouve dans le sac
-	 */
-	public Lettre(char label, int valeur) {
-		this.label = label;
-		this.valeur = valeur;
-	}
-	
-	/**
 	 * Constructeur par dÃ©faut de la classe Lettre
 	 * instancie directement la valeur à 0 
 	 * et un charactère invalide pour la création de mot
@@ -67,4 +56,14 @@ public class Lettre {
 		this('?',0);
 	}
 
+	/**
+	 * Constructeur de la classe Lettre
+	 * @param label le label de la lettre
+	 * @param valeur la valeur de la lettre
+	 * @param instance le nombre de fois que la lettre se trouve dans le sac
+	 */
+	public Lettre(char label, int valeur) {
+		this.label = label;
+		this.valeur = valeur;
+	}
 }
