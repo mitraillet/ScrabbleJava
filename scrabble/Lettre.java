@@ -10,7 +10,7 @@ package scrabble;
 public class Lettre {
 
 	/**
-	 * Le libellÃ© du caractÃ¨re
+	 * Le libellé du caractère
 	 */
 	private char label;
 	
@@ -20,6 +20,8 @@ public class Lettre {
 	private int valeur;
 	
 	/**
+	 * Méthode retournant le label
+	 * utiliser pour retourné le label de l'objet
 	 * @return la label
 	 */
 	public char getLabel() {
@@ -27,13 +29,17 @@ public class Lettre {
 	}
 
 	/**
-	 * @param label le label Ã  initialiser
+	 * Méthode permettant d'attribuer un label 
+	 * utiliser pour attribuer au joker un label 
+	 * @param label le label à initialiser
 	 */
 	public void setLabel(char label) {
 		this.label = label;
 	}
 
 	/**
+	 * Méthode retournant la valeur de la Lettre 
+	 * utiliser pour le calcul des points
 	 * @return la valeur
 	 */
 	public int getValeur() {
@@ -41,14 +47,7 @@ public class Lettre {
 	}
 
 	/**
-	 * @param valeur la valeur Ã  initialiser
-	 */
-	public void setValeur(int valeur) {
-		this.valeur = valeur;
-	}
-
-	/**
-	 * Constructeur
+	 * Constructeur de la classe Lettre
 	 * @param label le label de la lettre
 	 * @param valeur la valeur de la lettre
 	 * @param instance le nombre de fois que la lettre se trouve dans le sac
@@ -59,7 +58,10 @@ public class Lettre {
 	}
 	
 	/**
-	 * Constructeur par dÃ©faut
+	 * Constructeur par dÃ©faut de la classe Lettre
+	 * instancie directement la valeur à 0 
+	 * et un charactère invalide pour la création de mot
+	 * Ce constructeur n'est utilisé que pour le Joker
 	 */
 	public Lettre() {
 		this('?',0);
