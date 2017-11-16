@@ -161,15 +161,17 @@ public class Plateau {
 		// Enorme point d'interrogation sur ce que l'on doit faire et comment on peut le calculer
 	}
 	
+	/**
+	 * Affiche le plateau en console
+	 */
 	public void plateauConsole() {
 		int j = 0;
 		for(int i = 0; i < 15; i++) {
 			for(int h = 0; h < 15; h++) {
-				System.out.print(plateau[h][j].getBonus());
+				System.out.print(plateau[h][j].getBonus() + "|");
 			}
 			System.out.print("\n");
 			j++;
-			//System.out.print(j);
 		}
 	}
 }
