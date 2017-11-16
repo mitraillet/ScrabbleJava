@@ -1,5 +1,7 @@
 /**
- * 
+ * Classe permettant la création des Pièces
+ * du scrabble représentant les lettres 
+ * er leur valeur associée
  */
 package scrabble;
 

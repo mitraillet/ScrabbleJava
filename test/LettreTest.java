@@ -1,5 +1,5 @@
 /**
- * 
+ * Test unitaire pour la classe Lettre
  */
 package test;
 
@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import scrabble.Lettre;
 
 /**
- * @author Mitraillet
+ * @author  Fauconnier/Henriquet
  *
  */
 class LettreTest {
