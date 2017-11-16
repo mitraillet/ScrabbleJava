@@ -3,7 +3,6 @@
  */
 package scrabble;
 
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -28,13 +27,11 @@ import org.xml.sax.SAXParseException;
 
 import java.util.*;
 
-
 /**
  * @author Fauconnier/Henriquet
  *
  */
 public class Plateau {
-
 
 	public HashSet<String> dictionnaire = new HashSet<String>();
 	
@@ -56,9 +53,9 @@ public class Plateau {
 	private void construireDico() {
 		try {
 			File dico = new File("ressource/dictionnaire.txt"); //Path du dictionnaire.txt
-			BufferedReader br = new BufferedReader(new FileReader(dico)); //Crétation du buffer
+			BufferedReader br = new BufferedReader(new FileReader(dico)); //CrÃ©tation du buffer
 			String line; //Variable pour les lignes
-			while ((line = br.readLine()) != null) { //Pour chaque ligne éxécute la boucle
+			while ((line = br.readLine()) != null) { //Pour chaque ligne Ã©xÃ©cute la boucle
 					this.dictionnaire.add(line);
 			}
 			System.out.println(this.dictionnaire.size());
@@ -76,21 +73,21 @@ public class Plateau {
 	      factory.setIgnoringElementContentWhitespace(true);
 
 	      try {
-	         //Méthode qui permet d'activer la vérification du fichier
+	         //MÃ©thode qui permet d'activer la vÃ©rification du fichier
 	         factory.setValidating(true);
 	         
 	         DocumentBuilder builder = factory.newDocumentBuilder();
 	         
-	         //création de notre objet d'erreurs
+	         //crÃ©ation de notre objet d'erreurs
 	         ErrorHandler errHandler = new SimpleErrorHandler();
-	         //Affectation de notre objet au document pour interception des erreurs éventuelles
+	         //Affectation de notre objet au document pour interception des erreurs Ã©ventuelles
 	         builder.setErrorHandler(errHandler);
 	         
 	         // Parsing d'un XML via une URI
 	         String uri = "./ressource/dataCase.xml";
 	         
 	         //On rajoute un bloc de capture
-	         //pour intercepter les erreurs au cas où il y en a
+	         //pour intercepter les erreurs au cas oÃ¹ il y en a
 	         try {
 	            //Document xml = builder.parse(fileXML);
 	        	 	Document xml = builder.parse(uri);
@@ -101,8 +98,8 @@ public class Plateau {
 	            XPathFactory xpf = XPathFactory.newInstance();
 	            XPath path = xpf.newXPath();
 	            
-	            int j = 1;  //Variable pour incrémenter les lignes
-	            int c = 0; //Variable pour incrémenter les cases
+	            int j = 1;  //Variable pour incrÃ©menter les lignes
+	            int c = 0; //Variable pour incrÃ©menter les cases
 	            
 	            for (int i = 1; i < 226; i++){
 	            		c++;
@@ -137,8 +134,8 @@ public class Plateau {
 	}
 	
 	/**
-	 * Itération d'un dictionnaire pour trouver concordance 
-	 * avec le mot entré par le joueur et vérifier s'il existe
+	 * ItÃ©ration d'un dictionnaire pour trouver concordance 
+	 * avec le mot entrÃ© par le joueur et vÃ©rifier s'il existe
 	 * @return true si mot est dans le dictionnaire sinon false
 	 */
 	public boolean verification(String mot) {
@@ -147,45 +144,22 @@ public class Plateau {
 	
 	
 	/**
-	 * Recherche des mots périphériques é celui placé par le joueur
-	 * qui se seraient créés et appel de la méthode vérification
+	 * Recherche des mots pÃ©riphÃ©riques Ã© celui placÃ© par le joueur
+	 * qui se seraient crÃ©Ã©s et appel de la mÃ©thode vÃ©rification
 	 */
 	public void verificationPeripherique() {
-		// nom à changer surement
+		// nom Ã  changer surement
 	}
 	
 	
 	/**
 	 * Calcul du score en prenant compte les bonus
-	 * Utilisation des valeurs de chaques lettres pondérées avec le bonus
-
-	
-	/**
-	 * It�ration d'un dictionnaire pour trouver concordance 
-	 * avec le mot entr� par le joueur et v�rifier s'il existe
-	 */
-	public void verification() {
-		/* parcourir un dictionnaire 
-		 * et voir s'il y a correspondance avec le mot �crit 
-		 * par le joueur.
-		 */
-	}
-	/**
-	 * Recherche des mots p�riph�riques � celui plac� par le joueur
-	 * qui se seraient cr��s et appel de la m�thode v�rification
-	 */
-	public void verificationPeripherique() {
-		// nom � changer surement
-	}
-	/**
-	 * Calcul du score en prenant compte les bonus
-	 * Utilisation des valeurs de chaques lettres pond�r�es avec le bonus
+	 * Utilisation des valeurs de chaques lettres pondÃ©rÃ©es avec le bonus
 	 * et ajout dans la classe Joueur.score 
 	 */
 	public void calculScore() {
 		// Enorme point d'interrogation sur ce que l'on doit faire et comment on peut le calculer
 	}
-
 	
 	/**
 	 * Affiche le plateau en console
