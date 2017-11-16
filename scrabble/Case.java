@@ -27,6 +27,7 @@ public class Case {
 	
 	
 	/**
+	 * Renvoie la lettre contenue dans la case
 	 * @return lettre la lettre contenue dans la case
 	 */
 	public Lettre getLettre() {
@@ -34,6 +35,7 @@ public class Case {
 	}
 	
 	/**
+	 * Ajouter/Mettre à jour la lettre contenue dans la case
 	 * @param lettre l'objet lettre à mettre dans la case 
 	 */
 	public void setLettre(Lettre lettre) {
@@ -41,19 +43,36 @@ public class Case {
 	}
 	
 	/**
-	 * @return bonus l'indice du bonus 
+	 * Renvoie l'indice du bonus de la case
+	 * @return l'indice du bonus 
 	 */
 	public int getBonus() {
 		return this.bonus;
 	}
 	
 	/**
+	 * Mettre à jour le bonus de la cqse
 	 * @param bonus le chiffre du bonus pour la case
 	 */
 	public void setBonus(int bonus) {
 		this.bonus = bonus;
 	}
 	
+	/**
+	 * Renvoie le label de la lettre contenue dans la case
+	 * @return le label de la lettre contenue dans la case
+	 */
+	public char getLabelCase() {
+		return this.lettre.getLabel();
+	}
+	
+	/**
+	 * Mettre à jour le label de la lettre contenue dans la case
+	 * @param label le nouveau label
+	 */
+	public void setLabelCase(char label){
+		this.lettre.setLabel(label);
+	}
 	
 	
 	/**
