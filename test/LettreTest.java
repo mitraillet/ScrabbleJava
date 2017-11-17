@@ -29,19 +29,6 @@ class LettreTest {
 	}
 
 	/**
-	 * Test method for {@link scrabble.Lettre#setLabel(char)}.
-	 */
-	@Test
-	void testSetLabel() {
-		Lettre a = new Lettre('a',10);
-		Lettre pointInterrogation = new Lettre();
-		a.setLabel('y');
-		pointInterrogation.setLabel('@');
-		assertEquals(a.getLabel(), 'y' );
-		assertEquals(pointInterrogation.getLabel(), '@' );
-	}
-
-	/**
 	 * Test method for {@link scrabble.Lettre#getValeur()}.
 	 */
 	@Test
