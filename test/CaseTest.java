@@ -56,7 +56,7 @@ public class CaseTest {
 		Case caseTest = new Case();
 		Lettre testLettre = new Lettre('a', 1);
 		caseTest.setLettre(testLettre);
-		assertEquals(caseTest.getLettre().getLabel(), 'a');
+		assertEquals(caseTest.getLabelCase(), 'a');
 	}
 
 	
@@ -81,6 +81,35 @@ public class CaseTest {
 		Case caseTest = new Case();
 		caseTest.setBonus(1);
 		assertEquals(caseTest.getBonus(), 1);
+	}
+	
+	
+	/**
+	 * Test du getter du label de la lettre
+	 */
+	@Test
+	public void testGetLabelCase() {
+		//fail("Not yet implemented"); // TODO
+		Case caseTest = new Case();
+		Lettre lettreTest = new Lettre('b', 1);
+		caseTest.setLettre(lettreTest);
+		
+		assertEquals(caseTest.getLabelCase(), 'b');
+	}
+
+	/**
+	 * Test du setter du label de la lettre
+	 */
+	@Test
+	public void testSetLabelCase() {
+		//fail("Not yet implemented"); // TODO
+		Case caseTest = new Case();
+		Lettre lettreTest = new Lettre('b', 1);
+		caseTest.setLettre(lettreTest);
+		
+		caseTest.setLabelCase('z');
+		
+		assertEquals(caseTest.getLabelCase(), 'z');
 	}
 
 }
