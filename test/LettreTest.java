@@ -16,7 +16,8 @@ import scrabble.Lettre;
 class LettreTest {
 
 	/**
-	 * Test method for {@link scrabble.Lettre#getLabel()}.
+	 * Test de la méthode pour getLabel 
+	 * Méthode permettant l'obtention du label de la lettre
 	 */
 	@Test
 	void testGetLabel() {
@@ -29,7 +30,8 @@ class LettreTest {
 	}
 
 	/**
-	 * Test method for {@link scrabble.Lettre#getValeur()}.
+	 * Test de la méthode pour getValeur 
+	 * Méthode permettant l'obtention du valeur de la lettre
 	 */
 	@Test
 	void testGetValeur() {

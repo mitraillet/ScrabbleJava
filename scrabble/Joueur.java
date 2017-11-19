@@ -67,6 +67,9 @@ public class Joueur {
 	public char getLabelLettreMain(int positionMain) {
 		return getLettreMain(positionMain).getLabel();
 	}
+	public int getSizeMainJoueur() {
+		 return this.getMainJoueur().size();
+	}
 	
 	/**
 	 * @return the mainJoueur
@@ -85,30 +88,42 @@ public class Joueur {
 	/**
 	 * Permet de piocher des lettres
 	 */
-	public void pioche(Sac sac) {
+	public void pioche(Sac sac){
 		System.out.println("Pioche");
 		
-		if(mainJoueur.size() < 7 ) {
-			
-			int nombrePieceAPrendre = 7 - mainJoueur.size();
-			
-			for(int i = 0; i < nombrePieceAPrendre; i++) {
-				int positionSac = generateNumber(0, sac.tailleContenuSac());
-				mainJoueur.add(sac.getPositionLettreDansSac(positionSac));
-				sac.removeLettreDuSac(positionSac);
+		if(sac.tailleContenuSac() == 0) {
+			if( this.getSizeMainJoueur() > 1) {
+				System.out.println("L'adversaire n'a plus que " + this.getSizeMainJoueur() + " lettres dans sa main.");
 			}
-			
+			else {
+				System.out.println("L'adversaire n'a plus qu'une lettre dans sa main.");
+			}
 		}
-		else{
-			System.out.println("Pioche impossible");
-		}
+		else {
+			if(this.getSizeMainJoueur() < 7 ) {
+				
+				int nombrePieceAPrendre = 7 - mainJoueur.size();
+				if(sac.tailleContenuSac() < nombrePieceAPrendre) {
+					nombrePieceAPrendre = sac.tailleContenuSac();
+				}
+				for(int i = 0; i < nombrePieceAPrendre; i++) {
+					int positionSac = generateNumber(0, sac.tailleContenuSac());
+					mainJoueur.add(sac.getPositionLettreDansSac(positionSac));
+					sac.removeLettreDuSac(positionSac);
+				}
+			}
+			else{
+				System.out.println("Pioche impossible");
+			}
+		}	
 	}
 
 
 	/**
 	 * RemÃ©lange les lettres dans le sac
+	 * @throws SacVideException 
 	 */
-	public void melanger(List<Lettre> exitLettre, Sac sac) {
+	public void melanger(List<Lettre> exitLettre, Sac sac){
 		System.out.println("Melange");
 		for(int i = 0; i < exitLettre.size(); i++) {
 				sac.addLettreAuSac(exitLettre.get(i)); //faire méthode dans Sac pour encapsulation
