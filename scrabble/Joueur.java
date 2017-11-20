@@ -1,5 +1,5 @@
 /**
- * 
+ * Package scrabble
  */
 package scrabble;
 
@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * @author Fauconnier/Henriquet
- *
+ * Classe gérant les joueurs
  */
 public class Joueur {
 
@@ -46,9 +46,13 @@ public class Joueur {
 		this.score = score;
 	}
 
+	/**
+	* Constructeur par défaut de la classe Joueur
+	*/
 	public Joueur(){
 		this(0, true);
 	}
+	
 	/**
 	 * Constructeur du joueur
 	 * @param score le score du joueur
@@ -60,20 +64,34 @@ public class Joueur {
 		this.mainJoueur = new ArrayList<Lettre>();
 	}
 
+	/**
+	* Récupère une lettre dans la main du joueur
+	* @param positionMain la position de la lettre à récupérer
+	*/
 	public Lettre getLettreMain(int positionMain) {
 		return this.mainJoueur.get(positionMain);
 	}
 	
+	/**
+	* Récupère le label d'un lettre (se situant dans la main du joueur)
+	* @param positionMain la position de la lettre
+	*/
 	public char getLabelLettreMain(int positionMain) {
 		return getLettreMain(positionMain).getLabel();
 	}
+	
+	/**
+	* Récupère la taille de la main du joueur 
+	* @return la taille (int)
+	*/
 	public int getSizeMainJoueur() {
 		 return this.getMainJoueur().size();
 	}
 	
 	/**
-	 * @return the mainJoueur
-	 */
+	* Retourne toute la main du joueur
+	* @return the mainJoueur
+	*/
 	protected List<Lettre> getMainJoueur() {
 		return mainJoueur;
 	}
@@ -87,6 +105,7 @@ public class Joueur {
 	
 	/**
 	 * Permet de piocher des lettres
+	 * @param sac l'objet sac qui contient les lettres
 	 */
 	public void pioche(Sac sac){
 		System.out.println("Pioche");
@@ -121,16 +140,19 @@ public class Joueur {
 
 	/**
 	 * Remélange les lettres dans le sac
+	 * @param exitLettre la liste des lettres à remélanger 
+	 * @param sac l'objet sac qui récupère les lettres
 	 * @throws SacVideException 
 	 */
 	public void melanger(List<Lettre> exitLettre, Sac sac){
 		System.out.println("Melange");
 		for(int i = 0; i < exitLettre.size(); i++) {
-				sac.addLettreAuSac(exitLettre.get(i)); //faire m�thode dans Sac pour encapsulation
+				sac.addLettreAuSac(exitLettre.get(i)); 
 				mainJoueur.remove(exitLettre.get(i));
 		}
 		this.pioche(sac);
 	}
+	
 	/**
 	 * Permet au joueur de passer le tour
 	 */
