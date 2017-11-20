@@ -24,7 +24,7 @@ import javax.xml.xpath.XPathFactory;
 
 /**
  * @author Fauconnier/Henriquet
- *
+ * Sac contenant les Lettres
  */
 public class Sac {
 	
