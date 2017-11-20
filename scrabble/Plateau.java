@@ -29,20 +29,36 @@ import java.util.*;
 
 /**
  * @author Fauconnier/Henriquet
- *
+ * Classe de gestion du plateau. 
+ * Contient la vérification des mots et le calcul des scores
  */
 public class Plateau {
 
+	/*
+	* dictionnaire Contient tous les mots de la langues française 
+	*/
 	public HashSet<String> dictionnaire = new HashSet<String>();
 	
+	/*
+	* Tableau à double entrée representant le plateau
+	*/
 	public Case[][] plateau;
 	
+	/*
+	* Contructeur par défaut du sac
+	* @throws XPathExpressionException gestion des erreurs
+	*/
 	public Plateau() throws XPathExpressionException {
 		this.construireDico();
 		this.plateau = new Case [15][15];
 		this.initPlateau();
 	}
 	
+	/*
+	* Place un objet case à une position donnée du plateau (XY)
+	* @param x la position x du plateau
+	* @param y la position y du plateau
+	*/
 	public void initCasePlateau(Case caseSet, int x, int y) {
 		this.plateau[x][y] = caseSet;
 	}
@@ -67,7 +83,10 @@ public class Plateau {
 		}
 	}
 	
-	
+	/**
+	* Initialise le plateau.
+	* Lis le fichier dataCase.xml et place les cases dans le plateau
+	*/
 	private void initPlateau() throws XPathExpressionException {
 	      DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 	      factory.setIgnoringElementContentWhitespace(true);
@@ -89,20 +108,17 @@ public class Plateau {
 	         //On rajoute un bloc de capture
 	         //pour intercepter les erreurs au cas où il y en a
 	         try {
-	            //Document xml = builder.parse(fileXML);
-	        	 	Document xml = builder.parse(uri);
-	            Element root = xml.getDocumentElement();
+	            Document xml = builder.parse(uri); //Lis le fichier 
+	            Element root = xml.getDocumentElement(); //Récupère l'élément racine du fichier  
 	            
-	            System.out.println(root.getNodeName());
-	            
-	            XPathFactory xpf = XPathFactory.newInstance();
-	            XPath path = xpf.newXPath();
+	            XPathFactory xpf = XPathFactory.newInstance(); //Crée une instance de xpath
+	            XPath path = xpf.newXPath(); 
 	            
 	            int j = 1;  //Variable pour incrémenter les lignes
 	            int c = 0; //Variable pour incrémenter les cases
 	            
 	            for (int i = 1; i < 226; i++){
-	            		c++;
+	            		c++; //Incrémente le compteur de case
 	            	
 	            		String expressionX = "/plateau/ligne[" + j + "]/case[" + c + "]/x";
 	            		String expressionY = "/plateau/ligne[" + j + "]/case[" + c + "]/y";
@@ -117,6 +133,7 @@ public class Plateau {
 	            		Case caseNouvelle = new Case(bonus);
 	            		this.initCasePlateau(caseNouvelle, x, y);	            	
 	            		
+			    	//Incrémente la ligne toute les 15 cases lues
 	            		if(i%15 == 0) {
 	            			j++;
 	            			c = 0;
