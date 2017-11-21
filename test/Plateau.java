@@ -175,11 +175,11 @@ public class Plateau {
 						return false;
 					}
 				} else if(this.checkGauche(x, y) != "") {
-					if(this.verification(this.checkGauche(x, y)) == false) {
+					if(this.verification(this.checkGauche(x, y) + plateau[x][y]) == false) {
 						return false;
 					}
 				} else if(this.checkDroite(x, y) != "") {
-					if(this.verification(this.checkDroite(x, y)) == false) {
+					if(this.verification(plateau[x][y] +this.checkDroite(x, y)) == false) {
 						return false;
 					}
 				}
@@ -191,11 +191,11 @@ public class Plateau {
 						return false;
 					}
 				} else if(this.checkHaut(x, y) != "") {
-					if(this.verification(this.checkHaut(x, y)) == false) {
+					if(this.verification(this.checkHaut(x, y) + plateau[x][y]) == false) {
 						return false;
 					}
 				} else if(this.checkBas(x, y) != "") {
-					if(this.verification(this.checkBas(x, y)) == false) {
+					if(this.verification(plateau[x][y] + this.checkBas(x, y)) == false) {
 						return false;
 					}
 				}
