@@ -160,6 +160,11 @@ public class Plateau {
 	}
 	
 	/**
+	 * Flag : un mot est-il adjacent ? --> true = oui
+	 */
+	boolean estAdjacent = false;
+	
+	/**
 	 * Recherche des mots périphériques à celui placé par le joueur
 	 * qui se seraient créés et appel de la méthode vérification
 	 * @param x La position x de la première lettre
@@ -207,14 +212,16 @@ public class Plateau {
 				}
 				
 				System.out.println("Le mot est correct");
-				return true;
+				if(estAdjacent) {
+					return true;
+				} else {
+					System.out.println("Erreur : Placez le mot adjacent à un autre");
+					return false;
+				}
 
 			} else {
-				char premiereLettre = this.motJoue.get(0).getLabel();
-				char dernièreLettre = this.motJoue.get(motJoue.size()-1).getLabel();
 				
 				String motPrincipal = "";
-				String motSecondaire = "";
 				int tailleMot = motJoue.size();
 				
 				if(orientation == 'h') {
@@ -309,6 +316,7 @@ public class Plateau {
 				tempMot += plateau[x][y+j].getLabelCase();
 				j++;
 			}
+			estAdjacent = true;
 			return this.inverseString(tempMot);
 		} 
 		return "";
@@ -328,6 +336,7 @@ public class Plateau {
 				tempMot += plateau[x][y-j].getLabelCase();
 				j++;
 			}
+			estAdjacent = true;
 			return this.inverseString(tempMot);
 		} 
 		return "";
@@ -347,6 +356,7 @@ public class Plateau {
 				tempMot += plateau[x-j][y].getLabelCase();
 				j++;
 			}
+			estAdjacent = true;
 			return this.inverseString(tempMot);
 		} 
 		return "";
@@ -366,6 +376,7 @@ public class Plateau {
 				tempMot += this.plateau[x+j][y].getLabelCase();
 				j++;
 			}
+			estAdjacent = true;
 			return this.inverseString(tempMot);
 		} 
 		return "";
