@@ -170,50 +170,48 @@ public class Plateau {
 		
 			if(motJoue.size() == 1) {
 				
-				if(this.checkDroite(x, y) != "" || this.checkGauche(x, y) != "") {
-					String tempMot = checkGauche(x, y) + motJoue.get(1).getLabel() + checkDroite(x, y);
+				if(this.checkDroite(x, y) != "" && this.checkGauche(x, y) != "") {
+					String tempMot = checkGauche(x, y) + motJoue.get(0).getLabel() + checkDroite(x, y);
 					if(this.verification(tempMot) == false) {
-						System.out.println("Erreur 1");
+						System.out.println("Erreur 1 : Le mot horizontal est incorrect");
 						return false;
 					}
 				} else if(this.checkGauche(x, y) != "") {
-					if(this.verification(this.checkGauche(x, y) + motJoue.get(1).getLabel()) == false) {
-						System.out.println("Erreur 2");
+					if(this.verification(this.checkGauche(x, y) + motJoue.get(0).getLabel()) == false) {
+						System.out.println("Erreur 2 : Le mot à gauche est incorrect");
 						return false;
 					}
 				} else if(this.checkDroite(x, y) != "") {
 					if(this.verification(motJoue.get(1).getLabel() + this.checkDroite(x, y)) == false) {
-						System.out.println("Erreur 3");
+						System.out.println("Erreur 3 : Le mot à droite est incorrect");
 						return false;
 					}
 				}
 				
-				
-				if(this.checkHaut(x, y) != "" || this.checkBas(x, y) != "") {
-					String tempMot = checkHaut(x, y) + motJoue.get(1).getLabel() + checkBas(x, y);
+				if(this.checkHaut(x, y) != "" && this.checkBas(x, y) != "") {
+					String tempMot = this.checkHaut(x, y) + motJoue.get(0).getLabel() + this.checkBas(x, y);
 					if(this.verification(tempMot) == false) {
-						System.out.println("Erreur 4");
+						System.out.println("Erreur 4 : Le mot vertical est incorrect");
 						return false;
 					}
 				} else if(this.checkHaut(x, y) != "") {
-					if(this.verification(this.checkHaut(x, y) + motJoue.get(1).getLabel()) == false) {
-						System.out.println("Erreur 5");
+					if(this.verification(this.checkHaut(x, y) + motJoue.get(0).getLabel()) == false) {
+						System.out.println("Erreur 5 : Le mot en haut est incorrect");
 						return false;
 					}
 				} else if(this.checkBas(x, y) != "") {
-					if(this.verification(motJoue.get(1).getLabel() + this.checkBas(x, y)) == false) {
-						System.out.println("Erreur 6");
+					if(this.verification(motJoue.get(0).getLabel() + this.checkBas(x, y)) == false) {
+						System.out.println("Erreur 6 : Le mot en bas est incorrect");
 						return false;
 					}
 				}
 				
-				System.out.println("OK mot");
+				System.out.println("Le mot est correct");
 				return true;
 
 			} else {
-				System.out.println(this.motJoue.size());
-				char premiereLettre = this.motJoue.get(1).getLabel();
-				char dernièreLettre = this.motJoue.get(motJoue.size()).getLabel();
+				char premiereLettre = this.motJoue.get(0).getLabel();
+				char dernièreLettre = this.motJoue.get(motJoue.size()-1).getLabel();
 				
 				if(orientation == 'h') {
 					//TODO
@@ -241,9 +239,9 @@ public class Plateau {
 	 */
 	public String checkHaut(int x, int y){
 		String tempMot = "";
-		int j = 0;
-		if(plateau[x][y+1] != null) {
-			while(plateau[x][y+j] != null) {
+		int j = 1;
+		if(plateau[x][y+1].lettre != null) {
+			while(plateau[x][y+j].lettre != null) {
 				tempMot += plateau[x][y+j].getLabelCase();
 				j++;
 			}
@@ -260,9 +258,9 @@ public class Plateau {
 	 */
 	public String checkBas(int x, int y){
 		String tempMot = "";
-		int j = 0;
-		if(plateau[x][y-1] != null) {
-			while(plateau[x][y-j] != null) {
+		int j = 1;
+		if(plateau[x][y-1].lettre != null) {
+			while(plateau[x][y-j].lettre != null) {
 				tempMot += plateau[x][y-j].getLabelCase();
 				j++;
 			}
@@ -279,9 +277,9 @@ public class Plateau {
 	 */
 	public String checkGauche(int x, int y){
 		String tempMot = "";
-		int j = 0;
-		if(plateau[x-1][y] != null) {
-			while(plateau[x-j][y] != null) {
+		int j = 1;
+		if(plateau[x-1][y].lettre != null) {
+			while(plateau[x-j][y].lettre != null) {
 				tempMot += plateau[x-j][y].getLabelCase();
 				j++;
 			}
@@ -298,10 +296,10 @@ public class Plateau {
 	 */
 	public String checkDroite(int x, int y){
 		String tempMot = "";
-		int j = 0;
-		if(plateau[x+1][y] != null) {
-			while(plateau[x+j][y] != null) {
-				tempMot += plateau[x+j][y].getLabelCase();
+		int j = 1;
+		if(this.plateau[x+1][y].lettre != null) {
+			while(this.plateau[x+j][y].lettre != null) {
+				tempMot += this.plateau[x+j][y].getLabelCase();
 				j++;
 			}
 			return this.inverseString(tempMot);
