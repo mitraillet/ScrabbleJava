@@ -9,8 +9,6 @@ import java.io.FileReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import java.util.HashSet;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -34,17 +32,19 @@ import java.util.*;
  */
 public class Plateau {
 
-	/*
+	/**
 	* dictionnaire Contient tous les mots de la langues française 
 	*/
 	public HashSet<String> dictionnaire = new HashSet<String>();
 	
-	/*
+	/**
 	* Tableau à double entrée representant le plateau
 	*/
 	public Case[][] plateau;
 	
-	/*
+	public List<Lettre> motJoue = new ArrayList<Lettre>();
+	
+	/**
 	* Contructeur par défaut du sac
 	* @throws XPathExpressionException gestion des erreurs
 	*/
@@ -54,7 +54,7 @@ public class Plateau {
 		this.initPlateau();
 	}
 	
-	/*
+	/**
 	* Place un objet case à une position donnée du plateau (XY)
 	* @param x la position x du plateau
 	* @param y la position y du plateau
@@ -159,52 +159,61 @@ public class Plateau {
 		return dictionnaire.contains(mot);
 	}
 	
-	public String motJoue;
-	
 	/**
-	 * Recherche des mots périphériques é celui placé par le joueur
+	 * Recherche des mots périphériques à celui placé par le joueur
 	 * qui se seraient créés et appel de la méthode vérification
+	 * @param x La position x de la première lettre
+	 * @param y La position y de la première lettre
+	 * @param orientation l'orientation du mot, h = horizontal, v = vertical
 	 */
-	public boolean verificationPeripherique(int x, int y, char orientation, String mot) {
-		if(this.verification(mot)) {
-			if(mot.length() == 1) {
+	public boolean verificationPeripherique(int x, int y, char orientation) {
+		
+			if(motJoue.size() == 1) {
 				
 				if(this.checkDroite(x, y) != "" || this.checkGauche(x, y) != "") {
-					String tempMot = checkGauche(x, y) + plateau[x][y] + checkDroite(x, y);
+					String tempMot = checkGauche(x, y) + motJoue.get(1).getLabel() + checkDroite(x, y);
 					if(this.verification(tempMot) == false) {
+						System.out.println("Erreur 1");
 						return false;
 					}
 				} else if(this.checkGauche(x, y) != "") {
-					if(this.verification(this.checkGauche(x, y) + plateau[x][y]) == false) {
+					if(this.verification(this.checkGauche(x, y) + motJoue.get(1).getLabel()) == false) {
+						System.out.println("Erreur 2");
 						return false;
 					}
 				} else if(this.checkDroite(x, y) != "") {
-					if(this.verification(plateau[x][y] +this.checkDroite(x, y)) == false) {
+					if(this.verification(motJoue.get(1).getLabel() + this.checkDroite(x, y)) == false) {
+						System.out.println("Erreur 3");
 						return false;
 					}
 				}
 				
 				
 				if(this.checkHaut(x, y) != "" || this.checkBas(x, y) != "") {
-					String tempMot = checkHaut(x, y) + plateau[x][y] + checkBas(x, y);
+					String tempMot = checkHaut(x, y) + motJoue.get(1).getLabel() + checkBas(x, y);
 					if(this.verification(tempMot) == false) {
+						System.out.println("Erreur 4");
 						return false;
 					}
 				} else if(this.checkHaut(x, y) != "") {
-					if(this.verification(this.checkHaut(x, y) + plateau[x][y]) == false) {
+					if(this.verification(this.checkHaut(x, y) + motJoue.get(1).getLabel()) == false) {
+						System.out.println("Erreur 5");
 						return false;
 					}
 				} else if(this.checkBas(x, y) != "") {
-					if(this.verification(plateau[x][y] + this.checkBas(x, y)) == false) {
+					if(this.verification(motJoue.get(1).getLabel() + this.checkBas(x, y)) == false) {
+						System.out.println("Erreur 6");
 						return false;
 					}
 				}
 				
+				System.out.println("OK mot");
 				return true;
 
 			} else {
-				char premiereLettre = mot.charAt(1);
-				char dernièreLettre = mot.charAt(mot.length());
+				System.out.println(this.motJoue.size());
+				char premiereLettre = this.motJoue.get(1).getLabel();
+				char dernièreLettre = this.motJoue.get(motJoue.size()).getLabel();
 				
 				if(orientation == 'h') {
 					//TODO
@@ -212,16 +221,14 @@ public class Plateau {
 					//TODO
 				} else {
 					System.out.println("Erreur d'orientation");
+					System.out.println("Erreur 7");
 					return false;
 				}
 				
+				System.out.println("OK mot");
 				return true;
 			}
-			
-		
-		} else {
-			return false;
-		}
+	
 	}
 	
 	//----------------------------------------------------------------------------------
@@ -312,7 +319,7 @@ public class Plateau {
 	public void checkPremierMot(int x, int y, char orientation, String mot){
 		if(plateau[x][y] == null) { //Check si la case est vide
 			if(plateau[x][y].getBonus() == 5) { //Check si le bonus est à 5
-				this.poserMot(x, y, orientation, mot);
+				this.poserMot(x, y, orientation);
 			} else {
 				System.out.println("Erreur : Veuillez placer le premier mot au millieu");
 			} 
@@ -323,26 +330,27 @@ public class Plateau {
 	
 	/**
 	 * Permet de placer un mot sur le plateau
+	 * @param x La position x de la première lettre
+	 * @param y La position y de la première lettre
 	 */
-	public void poserMot(int x, int y, char orientation, String mot){
-		String[] motCut = mot.split("");
-		if(this.verification(mot)) {
-			if(orientation == 'h') {
-				for(int i = 0; i < motCut.length; i++) {
-					int tempX = x + i;
-					plateau[tempX][y].setLabelCase((motCut[i]).charAt(1));
-				}
-			} else if (orientation == 'v') {
-				for(int i = 0; i < motCut.length; i++) {
-					int tempY = x + i;
-					plateau[x][tempY].setLabelCase((motCut[i]).charAt(1));
+	public void poserMot(int x, int y, char orientation){
+			if(this.verificationPeripherique(x, y, orientation) == true) {
+				if(orientation == 'h') {
+					for(int i = 0; i < motJoue.size(); i++) {
+						int tempX = x + i;
+						plateau[tempX][y].setLabelCase((motJoue.get(i).getLabel()));
+					}
+				} else if (orientation == 'v') {
+					for(int i = 0; i < motJoue.size(); i++) {
+						int tempY = x + i;
+						plateau[x][tempY].setLabelCase((motJoue.get(i).getLabel()));
+					}
+				} else {
+					System.out.println("Erreur, vérifier l'orientation");
 				}
 			} else {
-				System.out.println("Erreur, vérifier l'orientation");
+				System.out.println("Mot incorrect");
 			}
-		} else {
-			System.out.println("Mot incorrect");
-		}
 	}
 	
 	/**
