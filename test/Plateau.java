@@ -182,7 +182,7 @@ public class Plateau {
 						return false;
 					}
 				} else if(this.checkDroite(x, y) != "") {
-					if(this.verification(motJoue.get(1).getLabel() + this.checkDroite(x, y)) == false) {
+					if(this.verification(motJoue.get(0).getLabel() + this.checkDroite(x, y)) == false) {
 						System.out.println("Erreur 3 : Le mot à droite est incorrect");
 						return false;
 					}
@@ -213,13 +213,77 @@ public class Plateau {
 				char premiereLettre = this.motJoue.get(0).getLabel();
 				char dernièreLettre = this.motJoue.get(motJoue.size()-1).getLabel();
 				
+				String motPrincipal = "";
+				String motSecondaire = "";
+				int tailleMot = motJoue.size();
+				
 				if(orientation == 'h') {
 					//TODO
+					motPrincipal += checkGauche(x, y);
+					String motTemp = "";
+					for(int i = 0; i < tailleMot; i++) {
+						motTemp += motJoue.get(i).getLabel();
+					}
+					motJoue.size();
+					motPrincipal += motTemp + checkDroite((x + tailleMot -1), y);
+					
+					if (this.verification(motPrincipal) == false) {
+						return false;
+					}
+					
+					for(int i = 0; i < (tailleMot ); i++) {
+						
+						if(this.checkHaut(x + i, y) != "" && this.checkBas(x + i, y) != "") {
+							String tempMot = this.checkHaut(x, y) + motJoue.get(0).getLabel() + this.checkBas(x + i, y);
+							if(this.verification(tempMot) == false) {
+								return false;
+							}
+						} else if(this.checkHaut(x + i, y) != "") {
+							if(this.verification(this.checkHaut(x + i, y) + motJoue.get(0).getLabel()) == false) {
+								return false;
+							}
+						} else if(this.checkBas(x + i, y) != "") {
+							if(this.verification(motJoue.get(0).getLabel() + this.checkBas(x + i, y)) == false) {
+								return false;
+							}
+						}
+						
+					}
+					
 				} else if(orientation =='v') {
 					//TODO
+					motPrincipal += checkHaut(x, y);
+					String motTemp = "";
+					for(int i = 0; i < tailleMot; i++) {
+						motTemp += motJoue.get(i).getLabel();
+					}
+					motJoue.size();
+					motPrincipal += motTemp + checkBas(x, (y + tailleMot -1));
+					
+					if (this.verification(motPrincipal) == false) {
+						return false;
+					}
+					
+					for(int i = 0; i < (tailleMot ); i++) {
+						
+						if(this.checkHaut(x, y + i) != "" && this.checkBas(x, y + i) != "") {
+							String tempMot = this.checkHaut(x, y + i) + motJoue.get(0).getLabel() + this.checkBas(x, y + i);
+							if(this.verification(tempMot) == false) {
+								return false;
+							}
+						} else if(this.checkHaut(x, y + i) != "") {
+							if(this.verification(this.checkHaut(x, y + i) + motJoue.get(0).getLabel()) == false) {
+								return false;
+							}
+						} else if(this.checkBas(x, y + i) != "") {
+							if(this.verification(motJoue.get(0).getLabel() + this.checkBas(x, y + i)) == false) {
+								return false;
+							}
+						}
+						
+					}
 				} else {
 					System.out.println("Erreur d'orientation");
-					System.out.println("Erreur 7");
 					return false;
 				}
 				
@@ -352,7 +416,7 @@ public class Plateau {
 	}
 	
 	/**
-	 * Inverse un String
+	 * Inverse une chaine de caractère
 	 * @param source la chaine de caractère à inverser
 	 * @return la chaine inversée
 	 */
