@@ -1,5 +1,6 @@
 package controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import scrabble.Dictionnaire;
@@ -22,19 +23,20 @@ public class ScrabbleController {
 		this.dictionnaire = dictionnaire;
 	}
 	
-	@SuppressWarnings("null")
 	public void melangeMain(String label) {
-		List<Lettre> exitLettre = null;
+		List<Lettre> exitLettre = new ArrayList<Lettre>();
 		char [] charLabel = new char[7];
 		for(int i = 0; i < label.length(); i++) {
 			charLabel[i] = label.charAt(i);
 		}
+		
 		for(int i = 0; i < charLabel.length; i++) {
-			if(charLabel[i] == joueur.getLabelLettreMain(i)) {
-				exitLettre.add(joueur.getLettreMain(i));
+			for(int j = 0; j < joueur.mainJoueur.size(); j++) {
+				if(charLabel[i] == joueur.getLabelLettreMain(j)) {
+					exitLettre.add(joueur.getLettreMain(j));
+				}
 			}
 		}
-		
 		joueur.melanger(exitLettre, sac);
 	}
 	public void addView(ScrabbleView vue) {
