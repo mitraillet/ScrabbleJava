@@ -30,7 +30,7 @@ import java.util.*;
  * Classe de gestion du plateau. 
  * Contient la vérification des mots et le calcul des scores
  */
-public class Plateau {
+public class Plateau extends Observable {
 
 	/**
 	* dictionnaire Contient tous les mots de la langues française 
@@ -484,15 +484,24 @@ public class Plateau {
 	
 	/**
 	 * Affiche le plateau en console
+	 * @return string contenant tout le plateau
 	 */
-	public void plateauConsole() {
+	public String toString() {
 		int j = 0;
+		String string = "";
 		for(int i = 0; i < 15; i++) {
+			string += "|";
 			for(int h = 0; h < 15; h++) {
-				System.out.print(plateau[h][j].getBonus() + "|");
+				if(plateau[h][j].getLettre() == null) {
+					string += (plateau[h][j].getBonus() + "|");
+				}
+				else {
+					string += (plateau[h][j].getLabelCase() + "|");
+				}
 			}
-			System.out.print("\n");
+			string += "\n";
 			j++;
 		}
+		return string;
 	}
 }

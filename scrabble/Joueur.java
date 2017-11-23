@@ -5,12 +5,13 @@ package scrabble;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 
 /**
  * @author Fauconnier/Henriquet
  * Classe gérant les joueurs
  */
-public class Joueur {
+public class Joueur extends Observable{
 
 	/**
 	 * Score total du joueur
@@ -134,7 +135,9 @@ public class Joueur {
 			else{
 				System.out.println("Pioche impossible");
 			}
-		}	
+		}
+		setChanged();
+		notifyObservers();
 	}
 
 
@@ -159,5 +162,16 @@ public class Joueur {
 	public void passer() {
 		System.out.println("Passer");
 	}
-
+	/**
+	 * Affiche la main du joueur
+	 * @return string contenant un String de la main du joueur
+	 */
+	public String toString() {
+		String string = "Votre main : ";
+		for(int i = 0; i < this.getSizeMainJoueur(); i++)
+	    {
+			string +=this.getLabelLettreMain(i) + " ";
+	    }
+		return string;
+	}
 }
