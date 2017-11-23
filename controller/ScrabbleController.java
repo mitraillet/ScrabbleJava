@@ -29,15 +29,26 @@ public class ScrabbleController {
 		for(int i = 0; i < label.length(); i++) {
 			charLabel[i] = label.charAt(i);
 		}
+	
+		boolean continueRecherche = true;
 		
 		for(int i = 0; i < charLabel.length; i++) {
 			for(int j = 0; j < joueur.mainJoueur.size(); j++) {
 				if(charLabel[i] == joueur.getLabelLettreMain(j)) {
-					exitLettre.add(joueur.getLettreMain(j));
+					if(continueRecherche == true ) {
+						exitLettre.add(joueur.getLettreMain(j));
+						continueRecherche = false;
+					}
 				}
 			}
+			continueRecherche = true;
+			
 		}
+		
 		joueur.melanger(exitLettre, sac);
+		for (int i = 0; i < 7; i++) {
+			System.out.println(joueur.getLabelLettreMain(i));
+		}
 	}
 	public void addView(ScrabbleView vue) {
 		this.vue = vue;
