@@ -9,8 +9,6 @@ import java.io.FileReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import java.util.HashSet;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -34,17 +32,19 @@ import java.util.*;
  */
 public class Plateau {
 
-	/*
+	/**
 	* dictionnaire Contient tous les mots de la langues française 
 	*/
 	public HashSet<String> dictionnaire = new HashSet<String>();
 	
-	/*
+	/**
 	* Tableau à double entrée representant le plateau
 	*/
 	public Case[][] plateau;
 	
-	/*
+	public List<Lettre> motJoue = new ArrayList<Lettre>();
+	
+	/**
 	* Contructeur par défaut du sac
 	* @throws XPathExpressionException gestion des erreurs
 	*/
@@ -54,7 +54,7 @@ public class Plateau {
 		this.initPlateau();
 	}
 	
-	/*
+	/**
 	* Place un objet case à une position donnée du plateau (XY)
 	* @param x la position x du plateau
 	* @param y la position y du plateau
@@ -159,14 +159,318 @@ public class Plateau {
 		return dictionnaire.contains(mot);
 	}
 	
+	/**
+	 * Flag : un mot est-il adjacent ? --> true = oui
+	 */
+	boolean estAdjacent = false;
 	
 	/**
-	 * Recherche des mots périphériques é celui placé par le joueur
+	 * Recherche des mots périphériques à celui placé par le joueur
 	 * qui se seraient créés et appel de la méthode vérification
+	 * @param x La position x de la première lettre
+	 * @param y La position y de la première lettre
+	 * @param orientation l'orientation du mot, h = horizontal, v = vertical
 	 */
-	public void verificationPeripherique() {
-		// nom à changer surement
+	public boolean verificationPeripherique(int x, int y, char orientation) {
+		
+			if(motJoue.size() == 1) {
+				
+				if(this.checkGaucheDroite(x, y, 0) != true) {
+					return false;
+				}
+				
+				if(this.checkHautBas(x, y, 0) != true) {
+					return false;
+				}
+				
+				if(estAdjacent) {
+					System.out.println("Le mot est correct");
+					return true;
+				} else {
+					System.out.println("Erreur : Placez le mot adjacent à un autre");
+					return false;
+				}
+
+			} else {
+				
+				String motPrincipal = "";
+				
+				if(orientation == 'v') {
+					motPrincipal += getLabelToList(checkHaut(x, y)) + this.getMotToList(motJoue) + getLabelToList(checkBas(x, y));
+				} else if (orientation == 'h') {
+					motPrincipal += getLabelToList(checkGauche(x, y)) + this.getMotToList(motJoue) + getLabelToList(checkDroite(x, y));
+				} else {
+					System.out.println("Orientation incorrecte");
+					return false;
+				}
+				
+				if (this.verification(motPrincipal) == false) {
+					System.out.println("Le mot " + motPrincipal + " est incorrect");
+					return false;
+				}
+				
+				for(int i = 0; i < (motJoue.size() ); i++) {
+					
+					if(orientation =='h') {
+						if(this.checkHautBas(x+i, y, i) != true) {
+							return false;
+						};
+					}
+					
+					if(orientation =='v') {
+						if(this.checkGaucheDroite(x, y+i, i) != true) {
+							return false;
+						};
+					}
+				}	
+				
+				System.out.println("OK mot");
+				return true;
+			}
+	
 	}
+	
+	//----------------------------------------------------------------------------------
+	
+	//Vérification haut/bas, gauche/droite
+	
+	/**
+	 * Vérifie les mots au dessus de la lettre
+	 * @param x la position x de la lettre
+	 * @param y la position y de la lettre
+	 * @return la chaine de caractère au dessus de la lettre
+	 */
+	public List<Case> checkHaut(int x, int y){
+		List<Case> contientLettre = new ArrayList<Case>();
+		int j = 1;
+		if(plateau[x][y+1].lettre != null) {
+			while(plateau[x][y+j].lettre != null) {
+				contientLettre.add(plateau[x][y+j]);
+				j++;
+			}
+			estAdjacent = true;
+		} 
+		return contientLettre;
+	}
+	
+	/**
+	 * Vérifie les mots en dessous de la lettre
+	 * @param x la position x de la lettre
+	 * @param y la position y de la lettre
+	 * @return la chaine de caractère en dessous de la lettre
+	 */
+	public List<Case> checkBas(int x, int y){
+		List<Case> contientLettre = new ArrayList<Case>();
+		int j = 1;
+		if(plateau[x][y-1].lettre != null) {
+			while(plateau[x][y-j].lettre != null) {
+				contientLettre.add(plateau[x][y-j]);
+				j++;
+			}
+			estAdjacent = true;
+		} 
+		return contientLettre;
+	}
+	
+	/**
+	 * Vérifie les mots à gauche de la lettre
+	 * @param x la position x de la lettre
+	 * @param y la position y de la lettre
+	 * @return la chaine de caractère à gauche de la lettre
+	 */
+	public List<Case> checkGauche(int x, int y){
+		List<Case> contientLettre = new ArrayList<Case>();
+		int j = 1;
+		if(plateau[x-1][y].lettre != null) {
+			while(plateau[x-j][y].lettre != null) {
+				contientLettre.add(plateau[x-j][y]);
+				j++;
+			}
+			estAdjacent = true;
+		} 
+		return contientLettre;
+	}
+	
+	/**
+	 * Vérifie les mots à droite de la lettre
+	 * @param x la position x de la lettre
+	 * @param y la position y de la lettre
+	 * @return la chaine de caractère à droite de la lettre
+	 */
+	public List<Case> checkDroite(int x, int y){
+		List<Case> contientLettre = new ArrayList<Case>();
+		int j = 1;
+		if(this.plateau[x+1][y].lettre != null) {
+			while(this.plateau[x+j][y].lettre != null) {
+				contientLettre.add(plateau[x+j][y]);
+				j++;
+			}
+			estAdjacent = true;
+		} 
+		return contientLettre;
+	}
+	
+	/**
+	 * Vérifie le mot en haut et en bas
+	 * @param x la position x de la lettre
+	 * @param y la position y de la lettre
+	 * @param getNum le numéro de la lettre dans motJoue
+	 * @return true si tous est juste, sinon false
+	 */
+	public boolean checkHautBas(int x, int y, int getNum) {
+		if(this.getLabelToList(checkHaut(x, y)) != "" && this.getLabelToList(checkBas(x, y)) != "") {
+			String tempMot = this.getLabelToList(checkHaut(x, y)) + motJoue.get(getNum).getLabel() + this.getLabelToList(checkBas(x, y));
+			if(this.verification(tempMot) == false) {
+				System.out.println("Mot incorrect");
+				return false;
+			}
+		} else if(this.getLabelToList(checkHaut(x, y)) != "") {
+			if(this.verification(this.getLabelToList(checkHaut(x, y)) + motJoue.get(getNum).getLabel()) == false) {
+				System.out.println("Le mot en haut est incorrect");
+				return false;
+			}
+		} else if(this.getLabelToList(checkBas(x, y)) != "") {
+			if(this.verification(motJoue.get(getNum).getLabel() + this.getLabelToList(checkBas(x, y))) == false) {
+				System.out.println("Le mot en bas est incorrect");
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	/**
+	 * Vérifie le mot à gauche et à droite
+	 * @param x la position x de la lettre
+	 * @param y la position y de la lettre
+	 * @param getNum le numéro de la lettre dans motJoue
+	 * @return true si tous est juste, sinon false
+	 */
+	public boolean checkGaucheDroite(int x, int y, int getNum) {
+		if(this.getLabelToList(checkGauche(x, y)) != "" && this.getLabelToList(checkDroite(x, y)) != "") {
+			String tempMot = this.getLabelToList(checkGauche(x, y)) + motJoue.get(getNum).getLabel() + this.getLabelToList(checkDroite(x, y));
+			if(this.verification(tempMot) == false) {
+				System.out.println("Mot incorrect");
+				return false;
+			}
+		} else if(this.getLabelToList(checkGauche(x, y)) != "") {
+			if(this.verification(this.getLabelToList(checkGauche(x, y)) + motJoue.get(getNum).getLabel()) == false) {
+				System.out.println("Le mot à droite est incorrect");
+				return false;
+			}
+		} else if(this.getLabelToList(checkDroite(x, y)) != "") {
+			if(this.verification(motJoue.get(getNum).getLabel() + this.getLabelToList(checkDroite(x, y))) == false) {
+				System.out.println("Le mot à gauche est incorrect");
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	//----------------------------------------------------------------------------------
+	
+	//Utilitaire
+	
+	/**
+	 * Récupère le label d'une liste de lettre dans des cases
+	 * @param listCase la liste de case
+	 * @return le mot formé par les labels
+	 */
+	public String getLabelToList(List<Case> listCase) {
+		String tempMot = "";
+		for(int i = 0; i < listCase.size(); i++) {
+			tempMot += listCase.get(i).getLabelCase();
+		}
+		return tempMot;
+	}
+	
+	/**
+	 * Récupère le score d'une liste de lettre dans des cases
+	 * @param listCase la liste de case
+	 * @return le score
+	 */
+	public int getScoreToList(List<Case> listCase) {
+		int tempScore = 0;
+		for(int i = 0; i < listCase.size(); i++) {
+			//TODO
+		}
+		return tempScore;
+	}
+	
+	/**
+	 * Récupère les labels d'une liste de lettre
+	 * @param listLettre la liste de lettre
+	 * @return le mot 
+	 */
+	public String getMotToList(List<Lettre> listLettre) {
+		String tempMot = "";
+		for(int i = 0; i < listLettre.size(); i++) {
+			tempMot += listLettre.get(i).getLabel();
+		}
+		return tempMot;
+	}
+	
+	/**
+	 * Inverse une chaine de caractère
+	 * @param source la chaine de caractère à inverser
+	 * @return la chaine inversée
+	 */
+	public String inverseString(String source) {
+	    int i;
+	    int len = source.length();
+	    StringBuilder dest = new StringBuilder(len);
+
+	    for (i = (len - 1); i >= 0; i--){
+	        dest.append(source.charAt(i));
+	    }
+
+	    return dest.toString();
+	}
+	
+	//----------------------------------------------------------------------------------
+	
+	/* TODO A réécrire
+	/**
+	 * Test du premier mot
+	 * @param x La position x de la première lettre
+	 * @param y La position y de la première lettre
+	 *
+	public void checkPremierMot(int x, int y, char orientation, String mot){
+		if(plateau[x][y] == null) { //Check si la case est vide
+			if(plateau[x][y].getBonus() == 5) { //Check si le bonus est à 5
+				this.poserMot(x, y, orientation);
+			} else {
+				System.out.println("Erreur : Veuillez placer le premier mot au millieu");
+			} 
+		} else {
+			System.out.println("Erreur critique. Relancez le jeu.");
+		}
+	}
+	
+	/**
+	 * Permet de placer un mot sur le plateau
+	 * @param x La position x de la première lettre
+	 * @param y La position y de la première lettre
+	 *
+	public void poserMot(int x, int y, char orientation){
+			if(this.verificationPeripherique(x, y, orientation) == true) {
+				if(orientation == 'h') {
+					for(int i = 0; i < motJoue.size(); i++) {
+						int tempX = x + i;
+						plateau[tempX][y].setLabelCase((motJoue.get(i).getLabel()));
+					}
+				} else if (orientation == 'v') {
+					for(int i = 0; i < motJoue.size(); i++) {
+						int tempY = x + i;
+						plateau[x][tempY].setLabelCase((motJoue.get(i).getLabel()));
+					}
+				} else {
+					System.out.println("Erreur, vérifier l'orientation");
+				}
+			} else {
+				System.out.println("Mot incorrect");
+			}
+	}
+	*/
 	
 	
 	/**
