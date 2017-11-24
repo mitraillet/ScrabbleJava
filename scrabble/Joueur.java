@@ -114,6 +114,8 @@ public class Joueur extends Observable{
 		if(sac.tailleContenuSac() == 0) {
 			if( this.getSizeMainJoueur() > 1) {
 				System.out.println("L'adversaire n'a plus que " + this.getSizeMainJoueur() + " lettres dans sa main.");
+				setChanged();
+				notifyObservers();
 			}
 			else {
 				System.out.println("L'adversaire n'a plus qu'une lettre dans sa main.");
@@ -131,13 +133,13 @@ public class Joueur extends Observable{
 					mainJoueur.add(sac.getPositionLettreDansSac(positionSac));
 					sac.removeLettreDuSac(positionSac);
 				}
+				setChanged();
+				notifyObservers();
 			}
 			else{
 				System.out.println("Pioche impossible");
 			}
 		}
-		setChanged();
-		notifyObservers();
 	}
 
 
