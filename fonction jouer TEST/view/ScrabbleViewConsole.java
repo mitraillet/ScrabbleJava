@@ -54,43 +54,15 @@ public class ScrabbleViewConsole extends ScrabbleView implements Observer{
 						affiche("Jouer"); 
 						String mot1 = sc.next();
 						if(plateau.verification(mot1)) {
-							/*int tailleMotDepuisLaMain = 0;
 							affiche("Mot Correct");
-							String[] motArray = mot1.split("");
+							affiche("Veuillez entrer la position X");
+							int intPosX = Integer.parseInt((sc.next()));
+							affiche("Veuillez entrer la position Y");
+							int intPosY = Integer.parseInt((sc.next()));
+							affiche("Veuillez entrer l'orientation (h ou v)");
+							char orientation = (sc.next()).charAt(0);
 							
-							for (int i=0; i < joueur.getSizeMainJoueur(); i++) {
-								if(mot1.contains(joueur.getLabelLettreMain(i) + "")) {
-									tailleMotDepuisLaMain++;
-								}
-							}
-							
-							if(mot1.length() <= tailleMotDepuisLaMain) {
-								//controller.jouer();
-								for (int i=0; i < motArray.length; i++) {
-									for(int j = 0; j < joueur.getSizeMainJoueur(); j++) {
-										if(motArray[i].charAt(0) == joueur.getLabelLettreMain(j)) {
-											plateau.motJoue.add(joueur.getLettreMain(j));
-											tailleMotDepuisLaMain++;
-										}
-									}
-								}*/
-								
-								affiche("Mot Correct");
-								affiche("Veuillez entrer la position X");
-								int intPosX = Integer.parseInt((sc.next()));
-								affiche("Veuillez entrer la position Y");
-								int intPosY = Integer.parseInt((sc.next()));
-								affiche("Veuillez entrer l'orientation (h ou v)");
-								char orientation = (sc.next()).charAt(0);
-								controller.poserMot(intPosX, intPosY, orientation, mot1);
-								//printPlateauMain();
-							/*}
-							else {
-								printPlateauMain();
-								affiche(mot1);
-								affiche("Vous ne possédez pas les lettres appropriées pour ce mot");
-							}*/
-							//printPlateauMain();
+							controller.poserMot(intPosX, intPosY, orientation, mot1);
 						}
 						else {
 							printPlateauMain();

@@ -80,7 +80,7 @@ public class JeuTest {
 		plateau.plateau[7][7].setLettre(a);
 		plateau.plateau[8][8].setLettre(t);
 		plateau.plateau[9][7].setLettre(x);
-		plateau.verificationPeripherique(8, 7, 'v');
+		//plateau.verificationPeripherique(8, 7, 'v');
 		
 		System.out.println("---------------------------------------------------------");
 		

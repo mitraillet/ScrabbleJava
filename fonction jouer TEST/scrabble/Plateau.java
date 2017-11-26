@@ -24,7 +24,6 @@ import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
 import java.util.*;
-import scrabble.Dictionnaire;
 
 /**
  * @author Fauconnier/Henriquet
@@ -44,7 +43,15 @@ public class Plateau extends Observable {
 	*/
 	public Case[][] plateau;
 	
+	/**
+	 * Liste des lettres jouée depuis la main
+	 */
 	public List<Lettre> motJoue = new ArrayList<Lettre>();
+	
+	/**
+	 * True si début de la partie, sinon false;
+	 */
+	public boolean debutPartie;
 	
 	/**
 	* Contructeur par défaut du sac
@@ -53,6 +60,7 @@ public class Plateau extends Observable {
 	public Plateau() throws XPathExpressionException {
 		this.construireDico();
 		this.plateau = new Case [15][15];
+		this.debutPartie = false;
 		this.initPlateau();
 	}
 	
@@ -162,11 +170,15 @@ public class Plateau extends Observable {
 		return dictionnaire.contains(mot);
 	}
 	
+	/**
+	 * Flag, un mot est-il adjacent (mot horizontal) ? Si oui --> true
+	 */
+	private boolean	estAdjacentH;
 	
 	/**
-	 * Flag : un mot est-il adjacent ? --> true = oui
+	 * Flag, un mot est-il adjacent (Mot vertical) ? Si oui --> true
 	 */
-	boolean estAdjacent = false;
+	private boolean estAdjacentV;
 	
 	/**
 	 * Recherche des mots périphériques à celui placé par le joueur
@@ -175,8 +187,9 @@ public class Plateau extends Observable {
 	 * @param y La position y de la première lettre
 	 * @param orientation l'orientation du mot, h = horizontal, v = vertical
 	 */
-	public boolean verificationPeripherique(int x, int y, char orientation) {
-			estAdjacent = false;
+	public boolean verificationPeripherique(int x, int y, char orientation, List<Lettre> motMain) {
+			estAdjacentH = false;
+			estAdjacentV = false;
 			
 			if(motJoue.size() == 1) {
 				
@@ -188,10 +201,11 @@ public class Plateau extends Observable {
 					return false;
 				}
 				
-				if(estAdjacent) {
+				if(estAdjacentH == true || estAdjacentV == true) {
 					System.out.println("Le mot est correct");
 					return true;
 				} else {
+					System.out.println(this);
 					System.out.println("Erreur : Placez le mot adjacent à un autre");
 					return false;
 				}
@@ -200,16 +214,17 @@ public class Plateau extends Observable {
 				
 				String motPrincipal = "";
 				
+				char labelLettre;
+				if(motJoue.get(0) != null) {
+					labelLettre = motJoue.get(0).getLabel();
+				} else {
+					labelLettre = this.plateau[x][y].getLabelCase();
+				}
+				
 				if(orientation == 'v') {
-					//System.out.println("haut : " + getLabelToList(checkHaut(x, y)));
-					//System.out.println("milieu : " + motJoue.get(0).getLabel());
-					//System.out.println("bas : " + getLabelToList(checkBas(x, y)));
-					motPrincipal += getLabelToList(checkHaut(x, y)) + motJoue.get(0).getLabel() + getLabelToList(checkBas(x, y));
+					motPrincipal += getLabelToList(checkHaut(x, y)) + labelLettre + getLabelToList(checkBas(x, y));
 				} else if (orientation == 'h') {
-					//System.out.println("droite : " + getLabelToList(checkDroite(x, y)));
-					//System.out.println("milieu : " + motJoue.get(0).getLabel());
-					//System.out.println("gauche : " + getLabelToList(checkGauche(x, y)));
-					motPrincipal += getLabelToList(checkGauche(x, y)) + motJoue.get(0).getLabel() + getLabelToList(checkDroite(x, y));
+					motPrincipal += getLabelToList(checkGauche(x, y)) + labelLettre + getLabelToList(checkDroite(x, y));
 				} else {
 					System.out.println("Orientation incorrecte");
 					return false;
@@ -225,13 +240,21 @@ public class Plateau extends Observable {
 					if(orientation =='h') {
 						if(this.checkHautBas(x+i, y, i) != true) {
 							return false;
-						};
+						}
+						
+						if(estAdjacentH != true || motPrincipal.length() < motMain.size()) {
+							return false;
+						}
 					}
 					
 					if(orientation =='v') {
 						if(this.checkGaucheDroite(x, y+i, i) != true) {
 							return false;
-						};
+						}
+						
+						if(estAdjacentV != true || motPrincipal.length() < motMain.size()) {
+							return false;
+						}
 					}
 				}	
 				
@@ -259,8 +282,8 @@ public class Plateau extends Observable {
 				contientLettre.add(plateau[x][y+j]);
 				j++;
 			}
-			estAdjacent = true;
 		} 
+		estAdjacentH = true;
 		Collections.reverse(contientLettre); //Inverse la liste
 		System.out.println("hautMot : " + this.getLabelToList(contientLettre));
 		return contientLettre;
@@ -280,8 +303,8 @@ public class Plateau extends Observable {
 				contientLettre.add(plateau[x][y-j]);
 				j++;
 			}
-			estAdjacent = true;
 		} 
+		estAdjacentH = true;
 		System.out.println("BasMot : " + this.getLabelToList(contientLettre));
 		return contientLettre;
 	}
@@ -300,8 +323,8 @@ public class Plateau extends Observable {
 				contientLettre.add(plateau[x-j][y]);
 				j++;
 			}
-			estAdjacent = true;
 		} 
+		estAdjacentV = true;
 		Collections.reverse(contientLettre); //Inverse la liste
 		System.out.println("GaucheMot : " + this.getLabelToList(contientLettre));
 		return contientLettre;
@@ -321,8 +344,8 @@ public class Plateau extends Observable {
 				contientLettre.add(plateau[x+j][y]);
 				j++;
 			}
-			estAdjacent = true;
 		} 
+		estAdjacentV = true;
 		System.out.println("DroiteMot : " + this.getLabelToList(contientLettre));
 		return contientLettre;
 	}
@@ -444,23 +467,40 @@ public class Plateau extends Observable {
 	
 	//----------------------------------------------------------------------------------
 	
-	/* TODO A réécrire
 	/**
 	 * Test du premier mot
 	 * @param x La position x de la première lettre
 	 * @param y La position y de la première lettre
-	 *
-	public void checkPremierMot(int x, int y, char orientation, String mot){
-		if(plateau[x][y] == null) { //Check si la case est vide
-			if(plateau[x][y].getBonus() == 5) { //Check si le bonus est à 5
-				this.poserMot(x, y, orientation);
-			} else {
-				System.out.println("Erreur : Veuillez placer le premier mot au millieu");
-			} 
-		} else {
-			System.out.println("Erreur critique. Relancez le jeu.");
-		}
-	}*/
+	 */
+	public boolean checkPremierMot(int x, int y, char orientation){
+			int j = 0;
+			boolean test = false; //Si c'est OK  --> true
+			switch (orientation) {
+				case 'v' :
+					while(plateau[x][y - j].lettre != null) {
+						if(plateau[x][y - j].getBonus() == 5) {
+							test = true;
+						}
+						j++;
+					} 
+					
+					break;
+				case 'h' : 
+					while(plateau[x + j][y].lettre != null) {
+						if(plateau[x + j][y].getBonus() == 5) {
+							test = true;
+						}
+						j++;
+					} 
+					
+					break;
+				default : 
+					System.out.println("Erreur, orientation incorrecte");
+					test = false;
+			}
+			this.debutPartie = true;
+			return test;
+	}
 	
 	
 	/**
@@ -476,6 +516,7 @@ public class Plateau extends Observable {
 	 * Affiche le plateau en console
 	 * @return string contenant tout le plateau
 	 */
+	@Override
 	public String toString() {
 		int j = 14; //int j = 0;
 		String string = "";
