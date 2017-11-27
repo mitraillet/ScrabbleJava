@@ -26,7 +26,7 @@ public class Joueur extends Observable{
 	/**
 	 * Tableau de Lettre représentant les Lettres du joueur
 	 */
-	public  List<Lettre> mainJoueur;
+	private  List<Lettre> mainJoueur;
 	
 	
 	/**
@@ -62,7 +62,7 @@ public class Joueur extends Observable{
 	public Joueur(int score, boolean tour) {
 		this.score = score;
 		this.doitJouer = tour;
-		this.mainJoueur = new ArrayList<Lettre>();
+		this.setMainJoueur(new ArrayList<Lettre>());
 	}
 
 	/**
@@ -70,7 +70,7 @@ public class Joueur extends Observable{
 	* @param positionMain la position de la lettre à récupérer
 	*/
 	public Lettre getLettreMain(int positionMain) {
-		return this.mainJoueur.get(positionMain);
+		return this.getMainJoueur().get(positionMain);
 	}
 	
 	/**
@@ -94,9 +94,17 @@ public class Joueur extends Observable{
 	* @return the mainJoueur
 	*/
 	public List<Lettre> getMainJoueur() {
-		return mainJoueur;
+		return this.mainJoueur;
 	}
-
+	
+	/**
+	 * Utilisé pour créer des copies de main 
+	 * @param mainJoueur
+	 */
+	public void setMainJoueur(List<Lettre> mainJoueur) {
+		this.mainJoueur = mainJoueur;
+	}
+	
 	/**
 	 * Permet de placer un mot sur le plateau
 	 */
@@ -124,13 +132,13 @@ public class Joueur extends Observable{
 		else {
 			if(this.getSizeMainJoueur() < 7 ) {
 				
-				int nombrePieceAPrendre = 7 - mainJoueur.size();
+				int nombrePieceAPrendre = 7 - getMainJoueur().size();
 				if(sac.tailleContenuSac() < nombrePieceAPrendre) {
 					nombrePieceAPrendre = sac.tailleContenuSac();
 				}
 				for(int i = 0; i < nombrePieceAPrendre; i++) {
 					int positionSac = generateNumber(0, sac.tailleContenuSac());
-					mainJoueur.add(sac.getPositionLettreDansSac(positionSac));
+					getMainJoueur().add(sac.getPositionLettreDansSac(positionSac));
 					sac.removeLettreDuSac(positionSac);
 				}
 				setChanged();
@@ -153,14 +161,14 @@ public class Joueur extends Observable{
 		System.out.println("Melange");
 		for(int i = 0; i < exitLettre.size(); i++) {
 				sac.addLettreAuSac(exitLettre.get(i)); 
-				mainJoueur.remove(exitLettre.get(i));
+				getMainJoueur().remove(exitLettre.get(i));
 		}
 		this.pioche(sac);
 	}
 	
 	/**
 	 * Vérifie que les lettres rentrées en console sont dans la main
-	 * @param mot le mot à jouer
+	 * @param mot le mot Ã  jouer
 	 * @param motJoue La liste de lettre du mots sur le plateau
 	 * @return Une liste de lettre récupérée depuis la main
 	 */
@@ -174,7 +182,7 @@ public class Joueur extends Observable{
 			lettreTrouve = false;
 			j = 0;
 			
-			//Tant qu' on n'a pas itéré toute la main et que la lettre n'est pas trouvée
+			//Tant qu' on n'a pas itéré toute la main et que la lettre n'est pas trouvÃ©e
 			while(j < 7 && lettreTrouve == false) {
 				if(mot[i].charAt(0) != (this.getLabelLettreMain(j))) {
 					tempLettre = null;
@@ -212,7 +220,7 @@ public class Joueur extends Observable{
 					}
 				}
 			} catch (ArrayIndexOutOfBoundsException e) {
-				this.mainJoueur = saveMain;
+				this.setMainJoueur(saveMain);
 				plateau = plateauSave;
 				System.out.println(plateau);
 				System.out.println(this);
@@ -231,23 +239,24 @@ public class Joueur extends Observable{
 			}
 			
 		}
+		setChanged();
+		notifyObservers();
 		return true;
 	}
 	
 	/**
-	 * Enlève les mots posé sur le plateau (de la main)
+	 * Enlève les mots posés sur le plateau (de la main)
 	 * @param motMain Les lettres venant de la main
 	 * @param motJoue Le mot posé
 	 */
 	public void viderLaMain(List<Lettre> motMain, List<Lettre> motJoue, Sac sac) {
 		for (int i = 0; i < motMain.size(); i++) {
 			if(motJoue.get(i) != null){
-				this.mainJoueur.remove(motMain.get(i));
+				this.getMainJoueur().remove(motMain.get(i));
 			}
 		}
 		this.pioche(sac);
 	}
-	
 	/**
 	 * Permet au joueur de passer le tour
 	 */
@@ -266,4 +275,5 @@ public class Joueur extends Observable{
 	    }
 		return string;
 	}
+
 }

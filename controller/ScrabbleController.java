@@ -44,7 +44,7 @@ public class ScrabbleController {
 		
 		joueur.melanger(exitLettre, sac);
 	}
-	
+
 	/**
 	 * Permet de placer un mot sur le plateau
 	 * @param x La position x de la première lettre
@@ -55,7 +55,7 @@ public class ScrabbleController {
 			Case[][] plateauSave = plateau.copyPlateau(); //Sauvegarde du plateau
 			List<Lettre> saveMain = joueur.getMainJoueur(); //Sauvegarde de la main
 			List<Lettre> motJoue = new ArrayList<Lettre>(); //La liste de lettre du mots sur le plateau
-			List<Lettre> motMain = new ArrayList<Lettre>(); //liste des lettres enlevée de la main
+			List<Lettre> motMain = new ArrayList<Lettre>(); //liste des lettres enlevÃ©e de la main
 	
 			String[] motArray = mot.split(""); //String séparé en Array de lettre
 			
@@ -73,7 +73,7 @@ public class ScrabbleController {
 				if(plateau.verificationPeripherique(x, y, orientation, motMain, motJoue)) {
 					joueur.viderLaMain(motMain, motJoue, sac);
 				} else {
-					joueur.mainJoueur = saveMain;
+					joueur.setMainJoueur(saveMain);
 					plateau.plateau = plateauSave;
 					System.out.println("\nPlacement du Mot incorrect");
 				}
@@ -83,7 +83,7 @@ public class ScrabbleController {
 				if(plateau.checkPremierMot(x, y, orientation)) {
 					joueur.viderLaMain(motMain, motJoue, sac);	
 				} else {
-					joueur.mainJoueur = saveMain;
+					joueur.setMainJoueur(saveMain);
 					plateau.plateau = plateauSave;
 					System.out.println("\nPlacement du Premier Mot incorrect");
 				}
@@ -92,7 +92,6 @@ public class ScrabbleController {
 			motJoue = new ArrayList<Lettre>(); //Remets à zéro la variable
 			
 	}
-	
 	public void addView(ScrabbleView vue) {
 		this.vue = vue;
 		

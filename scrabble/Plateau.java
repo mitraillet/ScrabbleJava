@@ -37,9 +37,8 @@ public class Plateau extends Observable {
 	*/
 	public HashSet<String> dictionnaire = new HashSet<String>();
 	
-	
 	/**
-	* Tableau à double entrée representant le plateau
+	* Tableau à double entrée représentant le plateau
 	*/
 	public Case[][] plateau;
 	
@@ -48,6 +47,8 @@ public class Plateau extends Observable {
 	 */
 	public boolean debutPartie;
 	
+	public List<Lettre> motJoue = new ArrayList<Lettre>();
+	
 	/**
 	* Contructeur par défaut du sac
 	* @throws XPathExpressionException gestion des erreurs
@@ -55,7 +56,6 @@ public class Plateau extends Observable {
 	public Plateau() {
 		this.construireDico();
 		this.plateau = new Case [15][15];
-		this.debutPartie = false;
 		this.initPlateau();
 	}
 	
@@ -67,7 +67,6 @@ public class Plateau extends Observable {
 	public void initCasePlateau(Case caseSet, int x, int y) {
 		this.plateau[x][y] = caseSet;
 	}
-	
 	/**
 	 * Construis le dictionnaire sur base du fichier dictionnaire.txt
 	 */
@@ -79,7 +78,6 @@ public class Plateau extends Observable {
 			while ((line = br.readLine()) != null) { //Pour chaque ligne éxécute la boucle
 					this.dictionnaire.add(line);
 			}
-			System.out.println(this.dictionnaire.size());
 			br.close(); //Ferme le fichier
 		} catch(FileNotFoundException e) {
 			e.printStackTrace();
@@ -144,7 +142,7 @@ public class Plateau extends Observable {
 	            		Case caseNouvelle = new Case(bonus);
 	            		this.initCasePlateau(caseNouvelle, x, y);	            	
 	            		
-			    	//Incrémente la ligne toute les 15 cases lues
+			    	//Incrémente la ligne toutes les 15 cases lues
 	            		if(i%15 == 0) {
 	            			j++;
 	            			c = 0;
@@ -160,7 +158,6 @@ public class Plateau extends Observable {
 	         e.printStackTrace();
 	      } 
 	}
-	
 	
 	/**
 	 * Itération d'un dictionnaire pour trouver concordance 
@@ -189,82 +186,82 @@ public class Plateau extends Observable {
 	 * @param orientation l'orientation du mot, h = horizontal, v = vertical
 	 */
 	public boolean verificationPeripherique(int x, int y, char orientation, List<Lettre> motMain, List<Lettre> motJoue) {
-			estAdjacentH = false;
-			estAdjacentV = false;
+		estAdjacentH = false;
+		estAdjacentV = false;
+		
+		if(motJoue.size() == 1) {
 			
-			if(motJoue.size() == 1) {
-				
-				if(this.checkGaucheDroite(x, y, 0, motJoue) != true) {
-					return false;
-				}
-				
-				if(this.checkHautBas(x, y, 0, motJoue) != true) {
-					return false;
-				}
-				
-				if(estAdjacentH == true || estAdjacentV == true) {
-					System.out.println("Le mot est correct");
-					return true;
-				} else {
-					System.out.println(this);
-					System.out.println("Erreur : Placez le mot adjacent à un autre");
-					return false;
-				}
-
-			} else {
-				
-				String motPrincipal = "";
-				
-				char labelLettre;
-				if(motJoue.get(0) != null) {
-					labelLettre = motJoue.get(0).getLabel();
-				} else {
-					labelLettre = this.plateau[x][y].getLabelCase();
-				}
-				
-				if(orientation == 'v') {
-					motPrincipal += getLabelToList(checkHaut(x, y)) + labelLettre + getLabelToList(checkBas(x, y));
-				} else if (orientation == 'h') {
-					motPrincipal += getLabelToList(checkGauche(x, y)) + labelLettre + getLabelToList(checkDroite(x, y));
-				} else {
-					System.out.println("Orientation incorrecte");
-					return false;
-				}
-				
-				if (this.verification(motPrincipal) == false) {
-					System.out.println("Le mot " + motPrincipal + " est incorrect");
-					return false;
-				}
-				
-				for(int i = 0; i < (motJoue.size() ); i++) {
-					
-					if(orientation =='h') {
-						if(this.checkHautBas(x+i, y, i, motJoue) != true) {
-							return false;
-						}
-						
-						if(estAdjacentH != true && motPrincipal.length() <= motMain.size()) {
-							return false;
-						}
-					}
-					
-					if(orientation =='v') {
-						if(this.checkGaucheDroite(x, y-i, i, motJoue) != true) {
-							System.out.println("gauchedroite");
-							return false;
-						}
-						
-						if(estAdjacentV != true && motPrincipal.length() <= motMain.size()) {
-							System.out.println("verif");
-							return false;
-						}
-					}
-				}	
-				
-				System.out.println("OK mot");
-				return true;
+			if(this.checkGaucheDroite(x, y, 0, motJoue) != true) {
+				return false;
 			}
-	
+			
+			if(this.checkHautBas(x, y, 0, motJoue) != true) {
+				return false;
+			}
+			
+			if(estAdjacentH == true || estAdjacentV == true) {
+				System.out.println("Le mot est correct");
+				return true;
+			} else {
+				System.out.println(this);
+				System.out.println("Erreur : Placez le mot adjacent à  un autre");
+				return false;
+			}
+
+		} else {
+			
+			String motPrincipal = "";
+			
+			char labelLettre;
+			if(motJoue.get(0) != null) {
+				labelLettre = motJoue.get(0).getLabel();
+			} else {
+				labelLettre = this.plateau[x][y].getLabelCase();
+			}
+			
+			if(orientation == 'v') {
+				motPrincipal += getLabelToList(checkHaut(x, y)) + labelLettre + getLabelToList(checkBas(x, y));
+			} else if (orientation == 'h') {
+				motPrincipal += getLabelToList(checkGauche(x, y)) + labelLettre + getLabelToList(checkDroite(x, y));
+			} else {
+				System.out.println("Orientation incorrecte");
+				return false;
+			}
+			
+			if (this.verification(motPrincipal) == false) {
+				System.out.println("Le mot " + motPrincipal + " est incorrect");
+				return false;
+			}
+			
+			for(int i = 0; i < (motJoue.size() ); i++) {
+				
+				if(orientation =='h') {
+					if(this.checkHautBas(x+i, y, i, motJoue) != true) {
+						return false;
+					}
+					
+					if(estAdjacentH != true && motPrincipal.length() <= motMain.size()) {
+						return false;
+					}
+				}
+				
+				if(orientation =='v') {
+					if(this.checkGaucheDroite(x, y-i, i, motJoue) != true) {
+						System.out.println("gauchedroite");
+						return false;
+					}
+					
+					if(estAdjacentV != true && motPrincipal.length() <= motMain.size()) {
+						System.out.println("verif");
+						return false;
+					}
+				}
+			}	
+			
+			System.out.println("OK mot");
+			return true;
+		}
+
 	}
 	
 	//----------------------------------------------------------------------------------
@@ -485,6 +482,34 @@ public class Plateau extends Observable {
 	}
 	
 	/**
+	 * Récupère les objets Case du plateau en fonction des coordonées de celle-ci
+	 * @param x La position x de la première case
+	 * @param y La position y de la première case
+	 * @return la case du plateau en (x,y)
+	 */
+	public Case getPlateau(int x, int y) {
+		return this.plateau[x][y];
+	}
+	
+	/**
+	 * Récupère les bonus de Case du plateau en fonction des coordonées de celle-ci
+	 * @param x La position x de la première case
+	 * @param y La position y de la première case
+	 * @return le bonus de la case du plateau en (x,y)
+	 */
+	public int getPlateauBonus(int x, int y) {
+		return this.plateau[x][y].getBonus();
+	}
+	/**
+	 * Récupère les labels des lettres contenues dans la Case du plateau en fonction des coordonées de celle-ci
+	 * @param x La position x de la première case
+	 * @param y La position y de la première case
+	 * @return les labels des lettres contenues dans la case du plateau en (x,y)
+	 */
+	public char getPlateauLabel(int x, int y) {
+		return this.plateau[x][y].getLabelCase();
+	}
+	/**
 	 * Copie le plateau, pour la sauvegarde
 	 * @param tab le tableau à copier
 	 * @return le tableau copié
@@ -542,7 +567,6 @@ public class Plateau extends Observable {
 			return test;
 	}
 	
-	
 	/**
 	 * Calcul du score en prenant compte les bonus
 	 * Utilisation des valeurs de chaques lettres pondérées avec le bonus
@@ -556,12 +580,25 @@ public class Plateau extends Observable {
 	 * Affiche le plateau en console
 	 * @return string contenant tout le plateau
 	 */
-	@Override
 	public String toString() {
-		int j = 14; //int j = 0;
-		String string = "";
+		int j = 14;
+		String string = "  |";
+		for (int i = 0; i < 15; i++) {
+			if(i < 10) {
+				string += i + "|";
+			}
+			if(i > 9) {
+				string += i ;
+			}
+		}
+		string += "\n";
 		for(int i = 0; i < 15; i++) {
-			string += "|";
+			if(i < 10) {
+				string += i + " |";
+			}
+			if(i > 9) {
+				string += i + "|";
+			}
 			for(int h = 0; h < 15; h++) {
 				if(plateau[h][j].getLettre() == null) {
 					string += (plateau[h][j].getBonus() + "|");
@@ -571,8 +608,8 @@ public class Plateau extends Observable {
 				}
 			}
 			string += "\n";
-			j--; //j++;
+			j--;
 		}
 		return string;
-	}
+	}	
 }

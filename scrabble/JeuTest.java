@@ -7,6 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.xpath.XPathExpressionException;
+
+import controller.ScrabbleController;
+import view.GUI;
+import view.ScrabbleGUI;
+import view.ScrabbleView;
+import view.ScrabbleViewConsole;
 /**
  * @author Fauconnier
  *
@@ -40,7 +46,7 @@ public class JeuTest {
 		    {
 		      System.out.println(i + " = " + sac.contenuSac.get(i).label);
 		    }*/
-		
+		/*
 
 		System.out.println(sac.getSac().size());
 		joueur.pioche(sac);
@@ -58,10 +64,17 @@ public class JeuTest {
 		}
 		System.out.println(sac.getSac().size());
 		
-		Plateau plateau = new Plateau();
 		System.out.println(plateau.verification("mlsqhdfmql"));
 		System.out.println(plateau.verification("bete"));
-		
-	}
+		*/
+		//ScrabbleGUI gui = new ScrabbleGUI();
+		Plateau plateau = new Plateau();
+		Joueur joueur1 = new Joueur();
+		Dictionnaire dictionnaire = new Dictionnaire();
+		Sac sac1 = new Sac();
+		joueur1.pioche(sac1);
+		ScrabbleController control = new ScrabbleController(plateau, joueur1, sac1, dictionnaire);
+		control.melangeMain("e");
+	}	
 
 }

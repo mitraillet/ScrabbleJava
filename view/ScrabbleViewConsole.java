@@ -1,10 +1,12 @@
 package view;
 
-import java.util.*;
+import java.util.InputMismatchException;
+import java.util.Observable;
+import java.util.Observer;
+import java.util.Scanner;
 
 
 import scrabble.Joueur;
-import scrabble.Lettre;
 import scrabble.Plateau;
 import scrabble.Dictionnaire;
 import controller.ScrabbleController;
