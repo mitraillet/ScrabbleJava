@@ -274,13 +274,17 @@ public class Plateau extends Observable {
 	public List<Case> checkHaut(int x, int y){
 		List<Case> contientLettre = new ArrayList<Case>();
 		int j = 1;
-		if(plateau[x][y+1].lettre != null) {
-			while(plateau[x][y+j].lettre != null) {
-				contientLettre.add(plateau[x][y+j]);
-				j++;
-			}
-			estAdjacentH = true;
-		} 
+		try {
+			if(plateau[x][y+1].lettre != null) {
+				while(plateau[x][y+j].lettre != null) {
+					contientLettre.add(plateau[x][y+j]);
+					j++;
+				}
+				estAdjacentH = true;
+			} 
+		} catch(IndexOutOfBoundsException e) {
+			//Empêche le crash, si le mot est au bord du plateau
+		}
 		Collections.reverse(contientLettre); //Inverse la liste
 		System.out.println("hautMot : " + this.getLabelToList(contientLettre));
 		return contientLettre;
@@ -295,13 +299,17 @@ public class Plateau extends Observable {
 	public List<Case> checkBas(int x, int y){
 		List<Case> contientLettre = new ArrayList<Case>();
 		int j = 1;
-		if(plateau[x][y-1].lettre != null) {
-			while(plateau[x][y-j].lettre != null) {
-				contientLettre.add(plateau[x][y-j]);
-				j++;
-			}
-			estAdjacentH = true;
-		} 
+		try {
+			if(plateau[x][y-1].lettre != null) {
+				while(plateau[x][y-j].lettre != null) {
+					contientLettre.add(plateau[x][y-j]);
+					j++;
+				}
+				estAdjacentH = true;
+			} 
+		} catch(IndexOutOfBoundsException e) {
+			//Empêche le crash, si le mot est au bord du plateau
+		}
 		System.out.println("BasMot : " + this.getLabelToList(contientLettre));
 		return contientLettre;
 	}
@@ -315,13 +323,17 @@ public class Plateau extends Observable {
 	public List<Case> checkGauche(int x, int y){
 		List<Case> contientLettre = new ArrayList<Case>();
 		int j = 1;
-		if(plateau[x-1][y].lettre != null) {
-			while(plateau[x-j][y].lettre != null) {
-				contientLettre.add(plateau[x-j][y]);
-				j++;
-			}
-			estAdjacentV = true;
-		} 
+		try {
+			if(plateau[x-1][y].lettre != null) {
+				while(plateau[x-j][y].lettre != null) {
+					contientLettre.add(plateau[x-j][y]);
+					j++;
+				}
+				estAdjacentV = true;
+			} 
+		} catch(IndexOutOfBoundsException e) {
+			//Empêche le crash, si le mot est au bord du plateau
+		}
 		Collections.reverse(contientLettre); //Inverse la liste
 		System.out.println("GaucheMot : " + this.getLabelToList(contientLettre));
 		return contientLettre;
@@ -336,13 +348,17 @@ public class Plateau extends Observable {
 	public List<Case> checkDroite(int x, int y){
 		List<Case> contientLettre = new ArrayList<Case>();
 		int j = 1;
-		if(this.plateau[x+1][y].lettre != null) {
-			while(this.plateau[x+j][y].lettre != null) {
-				contientLettre.add(plateau[x+j][y]);
-				j++;
-			}
-			estAdjacentV = true;
-		} 
+		try {
+			if(this.plateau[x+1][y].lettre != null) {
+				while(this.plateau[x+j][y].lettre != null) {
+					contientLettre.add(plateau[x+j][y]);
+					j++;
+				}
+				estAdjacentV = true;
+			} 	
+		} catch(IndexOutOfBoundsException e) {
+			//Empêche le crash, si le mot est au bord du plateau
+		}
 		System.out.println("DroiteMot : " + this.getLabelToList(contientLettre));
 		return contientLettre;
 	}
