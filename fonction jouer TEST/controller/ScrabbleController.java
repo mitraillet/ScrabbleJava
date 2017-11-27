@@ -51,112 +51,40 @@ public class ScrabbleController {
 	 * @param y La position y de la première lettre
 	 */
 	public void poserMot(int x, int y, char orientation, String mot){
-			Case[][] plateauSave = (plateau.plateau).clone(); //Sauvegarde du plateau
-			List<Lettre> saveMain = joueur.mainJoueur; //Sauvegarde de la main
+			Case[][] plateauJeu = plateau.plateau; //Plateau de jeu
+			Case[][] plateauSave = plateau.copyPlateau(); //Sauvegarde du plateau
+			List<Lettre> saveMain = joueur.getMainJoueur(); //Sauvegarde de la main
 			List<Lettre> motJoue = new ArrayList<Lettre>(); //La liste de lettre du mots sur le plateau
 			List<Lettre> motMain = new ArrayList<Lettre>(); //liste des lettres enlevée de la main
-			
-			int xPos = 0; //incrément Position x
-			int yPos = 0; //incrément Position y
+	
 			String[] motArray = mot.split(""); //String séparé en Array de lettre
 			
-			int j = 0; //variable incrémentale 
-			boolean lettreTrouve = false; //Flag, lettre trouvée
-			Lettre tempLettre = null; //Lettre temporaire
+			joueur.verifierLettreMain(motArray, motJoue);
 			
-			@SuppressWarnings("unused") //Utilisé dans certain if(){}
-			boolean tourStop = false; //Flag, true si erreur
-			
-			//Gère les lettres de la main
-			for(int i = 0; i < motArray.length; i++) {
-				lettreTrouve = false;
-				j = 0;
-				
-				//Tant qu' on n'a pas itéré toute la main et que la lettre n'est pas trouvée
-				while(j < 7 && lettreTrouve == false) {
-					if(motArray[i].charAt(0) != (joueur.getLabelLettreMain(j))) {
-						tempLettre = null;
-					} else { 
-						tempLettre = joueur.getLettreMain(j);
-						lettreTrouve = true;
-					}
-					j++;
-				}
-				
-				motJoue.add(tempLettre);
+			if(joueur.poserMotPlateau(mot, x, y, motJoue, motMain, motArray, plateauSave, 
+					saveMain, orientation, plateauJeu) == false) {
+				return;
+			} else {
+				plateau.plateau = plateauJeu;
 			}
 			
-			//Gère la pose des Lettres
-			for(int i = 0; i < mot.length(); i++) {
-				try {
-					if(plateau.plateau[x + xPos][y - yPos].getLettre() == null) {
-						plateau.plateau[x + xPos][y - yPos].setLettre(motJoue.get(i));
-						motMain.add(motJoue.get(i));
-					} else {
-						try {
-							if(plateau.plateau[x + xPos][y - yPos].getLabelCase() != motArray[i].charAt(0)) {
-								tourStop = true;
-								return;
-							}
-						} catch (NullPointerException e){
-							System.out.println("Erreur : motJoue vide !");
-						}
-					}
-				} catch (ArrayIndexOutOfBoundsException e) {
-					joueur.mainJoueur = saveMain;
-					plateau.plateau = new Case [15][15];
-					plateau.plateau = plateauSave.clone();
-					System.out.println(plateau);
-					System.out.println(joueur);
-					System.out.println("Erreur : votre mot sort du plateau");
-					return;
-				}
-
-				if(orientation == 'h') {
-					xPos ++;
-				} else if (orientation == 'v') {
-					yPos ++;
-				} else {
-					System.out.println("Erreur");
-					plateau.plateau = new Case [15][15];
-					plateau.plateau = plateauSave.clone();
-					return;
-				}
-				
-			}
-			
-			//Envoie les objets lettres au plateau
-			plateau.motJoue = motJoue;
-			
+			//Vérifie les mots
 			if(plateau.debutPartie == true) {
-				if(plateau.verificationPeripherique(x, y, orientation, motMain)) {
-					for (int i = 0; i < motMain.size(); i++) {
-						if(motJoue.get(i) != null){
-							joueur.mainJoueur.remove(motMain.get(i));
-						}
-					}
-					joueur.pioche(sac);
+				if(plateau.verificationPeripherique(x, y, orientation, motMain, motJoue)) {
+					joueur.viderLaMain(motMain, motJoue, sac);
 				} else {
 					joueur.mainJoueur = saveMain;
-					plateau.plateau = new Case [15][15];
-					plateau.plateau = plateauSave.clone();
-					System.out.println(plateau);
-					System.out.println(joueur);
+					plateau.plateau = plateauSave;
 					System.out.println("\nPlacement du Mot incorrect");
 				}
+				
 			} else {
 				//Enlève les lettres jouée de la main
 				if(plateau.checkPremierMot(x, y, orientation)) {
-					for (int i = 0; i < motMain.size(); i++) {
-						joueur.mainJoueur.remove(motMain.get(i));
-					}
-					joueur.pioche(sac);
+					joueur.viderLaMain(motMain, motJoue, sac);	
 				} else {
 					joueur.mainJoueur = saveMain;
-					plateau.plateau = new Case [15][15];
-					plateau.plateau = plateauSave.clone();
-					System.out.println(plateau);
-					System.out.println(joueur);
+					plateau.plateau = plateauSave;
 					System.out.println("\nPlacement du Premier Mot incorrect");
 				}
 			}
@@ -164,7 +92,6 @@ public class ScrabbleController {
 			motJoue = new ArrayList<Lettre>(); //Remets à zéro la variable
 			
 	}
-	
 	
 	public void addView(ScrabbleView vue) {
 		this.vue = vue;

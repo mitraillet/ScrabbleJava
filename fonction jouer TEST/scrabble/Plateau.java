@@ -44,11 +44,6 @@ public class Plateau extends Observable {
 	public Case[][] plateau;
 	
 	/**
-	 * Liste des lettres jouée depuis la main
-	 */
-	public List<Lettre> motJoue = new ArrayList<Lettre>();
-	
-	/**
 	 * True si début de la partie, sinon false;
 	 */
 	public boolean debutPartie;
@@ -187,17 +182,17 @@ public class Plateau extends Observable {
 	 * @param y La position y de la première lettre
 	 * @param orientation l'orientation du mot, h = horizontal, v = vertical
 	 */
-	public boolean verificationPeripherique(int x, int y, char orientation, List<Lettre> motMain) {
+	public boolean verificationPeripherique(int x, int y, char orientation, List<Lettre> motMain, List<Lettre> motJoue) {
 			estAdjacentH = false;
 			estAdjacentV = false;
 			
 			if(motJoue.size() == 1) {
 				
-				if(this.checkGaucheDroite(x, y, 0) != true) {
+				if(this.checkGaucheDroite(x, y, 0, motJoue) != true) {
 					return false;
 				}
 				
-				if(this.checkHautBas(x, y, 0) != true) {
+				if(this.checkHautBas(x, y, 0, motJoue) != true) {
 					return false;
 				}
 				
@@ -238,21 +233,23 @@ public class Plateau extends Observable {
 				for(int i = 0; i < (motJoue.size() ); i++) {
 					
 					if(orientation =='h') {
-						if(this.checkHautBas(x+i, y, i) != true) {
+						if(this.checkHautBas(x+i, y, i, motJoue) != true) {
 							return false;
 						}
 						
-						if(estAdjacentH != true || motPrincipal.length() < motMain.size()) {
+						if(estAdjacentH != true && motPrincipal.length() <= motMain.size()) {
 							return false;
 						}
 					}
 					
 					if(orientation =='v') {
-						if(this.checkGaucheDroite(x, y+i, i) != true) {
+						if(this.checkGaucheDroite(x, y-i, i, motJoue) != true) {
+							System.out.println("gauchedroite");
 							return false;
 						}
 						
-						if(estAdjacentV != true || motPrincipal.length() < motMain.size()) {
+						if(estAdjacentV != true && motPrincipal.length() <= motMain.size()) {
+							System.out.println("verif");
 							return false;
 						}
 					}
@@ -282,8 +279,8 @@ public class Plateau extends Observable {
 				contientLettre.add(plateau[x][y+j]);
 				j++;
 			}
+			estAdjacentH = true;
 		} 
-		estAdjacentH = true;
 		Collections.reverse(contientLettre); //Inverse la liste
 		System.out.println("hautMot : " + this.getLabelToList(contientLettre));
 		return contientLettre;
@@ -303,8 +300,8 @@ public class Plateau extends Observable {
 				contientLettre.add(plateau[x][y-j]);
 				j++;
 			}
+			estAdjacentH = true;
 		} 
-		estAdjacentH = true;
 		System.out.println("BasMot : " + this.getLabelToList(contientLettre));
 		return contientLettre;
 	}
@@ -323,8 +320,8 @@ public class Plateau extends Observable {
 				contientLettre.add(plateau[x-j][y]);
 				j++;
 			}
+			estAdjacentV = true;
 		} 
-		estAdjacentV = true;
 		Collections.reverse(contientLettre); //Inverse la liste
 		System.out.println("GaucheMot : " + this.getLabelToList(contientLettre));
 		return contientLettre;
@@ -344,8 +341,8 @@ public class Plateau extends Observable {
 				contientLettre.add(plateau[x+j][y]);
 				j++;
 			}
+			estAdjacentV = true;
 		} 
-		estAdjacentV = true;
 		System.out.println("DroiteMot : " + this.getLabelToList(contientLettre));
 		return contientLettre;
 	}
@@ -357,7 +354,7 @@ public class Plateau extends Observable {
 	 * @param getNum le numéro de la lettre dans motJoue
 	 * @return true si tous est juste, sinon false
 	 */
-	public boolean checkHautBas(int x, int y, int getNum) {
+	public boolean checkHautBas(int x, int y, int getNum, List<Lettre> motJoue) {
 		char labelLettre;
 		if(motJoue.get(getNum) != null) {
 			labelLettre = motJoue.get(getNum).getLabel();
@@ -394,7 +391,7 @@ public class Plateau extends Observable {
 	 * @param getNum le numéro de la lettre dans motJoue
 	 * @return true si tous est juste, sinon false
 	 */
-	public boolean checkGaucheDroite(int x, int y, int getNum) {
+	public boolean checkGaucheDroite(int x, int y, int getNum, List<Lettre> motJoue) {
 		char labelLettre;
 		if(motJoue.get(getNum) != null) {
 			labelLettre = motJoue.get(getNum).getLabel();
@@ -465,6 +462,25 @@ public class Plateau extends Observable {
 		return tempMot;
 	}
 	
+	/**
+	 * Copie le plateau, pour la sauvegarde
+	 * @param tab le tableau à copier
+	 * @return le tableau copié
+	 */
+	public Case[][] copyPlateau() {
+		Case[][] tempArray = new Case [15][15];
+		for(int i = 0; i < 15; i++) { //X
+			for(int h = 0; h < 15; h++) { //Y
+				if(this.plateau[0 + i][0 + h].getLettre() != null) {
+					tempArray[0 + i][0 + h] = new Case(this.plateau[0 + i][0 + h].getBonus(), this.plateau[0 + i][0 + h].getLettre());
+				} else {
+					tempArray[0 + i][0 + h] = new Case(this.plateau[0 + i][0 + h].getBonus(), null);
+				}
+			}
+		}
+		return tempArray;
+	}
+	
 	//----------------------------------------------------------------------------------
 	
 	/**
@@ -498,7 +514,9 @@ public class Plateau extends Observable {
 					System.out.println("Erreur, orientation incorrecte");
 					test = false;
 			}
-			this.debutPartie = true;
+			if (test) {
+				this.debutPartie = true;
+			}
 			return test;
 	}
 	
