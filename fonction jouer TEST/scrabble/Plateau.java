@@ -52,7 +52,7 @@ public class Plateau extends Observable {
 	* Contructeur par défaut du sac
 	* @throws XPathExpressionException gestion des erreurs
 	*/
-	public Plateau() throws XPathExpressionException {
+	public Plateau() {
 		this.construireDico();
 		this.plateau = new Case [15][15];
 		this.debutPartie = false;
@@ -92,7 +92,7 @@ public class Plateau extends Observable {
 	* Initialise le plateau.
 	* Lis le fichier dataCase.xml et place les cases dans le plateau
 	*/
-	private void initPlateau() throws XPathExpressionException {
+	private void initPlateau() {
 	      DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 	      factory.setIgnoringElementContentWhitespace(true);
 
@@ -129,11 +129,17 @@ public class Plateau extends Observable {
 	            		String expressionY = "/plateau/ligne[" + j + "]/case[" + c + "]/y";
 	            		String expressionBonus = "/plateau/ligne[" + j + "]/case[" + c + "]/bonus";
 	            		
-	            		int x = ((Double)path.evaluate(expressionX, root, XPathConstants.NUMBER)).intValue();
+	            		int x = 0;
+	            		int y = 0;
+	            		int bonus = 0;
 	            		
-	            		int y = ((Double)path.evaluate(expressionY, root, XPathConstants.NUMBER)).intValue();
-	            		
-	            		int bonus = ((Double)path.evaluate(expressionBonus, root, XPathConstants.NUMBER)).intValue();
+	            		try {
+	            			x = ((Double)path.evaluate(expressionX, root, XPathConstants.NUMBER)).intValue();
+	            			y = ((Double)path.evaluate(expressionY, root, XPathConstants.NUMBER)).intValue();
+	            			bonus = ((Double)path.evaluate(expressionBonus, root, XPathConstants.NUMBER)).intValue();
+	            		} catch(XPathExpressionException e) {
+	            			System.out.println("Erreur Système : vérifier ressource plateau");
+	            		}
 	            		
 	            		Case caseNouvelle = new Case(bonus);
 	            		this.initCasePlateau(caseNouvelle, x, y);	            	
