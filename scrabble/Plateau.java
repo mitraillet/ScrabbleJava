@@ -204,7 +204,7 @@ public class Plateau extends Observable {
 				return true;
 			} else {
 				System.out.println(this);
-				System.out.println("Erreur : Placez le mot adjacent à  un autre");
+				System.out.println("Erreur : Placez le mot adjacent à un autre");
 				return false;
 			}
 
@@ -582,22 +582,13 @@ public class Plateau extends Observable {
 	 */
 	public String toString() {
 		int j = 14;
-		String string = "  |";
-		for (int i = 0; i < 15; i++) {
-			if(i < 10) {
-				string += i + "|";
-			}
-			if(i > 9) {
-				string += i ;
-			}
-		}
-		string += "\n";
+		String string = "";
 		for(int i = 0; i < 15; i++) {
-			if(i < 10) {
-				string += i + " |";
+			if(j < 10) {
+				string += j + " |";
 			}
-			if(i > 9) {
-				string += i + "|";
+			else if(j > 9) {
+				string += j + "|";
 			}
 			for(int h = 0; h < 15; h++) {
 				if(plateau[h][j].getLettre() == null) {
@@ -610,6 +601,16 @@ public class Plateau extends Observable {
 			string += "\n";
 			j--;
 		}
+		string += "  |";
+		for (int i = 0; i < 15; i++) {
+			if(i < 10) {
+				string += i + "|";
+			}
+			else if(i > 9) {
+				string += i ;
+			}
+		}
+		string += "\n";
 		return string;
 	}	
 }

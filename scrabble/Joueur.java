@@ -223,7 +223,6 @@ public class Joueur extends Observable{
 				this.setMainJoueur(saveMain);
 				plateau = plateauSave;
 				System.out.println(plateau);
-				System.out.println(this);
 				System.out.println("Erreur : votre mot sort du plateau");
 				return false;
 			}
@@ -239,8 +238,6 @@ public class Joueur extends Observable{
 			}
 			
 		}
-		setChanged();
-		notifyObservers();
 		return true;
 	}
 	
