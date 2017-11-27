@@ -1,12 +1,10 @@
 package view;
 
-import java.util.InputMismatchException;
-import java.util.Observable;
-import java.util.Observer;
-import java.util.Scanner;
+import java.util.*;
 
 
 import scrabble.Joueur;
+import scrabble.Lettre;
 import scrabble.Plateau;
 import scrabble.Dictionnaire;
 import controller.ScrabbleController;
@@ -53,25 +51,18 @@ public class ScrabbleViewConsole extends ScrabbleView implements Observer{
 						affiche("Passer");
 						break;
 					case "J" : 
-						affiche("Jouer");
+						affiche("Jouer"); 
 						String mot1 = sc.next();
-						if(plateau.verification(mot1)){
-							int tailleMotDepuisLaMain = 0;
+						if(plateau.verification(mot1)) {
 							affiche("Mot Correct");
-							for (int i=0; i < joueur.getSizeMainJoueur(); i++) {
-								if(mot1.contains(joueur.getLabelLettreMain(i) + "")) {
-									tailleMotDepuisLaMain++;
-								}
-							}
-							if(mot1.length() <= tailleMotDepuisLaMain) {
-								//controller.jouer();
-								affiche("Correct");
-							}
-							else {
-								printPlateauMain();
-								affiche(mot1);
-								affiche("Vous ne possédez pas les lettres appropriées pour ce mot");
-							}
+							affiche("Veuillez entrer la position X");
+							int intPosX = Integer.parseInt((sc.next()));
+							affiche("Veuillez entrer la position Y");
+							int intPosY = Integer.parseInt((sc.next()));
+							affiche("Veuillez entrer l'orientation (h ou v)");
+							char orientation = (sc.next()).charAt(0);
+							
+							controller.poserMot(intPosX, intPosY, orientation, mot1);
 						}
 						else {
 							printPlateauMain();

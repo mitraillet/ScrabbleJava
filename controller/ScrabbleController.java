@@ -8,6 +8,7 @@ import scrabble.Joueur;
 import scrabble.Lettre;
 import scrabble.Plateau;
 import scrabble.Sac;
+import scrabble.Case;
 import view.ScrabbleView;
 
 public class ScrabbleController {
@@ -43,6 +44,55 @@ public class ScrabbleController {
 		
 		joueur.melanger(exitLettre, sac);
 	}
+	
+	/**
+	 * Permet de placer un mot sur le plateau
+	 * @param x La position x de la première lettre
+	 * @param y La position y de la première lettre
+	 */
+	public void poserMot(int x, int y, char orientation, String mot){
+			Case[][] plateauJeu = plateau.plateau; //Plateau de jeu
+			Case[][] plateauSave = plateau.copyPlateau(); //Sauvegarde du plateau
+			List<Lettre> saveMain = joueur.getMainJoueur(); //Sauvegarde de la main
+			List<Lettre> motJoue = new ArrayList<Lettre>(); //La liste de lettre du mots sur le plateau
+			List<Lettre> motMain = new ArrayList<Lettre>(); //liste des lettres enlevée de la main
+	
+			String[] motArray = mot.split(""); //String séparé en Array de lettre
+			
+			joueur.verifierLettreMain(motArray, motJoue);
+			
+			if(joueur.poserMotPlateau(mot, x, y, motJoue, motMain, motArray, plateauSave, 
+					saveMain, orientation, plateauJeu) == false) {
+				return;
+			} else {
+				plateau.plateau = plateauJeu;
+			}
+			
+			//Vérifie les mots
+			if(plateau.debutPartie == true) {
+				if(plateau.verificationPeripherique(x, y, orientation, motMain, motJoue)) {
+					joueur.viderLaMain(motMain, motJoue, sac);
+				} else {
+					joueur.mainJoueur = saveMain;
+					plateau.plateau = plateauSave;
+					System.out.println("\nPlacement du Mot incorrect");
+				}
+				
+			} else {
+				//Enlève les lettres jouée de la main
+				if(plateau.checkPremierMot(x, y, orientation)) {
+					joueur.viderLaMain(motMain, motJoue, sac);	
+				} else {
+					joueur.mainJoueur = saveMain;
+					plateau.plateau = plateauSave;
+					System.out.println("\nPlacement du Premier Mot incorrect");
+				}
+			}
+			
+			motJoue = new ArrayList<Lettre>(); //Remets à zéro la variable
+			
+	}
+	
 	public void addView(ScrabbleView vue) {
 		this.vue = vue;
 		

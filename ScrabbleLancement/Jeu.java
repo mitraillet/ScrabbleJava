@@ -15,11 +15,11 @@ public class Jeu {
 		// TODO Auto-generated constructor stub
 		Plateau plateau = new Plateau();
 		Joueur joueur = new Joueur();
-		Dictionnaire dictionnaire = new Dictionnaire();
+		Dictionnaire dictionnaireMot = new Dictionnaire();
 		Sac sac = new Sac();
 		joueur.pioche(sac);
 		
-		ScrabbleController controller = new ScrabbleController(plateau, joueur, sac, dictionnaire);
+		ScrabbleController controller = new ScrabbleController(plateau, joueur, sac, dictionnaireMot);
 		ScrabbleViewConsole console = new ScrabbleViewConsole(plateau, joueur, controller);
 		
 		controller.addView(console);
