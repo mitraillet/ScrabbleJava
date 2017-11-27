@@ -1,5 +1,5 @@
 /**
- * Instanciation du joker objet Ètendu de Lettre
+ * Instanciation du joker objet ÔøΩtendu de Lettre
  */
 package scrabble;
 
@@ -12,16 +12,18 @@ public class Joker extends Lettre {
 	/**
 	 * Permet de d√©finir la valeur du libell√©
 	 */
-	public void setJoker(String labelString) {
+	public boolean setJoker(String labelString) {
 		char labelChar;
 		labelString = labelString.toLowerCase();
 		String abc = "azertyuiopqsdfghjklmwxcvbn";
 		if(abc.contains(labelString)) {
 			labelChar = labelString.charAt(0);
 			this.setLabel(labelChar);
+			return true;
 		}
 		else {
-			System.out.println("CharactËre non authorisÈ !");
+			System.out.println("Charact√®re non authoris√© !");
+			return false;
 		}
 	}
 	

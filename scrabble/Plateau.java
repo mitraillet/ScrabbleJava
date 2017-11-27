@@ -37,20 +37,25 @@ public class Plateau extends Observable {
 	*/
 	public HashSet<String> dictionnaire = new HashSet<String>();
 	
+	
 	/**
 	* Tableau à double entrée representant le plateau
 	*/
 	public Case[][] plateau;
 	
-	public List<Lettre> motJoue = new ArrayList<Lettre>();
+	/**
+	 * True si début de la partie, sinon false;
+	 */
+	public boolean debutPartie;
 	
 	/**
 	* Contructeur par défaut du sac
 	* @throws XPathExpressionException gestion des erreurs
 	*/
-	public Plateau() throws XPathExpressionException {
+	public Plateau() {
 		this.construireDico();
 		this.plateau = new Case [15][15];
+		this.debutPartie = false;
 		this.initPlateau();
 	}
 	
@@ -87,7 +92,7 @@ public class Plateau extends Observable {
 	* Initialise le plateau.
 	* Lis le fichier dataCase.xml et place les cases dans le plateau
 	*/
-	private void initPlateau() throws XPathExpressionException {
+	private void initPlateau() {
 	      DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 	      factory.setIgnoringElementContentWhitespace(true);
 
@@ -124,11 +129,17 @@ public class Plateau extends Observable {
 	            		String expressionY = "/plateau/ligne[" + j + "]/case[" + c + "]/y";
 	            		String expressionBonus = "/plateau/ligne[" + j + "]/case[" + c + "]/bonus";
 	            		
-	            		int x = ((Double)path.evaluate(expressionX, root, XPathConstants.NUMBER)).intValue();
+	            		int x = 0;
+	            		int y = 0;
+	            		int bonus = 0;
 	            		
-	            		int y = ((Double)path.evaluate(expressionY, root, XPathConstants.NUMBER)).intValue();
-	            		
-	            		int bonus = ((Double)path.evaluate(expressionBonus, root, XPathConstants.NUMBER)).intValue();
+	            		try {
+	            			x = ((Double)path.evaluate(expressionX, root, XPathConstants.NUMBER)).intValue();
+	            			y = ((Double)path.evaluate(expressionY, root, XPathConstants.NUMBER)).intValue();
+	            			bonus = ((Double)path.evaluate(expressionBonus, root, XPathConstants.NUMBER)).intValue();
+	            		} catch(XPathExpressionException e) {
+	            			System.out.println("Erreur Système : vérifier ressource plateau");
+	            		}
 	            		
 	            		Case caseNouvelle = new Case(bonus);
 	            		this.initCasePlateau(caseNouvelle, x, y);	            	
@@ -150,6 +161,7 @@ public class Plateau extends Observable {
 	      } 
 	}
 	
+	
 	/**
 	 * Itération d'un dictionnaire pour trouver concordance 
 	 * avec le mot entré par le joueur et vérifier s'il existe
@@ -160,9 +172,14 @@ public class Plateau extends Observable {
 	}
 	
 	/**
-	 * Flag : un mot est-il adjacent ? --> true = oui
+	 * Flag, un mot est-il adjacent (mot horizontal) ? Si oui --> true
 	 */
-	boolean estAdjacent = false;
+	private boolean	estAdjacentH;
+	
+	/**
+	 * Flag, un mot est-il adjacent (Mot vertical) ? Si oui --> true
+	 */
+	private boolean estAdjacentV;
 	
 	/**
 	 * Recherche des mots périphériques à celui placé par le joueur
@@ -171,22 +188,25 @@ public class Plateau extends Observable {
 	 * @param y La position y de la première lettre
 	 * @param orientation l'orientation du mot, h = horizontal, v = vertical
 	 */
-	public boolean verificationPeripherique(int x, int y, char orientation) {
-		
+	public boolean verificationPeripherique(int x, int y, char orientation, List<Lettre> motMain, List<Lettre> motJoue) {
+			estAdjacentH = false;
+			estAdjacentV = false;
+			
 			if(motJoue.size() == 1) {
 				
-				if(this.checkGaucheDroite(x, y, 0) != true) {
+				if(this.checkGaucheDroite(x, y, 0, motJoue) != true) {
 					return false;
 				}
 				
-				if(this.checkHautBas(x, y, 0) != true) {
+				if(this.checkHautBas(x, y, 0, motJoue) != true) {
 					return false;
 				}
 				
-				if(estAdjacent) {
+				if(estAdjacentH == true || estAdjacentV == true) {
 					System.out.println("Le mot est correct");
 					return true;
 				} else {
+					System.out.println(this);
 					System.out.println("Erreur : Placez le mot adjacent à un autre");
 					return false;
 				}
@@ -195,10 +215,17 @@ public class Plateau extends Observable {
 				
 				String motPrincipal = "";
 				
+				char labelLettre;
+				if(motJoue.get(0) != null) {
+					labelLettre = motJoue.get(0).getLabel();
+				} else {
+					labelLettre = this.plateau[x][y].getLabelCase();
+				}
+				
 				if(orientation == 'v') {
-					motPrincipal += getLabelToList(checkHaut(x, y)) + this.getMotToList(motJoue) + getLabelToList(checkBas(x, y));
+					motPrincipal += getLabelToList(checkHaut(x, y)) + labelLettre + getLabelToList(checkBas(x, y));
 				} else if (orientation == 'h') {
-					motPrincipal += getLabelToList(checkGauche(x, y)) + this.getMotToList(motJoue) + getLabelToList(checkDroite(x, y));
+					motPrincipal += getLabelToList(checkGauche(x, y)) + labelLettre + getLabelToList(checkDroite(x, y));
 				} else {
 					System.out.println("Orientation incorrecte");
 					return false;
@@ -212,15 +239,25 @@ public class Plateau extends Observable {
 				for(int i = 0; i < (motJoue.size() ); i++) {
 					
 					if(orientation =='h') {
-						if(this.checkHautBas(x+i, y, i) != true) {
+						if(this.checkHautBas(x+i, y, i, motJoue) != true) {
 							return false;
-						};
+						}
+						
+						if(estAdjacentH != true && motPrincipal.length() <= motMain.size()) {
+							return false;
+						}
 					}
 					
 					if(orientation =='v') {
-						if(this.checkGaucheDroite(x, y+i, i) != true) {
+						if(this.checkGaucheDroite(x, y-i, i, motJoue) != true) {
+							System.out.println("gauchedroite");
 							return false;
-						};
+						}
+						
+						if(estAdjacentV != true && motPrincipal.length() <= motMain.size()) {
+							System.out.println("verif");
+							return false;
+						}
 					}
 				}	
 				
@@ -243,13 +280,19 @@ public class Plateau extends Observable {
 	public List<Case> checkHaut(int x, int y){
 		List<Case> contientLettre = new ArrayList<Case>();
 		int j = 1;
-		if(plateau[x][y+1].lettre != null) {
-			while(plateau[x][y+j].lettre != null) {
-				contientLettre.add(plateau[x][y+j]);
-				j++;
-			}
-			estAdjacent = true;
-		} 
+		try {
+			if(plateau[x][y+1].lettre != null) {
+				while(plateau[x][y+j].lettre != null) {
+					contientLettre.add(plateau[x][y+j]);
+					j++;
+				}
+				estAdjacentH = true;
+			} 
+		} catch(IndexOutOfBoundsException e) {
+			//Empêche le crash, si le mot est au bord du plateau
+		}
+		Collections.reverse(contientLettre); //Inverse la liste
+		System.out.println("hautMot : " + this.getLabelToList(contientLettre));
 		return contientLettre;
 	}
 	
@@ -262,13 +305,18 @@ public class Plateau extends Observable {
 	public List<Case> checkBas(int x, int y){
 		List<Case> contientLettre = new ArrayList<Case>();
 		int j = 1;
-		if(plateau[x][y-1].lettre != null) {
-			while(plateau[x][y-j].lettre != null) {
-				contientLettre.add(plateau[x][y-j]);
-				j++;
-			}
-			estAdjacent = true;
-		} 
+		try {
+			if(plateau[x][y-1].lettre != null) {
+				while(plateau[x][y-j].lettre != null) {
+					contientLettre.add(plateau[x][y-j]);
+					j++;
+				}
+				estAdjacentH = true;
+			} 
+		} catch(IndexOutOfBoundsException e) {
+			//Empêche le crash, si le mot est au bord du plateau
+		}
+		System.out.println("BasMot : " + this.getLabelToList(contientLettre));
 		return contientLettre;
 	}
 	
@@ -281,13 +329,19 @@ public class Plateau extends Observable {
 	public List<Case> checkGauche(int x, int y){
 		List<Case> contientLettre = new ArrayList<Case>();
 		int j = 1;
-		if(plateau[x-1][y].lettre != null) {
-			while(plateau[x-j][y].lettre != null) {
-				contientLettre.add(plateau[x-j][y]);
-				j++;
-			}
-			estAdjacent = true;
-		} 
+		try {
+			if(plateau[x-1][y].lettre != null) {
+				while(plateau[x-j][y].lettre != null) {
+					contientLettre.add(plateau[x-j][y]);
+					j++;
+				}
+				estAdjacentV = true;
+			} 
+		} catch(IndexOutOfBoundsException e) {
+			//Empêche le crash, si le mot est au bord du plateau
+		}
+		Collections.reverse(contientLettre); //Inverse la liste
+		System.out.println("GaucheMot : " + this.getLabelToList(contientLettre));
 		return contientLettre;
 	}
 	
@@ -300,13 +354,18 @@ public class Plateau extends Observable {
 	public List<Case> checkDroite(int x, int y){
 		List<Case> contientLettre = new ArrayList<Case>();
 		int j = 1;
-		if(this.plateau[x+1][y].lettre != null) {
-			while(this.plateau[x+j][y].lettre != null) {
-				contientLettre.add(plateau[x+j][y]);
-				j++;
-			}
-			estAdjacent = true;
-		} 
+		try {
+			if(this.plateau[x+1][y].lettre != null) {
+				while(this.plateau[x+j][y].lettre != null) {
+					contientLettre.add(plateau[x+j][y]);
+					j++;
+				}
+				estAdjacentV = true;
+			} 	
+		} catch(IndexOutOfBoundsException e) {
+			//Empêche le crash, si le mot est au bord du plateau
+		}
+		System.out.println("DroiteMot : " + this.getLabelToList(contientLettre));
 		return contientLettre;
 	}
 	
@@ -317,20 +376,29 @@ public class Plateau extends Observable {
 	 * @param getNum le numéro de la lettre dans motJoue
 	 * @return true si tous est juste, sinon false
 	 */
-	public boolean checkHautBas(int x, int y, int getNum) {
+	public boolean checkHautBas(int x, int y, int getNum, List<Lettre> motJoue) {
+		char labelLettre;
+		if(motJoue.get(getNum) != null) {
+			labelLettre = motJoue.get(getNum).getLabel();
+		} else {
+			labelLettre = this.plateau[x][y].getLabelCase();
+		}
+		
 		if(this.getLabelToList(checkHaut(x, y)) != "" && this.getLabelToList(checkBas(x, y)) != "") {
-			String tempMot = this.getLabelToList(checkHaut(x, y)) + motJoue.get(getNum).getLabel() + this.getLabelToList(checkBas(x, y));
+			String tempMot = this.getLabelToList(checkHaut(x, y)) + labelLettre + this.getLabelToList(checkBas(x, y));
 			if(this.verification(tempMot) == false) {
 				System.out.println("Mot incorrect");
 				return false;
 			}
+			
 		} else if(this.getLabelToList(checkHaut(x, y)) != "") {
-			if(this.verification(this.getLabelToList(checkHaut(x, y)) + motJoue.get(getNum).getLabel()) == false) {
+			if(this.verification(this.getLabelToList(checkHaut(x, y)) + labelLettre) == false) {
 				System.out.println("Le mot en haut est incorrect");
 				return false;
 			}
+			
 		} else if(this.getLabelToList(checkBas(x, y)) != "") {
-			if(this.verification(motJoue.get(getNum).getLabel() + this.getLabelToList(checkBas(x, y))) == false) {
+			if(this.verification(labelLettre + this.getLabelToList(checkBas(x, y))) == false) {
 				System.out.println("Le mot en bas est incorrect");
 				return false;
 			}
@@ -345,20 +413,27 @@ public class Plateau extends Observable {
 	 * @param getNum le numéro de la lettre dans motJoue
 	 * @return true si tous est juste, sinon false
 	 */
-	public boolean checkGaucheDroite(int x, int y, int getNum) {
+	public boolean checkGaucheDroite(int x, int y, int getNum, List<Lettre> motJoue) {
+		char labelLettre;
+		if(motJoue.get(getNum) != null) {
+			labelLettre = motJoue.get(getNum).getLabel();
+		} else {
+			labelLettre = this.plateau[x][y].getLabelCase();
+		}
+		
 		if(this.getLabelToList(checkGauche(x, y)) != "" && this.getLabelToList(checkDroite(x, y)) != "") {
-			String tempMot = this.getLabelToList(checkGauche(x, y)) + motJoue.get(getNum).getLabel() + this.getLabelToList(checkDroite(x, y));
+			String tempMot = this.getLabelToList(checkGauche(x, y)) + labelLettre + this.getLabelToList(checkDroite(x, y));
 			if(this.verification(tempMot) == false) {
 				System.out.println("Mot incorrect");
 				return false;
 			}
 		} else if(this.getLabelToList(checkGauche(x, y)) != "") {
-			if(this.verification(this.getLabelToList(checkGauche(x, y)) + motJoue.get(getNum).getLabel()) == false) {
+			if(this.verification(this.getLabelToList(checkGauche(x, y)) + labelLettre) == false) {
 				System.out.println("Le mot à droite est incorrect");
 				return false;
 			}
 		} else if(this.getLabelToList(checkDroite(x, y)) != "") {
-			if(this.verification(motJoue.get(getNum).getLabel() + this.getLabelToList(checkDroite(x, y))) == false) {
+			if(this.verification(labelLettre + this.getLabelToList(checkDroite(x, y))) == false) {
 				System.out.println("Le mot à gauche est incorrect");
 				return false;
 			}
@@ -410,67 +485,62 @@ public class Plateau extends Observable {
 	}
 	
 	/**
-	 * Inverse une chaine de caractère
-	 * @param source la chaine de caractère à inverser
-	 * @return la chaine inversée
+	 * Copie le plateau, pour la sauvegarde
+	 * @param tab le tableau à copier
+	 * @return le tableau copié
 	 */
-	public String inverseString(String source) {
-	    int i;
-	    int len = source.length();
-	    StringBuilder dest = new StringBuilder(len);
-
-	    for (i = (len - 1); i >= 0; i--){
-	        dest.append(source.charAt(i));
-	    }
-
-	    return dest.toString();
+	public Case[][] copyPlateau() {
+		Case[][] tempArray = new Case [15][15];
+		for(int i = 0; i < 15; i++) { //X
+			for(int h = 0; h < 15; h++) { //Y
+				if(this.plateau[0 + i][0 + h].getLettre() != null) {
+					tempArray[0 + i][0 + h] = new Case(this.plateau[0 + i][0 + h].getBonus(), this.plateau[0 + i][0 + h].getLettre());
+				} else {
+					tempArray[0 + i][0 + h] = new Case(this.plateau[0 + i][0 + h].getBonus(), null);
+				}
+			}
+		}
+		return tempArray;
 	}
 	
 	//----------------------------------------------------------------------------------
 	
-	/* TODO A réécrire
 	/**
 	 * Test du premier mot
 	 * @param x La position x de la première lettre
 	 * @param y La position y de la première lettre
-	 *
-	public void checkPremierMot(int x, int y, char orientation, String mot){
-		if(plateau[x][y] == null) { //Check si la case est vide
-			if(plateau[x][y].getBonus() == 5) { //Check si le bonus est à 5
-				this.poserMot(x, y, orientation);
-			} else {
-				System.out.println("Erreur : Veuillez placer le premier mot au millieu");
-			} 
-		} else {
-			System.out.println("Erreur critique. Relancez le jeu.");
-		}
-	}
-	
-	/**
-	 * Permet de placer un mot sur le plateau
-	 * @param x La position x de la première lettre
-	 * @param y La position y de la première lettre
-	 *
-	public void poserMot(int x, int y, char orientation){
-			if(this.verificationPeripherique(x, y, orientation) == true) {
-				if(orientation == 'h') {
-					for(int i = 0; i < motJoue.size(); i++) {
-						int tempX = x + i;
-						plateau[tempX][y].setLabelCase((motJoue.get(i).getLabel()));
-					}
-				} else if (orientation == 'v') {
-					for(int i = 0; i < motJoue.size(); i++) {
-						int tempY = x + i;
-						plateau[x][tempY].setLabelCase((motJoue.get(i).getLabel()));
-					}
-				} else {
-					System.out.println("Erreur, vérifier l'orientation");
-				}
-			} else {
-				System.out.println("Mot incorrect");
+	 */
+	public boolean checkPremierMot(int x, int y, char orientation){
+			int j = 0;
+			boolean test = false; //Si c'est OK  --> true
+			switch (orientation) {
+				case 'v' :
+					while(plateau[x][y - j].lettre != null) {
+						if(plateau[x][y - j].getBonus() == 5) {
+							test = true;
+						}
+						j++;
+					} 
+					
+					break;
+				case 'h' : 
+					while(plateau[x + j][y].lettre != null) {
+						if(plateau[x + j][y].getBonus() == 5) {
+							test = true;
+						}
+						j++;
+					} 
+					
+					break;
+				default : 
+					System.out.println("Erreur, orientation incorrecte");
+					test = false;
 			}
+			if (test) {
+				this.debutPartie = true;
+			}
+			return test;
 	}
-	*/
 	
 	
 	/**
@@ -486,8 +556,9 @@ public class Plateau extends Observable {
 	 * Affiche le plateau en console
 	 * @return string contenant tout le plateau
 	 */
+	@Override
 	public String toString() {
-		int j = 0;
+		int j = 14; //int j = 0;
 		String string = "";
 		for(int i = 0; i < 15; i++) {
 			string += "|";
@@ -500,7 +571,7 @@ public class Plateau extends Observable {
 				}
 			}
 			string += "\n";
-			j++;
+			j--; //j++;
 		}
 		return string;
 	}

@@ -26,7 +26,7 @@ public class Joueur extends Observable{
 	/**
 	 * Tableau de Lettre représentant les Lettres du joueur
 	 */
-	protected  List<Lettre> mainJoueur;
+	public  List<Lettre> mainJoueur;
 	
 	
 	/**
@@ -93,7 +93,7 @@ public class Joueur extends Observable{
 	* Retourne toute la main du joueur
 	* @return the mainJoueur
 	*/
-	protected List<Lettre> getMainJoueur() {
+	public List<Lettre> getMainJoueur() {
 		return mainJoueur;
 	}
 
@@ -154,6 +154,96 @@ public class Joueur extends Observable{
 		for(int i = 0; i < exitLettre.size(); i++) {
 				sac.addLettreAuSac(exitLettre.get(i)); 
 				mainJoueur.remove(exitLettre.get(i));
+		}
+		this.pioche(sac);
+	}
+	
+	/**
+	 * Vérifie que les lettres rentrées en console sont dans la main
+	 * @param mot le mot à jouer
+	 * @param motJoue La liste de lettre du mots sur le plateau
+	 * @return Une liste de lettre récupérée depuis la main
+	 */
+	public void verifierLettreMain(String[] mot, List<Lettre> motJoue) {
+		//Gère les lettres de la main
+		Lettre tempLettre = null; //Lettre temporaire
+		int j = 0; //variable incrémentale 
+		boolean lettreTrouve = false; //Flag, lettre trouvée
+		
+		for(int i = 0; i < mot.length; i++) {
+			lettreTrouve = false;
+			j = 0;
+			
+			//Tant qu' on n'a pas itéré toute la main et que la lettre n'est pas trouvée
+			while(j < 7 && lettreTrouve == false) {
+				if(mot[i].charAt(0) != (this.getLabelLettreMain(j))) {
+					tempLettre = null;
+				} else { 
+					tempLettre = this.getLettreMain(j);
+					lettreTrouve = true;
+				}
+				j++;
+			}
+			
+			motJoue.add(tempLettre);
+		}
+	}
+	
+	public boolean poserMotPlateau(String mot, int x, int y, List<Lettre> motJoue, List<Lettre> motMain, 
+			String[] motArray, Case[][] plateauSave, List<Lettre> saveMain, char orientation, Case[][] plateau) {
+		//Gère la pose des Lettres
+		int xPos = 0; //incrément Position x
+		int yPos = 0; //incrément Position y
+		@SuppressWarnings("unused") //Utiliser dans le try/catch
+		boolean tourStop = false; //Flag, true si erreur
+		for(int i = 0; i < mot.length(); i++) {
+			try {
+				if(plateau[x + xPos][y - yPos].getLettre() == null) {
+					plateau[x + xPos][y - yPos].setLettre(motJoue.get(i));
+					motMain.add(motJoue.get(i));
+				} else {
+					try {
+						if(plateau[x + xPos][y - yPos].getLabelCase() != motArray[i].charAt(0)) {
+							tourStop = true;
+							return false;
+						}
+					} catch (NullPointerException e){
+						System.out.println("Erreur : motJoue vide !");
+					}
+				}
+			} catch (ArrayIndexOutOfBoundsException e) {
+				this.mainJoueur = saveMain;
+				plateau = plateauSave;
+				System.out.println(plateau);
+				System.out.println(this);
+				System.out.println("Erreur : votre mot sort du plateau");
+				return false;
+			}
+
+			if(orientation == 'h') {
+				xPos ++;
+			} else if (orientation == 'v') {
+				yPos ++;
+			} else {
+				System.out.println("Erreur");
+				plateau = plateauSave;
+				return false;
+			}
+			
+		}
+		return true;
+	}
+	
+	/**
+	 * Enlève les mots posé sur le plateau (de la main)
+	 * @param motMain Les lettres venant de la main
+	 * @param motJoue Le mot posé
+	 */
+	public void viderLaMain(List<Lettre> motMain, List<Lettre> motJoue, Sac sac) {
+		for (int i = 0; i < motMain.size(); i++) {
+			if(motJoue.get(i) != null){
+				this.mainJoueur.remove(motMain.get(i));
+			}
 		}
 		this.pioche(sac);
 	}

@@ -91,4 +91,14 @@ public class Case {
 		this.bonus = bonus;
 	}
 	
+	/**
+	 * Constructeur de l'objet Case
+	 * @param bonus le bonus associé à la case
+	 * @param lettre la lettre associée à la case
+	 */
+	public Case(int bonus, Lettre lettre) {
+		this.lettre = lettre;
+		this.bonus = bonus;
+	}
+	
 }

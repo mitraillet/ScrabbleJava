@@ -37,7 +37,6 @@ public class Dictionnaire {
 		return dictionnaire;
 	}
 	
-	
 
 	/**
 	 * Construis le dictionnaire sur base du fichier dictionnaire.txt
@@ -45,7 +44,7 @@ public class Dictionnaire {
 	private void construireDico() {
 		try {
 			File dico = new File("ressource/dictionnaire.txt"); //Path du dictionnaire.txt
-			BufferedReader br = new BufferedReader(new FileReader(dico)); //Crétation du buffer
+			BufferedReader br = new BufferedReader(new FileReader(dico)); //Création du buffer
 			String line; //Variable pour les lignes
 			while ((line = br.readLine()) != null) { //Pour chaque ligne éxécute la boucle
 					this.dictionnaire.add(line);
