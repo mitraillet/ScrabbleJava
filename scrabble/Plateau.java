@@ -572,8 +572,59 @@ public class Plateau extends Observable {
 	 * Utilisation des valeurs de chaques lettres pondérées avec le bonus
 	 * et ajout dans la classe Joueur.score 
 	 */
-	public void calculScore() {
+	public void calculScore(int x, int y, char orientation, Joueur joueurActuel) {
 		// Enorme point d'interrogation sur ce que l'on doit faire et comment on peut le calculer
+		int h = 0;
+		int v = 0;
+		int doubleMot = 0;
+		int tripleMot = 0;
+		Lettre tempLettre = new Lettre();
+		int valeur = 0;
+		int score = 0;
+		
+		/*while (score == 0){ //TODO
+			
+			
+			if(orientation == 'h') {
+				h++;
+			} else if (orientation == 'v') {
+				v++;
+			} else {
+				System.out.println("Mauvaise orientation");
+			}*/
+			
+			valeur = plateau[x + h][y + v].getValeurCase();
+			
+			switch (plateau[x + h][y + v].getBonus()){
+			case 1: 
+				score += valeur*2;
+				break;
+			case 2:
+				score += valeur*3;
+				break;
+			case 3:
+				doubleMot += 1;
+				break;
+			case 4:
+				tripleMot += 1;
+				break;
+			case 5: 
+				doubleMot += 1;
+				break;
+			default:
+				break;
+			}
+			
+		//}
+		
+		if(doubleMot > 0) {
+			score = (score*2)*doubleMot;
+		} else if (tripleMot > 0) {
+			score = (score*2)*tripleMot;
+		}
+		
+		joueurActuel.setScore(score);
+		
 	}
 	
 	/**
