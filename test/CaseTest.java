@@ -98,18 +98,16 @@ public class CaseTest {
 	}
 
 	/**
-	 * Test du setter du label de la lettre
+	 * Test du getter de la valeur de la lettre
 	 */
 	@Test
-	public void testSetLabelCase() {
+	public void testGetValeurCase() {
 		//fail("Not yet implemented"); // TODO
 		Case caseTest = new Case();
 		Lettre lettreTest = new Lettre('b', 1);
 		caseTest.setLettre(lettreTest);
 		
-		caseTest.setLabelCase('z');
-		
-		assertEquals(caseTest.getLabelCase(), 'z');
+		assertEquals(caseTest.getValeurCase(), 1);
 	}
 
 }
