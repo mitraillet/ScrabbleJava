@@ -83,26 +83,6 @@ public class Sac {
 		contenuSac.add(joker1);
 		contenuSac.add(joker2);	
 	}
-	
-	/**
-	 * Méthode lié a la méthode pioche du joueur 
-	 * en vue de lui compléter sa main ou de la lui remplir complétement
-	 */
-	public void pioche() {
-		/*
-		 * ajout de lettres dans la main de joueur de tel sorte que nmbre de lettre
-		 * dans sa main soit égal é 0 et pioche de lettre random
-		 */
-	}
-	
-	/**
-	 * Méthode lié a la méthode remelange de joueur
-	 * pour pouvoir changer certaines lettres
-	 * Appel de la méthode pioche
-	 */
-	public void melangeMain() {
-		
-	}
 
 	/**
 	 * Récupère les donnees des lettre dans le fichier dataLettre.XML et remplis la variable sac

@@ -10,7 +10,9 @@ package scrabble;
 public class Joker extends Lettre {
 
 	/**
-	 * Permet de définir la valeur du libellé
+	 * Permet de définir la valeur du label du joker 
+	 * et ce seulement si c'est une lettre
+	 * @param label de la lettre de type String pour plus de flexibilité
 	 */
 	public void setJoker(String labelString) {
 		char labelChar;
