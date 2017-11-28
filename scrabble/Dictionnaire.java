@@ -62,6 +62,7 @@ public class Dictionnaire {
 	 * Construis le dictionnaire sur base du fichier dictionnaire.txt
 	 */
 	public Dictionnaire() {
-		this.construireDico();
+		this.dictionnaire = new HashSet<String>();
+		construireDico();
 	}
 }

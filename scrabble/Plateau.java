@@ -72,11 +72,11 @@ public class Plateau extends Observable {
 	 */
 	private void construireDico() {
 		try {
-			File dico = new File("ressource/dictionnaire.txt"); //Path du dictionnaire.txt
+			File dico = new File("ressource/MotValideScrabble.txt"); //Path du dictionnaire.txt
 			BufferedReader br = new BufferedReader(new FileReader(dico)); //Crétation du buffer
 			String line; //Variable pour les lignes
-			while ((line = br.readLine()) != null) { //Pour chaque ligne éxécute la boucle
-					this.dictionnaire.add(line);
+			while ((line = br.readLine()) != null) { //Pour chaque ligne exécute la boucle
+					this.dictionnaire.add(line.toLowerCase());
 			}
 			br.close(); //Ferme le fichier
 		} catch(FileNotFoundException e) {

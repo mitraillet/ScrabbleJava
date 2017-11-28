@@ -14,7 +14,6 @@ import controller.ScrabbleController;
 
 public class ScrabbleViewConsole extends ScrabbleView implements Observer{
 	protected Scanner sc;
-	protected Dictionnaire dictionnaire;
 	
 	public ScrabbleViewConsole(Plateau plateau, Joueur joueur, ScrabbleController controller) {
 		// TODO Auto-generated constructor stub

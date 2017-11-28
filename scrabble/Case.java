@@ -64,16 +64,7 @@ public class Case {
 	 */
 	public char getLabelCase() {
 		return this.lettre.getLabel();
-	}
-	
-	/**
-	 * Mettre à jour le label de la lettre contenue dans la case
-	 * @param label le nouveau label
-	 */
-	public void setLabelCase(char label){
-		this.lettre.setLabel(label);
-	}
-	
+	}	
 	
 	/**
 	 * Constructeur de l'objet Case par défaut (sans paramètre)

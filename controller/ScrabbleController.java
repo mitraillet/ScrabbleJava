@@ -15,13 +15,11 @@ public class ScrabbleController {
 	Plateau plateau; 
 	Joueur joueur;
 	Sac sac;
-	Dictionnaire dictionnaire;
 	ScrabbleView vue;
-	public ScrabbleController(Plateau plateau, Joueur joueur, Sac sac, Dictionnaire dictionnaire) {
+	public ScrabbleController(Plateau plateau, Joueur joueur, Sac sac) {
 		this.plateau = plateau;
 		this.joueur = joueur;
 		this.sac = sac;
-		this.dictionnaire = dictionnaire;
 	}
 	
 	public void melangeMain(String label) {
