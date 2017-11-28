@@ -64,7 +64,15 @@ public class Case {
 	 */
 	public char getLabelCase() {
 		return this.lettre.getLabel();
-	}	
+	}
+	
+	/**
+	 * Renvoie la valeur de la lettre contenue dans la case
+	 * @return la valeur de la lettre contenue dans la case
+	 */
+	public int getValeurCase() {
+		return this.lettre.getValeur();
+	}
 	
 	/**
 	 * Constructeur de l'objet Case par défaut (sans paramètre)
