@@ -203,7 +203,6 @@ public class Plateau extends Observable {
 				System.out.println("Le mot est correct");
 				return true;
 			} else {
-				System.out.println(this);
 				System.out.println("Erreur : Placez le mot adjacent à un autre");
 				return false;
 			}
@@ -247,7 +246,6 @@ public class Plateau extends Observable {
 				
 				if(orientation =='v') {
 					if(this.checkGaucheDroite(x, y-i, i, motJoue) != true) {
-						System.out.println("gauchedroite");
 						return false;
 					}
 					
@@ -414,6 +412,7 @@ public class Plateau extends Observable {
 		char labelLettre;
 		if(motJoue.get(getNum) != null) {
 			labelLettre = motJoue.get(getNum).getLabel();
+			this.calculScore(x, y);
 		} else {
 			labelLettre = this.plateau[x][y].getLabelCase();
 		}
@@ -567,20 +566,24 @@ public class Plateau extends Observable {
 			return test;
 	}
 	
+	int doubleMot = 0;
+	int tripleMot = 0;
+	int score = 0;
+	
 	/**
 	 * Calcul du score en prenant compte les bonus
 	 * Utilisation des valeurs de chaques lettres pondérées avec le bonus
 	 * et ajout dans la classe Joueur.score 
 	 */
-	public void calculScore(int x, int y, char orientation, Joueur joueurActuel) {
+	public int calculScore(int x, int y) {
 		// Enorme point d'interrogation sur ce que l'on doit faire et comment on peut le calculer
 		int h = 0;
 		int v = 0;
-		int doubleMot = 0;
-		int tripleMot = 0;
-		Lettre tempLettre = new Lettre();
 		int valeur = 0;
-		int score = 0;
+		
+		doubleMot = 0;
+		tripleMot = 0;
+		score = 0;
 		
 		/*while (score == 0){ //TODO
 			
@@ -615,8 +618,15 @@ public class Plateau extends Observable {
 				break;
 			}
 			
-		//}
-		
+		//}	
+		return score;
+	}
+	
+	/**
+	 * Calcul et mets à jour le score du joueur
+	 * @param joueurActuel le joueur où le score sera mis à jour
+	 */
+	public void setScore(Joueur joueurActuel) {
 		if(doubleMot > 0) {
 			score = (score*2)*doubleMot;
 		} else if (tripleMot > 0) {
@@ -624,7 +634,6 @@ public class Plateau extends Observable {
 		}
 		
 		joueurActuel.setScore(score);
-		
 	}
 	
 	/**
@@ -643,7 +652,7 @@ public class Plateau extends Observable {
 			}
 			for(int h = 0; h < 15; h++) {
 				if(plateau[h][j].getLettre() == null) {
-					string += (plateau[h][j].getBonus() + "|");
+						string += (plateau[h][j].getBonus() + "|");
 				}
 				else {
 					string += (plateau[h][j].getLabelCase() + "|");
