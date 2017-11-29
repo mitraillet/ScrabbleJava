@@ -583,7 +583,7 @@ public class Plateau extends Observable {
 		
 		//doubleMot = 0;
 		//tripleMot = 0;
-		//score = 0;
+		int score = 0;
 			
 		valeur = plateau[x][y].getValeurCase();
 			
@@ -599,9 +599,11 @@ public class Plateau extends Observable {
 			break;
 		case 4:
 			tripleMot += 1;
+			score += valeur;
 			break;
 		case 5: 
 			doubleMot += 1;
+			score += valeur;
 			break;
 		default:
 			score += valeur;
