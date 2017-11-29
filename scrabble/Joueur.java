@@ -256,11 +256,10 @@ public class Joueur extends Observable{
 	/**
 	 * Enlève les mots posés sur le plateau (de la main)
 	 * @param motMain Les lettres venant de la main
-	 * @param motJoue Le mot posé
 	 */
-	public void viderLaMain(List<Lettre> motMain, List<Lettre> motJoue, Sac sac) {
+	public void viderLaMain(List<Lettre> motMain, Sac sac) {
 		for (int i = 0; i < motMain.size(); i++) {
-			if(motJoue.get(i) != null){
+			if(motMain.get(i) != null){
 				this.getMainJoueur().remove(motMain.get(i));
 			}
 		}
