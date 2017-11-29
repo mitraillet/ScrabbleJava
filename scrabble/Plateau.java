@@ -412,7 +412,6 @@ public class Plateau extends Observable {
 		char labelLettre;
 		if(motJoue.get(getNum) != null) {
 			labelLettre = motJoue.get(getNum).getLabel();
-			this.calculScore(x, y);
 		} else {
 			labelLettre = this.plateau[x][y].getLabelCase();
 		}
@@ -534,12 +533,13 @@ public class Plateau extends Observable {
 	 * @param x La position x de la première lettre
 	 * @param y La position y de la première lettre
 	 */
-	public boolean checkPremierMot(int x, int y, char orientation){
+	public boolean checkPremierMot(int x, int y, char orientation, Joueur joueurActuel){
 			int j = 0;
 			boolean test = false; //Si c'est OK  --> true
 			switch (orientation) {
 				case 'v' :
 					while(plateau[x][y - j].lettre != null) {
+						this.calculScore(x, y - j);
 						if(plateau[x][y - j].getBonus() == 5) {
 							test = true;
 						}
@@ -549,6 +549,7 @@ public class Plateau extends Observable {
 					break;
 				case 'h' : 
 					while(plateau[x + j][y].lettre != null) {
+						this.calculScore(x + j, y);
 						if(plateau[x + j][y].getBonus() == 5) {
 							test = true;
 						}
@@ -562,6 +563,7 @@ public class Plateau extends Observable {
 			}
 			if (test) {
 				this.debutPartie = true;
+				this.setScore(joueurActuel);
 			}
 			return test;
 	}
@@ -575,51 +577,38 @@ public class Plateau extends Observable {
 	 * Utilisation des valeurs de chaques lettres pondérées avec le bonus
 	 * et ajout dans la classe Joueur.score 
 	 */
-	public int calculScore(int x, int y) {
+	public void calculScore(int x, int y) {
 		// Enorme point d'interrogation sur ce que l'on doit faire et comment on peut le calculer
-		int h = 0;
-		int v = 0;
 		int valeur = 0;
 		
-		doubleMot = 0;
-		tripleMot = 0;
-		score = 0;
-		
-		/*while (score == 0){ //TODO
+		//doubleMot = 0;
+		//tripleMot = 0;
+		//score = 0;
 			
+		valeur = plateau[x][y].getValeurCase();
 			
-			if(orientation == 'h') {
-				h++;
-			} else if (orientation == 'v') {
-				v++;
-			} else {
-				System.out.println("Mauvaise orientation");
-			}*/
+		switch (plateau[x][y].getBonus()){
+		case 1: 
+			score += (valeur*2);
+			break;
+		case 2:
+			score += (valeur*3);
+			break;
+		case 3:
+			doubleMot += 1;
+			break;
+		case 4:
+			tripleMot += 1;
+			break;
+		case 5: 
+			doubleMot += 1;
+			break;
+		default:
+			score += valeur;
+			break;
+		}
 			
-			valeur = plateau[x + h][y + v].getValeurCase();
-			
-			switch (plateau[x + h][y + v].getBonus()){
-			case 1: 
-				score += valeur*2;
-				break;
-			case 2:
-				score += valeur*3;
-				break;
-			case 3:
-				doubleMot += 1;
-				break;
-			case 4:
-				tripleMot += 1;
-				break;
-			case 5: 
-				doubleMot += 1;
-				break;
-			default:
-				break;
-			}
-			
-		//}	
-		return score;
+		this.score += score;
 	}
 	
 	/**
