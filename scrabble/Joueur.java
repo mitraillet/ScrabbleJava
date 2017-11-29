@@ -265,23 +265,28 @@ public class Joueur extends Observable{
 		}
 		this.pioche(sac);
 	}
+	
 	/**
 	 * Permet au joueur de passer le tour
 	 */
 	public void passer() {
 		System.out.println("Passer");
 	}
+	
 	/**
 	 * Affiche la main du joueur
 	 * @return string contenant un String de la main du joueur
 	 */
 	public String toString() {
+		String joueur;
+		String score = "Score : " + this.score;
 		String string = "Votre main : ";
 		for(int i = 0; i < this.getSizeMainJoueur(); i++)
 	    {
 			string +=this.getLabelLettreMain(i) + " ";
 	    }
-		return string;
+		joueur = score + '\n' + string;
+		return joueur;
 	}
 
 }
