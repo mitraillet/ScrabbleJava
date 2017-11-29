@@ -1,13 +1,13 @@
 package test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.xpath.XPathExpressionException;
 
-import org.junit.jupiter.api.Test;
 import scrabble.Joueur;
 import scrabble.Lettre;
 import scrabble.Sac;
@@ -164,7 +164,8 @@ class JoueurTest {
 		joueur.melanger(lettreMainTestChangement, sac);
 		assertEquals(joueur.getSizeMainJoueur(), tailleMain);
 		assertEquals(sac.tailleContenuSac(), tailleSac);
-
+		
+		//Vérif si lettre non comprise dans la main
 		List<Lettre> mainTest = joueur.getMainJoueur();
 		lettreMainTestChangement = new ArrayList<Lettre>();
 		lettreMainTestChangement.add(new Lettre('y', 86));
@@ -184,8 +185,26 @@ class JoueurTest {
 	}
 
 	@Test
-	void testViderLaMain() {
-		fail("Not yet implemented"); // TODO
+	void testViderLaMain() throws XPathExpressionException {
+		Sac sac = new Sac();
+		Joueur joueur = new Joueur();
+		List<Lettre> lettreMainTestChangement = new ArrayList<Lettre>();
+		lettreMainTestChangement.add(new Lettre('y', 86));
+		lettreMainTestChangement.add(new Lettre('i', 6));
+		lettreMainTestChangement.add(new Lettre('t', 50));
+		joueur.pioche(sac);
+		
+		lettreMainTestChangement.add(joueur.getLettreMain(1));
+		lettreMainTestChangement.add(joueur.getLettreMain(2));
+		lettreMainTestChangement.add(joueur.getLettreMain(0));
+		
+		joueur.viderLaMain(lettreMainTestChangement, sac);
+		assertNotSame(joueur.getLettreMain(1), lettreMainTestChangement.get(0));
+		assertNotSame(joueur.getLettreMain(2), lettreMainTestChangement.get(1));
+		assertNotSame(joueur.getLettreMain(0), lettreMainTestChangement.get(2));
+		
+		
+		
 	}
 
 	@Test

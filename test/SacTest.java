@@ -3,11 +3,10 @@
  */
 package test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
+import org.junit.Test;
 
 import javax.xml.xpath.XPathExpressionException;
-
-import org.junit.jupiter.api.Test;
 
 import scrabble.Lettre;
 import scrabble.Sac;
