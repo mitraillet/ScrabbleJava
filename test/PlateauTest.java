@@ -8,6 +8,7 @@ import java.util.*;
 import scrabble.Case;
 import scrabble.Lettre;
 import scrabble.Plateau;
+import scrabble.Joueur;
 
 public class PlateauTest {
 
@@ -236,6 +237,7 @@ public class PlateauTest {
 	@Test
 	public void testCheckPremierMot() {
 		//fail("Not yet implemented"); s
+		Joueur joueur = new Joueur();
 		Plateau plateauTest = new Plateau();
 		Lettre m = new Lettre('m', 1);
 		Lettre o = new Lettre('o', 1);
@@ -245,19 +247,38 @@ public class PlateauTest {
 		plateauTest.plateau[6][7].setLettre(o);
 		plateauTest.plateau[7][7].setLettre(t);
 		plateauTest.plateau[8][7].setLettre(s);
-		assertEquals(plateauTest.checkPremierMot(5, 7, 'h'), true);
+		assertEquals(plateauTest.checkPremierMot(5, 7, 'h', joueur), true);
 		
 		Plateau plateauTest2 = new Plateau();
 		plateauTest2.plateau[5][8].setLettre(m);
 		plateauTest2.plateau[6][8].setLettre(o);
 		plateauTest2.plateau[7][8].setLettre(t);
 		plateauTest2.plateau[8][8].setLettre(s);
-		assertEquals(plateauTest2.checkPremierMot(5, 8, 'h'), false);
+		assertEquals(plateauTest2.checkPremierMot(5, 8, 'h', joueur), false);
 	}
 
 	@Test
 	public void testCalculScore() {
-		fail("Not yet implemented"); // TODO
+		//fail("Not yet implemented"); // TODO
+		Plateau plateauTest = new Plateau();
+		Lettre m = new Lettre('m', 1);
+		Lettre o = new Lettre('o', 1);
+		Lettre t = new Lettre('t', 1);
+		Lettre s = new Lettre('s', 1);
+		
+		List<Lettre> listLettre = new ArrayList<Lettre>();
+		listLettre.add(m);
+		listLettre.add(o);
+		listLettre.add(t);
+		listLettre.add(s);
+		
+		for(int i = 0; i < 4; i++) {
+			plateauTest.plateau[7][0 + i].setLettre(listLettre.get(i));
+			plateauTest.calculScore(7, 0 + i);
+		}
+		
+		assertEquals(plateauTest.score, 5); //Pas de prise en compte des mots double/triple
+		
 	}
 
 	@Test
