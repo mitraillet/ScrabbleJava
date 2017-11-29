@@ -69,7 +69,7 @@ public class ScrabbleController {
 			//Vérifie les mots
 			if(plateau.debutPartie == true) {
 				if(plateau.verificationPeripherique(x, y, orientation, motMain, motJoue)) {
-					joueur.viderLaMain(motMain, motJoue, sac);
+					joueur.viderLaMain(motMain, sac);
 				} else {
 					joueur.setMainJoueur(saveMain);
 					plateau.plateau = plateauSave;
@@ -78,8 +78,8 @@ public class ScrabbleController {
 				
 			} else {
 				//Enlève les lettres jouée de la main
-				if(plateau.checkPremierMot(x, y, orientation)) {
-					joueur.viderLaMain(motMain, motJoue, sac);	
+				if(plateau.checkPremierMot(x, y, orientation, joueur)) {
+					joueur.viderLaMain(motMain, sac);	
 				} else {
 					joueur.setMainJoueur(saveMain);
 					plateau.plateau = plateauSave;
