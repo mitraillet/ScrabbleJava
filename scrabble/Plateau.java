@@ -570,15 +570,14 @@ public class Plateau extends Observable {
 	
 	int doubleMot = 0;
 	int tripleMot = 0;
-	int score = 0;
+	public int score = 0;
 	
 	/**
-	 * Calcul du score en prenant compte les bonus
-	 * Utilisation des valeurs de chaques lettres pondérées avec le bonus
-	 * et ajout dans la classe Joueur.score 
+	 * Calcul du score pour une lettre en prenant compte les bonus
+	 * @param x la position x de la lettre
+	 * @param y la position y de la lettre
 	 */
 	public void calculScore(int x, int y) {
-		// Enorme point d'interrogation sur ce que l'on doit faire et comment on peut le calculer
 		int valeur = 0;
 		
 		//doubleMot = 0;
