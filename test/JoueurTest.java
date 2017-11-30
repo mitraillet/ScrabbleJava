@@ -10,6 +10,7 @@ import javax.xml.xpath.XPathExpressionException;
 
 import scrabble.Joueur;
 import scrabble.Lettre;
+import scrabble.Plateau;
 import scrabble.Sac;
 
 class JoueurTest {
@@ -180,8 +181,11 @@ class JoueurTest {
 	}
 
 	@Test
-	void testPoserMotPlateau() {
-		fail("Not yet implemented"); // TODO
+	void testPoserMotPlateau() throws XPathExpressionException {
+		Sac sac = new Sac();
+		Joueur joueur = new Joueur();
+		Plateau plateau = new Plateau();
+		//joueur.poserMotPlateau(mot, x, y, motJoue, motMain, motArray, plateauSave, saveMain, orientation, plateau)
 	}
 
 	@Test
