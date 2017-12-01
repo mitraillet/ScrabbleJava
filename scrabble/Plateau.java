@@ -601,17 +601,17 @@ public class Plateau extends Observable {
 	/**
 	 * Toutes les lettres doublées
 	 */
-	List<Lettre> lettreDouble = new ArrayList<Lettre>();
+	private List<Lettre> lettreDouble = new ArrayList<Lettre>();
 	
 	/**
 	 * Toutes les lettres triplées
 	 */
-	List<Lettre> lettreTriple = new ArrayList<Lettre>();
+	private List<Lettre> lettreTriple = new ArrayList<Lettre>();
 	
 	/**
 	 * Lettre sans bonus
 	 */
-	List<Lettre> lettreScore = new ArrayList<Lettre>();
+	private List<Lettre> lettreScore = new ArrayList<Lettre>();
 	
 	/**
 	 * Calcule le score du mot posé
@@ -678,29 +678,6 @@ public class Plateau extends Observable {
 				lettreTriple.add(caseActuel.getLettre());
 			}
 			
-			/*switch (caseActuel.getBonus()){
-				case 1: 
-					lettreDouble.add(caseActuel.getLettre());
-					continue;
-				case 2:
-					lettreTriple.add(caseActuel.getLettre());
-				case 3:
-					doubleMot += 1;
-				case 4:
-					tripleMot += 1;
-				case 5: 
-					doubleMot += 1;
-				default:
-					if(doubleMot == 0 && tripleMot == 0) {
-						lettreScore.add(caseActuel.getLettre());
-					} else if(doubleMot > 0) {
-						lettreDouble.add(caseActuel.getLettre());
-					} else if(tripleMot > 0) {
-						lettreTriple.add(caseActuel.getLettre());
-					}
-					break;
-			}*/
-			
 			caseActuel.setBonus(0);
 			
 			if(orientation == 'h') {
@@ -757,8 +734,7 @@ public class Plateau extends Observable {
 	}
 	
 	/**
-	 * Calcule le score du premier mot
-	 * @param joueurActuel le joueur où le score sera mis à jour
+	 * Calcule le score d'un mot en comptant les mots doubles et triples
 	 */
 	public void calculScoreMot() {
 		int score = 0;
@@ -779,8 +755,13 @@ public class Plateau extends Observable {
 		System.out.println("Score :" + score);
 	}
 	
+	/**
+	 * Actualise le score du joueur passé en paramètre
+	 * @param joueurActuel le joueur qu'on actualise
+	 */
 	public void setScoreJoueur(Joueur joueurActuel) {
 		joueurActuel.addScore(tempScore);
+		this.tempScore = 0;
 	}
 	
 	/**
