@@ -46,6 +46,13 @@ public class Joueur extends Observable{
 	public void setScore(int score) {
 		this.score = score;
 	}
+	
+	/**
+	 * @param ajoute le score d'un mot au joueur
+	 */
+	public void addScore(int score) {
+		this.score += score;
+	}
 
 	/**
 	* Constructeur par défaut de la classe Joueur
