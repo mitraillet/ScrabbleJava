@@ -79,7 +79,7 @@ public class ScrabbleController {
 				
 			} else {
 				//Enlève les lettres jouée de la main
-				if(plateau.checkPremierMot(x, y, orientation, joueur)) {
+				if(plateau.checkPremierMot(x, y, orientation, joueur, motMain)) {
 					plateau.setScoreJoueur(joueur);
 					joueur.viderLaMain(motMain, sac);	
 				} else {
