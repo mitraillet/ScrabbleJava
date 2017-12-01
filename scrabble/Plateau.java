@@ -657,11 +657,14 @@ public class Plateau extends Observable {
 			Case caseActuel = this.plateau[xDebut + h][yDebut - v];
 			
 			int bonusActuel = caseActuel.getBonus();
+			boolean flagEstCompte = false; //Flag, true si la lettre est comptabilisé
 			
 			if(bonusActuel == 1) {
 				lettreDouble.add(caseActuel.getLettre());
+				flagEstCompte = true;
 			} else if (bonusActuel == 2) {
 				lettreTriple.add(caseActuel.getLettre());
+				flagEstCompte = true;
 			} else if (bonusActuel == 3) {
 				doubleMot += 1;
 			} else if (bonusActuel == 4) {
@@ -670,7 +673,7 @@ public class Plateau extends Observable {
 				doubleMot += 1;
 			}
 			
-			if(doubleMot == 0 && tripleMot == 0) {
+			if(doubleMot == 0 && tripleMot == 0 && flagEstCompte == false) {
 				lettreScore.add(caseActuel.getLettre());
 			} else if(doubleMot > 0) {
 				lettreDouble.add(caseActuel.getLettre());
