@@ -154,7 +154,7 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 		JPanel copyMain;
 		JButton melange;
 		JButton annuler;
-		String label;
+		String label = "";
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -191,11 +191,10 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 			
 			JPanel mainBox11 = new JPanel(new GridLayout(1,7));	
 			
-			for(int i = 0; i < joueur.getSizeMainJoueur(); i++) {
-				JCheckBox img;
-				char labelIMG = joueur.getLabelLettreMain(i);
+			JCheckBox img;
+			
+				char labelIMG = joueur.getLabelLettreMain(0);
 				event e = new event();
-				
 				if(labelIMG == '?') {
 					img = new JCheckBox(new ImageIcon("ressource/image/lettre/joker.png", "?"));
 					img.setSelectedIcon(new ImageIcon("ressource/image/lettre/jokerSelected.png", "?"));
@@ -204,10 +203,109 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 					img = new JCheckBox(new ImageIcon("ressource/image/lettre/" + labelIMG + ".png", labelIMG +""));
 					img.setSelectedIcon(new ImageIcon("ressource/image/lettre/" + labelIMG + "Selected.png", labelIMG +""));
 				}
+				
+			JCheckBox img1;
+			
+				labelIMG = joueur.getLabelLettreMain(1);
+				event e1 = new event();
+				if(labelIMG == '?') {
+					img1 = new JCheckBox(new ImageIcon("ressource/image/lettre/joker.png", "?"));
+					img1.setSelectedIcon(new ImageIcon("ressource/image/lettre/jokerSelected.png", "?"));
+				}
+				else {
+					img1 = new JCheckBox(new ImageIcon("ressource/image/lettre/" + labelIMG + ".png", labelIMG +""));
+					img1.setSelectedIcon(new ImageIcon("ressource/image/lettre/" + labelIMG + "Selected.png", labelIMG +""));
+				}
+
+			JCheckBox img2;
+			
+				labelIMG = joueur.getLabelLettreMain(2);
+				event e2 = new event();
+				if(labelIMG == '?') {
+					img2 = new JCheckBox(new ImageIcon("ressource/image/lettre/joker.png", "?"));
+					img2.setSelectedIcon(new ImageIcon("ressource/image/lettre/jokerSelected.png", "?"));
+				}
+				else {
+					img2 = new JCheckBox(new ImageIcon("ressource/image/lettre/" + labelIMG + ".png", labelIMG +""));
+					img2.setSelectedIcon(new ImageIcon("ressource/image/lettre/" + labelIMG + "Selected.png", labelIMG +""));
+				}
+				
+			JCheckBox img3;
+			
+				labelIMG = joueur.getLabelLettreMain(3);
+				event e3 = new event();
+				
+				if(labelIMG == '?') {
+					img3 = new JCheckBox(new ImageIcon("ressource/image/lettre/joker.png", "?"));
+					img3.setSelectedIcon(new ImageIcon("ressource/image/lettre/jokerSelected.png", "?"));
+				}
+				else {
+					img3 = new JCheckBox(new ImageIcon("ressource/image/lettre/" + labelIMG + ".png", labelIMG +""));
+					img3.setSelectedIcon(new ImageIcon("ressource/image/lettre/" + labelIMG + "Selected.png", labelIMG +""));
+				}
+				
+			JCheckBox img4;
+			
+				labelIMG = joueur.getLabelLettreMain(4);
+				event e4 = new event();
+				if(labelIMG == '?') {
+					img4 = new JCheckBox(new ImageIcon("ressource/image/lettre/joker.png", "?"));
+					img4.setSelectedIcon(new ImageIcon("ressource/image/lettre/jokerSelected.png", "?"));
+				}
+				else {
+					img4 = new JCheckBox(new ImageIcon("ressource/image/lettre/" + labelIMG + ".png", labelIMG +""));
+					img4.setSelectedIcon(new ImageIcon("ressource/image/lettre/" + labelIMG + "Selected.png", labelIMG +""));
+				}
+				
+			JCheckBox img5;
+			
+				labelIMG = joueur.getLabelLettreMain(5);
+				event e5 = new event();
+				if(labelIMG == '?') {
+					img5 = new JCheckBox(new ImageIcon("ressource/image/lettre/joker.png", "?"));
+					img5.setSelectedIcon(new ImageIcon("ressource/image/lettre/jokerSelected.png", "?"));
+				}
+				else {
+					img5 = new JCheckBox(new ImageIcon("ressource/image/lettre/" + labelIMG + ".png", labelIMG +""));
+					img5.setSelectedIcon(new ImageIcon("ressource/image/lettre/" + labelIMG + "Selected.png", labelIMG +""));
+				}
+
+			JCheckBox img6;
+			
+				labelIMG = joueur.getLabelLettreMain(6);
+				event e6 = new event();
+				if(labelIMG == '?') {
+					img6 = new JCheckBox(new ImageIcon("ressource/image/lettre/joker.png", "?"));
+					img6.setSelectedIcon(new ImageIcon("ressource/image/lettre/jokerSelected.png", "?"));
+				}
+				else {
+					img6 = new JCheckBox(new ImageIcon("ressource/image/lettre/" + labelIMG + ".png", labelIMG +""));
+					img6.setSelectedIcon(new ImageIcon("ressource/image/lettre/" + labelIMG + "Selected.png", labelIMG +""));
+				}
+			
 				img.setBackground(new Color(253, 245, 230));
 				img.addItemListener(e);
+				img1.setBackground(new Color(253, 245, 230));
+				img1.addItemListener(e1);
+				img2.setBackground(new Color(253, 245, 230));
+				img2.addItemListener(e2);
+				img3.setBackground(new Color(253, 245, 230));
+				img3.addItemListener(e3);
+				img4.setBackground(new Color(253, 245, 230));
+				img4.addItemListener(e4);
+				img5.setBackground(new Color(253, 245, 230));
+				img5.addItemListener(e5);
+				img6.setBackground(new Color(253, 245, 230));
+				img6.addItemListener(e6);
+
 				mainBox11.add(img);
-			}
+				mainBox11.add(img1);
+				mainBox11.add(img2);
+				mainBox11.add(img3);
+				mainBox11.add(img4);
+				mainBox11.add(img5);
+				mainBox11.add(img6);
+			
 		 	boxMain.add(mainBox11);
 		 	box.add(boxMain);
 		}
@@ -217,12 +315,13 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 			public void itemStateChanged(ItemEvent e) {
 				// TODO Auto-generated method stub
 				if(e.getItemSelectable() != null) {
-					label += e.getItemSelectable().getClass().getName();
+					label += ((AbstractButton) e.getItemSelectable()).getSelectedIcon().toString();
+					System.out.println(label);
 				}
 				else {
 					
 					String chNew = "";
-					String carAsup = e.getItemSelectable().getClass().getName();
+					String carAsup = ((AbstractButton) e.getItemSelectable()).getSelectedIcon().toString();
 		         
 					int inSup = label.indexOf(carAsup);
 		      	
@@ -243,6 +342,7 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 			public void actionPerformed(ActionEvent e) {
 				fenetreMelange.removeAll();
 				fenetreMelange.dispose();
+				label = "";
 			}
 		}
 		/**
@@ -258,6 +358,7 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 				controller.melangeMain(label);
 				fenetreMelange.removeAll();
 				fenetreMelange.dispose();
+				label = "";
 			}
 			
 		}
