@@ -3,11 +3,12 @@ package ScrabbleLancement;
 import javax.xml.xpath.XPathExpressionException;
 
 import controller.ScrabbleController;
-import scrabble.Dictionnaire;
 import scrabble.Joueur;
 import scrabble.Plateau;
 import scrabble.Sac;
-//import view.GUI;
+import view.ScrabbleViewGUI;
+import view.GUISave;
+
 import view.ScrabbleViewConsole;
 
 public class Jeu {
@@ -21,11 +22,10 @@ public class Jeu {
 		
 		ScrabbleController controller = new ScrabbleController(plateau, joueur, sac);
 		ScrabbleViewConsole console = new ScrabbleViewConsole(plateau, joueur, controller);
-		//GUI GUI = new GUI(plateau, joueur, controller);
+		ScrabbleViewGUI GUI = new ScrabbleViewGUI(plateau, joueur, controller);
 		
 		controller.addView(console);
-		//controller.addView(GUI);
-		
+		controller.addView(GUI);
 	}
 	public static void main(String args[]) {
 		//Schedule a job for the event-dispatching thread:
