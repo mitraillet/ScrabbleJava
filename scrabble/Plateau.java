@@ -656,9 +656,32 @@ public class Plateau extends Observable {
 			
 			Case caseActuel = this.plateau[xDebut + h][yDebut - v];
 			
-			switch (caseActuel.getBonus()){
+			int bonusActuel = caseActuel.getBonus();
+			
+			if(bonusActuel == 1) {
+				lettreDouble.add(caseActuel.getLettre());
+			} else if (bonusActuel == 2) {
+				lettreTriple.add(caseActuel.getLettre());
+			} else if (bonusActuel == 3) {
+				doubleMot += 1;
+			} else if (bonusActuel == 4) {
+				tripleMot += 1;
+			} else if (bonusActuel == 5) {
+				doubleMot += 1;
+			}
+			
+			if(doubleMot == 0 && tripleMot == 0) {
+				lettreScore.add(caseActuel.getLettre());
+			} else if(doubleMot > 0) {
+				lettreDouble.add(caseActuel.getLettre());
+			} else if(tripleMot > 0) {
+				lettreTriple.add(caseActuel.getLettre());
+			}
+			
+			/*switch (caseActuel.getBonus()){
 				case 1: 
 					lettreDouble.add(caseActuel.getLettre());
+					continue;
 				case 2:
 					lettreTriple.add(caseActuel.getLettre());
 				case 3:
@@ -676,7 +699,9 @@ public class Plateau extends Observable {
 						lettreTriple.add(caseActuel.getLettre());
 					}
 					break;
-			}
+			}*/
+			
+			caseActuel.setBonus(0);
 			
 			if(orientation == 'h') {
 				h++;
