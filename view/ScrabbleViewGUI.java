@@ -47,7 +47,6 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 		fenetreJeu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		fenetreJeu.setLocationRelativeTo(null);
 		fenetreJeu.setResizable(false);
-		fenetreJeu.setAlwaysOnTop(true);
 		
 		updateBouton(sac);
 
@@ -162,39 +161,39 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 	 * Classe pour le bouton melanger qui va ouvrir une fenêtre pour pouvoir mélanger la main
 	 */
 	class Melanger implements ActionListener{
-		JFrame fenetreMelange;
+		JWindow fenetreMelange;
 		JPanel copyMain;
 		JButton melange;
 		JButton annuler;
 		String label = "";
+		Boolean isUp = false;
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			fenetreMelange = new JFrame();
-			copyMain = new JPanel();
-			melange = new JButton("Mélanger");
-			annuler = new JButton("Annuler");
-			
-			fenetreMelange.setSize(500, 160);
-			fenetreMelange.setPreferredSize(new Dimension(500, 160));
-			fenetreMelange.setTitle("Mélange");
-			fenetreMelange.setLocationRelativeTo(null);
-			fenetreMelange.setResizable(false);
-			fenetreMelange.setAlwaysOnTop(true);
-			fenetreMelange.setBackground(new Color(253, 245, 230));
-			fenetreMelange.setVisible(true);
-			
-			melange.addActionListener(new Melange());
-			annuler.addActionListener(new Annule());
-			
-			ajouteMainMelange(copyMain);
-			
-			copyMain.setBackground(new Color(253, 245, 230));
-			copyMain.add(melange);
-			copyMain.add(annuler);
-			
-			fenetreMelange.setContentPane(copyMain);
-			
+			if(!isUp) {
+				fenetreMelange = new JWindow();
+				copyMain = new JPanel();
+				melange = new JButton("Mélanger");
+				annuler = new JButton("Annuler");
+				
+				fenetreMelange.setSize(500, 100);
+				fenetreMelange.setPreferredSize(new Dimension(500, 100));
+				fenetreMelange.setLocationRelativeTo(null);
+				fenetreMelange.setAlwaysOnTop(true);
+				fenetreMelange.setVisible(true);
+				
+				melange.addActionListener(new Melange());
+				annuler.addActionListener(new Annule());
+				
+				ajouteMainMelange(copyMain);
+				
+				copyMain.setBackground(new Color(253, 245, 230));
+				copyMain.add(melange);
+				copyMain.add(annuler);
+				
+				fenetreMelange.setContentPane(copyMain);
+				isUp = true;
+			}
 		}
 		
 		private void ajouteMainMelange(JPanel box) {
@@ -326,14 +325,13 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				// TODO Auto-generated method stub
-				if(e.getItemSelectable() != null) {
+				if(e.getStateChange() == 1) {
 					label += ((AbstractButton) e.getItemSelectable()).getSelectedIcon().toString();
-					System.out.println(label);
 				}
 				else {
 					
 					String chNew = "";
-					String carAsup = ((AbstractButton) e.getItemSelectable()).getSelectedIcon().toString();
+					String carAsup = ((AbstractButton) e.getItemSelectable()).getIcon().toString();
 		         
 					int inSup = label.indexOf(carAsup);
 		      	
@@ -355,6 +353,7 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 				fenetreMelange.removeAll();
 				fenetreMelange.dispose();
 				label = "";
+				isUp = false;
 			}
 		}
 		/**
@@ -371,6 +370,7 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 				fenetreMelange.removeAll();
 				fenetreMelange.dispose();
 				label = "";
+				isUp = false;
 			}
 			
 		}
