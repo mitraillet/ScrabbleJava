@@ -13,8 +13,11 @@ import javax.swing.*;
 import controller.ScrabbleController;
 import scrabble.Joueur;
 import scrabble.Plateau;
+import scrabble.Sac;
 
 public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
+	
+	private Sac sac;
 	
 	private JFrame fenetreJeu = new JFrame();
 	private JPanel container = new JPanel();
@@ -34,8 +37,10 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 
 	private Box buttonBox = Box.createVerticalBox();
 	
-	public ScrabbleViewGUI(Plateau plateau, Joueur joueur, ScrabbleController controller) {
+	public ScrabbleViewGUI(Plateau plateau, Joueur joueur, Sac sac,ScrabbleController controller) {
 		super(plateau, joueur, controller);
+		this.sac = sac;
+		
 		fenetreJeu.setSize(1000, 940);
 		fenetreJeu.setPreferredSize(new Dimension(1000, 940));
 		fenetreJeu.setTitle("Scrabble");
@@ -43,23 +48,28 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 		fenetreJeu.setLocationRelativeTo(null);
 		fenetreJeu.setResizable(false);
 		fenetreJeu.setAlwaysOnTop(true);
-
-		buttonBox.add(jouerJButton);
-		melangeJButton.addActionListener(new Melanger());
-		buttonBox.add(melangeJButton);
-		buttonBox.add(passerJButton);
 		
-		container.add(buttonBox);
-		container.setBackground(new Color(253, 245, 230));
+		updateBouton(sac);
 
 		updatePlateau();
 
-		updateMain(container);
+		updateMain();
+
+		container.setBackground(new Color(253, 245, 230));
 		
 		fenetreJeu.setContentPane(container);
 		fenetreJeu.setVisible(true);
 	}
 
+	private void updateBouton(Sac sac) {
+		buttonBox.add(jouerJButton);
+		melangeJButton.addActionListener(new Melanger());
+		melangeJButton.setEnabled(sac.tailleContenuSac() != 0);
+		buttonBox.add(melangeJButton);
+		buttonBox.add(passerJButton);
+		
+		container.add(buttonBox);
+	}
 	private void updatePlateau() {
 		
 		JLayeredPane layeredPane = new JLayeredPane();
@@ -100,7 +110,7 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 	    layeredPane.setPreferredSize(new Dimension(784, 784));
 		container.add(layeredPane);
 	}
-	 private void updateMain(JPanel box) {
+	 private void updateMain() {
 		
 		Box boxMain = Box.createHorizontalBox();
 		boxMain.setPreferredSize(new Dimension(400, 80));
@@ -121,7 +131,7 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 			mainBox11.add(img);
 		}
 	 	boxMain.add(mainBox11);
-	 	box.add(boxMain);
+	 	container.add(boxMain);
 	}
 
 	@Override
@@ -133,8 +143,10 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 	public void update(Observable o, Object arg) {
 		container.remove(2);
 		container.remove(1);
+		container.remove(0);
+		updateBouton(sac);
 		updatePlateau();
-		updateMain(container);
+		updateMain();
 		fenetreJeu.pack();
 	}
 

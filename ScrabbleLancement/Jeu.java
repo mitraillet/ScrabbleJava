@@ -22,7 +22,7 @@ public class Jeu {
 		
 		ScrabbleController controller = new ScrabbleController(plateau, joueur, sac);
 		ScrabbleViewConsole console = new ScrabbleViewConsole(plateau, joueur, controller);
-		ScrabbleViewGUI GUI = new ScrabbleViewGUI(plateau, joueur, controller);
+		ScrabbleViewGUI GUI = new ScrabbleViewGUI(plateau, joueur, sac, controller);
 		
 		controller.addView(console);
 		controller.addView(GUI);
