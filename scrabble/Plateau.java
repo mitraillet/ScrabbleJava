@@ -199,8 +199,10 @@ public class Plateau extends Observable {
 				return false;
 			}
 			
+			
 			if(estAdjacentH == true || estAdjacentV == true) {
 				System.out.println("Le mot est correct");
+				this.calculScore(x, y, orientation);
 				return true;
 			} else {
 				System.out.println("Erreur : Placez le mot adjacent à un autre");
@@ -256,6 +258,7 @@ public class Plateau extends Observable {
 				}
 			}	
 			
+			this.calculScore(x, y, orientation);
 			System.out.println("OK mot");
 			return true;
 		}
@@ -379,21 +382,26 @@ public class Plateau extends Observable {
 			labelLettre = this.plateau[x][y].getLabelCase();
 		}
 		
-		if(this.getLabelToList(checkHaut(x, y)) != "" && this.getLabelToList(checkBas(x, y)) != "") {
-			String tempMot = this.getLabelToList(checkHaut(x, y)) + labelLettre + this.getLabelToList(checkBas(x, y));
+		String motHaut = this.getLabelToList(checkHaut(x, y));
+		String motBas = this.getLabelToList(checkBas(x, y));
+		
+		
+		
+		if(motHaut != "" && motBas != "") {
+			String tempMot = motHaut + labelLettre + motBas;
 			if(this.verification(tempMot) == false) {
 				System.out.println("Mot incorrect");
 				return false;
 			}
 			
-		} else if(this.getLabelToList(checkHaut(x, y)) != "") {
-			if(this.verification(this.getLabelToList(checkHaut(x, y)) + labelLettre) == false) {
+		} else if(motHaut != "") {
+			if(this.verification(motHaut + labelLettre) == false) {
 				System.out.println("Le mot en haut est incorrect");
 				return false;
 			}
 			
-		} else if(this.getLabelToList(checkBas(x, y)) != "") {
-			if(this.verification(labelLettre + this.getLabelToList(checkBas(x, y))) == false) {
+		} else if(motBas != "") {
+			if(this.verification(labelLettre + motBas) == false) {
 				System.out.println("Le mot en bas est incorrect");
 				return false;
 			}
@@ -416,19 +424,23 @@ public class Plateau extends Observable {
 			labelLettre = this.plateau[x][y].getLabelCase();
 		}
 		
-		if(this.getLabelToList(checkGauche(x, y)) != "" && this.getLabelToList(checkDroite(x, y)) != "") {
-			String tempMot = this.getLabelToList(checkGauche(x, y)) + labelLettre + this.getLabelToList(checkDroite(x, y));
+		String motGauche = this.getLabelToList(checkGauche(x, y));
+		String motDroit = this.getLabelToList(checkDroite(x, y));
+		
+		
+		if(motGauche != "" && motDroit != "") {
+			String tempMot = motGauche + labelLettre + motDroit;
 			if(this.verification(tempMot) == false) {
 				System.out.println("Mot incorrect");
 				return false;
 			}
-		} else if(this.getLabelToList(checkGauche(x, y)) != "") {
-			if(this.verification(this.getLabelToList(checkGauche(x, y)) + labelLettre) == false) {
+		} else if(motGauche != "") {
+			if(this.verification(motGauche + labelLettre) == false) {
 				System.out.println("Le mot à droite est incorrect");
 				return false;
 			}
-		} else if(this.getLabelToList(checkDroite(x, y)) != "") {
-			if(this.verification(labelLettre + this.getLabelToList(checkDroite(x, y))) == false) {
+		} else if(motDroit != "") {
+			if(this.verification(labelLettre + motDroit) == false) {
 				System.out.println("Le mot à gauche est incorrect");
 				return false;
 			}
@@ -454,14 +466,15 @@ public class Plateau extends Observable {
 	}
 	
 	/**
-	 * Récupère le score d'une liste de lettre dans des cases
+	 * Récupère le score d'une liste de lettre dans des cases sans prendre
+	 * en compte les bonus
 	 * @param listCase la liste de case
 	 * @return le score
 	 */
 	public int getScoreToList(List<Case> listCase) {
 		int tempScore = 0;
 		for(int i = 0; i < listCase.size(); i++) {
-			//TODO
+			tempScore += listCase.get(i).getValeurCase();
 		}
 		return tempScore;
 	}
@@ -498,6 +511,7 @@ public class Plateau extends Observable {
 	public int getPlateauBonus(int x, int y) {
 		return this.plateau[x][y].getBonus();
 	}
+	
 	/**
 	 * Récupère les labels des lettres contenues dans la Case du plateau en fonction des coordonées de celle-ci
 	 * @param x La position x de la première case
@@ -526,6 +540,19 @@ public class Plateau extends Observable {
 		return tempArray;
 	}
 	
+	/**
+	 * Converti une liste de cases en liste de Lettre
+	 * @param cases la liste de cases
+	 * @return la liste de lettre récupérée des cases
+	 */
+	public List<Lettre> convertListCaseToListLettre(List<Case> cases) {
+		List<Lettre> listTemp = new ArrayList<Lettre>();
+		for(int i = 0; i < cases.size(); i++) {
+			listTemp.add(cases.get(i).getLettre());
+		}
+		return listTemp;
+	}
+	
 	//----------------------------------------------------------------------------------
 	
 	/**
@@ -535,13 +562,12 @@ public class Plateau extends Observable {
 	 */
 	public boolean checkPremierMot(int x, int y, char orientation, Joueur joueurActuel){
 			int j = 0;
-			boolean test = false; //Si c'est OK  --> true
+			boolean estCentre = false; //Si c'est OK  --> true = au milieu du plateau
 			switch (orientation) {
 				case 'v' :
 					while(plateau[x][y - j].lettre != null) {
-						this.calculScore(x, y - j);
 						if(plateau[x][y - j].getBonus() == 5) {
-							test = true;
+							estCentre = true;
 						}
 						j++;
 					} 
@@ -549,9 +575,8 @@ public class Plateau extends Observable {
 					break;
 				case 'h' : 
 					while(plateau[x + j][y].lettre != null) {
-						this.calculScore(x + j, y);
 						if(plateau[x + j][y].getBonus() == 5) {
-							test = true;
+							estCentre = true;
 						}
 						j++;
 					} 
@@ -559,71 +584,178 @@ public class Plateau extends Observable {
 					break;
 				default : 
 					System.out.println("Erreur, orientation incorrecte");
-					test = false;
+					estCentre = false;
 			}
-			if (test) {
+			if (estCentre) {
+				this.calculScore(x, y, orientation);
 				this.debutPartie = true;
-				this.setScore(joueurActuel);
 			}
-			return test;
+			return estCentre;
 	}
 	
-	int doubleMot = 0;
-	int tripleMot = 0;
-	public int score = 0;
-	
 	/**
-	 * Calcul du score pour une lettre en prenant compte les bonus
-	 * @param x la position x de la lettre
-	 * @param y la position y de la lettre
+	 * Contient le score temporaire lors du calcul de score
 	 */
-	public void calculScore(int x, int y) {
-		int valeur = 0;
+	public int tempScore = 0;
+	
+	/**
+	 * Toutes les lettres doublées
+	 */
+	List<Lettre> lettreDouble = new ArrayList<Lettre>();
+	
+	/**
+	 * Toutes les lettres triplées
+	 */
+	List<Lettre> lettreTriple = new ArrayList<Lettre>();
+	
+	/**
+	 * Lettre sans bonus
+	 */
+	List<Lettre> lettreScore = new ArrayList<Lettre>();
+	
+	/**
+	 * Calcule le score du mot posé
+	 * @param x la postion x de la première lettre posée
+	 * @param y la postion y de la première lettre posée
+	 * @param orientation l'orientation du mot (h ou v)
+	 */
+	public void calculScore(int x, int y, char orientation) {
+		List<Lettre> scorePrincipal = new ArrayList<Lettre>();
 		
-		//doubleMot = 0;
-		//tripleMot = 0;
-		int score = 0;
+		//Vide les listes
+		lettreTriple.removeAll(lettreTriple);
+		lettreDouble.removeAll(lettreDouble);
+		lettreScore.removeAll(lettreScore);
+		
+		int doubleMot = 0;
+		int tripleMot = 0;
+		
+		int xDebut = x;
+		int yDebut = y;
+		
+		if(orientation == 'h') {
+			scorePrincipal.addAll(this.convertListCaseToListLettre(this.checkGauche(x, y)));
+			scorePrincipal.add(this.plateau[x][y].getLettre());
+			scorePrincipal.addAll(this.convertListCaseToListLettre(this.checkDroite(x, y)));
 			
-		valeur = plateau[x][y].getValeurCase();
+			xDebut = x - this.checkGauche(x, y).size();
 			
-		switch (plateau[x][y].getBonus()){
-		case 1: 
-			score += (valeur*2);
-			break;
-		case 2:
-			score += (valeur*3);
-			break;
-		case 3:
-			doubleMot += 1;
-			break;
-		case 4:
-			tripleMot += 1;
-			score += valeur;
-			break;
-		case 5: 
-			doubleMot += 1;
-			score += valeur;
-			break;
-		default:
-			score += valeur;
-			break;
+		} else { //orientation == 'v'
+			scorePrincipal.addAll(this.convertListCaseToListLettre(this.checkHaut(x, y)));
+			scorePrincipal.add(this.plateau[x][y].getLettre());
+			scorePrincipal.addAll(this.convertListCaseToListLettre(this.checkBas(x, y)));
+			
+			yDebut = y + this.checkHaut(x, y).size();
+			
 		}
+		
+		int h = 0;
+		int v = 0;
+		
+		for(int i = 0; i < scorePrincipal.size(); i++) {
 			
-		this.score += score;
+			Case caseActuel = this.plateau[xDebut + h][yDebut - v];
+			
+			switch (caseActuel.getBonus()){
+				case 1: 
+					lettreDouble.add(caseActuel.getLettre());
+				case 2:
+					lettreTriple.add(caseActuel.getLettre());
+				case 3:
+					doubleMot += 1;
+				case 4:
+					tripleMot += 1;
+				case 5: 
+					doubleMot += 1;
+				default:
+					if(doubleMot == 0 && tripleMot == 0) {
+						lettreScore.add(caseActuel.getLettre());
+					} else if(doubleMot > 0) {
+						lettreDouble.add(caseActuel.getLettre());
+					} else if(tripleMot > 0) {
+						lettreTriple.add(caseActuel.getLettre());
+					}
+					break;
+			}
+			
+			if(orientation == 'h') {
+				h++;
+			} else {
+				v++;
+			}
+		}
+		this.calculScoreMot();
+		this.calculScorePeripherique(x, y, orientation);
 	}
 	
 	/**
-	 * Calcul et mets à jour le score du joueur
+	 * Calcule le score périphérique d'un mot
+	 * @param x la position x de la première lettre posée
+	 * @param y la position y de la première lettre posée
+	 * @param orientation l'orientation du mot (h ou v)
+	 */
+	public void calculScorePeripherique(int x, int y, char orientation) {
+		int scoreSecondaireTemp = 0;
+		int h = 0;
+		int v = 0;
+		for(int i = 0; i < motJoue.size(); i++) { //motJoue, la longueur du mot posé
+			scoreSecondaireTemp = 0;
+			
+			if(motJoue.get(i) != null) {
+				if(orientation == 'h') {
+					scoreSecondaireTemp += this.getScoreToList(this.checkHaut(x + h, y));
+					scoreSecondaireTemp += this.getScoreToList(this.checkBas(x + h, y));
+					
+				} else {
+					scoreSecondaireTemp += this.getScoreToList(this.checkDroite(x, y - v));
+					scoreSecondaireTemp += this.getScoreToList(this.checkGauche(x, y - v));
+					
+				}
+				
+				if(this.plateau[x + h][y - v].getBonus() == 3) {
+					this.tempScore += (scoreSecondaireTemp)*2;
+				} else if (this.plateau[x + h][y - v].getBonus() == 4) {
+					this.tempScore += (scoreSecondaireTemp)*3;
+				} else {
+					this.tempScore += scoreSecondaireTemp;
+				}
+				
+				if(orientation == 'h') {
+					h++;
+				} else {
+					v++;
+				}
+				
+				this.tempScore += scoreSecondaireTemp;
+			}
+		}
+	}
+	
+	/**
+	 * Calcule le score du premier mot
 	 * @param joueurActuel le joueur où le score sera mis à jour
 	 */
-	public void setScore(Joueur joueurActuel) {
-		if(doubleMot > 0) {
-			score = (score*2)*doubleMot;
-		} else if (tripleMot > 0) {
-			score = (score*2)*tripleMot;
+	public void calculScoreMot() {
+		int score = 0;
+		
+		for(int i = 0; i < lettreDouble.size(); i++) {
+			score += (lettreDouble.get(i).getValeur() * 2);
 		}
 		
-		joueurActuel.setScore(score);
+		for(int i = 0; i < lettreTriple.size(); i++) {
+			score += (lettreTriple.get(i).getValeur() * 2);
+		}
+		
+		for(int i = 0; i < lettreScore.size(); i++) {
+			score += lettreScore.get(i).getValeur();
+		}
+		
+		this.tempScore += score;
+		System.out.println("Score :" + score);
+	}
+	
+	public void setScoreJoueur(Joueur joueurActuel) {
+		joueurActuel.addScore(tempScore);
 	}
 	
 	/**

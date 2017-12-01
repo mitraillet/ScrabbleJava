@@ -69,6 +69,7 @@ public class ScrabbleController {
 			//Vérifie les mots
 			if(plateau.debutPartie == true) {
 				if(plateau.verificationPeripherique(x, y, orientation, motMain, motJoue)) {
+					plateau.setScoreJoueur(joueur);
 					joueur.viderLaMain(motMain, sac);
 				} else {
 					joueur.setMainJoueur(saveMain);
@@ -79,6 +80,7 @@ public class ScrabbleController {
 			} else {
 				//Enlève les lettres jouée de la main
 				if(plateau.checkPremierMot(x, y, orientation, joueur)) {
+					plateau.setScoreJoueur(joueur);
 					joueur.viderLaMain(motMain, sac);	
 				} else {
 					joueur.setMainJoueur(saveMain);
@@ -86,7 +88,6 @@ public class ScrabbleController {
 					System.out.println("\nPlacement du Premier Mot incorrect");
 				}
 			}
-			
 			motJoue = new ArrayList<Lettre>(); //Remets à zéro la variable
 			
 	}
