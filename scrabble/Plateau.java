@@ -234,29 +234,34 @@ public class Plateau extends Observable {
 				return false;
 			}
 			
-			for(int i = 0; i < (motJoue.size() ); i++) {
+			for(int i = 0; i < (motJoue.size()); i++) {
 				
 				if(orientation =='h') {
 					if(this.checkHautBas(x+i, y, i, motJoue) != true) {
-						return false;
-					}
-					
-					if(estAdjacentH != true && motPrincipal.length() <= motMain.size()) {
+						System.out.println("Le mot vertical n'est pas correct");
 						return false;
 					}
 				}
 				
 				if(orientation =='v') {
 					if(this.checkGaucheDroite(x, y-i, i, motJoue) != true) {
-						return false;
-					}
-					
-					if(estAdjacentV != true && motPrincipal.length() <= motMain.size()) {
-						System.out.println("verif");
+						System.out.println("Le mot horizontal n'est pas correct");
 						return false;
 					}
 				}
-			}	
+			}
+			
+			if(orientation =='h') {
+				if(estAdjacentH != true && motPrincipal.length() <= motMain.size()) {
+					System.out.println("Placez le mot adjacent à un autre");
+					return false;
+				}
+			} else {
+				if(estAdjacentV != true && motPrincipal.length() <= motMain.size()) {
+					System.out.println("Placez le mot adjacent à un autre");
+					return false;
+				}
+			}
 			
 			this.calculScore(x, y, orientation, motMain);
 			System.out.println("OK mot");
