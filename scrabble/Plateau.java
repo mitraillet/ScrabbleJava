@@ -745,6 +745,11 @@ public class Plateau extends Observable {
 	public void calculScoreMot(List<Lettre> motMain) {
 		int score = 0;
 		
+		if(motMain.size() == 7) {
+			Lettre scrabble = new Lettre('$', 50); //Création d'une lettre de 50points pour le scrabble
+			lettreScore.add(scrabble);
+		}
+		
 		for(int i = 0; i < lettreDouble.size(); i++) {
 			score += (lettreDouble.get(i).getValeur() * 2);
 		}
@@ -755,10 +760,6 @@ public class Plateau extends Observable {
 		
 		for(int i = 0; i < lettreScore.size(); i++) {
 			score += lettreScore.get(i).getValeur();
-		}
-		
-		if(motMain.size() == 7) {
-			score += 50;
 		}
 		
 		this.tempScore += score;
