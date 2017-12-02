@@ -606,17 +606,17 @@ public class Plateau extends Observable {
 	/**
 	 * Toutes les lettres doublées
 	 */
-	private List<Lettre> lettreDouble = new ArrayList<Lettre>();
+	public List<Lettre> lettreDouble = new ArrayList<Lettre>();
 	
 	/**
 	 * Toutes les lettres triplées
 	 */
-	private List<Lettre> lettreTriple = new ArrayList<Lettre>();
+	public List<Lettre> lettreTriple = new ArrayList<Lettre>();
 	
 	/**
 	 * Lettre sans bonus
 	 */
-	private List<Lettre> lettreScore = new ArrayList<Lettre>();
+	public List<Lettre> lettreScore = new ArrayList<Lettre>();
 	
 	/**
 	 * Calcul le score du mot posé
@@ -760,7 +760,7 @@ public class Plateau extends Observable {
 		}
 		
 		for(int i = 0; i < lettreTriple.size(); i++) {
-			score += (lettreTriple.get(i).getValeur() * 2);
+			score += (lettreTriple.get(i).getValeur() * 3);
 		}
 		
 		for(int i = 0; i < lettreScore.size(); i++) {
