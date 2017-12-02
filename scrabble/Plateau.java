@@ -695,7 +695,6 @@ public class Plateau extends Observable {
 				v++;
 			}
 		}
-		
 		this.calculScoreMot(motMain);
 		this.calculScorePeripherique(x, y, orientation);
 	}
@@ -737,8 +736,7 @@ public class Plateau extends Observable {
 				} else {
 					v++;
 				}
-				
-				this.tempScore += scoreSecondaireTemp;
+				//this.tempScore += scoreSecondaireTemp;
 			}
 		}
 	}
