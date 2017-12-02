@@ -498,7 +498,7 @@ public class Plateau extends Observable {
 	 * @param y La position y de la première case
 	 * @return la case du plateau en (x,y)
 	 */
-	public Case getPlateau(int x, int y) {
+	public Case getCase(int x, int y) {
 		return this.plateau[x][y];
 	}
 	
@@ -614,7 +614,7 @@ public class Plateau extends Observable {
 	private List<Lettre> lettreScore = new ArrayList<Lettre>();
 	
 	/**
-	 * Calcule le score du mot posé
+	 * Calcul le score du mot posé
 	 * @param x la postion x de la première lettre posée
 	 * @param y la postion y de la première lettre posée
 	 * @param orientation l'orientation du mot (h ou v)

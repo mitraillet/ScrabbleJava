@@ -87,7 +87,7 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 	    for(int i = 0; i < 15; i++) {
 			for(int h = 0; h < 15; h++) {
 				JLabel pic;
-				if(plateau.getPlateau(h, j).getLettre() == null) {
+				if(plateau.getCase(h, j).getLettre() == null) {
 					pic = new JLabel();
 					pic.setOpaque(false);
 					pic.setBackground(new Color(0,0,0,0));
