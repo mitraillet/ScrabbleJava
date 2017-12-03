@@ -48,12 +48,12 @@ public class ScrabbleController {
 	 * @param x La position x de la première lettre
 	 * @param y La position y de la première lettre
 	 */
-	public void poserMot(int x, int y, char orientation, String mot){
+	public void poserMot(int x, int y, char orientation, String mot, List<Lettre> saveMainJoueur){
 			Case[][] plateauJeu = plateau.plateau; //Plateau de jeu
 			Case[][] plateauSave = plateau.copyPlateau(); //Sauvegarde du plateau
-			List<Lettre> saveMain = joueur.getMainJoueur(); //Sauvegarde de la main
+			List<Lettre> saveMain = saveMainJoueur;
 			List<Lettre> motJoue = new ArrayList<Lettre>(); //La liste de lettre du mots sur le plateau
-			List<Lettre> motMain = new ArrayList<Lettre>(); //liste des lettres enlevÃ©e de la main
+			List<Lettre> motMain = new ArrayList<Lettre>(); //liste des lettres enlevée de la main
 	
 			String[] motArray = mot.split(""); //String séparé en Array de lettre
 			

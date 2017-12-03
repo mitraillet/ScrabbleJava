@@ -23,7 +23,7 @@ public class Joker extends Lettre {
 			this.setLabel(labelChar);
 		}
 		else {
-			System.out.println("Charactère non authorisé !");
+			System.out.println("Caractère non authorisé !");
 		}
 	}
 	

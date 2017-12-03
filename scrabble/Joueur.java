@@ -197,9 +197,6 @@ public class Joueur extends Observable{
 		int j = 0; //variable incrémentale 
 		boolean lettreTrouve = false; //Flag, lettre trouvée
 		
-		List<Lettre> mainSave = new ArrayList<Lettre>();
-		mainSave.addAll(this.getMainJoueur());
-		
 		HashSet<Integer> lettrePrise = new HashSet<Integer>(); //Garde les positions des lettres déjà prises
 		
 		for(int i = 0; i < mot.length; i++) {
@@ -279,6 +276,48 @@ public class Joueur extends Observable{
 			}
 		}
 		this.pioche(sac);
+	}
+	
+	/**
+	 * Détecte le nombre de joker dans le mot à jouer
+	 * @param motArray le mot à jouer
+	 * @return le nombre de joker
+	 */
+	public int detecteJoker(String mot) {
+		int nbrJoker = 0;
+		String [] motArray = mot.split("");
+		for(int i = 0; i < motArray.length; i++) {
+			if(motArray[i].charAt(0) == '?') {
+				nbrJoker++;
+			}
+		}
+		return nbrJoker;
+	}
+	
+	/**
+	 * Attribue un label aux jokers
+	 * @param joker1 le label du premier joker
+	 * @param joker2 le label du deuxième joker
+	 * @param mot le mot joué
+	 * @return le mot avec les jokers modifiés
+	 */
+	public String setJokerMain(char joker1, char joker2, String mot) {
+		
+		boolean joker1ok = false;
+		for(int i = 0; i < this.mainJoueur.size(); i++) {
+			if(this.mainJoueur.get(i).getLabel() == '?') {
+				if(joker1ok == false) {
+					this.mainJoueur.get(i).setLabel(joker1);
+					mot = mot.replaceFirst("\\?", Character.toString(joker1));
+					joker1ok = true;
+				} else if(joker2 != '/' && joker1ok == true) {
+					mot = mot.replaceFirst("\\?", Character.toString(joker2));
+					this.mainJoueur.get(i).setLabel(joker2);
+				}
+			}
+		}
+		
+		return mot;
 	}
 	
 	/**

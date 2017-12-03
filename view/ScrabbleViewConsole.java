@@ -1,12 +1,14 @@
 package view;
 
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Scanner;
 
 
 import scrabble.Joueur;
+import scrabble.Lettre;
 import scrabble.Plateau;
 import scrabble.Dictionnaire;
 import controller.ScrabbleController;
@@ -54,6 +56,24 @@ public class ScrabbleViewConsole extends ScrabbleView implements Observer{
 					case "J" : 
 						affiche("Jouer"); 
 						String mot1 = sc.next();
+						List<Lettre> saveMain = joueur.getMainJoueur(); //Sauvegarde de la main
+						
+						int joker = joueur.detecteJoker(mot1);
+						
+						if(joker == 1) {
+							affiche("Veuillez entrer le label du joker :");
+							char joker1 = (sc.next()).charAt(0);
+							//mot1 = 
+							mot1 = joueur.setJokerMain(joker1, '/', mot1);
+						} else if(joker == 2) {
+							affiche("Veuillez entrer le label du premier joker :");
+							char joker1 = (sc.next()).charAt(0);
+							affiche("Veuillez entrer le label du deuxième joker :");
+							char joker2 = (sc.next()).charAt(0);
+							//mot1 = 
+							mot1 = joueur.setJokerMain(joker1, joker2, mot1);
+						}
+						
 						if(plateau.verification(mot1)) {
 							affiche("Mot Correct");
 							affiche("Veuillez entrer la position X");
@@ -63,7 +83,7 @@ public class ScrabbleViewConsole extends ScrabbleView implements Observer{
 							affiche("Veuillez entrer l'orientation (h ou v)");
 							char orientation = (sc.next()).charAt(0);
 							
-							controller.poserMot(intPosX, intPosY, orientation, mot1);
+							controller.poserMot(intPosX, intPosY, orientation, mot1, saveMain);
 						}
 						else {
 							printPlateauMain();
