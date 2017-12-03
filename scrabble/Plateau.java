@@ -202,7 +202,7 @@ public class Plateau extends Observable {
 			
 			if(estAdjacentH == true || estAdjacentV == true) {
 				System.out.println("Le mot est correct");
-				this.calculScore(x, y, orientation);
+				this.calculScore(x, y, orientation, motMain);
 				return true;
 			} else {
 				System.out.println("Erreur : Placez le mot adjacent à un autre");
@@ -234,31 +234,36 @@ public class Plateau extends Observable {
 				return false;
 			}
 			
-			for(int i = 0; i < (motJoue.size() ); i++) {
+			for(int i = 0; i < (motJoue.size()); i++) {
 				
 				if(orientation =='h') {
 					if(this.checkHautBas(x+i, y, i, motJoue) != true) {
-						return false;
-					}
-					
-					if(estAdjacentH != true && motPrincipal.length() <= motMain.size()) {
+						System.out.println("Le mot vertical n'est pas correct");
 						return false;
 					}
 				}
 				
 				if(orientation =='v') {
 					if(this.checkGaucheDroite(x, y-i, i, motJoue) != true) {
-						return false;
-					}
-					
-					if(estAdjacentV != true && motPrincipal.length() <= motMain.size()) {
-						System.out.println("verif");
+						System.out.println("Le mot horizontal n'est pas correct");
 						return false;
 					}
 				}
-			}	
+			}
 			
-			this.calculScore(x, y, orientation);
+			if(orientation =='h') {
+				if(estAdjacentH != true && motPrincipal.length() <= motMain.size()) {
+					System.out.println("Placez le mot adjacent à un autre");
+					return false;
+				}
+			} else {
+				if(estAdjacentV != true && motPrincipal.length() <= motMain.size()) {
+					System.out.println("Placez le mot adjacent à un autre");
+					return false;
+				}
+			}
+			
+			this.calculScore(x, y, orientation, motMain);
 			System.out.println("OK mot");
 			return true;
 		}
@@ -498,7 +503,7 @@ public class Plateau extends Observable {
 	 * @param y La position y de la première case
 	 * @return la case du plateau en (x,y)
 	 */
-	public Case getPlateau(int x, int y) {
+	public Case getCase(int x, int y) {
 		return this.plateau[x][y];
 	}
 	
@@ -560,7 +565,7 @@ public class Plateau extends Observable {
 	 * @param x La position x de la première lettre
 	 * @param y La position y de la première lettre
 	 */
-	public boolean checkPremierMot(int x, int y, char orientation, Joueur joueurActuel){
+	public boolean checkPremierMot(int x, int y, char orientation, Joueur joueurActuel, List<Lettre> motMain){
 			int j = 0;
 			boolean estCentre = false; //Si c'est OK  --> true = au milieu du plateau
 			switch (orientation) {
@@ -587,7 +592,7 @@ public class Plateau extends Observable {
 					estCentre = false;
 			}
 			if (estCentre) {
-				this.calculScore(x, y, orientation);
+				this.calculScore(x, y, orientation, motMain);
 				this.debutPartie = true;
 			}
 			return estCentre;
@@ -601,25 +606,26 @@ public class Plateau extends Observable {
 	/**
 	 * Toutes les lettres doublées
 	 */
-	private List<Lettre> lettreDouble = new ArrayList<Lettre>();
+	public List<Lettre> lettreDouble = new ArrayList<Lettre>();
 	
 	/**
 	 * Toutes les lettres triplées
 	 */
-	private List<Lettre> lettreTriple = new ArrayList<Lettre>();
+	public List<Lettre> lettreTriple = new ArrayList<Lettre>();
 	
 	/**
 	 * Lettre sans bonus
 	 */
-	private List<Lettre> lettreScore = new ArrayList<Lettre>();
+	public List<Lettre> lettreScore = new ArrayList<Lettre>();
 	
 	/**
-	 * Calcule le score du mot posé
+	 * Calcul le score du mot posé
 	 * @param x la postion x de la première lettre posée
 	 * @param y la postion y de la première lettre posée
 	 * @param orientation l'orientation du mot (h ou v)
+	 * @param motMain le nombre de lettre jouée depuis la main (en cas de scrabble)
 	 */
-	public void calculScore(int x, int y, char orientation) {
+	public void calculScore(int x, int y, char orientation, List<Lettre> motMain) {
 		List<Lettre> scorePrincipal = new ArrayList<Lettre>();
 		
 		//Vide les listes
@@ -657,11 +663,14 @@ public class Plateau extends Observable {
 			Case caseActuel = this.plateau[xDebut + h][yDebut - v];
 			
 			int bonusActuel = caseActuel.getBonus();
+			boolean flagEstCompte = false; //Flag, true si la lettre est comptabilisé
 			
 			if(bonusActuel == 1) {
 				lettreDouble.add(caseActuel.getLettre());
+				flagEstCompte = true;
 			} else if (bonusActuel == 2) {
 				lettreTriple.add(caseActuel.getLettre());
+				flagEstCompte = true;
 			} else if (bonusActuel == 3) {
 				doubleMot += 1;
 			} else if (bonusActuel == 4) {
@@ -670,7 +679,7 @@ public class Plateau extends Observable {
 				doubleMot += 1;
 			}
 			
-			if(doubleMot == 0 && tripleMot == 0) {
+			if(doubleMot == 0 && tripleMot == 0 && flagEstCompte == false) {
 				lettreScore.add(caseActuel.getLettre());
 			} else if(doubleMot > 0) {
 				lettreDouble.add(caseActuel.getLettre());
@@ -686,7 +695,7 @@ public class Plateau extends Observable {
 				v++;
 			}
 		}
-		this.calculScoreMot();
+		this.calculScoreMot(motMain);
 		this.calculScorePeripherique(x, y, orientation);
 	}
 	
@@ -727,24 +736,29 @@ public class Plateau extends Observable {
 				} else {
 					v++;
 				}
-				
-				this.tempScore += scoreSecondaireTemp;
+				//this.tempScore += scoreSecondaireTemp;
 			}
 		}
 	}
 	
 	/**
 	 * Calcule le score d'un mot en comptant les mots doubles et triples
+	 * @param motMain le nombre de lettre jouées depuis la main (en cas de scrabble)
 	 */
-	public void calculScoreMot() {
+	public void calculScoreMot(List<Lettre> motMain) {
 		int score = 0;
+		
+		if(motMain.size() == 7) {
+			Lettre scrabble = new Lettre('$', 50); //Création d'une lettre de 50points pour le scrabble
+			lettreScore.add(scrabble);
+		}
 		
 		for(int i = 0; i < lettreDouble.size(); i++) {
 			score += (lettreDouble.get(i).getValeur() * 2);
 		}
 		
 		for(int i = 0; i < lettreTriple.size(); i++) {
-			score += (lettreTriple.get(i).getValeur() * 2);
+			score += (lettreTriple.get(i).getValeur() * 3);
 		}
 		
 		for(int i = 0; i < lettreScore.size(); i++) {
@@ -752,7 +766,6 @@ public class Plateau extends Observable {
 		}
 		
 		this.tempScore += score;
-		System.out.println("Score :" + score);
 	}
 	
 	/**
