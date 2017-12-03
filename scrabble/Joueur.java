@@ -165,7 +165,6 @@ public class Joueur extends Observable{
 	 * Remélange les lettres dans le sac
 	 * @param exitLettre la liste des lettres à remélanger 
 	 * @param sac l'objet sac qui récupère les lettres
-	 * @throws SacVideException 
 	 */
 	public void melanger(List<Lettre> exitLettre, Sac sac){
 		System.out.println("Melange");
@@ -232,7 +231,7 @@ public class Joueur extends Observable{
 		//Gère la pose des Lettres
 		int xPos = 0; //incrément Position x
 		int yPos = 0; //incrément Position y
-		@SuppressWarnings("unused") //Utiliser dans le try/catch
+		@SuppressWarnings("unused") //Utilisé dans le try/catch
 		boolean tourStop = false; //Flag, true si erreur
 		for(int i = 0; i < mot.length(); i++) {
 			try {
