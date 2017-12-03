@@ -363,6 +363,7 @@ public class JoueurTest {
 		Lettre e = new Lettre('e', 1);
 		Lettre s = new Lettre('s', 1);
 		Lettre $ = new Lettre('?', 0);
+		Lettre $2 = new Lettre('?', 0);
 		
 		List<Lettre> mainJoueur = new ArrayList<Lettre>();
 		mainJoueur.add(a);
@@ -381,9 +382,20 @@ public class JoueurTest {
 		
 		joker2 = 's';
 		mot = "tes??";
-		mainJoueur.remove(1);
-		Lettre $2 = new Lettre('?', 0);
+		$ = new Lettre('?', 0);
+		mainJoueur.removeAll(mainJoueur);
+		mainJoueur.add(b);
+		mainJoueur.add(c);
+		mainJoueur.add(t);
+		mainJoueur.add(e);
+		mainJoueur.add(s);
+		mainJoueur.add($);
 		mainJoueur.add($2);
+		joueur.setMainJoueur(mainJoueur);
+		
+		for(int i =0; i < joueur.getMainJoueur().size(); i++) {
+			System.out.println(joueur.getMainJoueur().get(i).getLabel());
+		}
 		
 		assertEquals(joueur.setJokerMain(joker1, joker2, mot), "tests");
 		
