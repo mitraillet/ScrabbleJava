@@ -4,6 +4,7 @@
 package scrabble;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Observable;
 
@@ -120,13 +121,6 @@ public class Joueur extends Observable{
 	}
 	
 	/**
-	 * Permet de placer un mot sur le plateau
-	 */
-	public void jouer() {
-		System.out.println("Jouer");
-	}
-	
-	/**
 	 * Permet de piocher des lettres
 	 * @param sac l'objet sac qui contient les lettres
 	 */
@@ -204,17 +198,27 @@ public class Joueur extends Observable{
 		int j = 0; //variable incrémentale 
 		boolean lettreTrouve = false; //Flag, lettre trouvée
 		
+		List<Lettre> mainSave = new ArrayList<Lettre>();
+		mainSave.addAll(this.getMainJoueur());
+		
+		HashSet<Integer> lettrePrise = new HashSet<Integer>(); //Garde les positions des lettres déjà prises
+		
 		for(int i = 0; i < mot.length; i++) {
 			lettreTrouve = false;
 			j = 0;
 			
-			//Tant qu' on n'a pas itéré toute la main et que la lettre n'est pas trouvÃ©e
+			//Tant qu' on n'a pas itéré toute la main et que la lettre n'est pas trouvée
 			while(j < 7 && lettreTrouve == false) {
 				if(mot[i].charAt(0) != (this.getLabelLettreMain(j))) {
 					tempLettre = null;
 				} else { 
-					tempLettre = this.getLettreMain(j);
-					lettreTrouve = true;
+					if(lettrePrise.contains(j)) {
+						tempLettre = null;
+					} else {
+						lettrePrise.add(j);
+						tempLettre = this.getLettreMain(j);
+						lettreTrouve = true;
+					}
 				}
 				j++;
 			}
