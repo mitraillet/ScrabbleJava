@@ -393,10 +393,6 @@ public class JoueurTest {
 		mainJoueur.add($2);
 		joueur.setMainJoueur(mainJoueur);
 		
-		for(int i =0; i < joueur.getMainJoueur().size(); i++) {
-			System.out.println(joueur.getMainJoueur().get(i).getLabel());
-		}
-		
 		assertEquals(joueur.setJokerMain(joker1, joker2, mot), "tests");
 		
 	}
