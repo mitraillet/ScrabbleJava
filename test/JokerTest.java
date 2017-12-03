@@ -12,13 +12,13 @@ import scrabble.Joker;
  * @author Fauconnier/Henriquet
  * Test unitaire pour la classe Joker
  */
-class JokerTest {
+public class JokerTest {
 
 	/**
 	 * Teste la méthode permettant le changement du label du joker
 	 */
 	@Test
-	void testSetJoker() {
+	public void testSetJoker() {
 		Joker joker = new Joker();
 		
 		joker.setJoker("a");

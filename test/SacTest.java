@@ -15,14 +15,14 @@ import scrabble.Sac;
  * @author Fauconnier/Henriquet
  * Test unitaire pour la classe Sac
  */
-class SacTest {
+public class SacTest {
 
 	/**
 	 * Test method for {@link scrabble.Sac#getPositionLettreDansSac(int)}.
 	 * @throws XPathExpressionException 
 	 */
 	@Test
-	void testGetPositionLettreDansSac() throws XPathExpressionException {
+	public void testGetPositionLettreDansSac() throws XPathExpressionException {
     	Sac sac = new Sac();
 		assertEquals(sac.getPositionLettreDansSac(1).getLabel(), 'a' );
 		assertEquals(sac.getPositionLettreDansSac(1).getValeur(), 1 );
@@ -37,7 +37,7 @@ class SacTest {
 	 * @throws XPathExpressionException 
 	 */
 	@Test
-	void testRemoveLettreDuSac() throws XPathExpressionException {
+	public void testRemoveLettreDuSac() throws XPathExpressionException {
 		Sac sac = new Sac();
 		int tailleAvantSupp = sac.getSac().size();
 		char labelLettreAvantSup = sac.getPositionLettreDansSac(54).getLabel();
@@ -51,7 +51,7 @@ class SacTest {
 	 * @throws XPathExpressionException 
 	 */
 	@Test
-	void testAddLettreAuSac() throws XPathExpressionException {
+	public void testAddLettreAuSac() throws XPathExpressionException {
 		Sac sac = new Sac();
 		Lettre ajout = new Lettre('a', 15);
 		sac.addLettreAuSac(ajout);
@@ -63,7 +63,7 @@ class SacTest {
 	 * @throws XPathExpressionException 
 	 */
 	@Test
-	void testTailleContenuSac() throws XPathExpressionException {
+	public void testTailleContenuSac() throws XPathExpressionException {
 		Sac sac = new Sac();
 		assertEquals(sac.tailleContenuSac(), sac.getSac().size());
 	}

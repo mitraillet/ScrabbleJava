@@ -13,10 +13,10 @@ import scrabble.Lettre;
 import scrabble.Plateau;
 import scrabble.Sac;
 
-class JoueurTest {
+public class JoueurTest {
 
 	@Test
-	void testGenerateNumber() {
+	public void testGenerateNumber() {
 		Joueur joueur = new Joueur();
 		for(int i = 0 ; i < 50; i++) {
 			int temp = joueur.generateNumber(0, 15);
@@ -25,12 +25,12 @@ class JoueurTest {
 	}
 
 	@Test
-	void testSetScore() {
+	public void testSetScore() {
 		fail("Not yet implemented"); // TODO
 	}
 
 	@Test
-	void testGetLettreMain() throws XPathExpressionException {
+	public void testGetLettreMain() throws XPathExpressionException {
 		Sac sac = new Sac();
 		Joueur joueur = new Joueur();
 		joueur.pioche(sac);
@@ -40,7 +40,7 @@ class JoueurTest {
 	}
 
 	@Test
-	void testGetSizeMainJoueur() throws XPathExpressionException {
+	public void testGetSizeMainJoueur() throws XPathExpressionException {
 		Sac sac = new Sac();
 		Joueur joueur = new Joueur();
 		joueur.pioche(sac);
@@ -49,7 +49,7 @@ class JoueurTest {
 	}
 
 	@Test
-	void testGetMainJoueur() throws XPathExpressionException {
+	public void testGetMainJoueur() throws XPathExpressionException {
 		Sac sac = new Sac();
 		Joueur joueur = new Joueur();
 		
@@ -60,7 +60,7 @@ class JoueurTest {
 	}
 
 	@Test
-	void testSetMainJoueur() {
+	public void testSetMainJoueur() {
 		Joueur joueur = new Joueur();
 		
 		List<Lettre> mainTest = new ArrayList<Lettre>();
@@ -77,12 +77,12 @@ class JoueurTest {
 	}
 
 	@Test
-	void testJouer() {
+	public void testJouer() {
 		fail("Not yet implemented"); // TODO
 	}
 
 	@Test
-	void testPioche() throws XPathExpressionException {
+	public void testPioche() throws XPathExpressionException {
 		//Si main pleine pas de changement de taille ni du sac ni de la main
 		for(int i = 0; i < 25; i++) {
 			Sac sac = new Sac();
@@ -142,7 +142,7 @@ class JoueurTest {
 	}
 
 	@Test
-	void testMelanger() throws XPathExpressionException {
+	public void testMelanger() throws XPathExpressionException {
 		Sac sac = new Sac();
 		Joueur joueur = new Joueur();
 		List<Lettre> lettreSacTestChangement = new ArrayList<Lettre>();
@@ -176,12 +176,12 @@ class JoueurTest {
 	}
 
 	@Test
-	void testVerifierLettreMain() {
+	public void testVerifierLettreMain() {
 		fail("Not yet implemented"); // TODO
 	}
 
 	@Test
-	void testPoserMotPlateau() throws XPathExpressionException {
+	public void testPoserMotPlateau() throws XPathExpressionException {
 		Sac sac = new Sac();
 		Joueur joueur = new Joueur();
 		Plateau plateau = new Plateau();
@@ -189,7 +189,7 @@ class JoueurTest {
 	}
 
 	@Test
-	void testViderLaMain() throws XPathExpressionException {
+	public void testViderLaMain() throws XPathExpressionException {
 		Sac sac = new Sac();
 		Joueur joueur = new Joueur();
 		List<Lettre> lettreMainTestChangement = new ArrayList<Lettre>();
@@ -212,7 +212,7 @@ class JoueurTest {
 	}
 
 	@Test
-	void testPasser() {
+	public void testPasser() {
 		fail("Not yet implemented"); // TODO
 	}
 

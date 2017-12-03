@@ -12,14 +12,14 @@ import scrabble.Lettre;
  * @author Fauconnier/Henriquet
   *Test unitaire pour la classe Lettre
  */
-class LettreTest {
+public class LettreTest {
 
 	/**
 	 * Test de la méthode pour getLabel 
 	 * Méthode permettant l'obtention du label de la lettre
 	 */
 	@Test
-	void testGetLabel() {
+	public void testGetLabel() {
 		Lettre a = new Lettre('a',10);
 		Lettre i = new Lettre('i',10);
 		Lettre pointInterrogation = new Lettre();
@@ -33,7 +33,7 @@ class LettreTest {
 	 * Méthode permettant l'obtention du valeur de la lettre
 	 */
 	@Test
-	void testGetValeur() {
+	public void testGetValeur() {
 		Lettre a = new Lettre('a',10);
 		Lettre i = new Lettre('i',96);
 		Lettre pointInterrogation = new Lettre();
