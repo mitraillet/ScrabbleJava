@@ -12,6 +12,7 @@ import scrabble.Joueur;
 import scrabble.Lettre;
 import scrabble.Plateau;
 import scrabble.Sac;
+import scrabble.Case;
 
 public class JoueurTest {
 
@@ -26,7 +27,31 @@ public class JoueurTest {
 
 	@Test
 	public void testSetScore() {
-		fail("Not yet implemented"); // TODO
+		//fail("Not yet implemented"); // TODO
+		Joueur joueur = new Joueur();
+		joueur.setScore(80);
+		assertEquals(joueur.getScore(), 80);
+	}
+	
+	@Test
+	public void testGetScore() {
+		//fail("Not yet implemented"); // TODO
+		Joueur joueur = new Joueur();
+		joueur.setScore(50);
+		assertEquals(joueur.getScore(), 50);
+	}
+	
+	@Test
+	public void testAddScore() {
+		//fail("Not yet implemented"); // TODO
+		Joueur joueur = new Joueur();
+		
+		joueur.addScore(5);
+		assertEquals(joueur.getScore(), 5);
+		
+		joueur.addScore(40);
+		assertEquals(joueur.getScore(), 45);
+		
 	}
 
 	@Test
@@ -37,6 +62,26 @@ public class JoueurTest {
 		for(int i = 0; i < 7; i++) {
 			assertFalse(joueur.getLettreMain(i) == null);
 		}
+	}
+	
+	@Test
+	public void testGetLabelLettreMain() {
+		//fail("Not yet implemented"); // TODO
+		Joueur joueur = new Joueur();
+		List<Lettre> listMain = new ArrayList<Lettre>();
+		
+		Lettre a = new Lettre('a', 1);
+		Lettre z = new Lettre('z', 10);
+		Lettre b = new Lettre('b', 2);
+		
+		listMain.add(a);
+		listMain.add(z);
+		listMain.add(b);
+		
+		joueur.setMainJoueur(listMain);
+		
+		assertEquals(joueur.getLabelLettreMain(1), 'z');
+		assertEquals(joueur.getLabelLettreMain(0), 'a');
 	}
 
 	@Test
@@ -74,11 +119,6 @@ public class JoueurTest {
 		joueur.setMainJoueur(mainTest);
 		
 		assertEquals(joueur.getMainJoueur(), mainTest);
-	}
-
-	@Test
-	public void testJouer() {
-		fail("Not yet implemented"); // TODO
 	}
 
 	@Test
@@ -177,15 +217,103 @@ public class JoueurTest {
 
 	@Test
 	public void testVerifierLettreMain() {
-		fail("Not yet implemented"); // TODO
+		Joueur joueur = new Joueur();
+		
+		String [] mot = "arbre".split("");
+		String [] mot2 = "aride".split("");
+		
+		List<Lettre> motJoue = new ArrayList<Lettre>();
+		
+		Lettre a = new Lettre('a', 15);
+		Lettre r = new Lettre('r', 5);
+		Lettre d = new Lettre('d', 9);
+		Lettre i = new Lettre('i', 15);
+		Lettre z = new Lettre('z', 105);
+		Lettre e = new Lettre('e', 1);
+		
+		List<Lettre> mainTest = new ArrayList<Lettre>();
+		mainTest.add(a);
+		mainTest.add(r);
+		mainTest.add(d);
+		mainTest.add(i);
+		mainTest.add(z);
+		mainTest.add(e);
+		mainTest.add(e);
+		joueur.setMainJoueur(mainTest);
+		
+		List<Lettre> motJoueCheck1 = new ArrayList<Lettre>();
+		List<Lettre> motJoueCheck2 = new ArrayList<Lettre>();
+		
+		motJoueCheck1.add(a);
+		motJoueCheck1.add(r);
+		motJoueCheck1.add(null);
+		motJoueCheck1.add(null);
+		motJoueCheck1.add(e);
+		
+		motJoueCheck2.add(a);
+		motJoueCheck2.add(r);
+		motJoueCheck2.add(i);
+		motJoueCheck2.add(d);
+		motJoueCheck2.add(e);
+		
+		joueur.verifierLettreMain(mot, motJoue);
+		assertEquals(motJoue, motJoueCheck1);
+		
+		motJoue.removeAll(motJoue);
+		
+		joueur.verifierLettreMain(mot2, motJoue);
+		assertEquals(motJoue, motJoueCheck2);
+		
 	}
 
 	@Test
 	public void testPoserMotPlateau() throws XPathExpressionException {
-		Sac sac = new Sac();
 		Joueur joueur = new Joueur();
 		Plateau plateau = new Plateau();
-		//joueur.poserMotPlateau(mot, x, y, motJoue, motMain, motArray, plateauSave, saveMain, orientation, plateau)
+		Case[][] plateauSave;
+		plateauSave = plateau.copyPlateau();
+		List<Lettre> saveMain = joueur.getMainJoueur();		
+		String [] motArray = "test".split("");
+		
+		List<Lettre> motJoue = joueur.getMainJoueur();		
+		List<Lettre> motMain = joueur.getMainJoueur();		
+		
+		Lettre t = new Lettre('t', 2);
+		Lettre e = new Lettre('e', 1);
+		Lettre s = new Lettre('s', 3);
+		
+		motJoue.add(t);
+		motJoue.add(e);
+		motJoue.add(s);
+		motJoue.add(t);
+		
+		joueur.poserMotPlateau(7, 7, motJoue, motMain, motArray, plateauSave, saveMain, 'h', plateau.plateau);
+		
+		assertEquals(plateau.plateau[7][7].getLabelCase(), 't');
+		assertEquals(plateau.plateau[8][7].getLabelCase(), 'e');
+		assertEquals(plateau.plateau[9][7].getLabelCase(), 's');
+		assertEquals(plateau.plateau[10][7].getLabelCase(), 't');
+		assertEquals(plateau.plateau[11][7].getLettre(), null);
+		
+		assertFalse(joueur.poserMotPlateau(13, 13, motJoue, motMain, motArray, plateauSave, saveMain, 'h', plateau.plateau));
+		
+		joueur.poserMotPlateau(1, 14, motJoue, motMain, motArray, plateauSave, saveMain, 'v', plateau.plateau);
+		
+		assertEquals(plateau.plateau[1][14].getLabelCase(), 't');
+		assertEquals(plateau.plateau[1][13].getLabelCase(), 'e');
+		assertEquals(plateau.plateau[1][12].getLabelCase(), 's');
+		assertEquals(plateau.plateau[1][11].getLabelCase(), 't');
+		assertEquals(plateau.plateau[1][10].getLettre(), null);
+		assertEquals(plateau.plateau[2][14].getLettre(), null);
+		
+		motJoue.removeAll(motJoue);
+		motMain.removeAll(motMain);
+		
+		motJoue.add(s);
+		motJoue.add(e);
+		motArray = "se".split("");
+		
+		assertFalse(joueur.poserMotPlateau(7, 7, motJoue, motMain, motArray, plateauSave, saveMain, 'v', plateau.plateau));
 	}
 
 	@Test
