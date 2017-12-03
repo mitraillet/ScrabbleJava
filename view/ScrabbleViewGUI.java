@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.awt.event.MouseListener;
 import java.util.Observable;
 
 import javax.swing.*;
@@ -121,7 +120,16 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 	 * Création et mise à jour du score
 	 */
 	private void updateScore() {
+		String scoreMsg = "Score : " + joueur.getScore();
+		Font font = new Font("Serif", Font.BOLD, 20);
+		JLabel  scoreAffiche = new JLabel (scoreMsg);
+		scoreAffiche.setPreferredSize(new Dimension(150, 40));
+		scoreAffiche.setSize(150, 40);
+		scoreAffiche.setFont(font);
+		scoreAffiche.setBackground(new Color(0,0,0,0));
+		scoreAffiche.setHorizontalAlignment(2);
 		
+		container.add(scoreAffiche);
 	}
 	
 	/**
@@ -161,6 +169,7 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 		container.removeAll();
 		updateBouton(sac);
 		updatePlateau();
+		updateScore();
 		updateMain();
 		fenetreJeu.pack();
 	}
