@@ -233,6 +233,11 @@ public class Joueur extends Observable{
 		int yPos = 0; //incrément Position y
 		for(int i = 0; i < motArray.length; i++) {
 			try {
+				if(plateau[x + xPos][y - yPos].getLettre() == null && motJoue.get(i) == null) {
+					System.out.println("Vous ne possèdez pas les lettres requises.");
+					return false;
+				}
+				
 				if(plateau[x + xPos][y - yPos].getLettre() == null) {
 					plateau[x + xPos][y - yPos].setLettre(motJoue.get(i));
 					motMain.add(motJoue.get(i));

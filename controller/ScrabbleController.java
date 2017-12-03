@@ -59,8 +59,10 @@ public class ScrabbleController {
 			
 			joueur.verifierLettreMain(motArray, motJoue);
 			
-			if(joueur.poserMotPlateau(mot, x, y, motJoue, motMain, motArray, plateauSave, 
+			if(joueur.poserMotPlateau(x, y, motJoue, motMain, motArray, plateauSave, 
 					saveMain, orientation, plateauJeu) == false) {
+				joueur.setMainJoueur(saveMain);
+				plateau.plateau = plateauSave;
 				return;
 			} else {
 				plateau.plateau = plateauJeu;
