@@ -334,8 +334,58 @@ public class JoueurTest {
 		assertNotSame(joueur.getLettreMain(1), lettreMainTestChangement.get(0));
 		assertNotSame(joueur.getLettreMain(2), lettreMainTestChangement.get(1));
 		assertNotSame(joueur.getLettreMain(0), lettreMainTestChangement.get(2));
+	}
+	
+	@Test
+	public void testDetecteJoker() {
+		Joueur joueur = new Joueur();
 		
+		String mot = "tes?s";
+		assertEquals(joueur.detecteJoker(mot), 1);
 		
+		mot = "tests";
+		assertEquals(joueur.detecteJoker(mot), 0);
+		
+		mot = "t?s?s";
+		assertEquals(joueur.detecteJoker(mot), 2);
+	}
+	
+	@Test
+	public void testSetJokerMain() {
+		Joueur joueur = new Joueur();
+		char joker1 = 't';
+		char joker2 = '/';
+		
+		Lettre a = new Lettre('a', 1);
+		Lettre b = new Lettre('b', 2);
+		Lettre c = new Lettre('c', 3);
+		Lettre t = new Lettre('t', 2);
+		Lettre e = new Lettre('e', 1);
+		Lettre s = new Lettre('s', 1);
+		Lettre $ = new Lettre('?', 0);
+		
+		List<Lettre> mainJoueur = new ArrayList<Lettre>();
+		mainJoueur.add(a);
+		mainJoueur.add(b);
+		mainJoueur.add(c);
+		mainJoueur.add(t);
+		mainJoueur.add(e);
+		mainJoueur.add(s);
+		mainJoueur.add($);
+		
+		joueur.setMainJoueur(mainJoueur);
+		
+		String mot = "tes?s";
+		
+		assertEquals(joueur.setJokerMain(joker1, joker2, mot), "tests");
+		
+		joker2 = 's';
+		mot = "tes??";
+		mainJoueur.remove(1);
+		Lettre $2 = new Lettre('?', 0);
+		mainJoueur.add($2);
+		
+		assertEquals(joueur.setJokerMain(joker1, joker2, mot), "tests");
 		
 	}
 

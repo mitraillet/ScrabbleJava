@@ -305,11 +305,13 @@ public class Joueur extends Observable{
 		
 		boolean joker1ok = false;
 		for(int i = 0; i < this.mainJoueur.size(); i++) {
+			
 			if(this.mainJoueur.get(i).getLabel() == '?') {
 				if(joker1ok == false) {
 					this.mainJoueur.get(i).setLabel(joker1);
 					mot = mot.replaceFirst("\\?", Character.toString(joker1));
 					joker1ok = true;
+					
 				} else if(joker2 != '/' && joker1ok == true) {
 					mot = mot.replaceFirst("\\?", Character.toString(joker2));
 					this.mainJoueur.get(i).setLabel(joker2);
