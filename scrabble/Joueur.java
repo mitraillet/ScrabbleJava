@@ -226,26 +226,19 @@ public class Joueur extends Observable{
 		}
 	}
 	
-	public boolean poserMotPlateau(String mot, int x, int y, List<Lettre> motJoue, List<Lettre> motMain, 
+	public boolean poserMotPlateau(int x, int y, List<Lettre> motJoue, List<Lettre> motMain, 
 			String[] motArray, Case[][] plateauSave, List<Lettre> saveMain, char orientation, Case[][] plateau) {
 		//Gère la pose des Lettres
 		int xPos = 0; //incrément Position x
 		int yPos = 0; //incrément Position y
-		@SuppressWarnings("unused") //Utilisé dans le try/catch
-		boolean tourStop = false; //Flag, true si erreur
-		for(int i = 0; i < mot.length(); i++) {
+		for(int i = 0; i < motArray.length; i++) {
 			try {
 				if(plateau[x + xPos][y - yPos].getLettre() == null) {
 					plateau[x + xPos][y - yPos].setLettre(motJoue.get(i));
 					motMain.add(motJoue.get(i));
 				} else {
-					try {
-						if(plateau[x + xPos][y - yPos].getLabelCase() != motArray[i].charAt(0)) {
-							tourStop = true;
-							return false;
-						}
-					} catch (NullPointerException e){
-						System.out.println("Erreur : motJoue vide !");
+					if(plateau[x + xPos][y - yPos].getLabelCase() != motArray[i].charAt(0)) {
+						return false;
 					}
 				}
 			} catch (ArrayIndexOutOfBoundsException e) {
