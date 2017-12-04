@@ -30,7 +30,7 @@ import java.util.*;
  * Classe de gestion du plateau. 
  * Contient la vérification des mots et le calcul des scores
  */
-public class Plateau extends Observable {
+public class Plateau {
 
 	/**
 	* dictionnaire Contient tous les mots de la langues française 
