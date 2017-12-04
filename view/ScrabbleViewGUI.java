@@ -102,7 +102,12 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 				}
 				else{
 					char labelLettre = plateau.getPlateauLabel(h, j);
-					pic = new JLabel(new ImageIcon("ressource/image/lettre/"+ labelLettre +".png", labelLettre +""));
+					if(plateau.getCase(h, j).getValeurCase() == 0) {
+						pic = new JLabel(new ImageIcon("ressource/image/lettre/joker/"+ labelLettre +".png", labelLettre +""));
+					}
+					else {
+						pic = new JLabel(new ImageIcon("ressource/image/lettre/"+ labelLettre +".png", labelLettre +""));
+					}
 					plateauGraphic.add(pic);
 				}
 			}
