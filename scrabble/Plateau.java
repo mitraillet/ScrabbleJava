@@ -659,6 +659,31 @@ public class Plateau {
 		int v = 0;
 		
 		for(int i = 0; i < scorePrincipal.size(); i++) {
+			switch (this.plateau[xDebut + h][yDebut - v].getBonus()) {
+				case 3:
+					doubleMot += 1;
+					break;
+				case 4:
+					tripleMot += 1;
+					break;
+				case 5:
+					doubleMot += 1;
+					break;
+				default:
+				
+			}
+		
+			if(orientation == 'h') {
+				h++;
+			} else {
+				v++;
+			}
+		}
+		
+		h = 0;
+		v = 0;
+		
+		for(int i = 0; i < scorePrincipal.size(); i++) {
 			
 			Case caseActuel = this.plateau[xDebut + h][yDebut - v];
 			
@@ -671,13 +696,7 @@ public class Plateau {
 			} else if (bonusActuel == 2) {
 				lettreTriple.add(caseActuel.getLettre());
 				flagEstCompte = true;
-			} else if (bonusActuel == 3) {
-				doubleMot += 1;
-			} else if (bonusActuel == 4) {
-				tripleMot += 1;
-			} else if (bonusActuel == 5) {
-				doubleMot += 1;
-			}
+			} 
 			
 			if(doubleMot == 0 && tripleMot == 0 && flagEstCompte == false) {
 				lettreScore.add(caseActuel.getLettre());
