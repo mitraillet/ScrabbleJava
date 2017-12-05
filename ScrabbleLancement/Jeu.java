@@ -7,7 +7,7 @@ import scrabble.Joueur;
 import scrabble.Plateau;
 import scrabble.Sac;
 import view.ScrabbleViewGUI;
-import view.GUISave;
+//import view.GUISave;
 
 import view.ScrabbleViewConsole;
 

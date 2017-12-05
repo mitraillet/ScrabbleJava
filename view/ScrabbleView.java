@@ -17,7 +17,7 @@ public abstract class ScrabbleView  implements Observer {
 			this.plateau = plateau;
 			this.joueur = joueur;
 			this.controller = controller;
-			plateau.addObserver(this);
+			//plateau.addObserver(this);
 			joueur.addObserver(this);
 		}
 
