@@ -3,7 +3,6 @@ package controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import scrabble.Dictionnaire;
 import scrabble.Joueur;
 import scrabble.Lettre;
 import scrabble.Plateau;
