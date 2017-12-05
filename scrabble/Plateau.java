@@ -67,6 +67,7 @@ public class Plateau {
 	public void initCasePlateau(Case caseSet, int x, int y) {
 		this.plateau[x][y] = caseSet;
 	}
+	
 	/**
 	 * Construis le dictionnaire sur base du fichier dictionnaire.txt
 	 */
@@ -639,6 +640,7 @@ public class Plateau {
 		int xDebut = x;
 		int yDebut = y;
 		
+		//Calcul le score du mot posé
 		if(orientation == 'h') {
 			scorePrincipal.addAll(this.convertListCaseToListLettre(this.checkGauche(x, y)));
 			scorePrincipal.add(this.plateau[x][y].getLettre());
@@ -658,6 +660,7 @@ public class Plateau {
 		int h = 0;
 		int v = 0;
 		
+		//Comptabilise les bonus
 		for(int i = 0; i < scorePrincipal.size(); i++) {
 			switch (this.plateau[xDebut + h][yDebut - v].getBonus()) {
 				case 3:
@@ -683,6 +686,7 @@ public class Plateau {
 		h = 0;
 		v = 0;
 		
+		//Ajoute les lettres dans les listes de score suivant les bonus
 		for(int i = 0; i < scorePrincipal.size(); i++) {
 			
 			Case caseActuel = this.plateau[xDebut + h][yDebut - v];
@@ -706,8 +710,6 @@ public class Plateau {
 				lettreTriple.add(caseActuel.getLettre());
 			}
 			
-			//caseActuel.setBonus(0);
-			
 			if(orientation == 'h') {
 				h++;
 			} else {
@@ -728,6 +730,7 @@ public class Plateau {
 		int scoreSecondaireTemp = 0;
 		int h = 0;
 		int v = 0;
+		
 		for(int i = 0; i < motJoue.size(); i++) { //motJoue, la longueur du mot posé
 			scoreSecondaireTemp = 0;
 			

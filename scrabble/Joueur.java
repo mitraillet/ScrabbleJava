@@ -223,6 +223,19 @@ public class Joueur extends Observable{
 		}
 	}
 	
+	/**
+	 * Pose le mot sur le plateau
+	 * @param x la position x de départ
+	 * @param y la position y de départ
+	 * @param motJoue le mot posé (null = lettre déja sur le plateau)
+	 * @param motMain les lettres tirée de la main
+	 * @param motArray le mot posé (en entier)
+	 * @param plateauSave la sauvegarde du plateau
+	 * @param saveMain la sauvegarde de la main
+	 * @param orientation l'orienation du mot
+	 * @param plateau le plateau sur lequel posé le mot
+	 * @return true si le mot est posé sans erreur, sinon false
+	 */
 	public boolean poserMotPlateau(int x, int y, List<Lettre> motJoue, List<Lettre> motMain, 
 			String[] motArray, Case[][] plateauSave, List<Lettre> saveMain, char orientation, Case[][] plateau) {
 		//Gère la pose des Lettres
