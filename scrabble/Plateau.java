@@ -19,7 +19,6 @@ import javax.xml.xpath.XPathFactory;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
@@ -51,7 +50,6 @@ public class Plateau {
 	
 	/**
 	* Contructeur par défaut du sac
-	* @throws XPathExpressionException gestion des erreurs
 	*/
 	public Plateau() {
 		this.construireDico();
@@ -100,11 +98,6 @@ public class Plateau {
 	         factory.setValidating(true);
 	         
 	         DocumentBuilder builder = factory.newDocumentBuilder();
-	         
-	         //création de notre objet d'erreurs
-	         ErrorHandler errHandler = new SimpleErrorHandler();
-	         //Affectation de notre objet au document pour interception des erreurs éventuelles
-	         builder.setErrorHandler(errHandler);
 	         
 	         // Parsing d'un XML via une URI
 	         String uri = "./ressource/dataCase.xml";

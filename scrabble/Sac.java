@@ -13,7 +13,6 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
@@ -73,9 +72,8 @@ public class Sac {
 	
 	/**
 	 * Constructeur par défaut + initialisation du contenu du sac
-	 * @throws XPathExpressionException 
 	 */
-	public Sac() throws XPathExpressionException {
+	public Sac() {
 		this.contenuSac = new ArrayList<Lettre>();
 		this.remplissageSac();
 		Joker joker1 = new Joker();
@@ -86,9 +84,8 @@ public class Sac {
 
 	/**
 	 * Récupère les donnees des lettre dans le fichier dataLettre.XML et remplis la variable sac
-	 * @throws XPathExpressionException
 	 */
-	private void remplissageSac() throws XPathExpressionException {
+	private void remplissageSac() {
 	      DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 	      factory.setIgnoringElementContentWhitespace(true);
 
@@ -97,11 +94,6 @@ public class Sac {
 	         factory.setValidating(true);
 	         
 	         DocumentBuilder builder = factory.newDocumentBuilder();
-	         
-	         //Création de notre objet d'erreurs
-	         ErrorHandler errHandler = new SimpleErrorHandler();
-	         //Affectation de notre objet au document pour interception des erreurs éventuelles
-	         builder.setErrorHandler(errHandler);
 	         
 	         // Parsing d'un XML via une URI
 	         String uri = "./ressource/dataLettre.xml";
@@ -124,11 +116,20 @@ public class Sac {
 	            		String expressionValeur = "/alphabet/lettre[" + i + "]/valeur";
 	            		String expressionInstance = "/alphabet/lettre[" + i + "]/instance";
 	            		
-	            		char labelLettre = ((String)path.evaluate(expressionlabel, root)).charAt(0);
+	            		char labelLettre = '/';
+	            		int valeurLettre = 0;
+	            		int instanceLettre = 0;
 	            		
-	            		int valeurLettre = ((Double)path.evaluate(expressionValeur, root, XPathConstants.NUMBER)).intValue();
+	            		try {
+	            			labelLettre = ((String)path.evaluate(expressionlabel, root)).charAt(0);
 	            		
-	            		int instanceLettre = ((Double)path.evaluate(expressionInstance, root, XPathConstants.NUMBER)).intValue();
+	            			valeurLettre = ((Double)path.evaluate(expressionValeur, root, XPathConstants.NUMBER)).intValue();
+	            		
+	            			instanceLettre = ((Double)path.evaluate(expressionInstance, root, XPathConstants.NUMBER)).intValue();
+	            			
+	            		} catch (XPathExpressionException e) {
+	            			System.out.println("Erreur Système : vérifier ressource sac");
+	            		} 
 	            		
 	            		Lettre addLettre = new Lettre(labelLettre, valeurLettre);
 	            		
@@ -147,7 +148,7 @@ public class Sac {
 	         e.printStackTrace();
 	      } catch (IOException e) {
 	         e.printStackTrace();
-	      }      
+	      }    
 	   }
 
 }
