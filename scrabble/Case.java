@@ -67,13 +67,12 @@ public class Case {
 	}
 	
 	/**
-	 * Mettre à jour le label de la lettre contenue dans la case
-	 * @param label le nouveau label
+	 * Renvoie la valeur de la lettre contenue dans la case
+	 * @return la valeur de la lettre contenue dans la case
 	 */
-	public void setLabelCase(char label){
-		this.lettre.setLabel(label);
+	public int getValeurCase() {
+		return this.lettre.getValeur();
 	}
-	
 	
 	/**
 	 * Constructeur de l'objet Case par défaut (sans paramètre)
@@ -90,5 +89,16 @@ public class Case {
 		this.lettre = null;
 		this.bonus = bonus;
 	}
+	
+	/**
+	 * Constructeur de l'objet Case
+	 * @param bonus le bonus associé à la case
+	 * @param lettre la lettre associé à la case
+	 */
+	public Case(int bonus, Lettre lettre) {
+		this.lettre = lettre;
+		this.bonus = bonus;
+	}
+	
 	
 }

@@ -10,10 +10,21 @@ package scrabble;
 public class Joker extends Lettre {
 
 	/**
-	 * Permet de dÃ©finir la valeur du libellÃ©
+	 * Permet de définir la valeur du label du joker 
+	 * et ce seulement si c'est une lettre
+	 * @param label de la lettre de type String pour plus de flexibilité
 	 */
-	public void setJoker(char label) {
-		this.setLabel(label);
+	public void setJoker(String labelString) {
+		char labelChar;
+		labelString = labelString.toLowerCase();
+		String abc = "azertyuiopqsdfghjklmwxcvbn";
+		if(abc.contains(labelString)) {
+			labelChar = labelString.charAt(0);
+			this.setLabel(labelChar);
+		}
+		else {
+			System.out.println("Caractère non authorisé !");
+		}
 	}
 	
 	public Joker() {

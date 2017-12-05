@@ -1,5 +1,5 @@
 /**
- * Test unitaire pour la classe Case
+ * Package contenant tous les tests unitaires
  */
 package test;
 
@@ -10,6 +10,10 @@ import scrabble.Lettre;
 
 import org.junit.Test;
 
+/**
+ * @author Fauconnier/Henriquet
+ * Test unitaire pour la classe Case
+ */
 public class CaseTest {
 
 	
@@ -95,19 +99,6 @@ public class CaseTest {
 		caseTest.setLettre(lettreTest);
 		
 		assertEquals(caseTest.getLabelCase(), 'b');
-	}
-
-	/**
-	 * Test du getter de la valeur de la lettre
-	 */
-	@Test
-	public void testGetValeurCase() {
-		//fail("Not yet implemented"); // TODO
-		Case caseTest = new Case();
-		Lettre lettreTest = new Lettre('b', 1);
-		caseTest.setLettre(lettreTest);
-		
-		assertEquals(caseTest.getValeurCase(), 1);
 	}
 
 }

@@ -1,53 +1,41 @@
 /**
- * 
+ * Package contenant tous les tests unitaires
  */
 package test;
 
-import static org.junit.Assert.assertEquals;
-
-import org.junit.jupiter.api.Test;
+import static org.junit.Assert.*;
+import org.junit.Test;
 
 import scrabble.Lettre;
 
 /**
- * @author Mitraillet
- *
+ * @author Fauconnier/Henriquet
+  *Test unitaire pour la classe Lettre
  */
-class LettreTest {
+public class LettreTest {
 
 	/**
-	 * Test method for {@link scrabble.Lettre#getLabel()}.
+	 * Test de la m√©thode pour getLabel 
+	 * M√©thode permettant l'obtention du label de la lettre
 	 */
 	@Test
-	void testGetLabel() {
+	public void testGetLabel() {
 		Lettre a = new Lettre('a',10);
-		Lettre i = new Lettre('Ó',10);
+		Lettre i = new Lettre('i',10);
 		Lettre pointInterrogation = new Lettre();
 		assertEquals(a.getLabel(), 'a' );
-		assertEquals(i.getLabel(), 'Ó' );
+		assertEquals(i.getLabel(), 'i' );
 		assertEquals(pointInterrogation.getLabel(), '?' );
 	}
 
 	/**
-	 * Test method for {@link scrabble.Lettre#setLabel(char)}.
+	 * Test de la m√©thode pour getValeur 
+	 * M√©thode permettant l'obtention du valeur de la lettre
 	 */
 	@Test
-	void testSetLabel() {
+	public void testGetValeur() {
 		Lettre a = new Lettre('a',10);
-		Lettre pointInterrogation = new Lettre();
-		a.setLabel('y');
-		pointInterrogation.setLabel('@');
-		assertEquals(a.getLabel(), 'y' );
-		assertEquals(pointInterrogation.getLabel(), '@' );
-	}
-
-	/**
-	 * Test method for {@link scrabble.Lettre#getValeur()}.
-	 */
-	@Test
-	void testGetValeur() {
-		Lettre a = new Lettre('a',10);
-		Lettre i = new Lettre('Ó',96);
+		Lettre i = new Lettre('i',96);
 		Lettre pointInterrogation = new Lettre();
 		assertEquals(a.getValeur(), 10 );
 		assertEquals(i.getValeur(), 96 );

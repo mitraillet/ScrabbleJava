@@ -13,7 +13,6 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
@@ -24,129 +23,122 @@ import javax.xml.xpath.XPathFactory;
 
 /**
  * @author Fauconnier/Henriquet
- *
+ * Sac contenant les Lettres
  */
 public class Sac {
 	
-	//private Lettre[] sac = new Lettre[102];
 	private final List<Lettre> contenuSac;
 	
 	/**
+	 * Retourne le sac
 	 * @return le sac
 	 */
-	//public Lettre[] getSac() {
 	public List<Lettre> getSac() {
 		return contenuSac;
 	}
 	
+	/**
+	* Retourne une lettre du sac
+	* @param positionSac la position de la lettre a récuperer
+	* @return la lettre selon la position
+	*/
 	public Lettre getPositionLettreDansSac(int positionSac) {
 		return this.contenuSac.get(positionSac);
 	}
 	
+	/**
+	* Supprime une lettre du sac
+	* @param positionSac la position de la lettre a supprimer
+	*/
 	public void removeLettreDuSac(int positionSac) {
 		this.contenuSac.remove(positionSac);
 	}
+	
+	/**
+	* Ajoute une lettre dans le sac (a la fin de la liste)
+	* @param lettre l'objet Lettre a ajouter au sac
+	*/
 	public void addLettreAuSac(Lettre lettre) {
 		this.contenuSac.add(lettre);
 	}
+	
+	/**
+	* Retourne la taille du sac (nombre de lettre)
+	* @return le nombre de lettre dans le sac
+	*/
 	public int tailleContenuSac() {
 		return this.contenuSac.size();
 	}
 	
 	/**
-	 * @param ajoute les lettres au sac 
-	 * @throws XPathExpressionException 
+	 * Constructeur par défaut + initialisation du contenu du sac
 	 */
-	public Sac() throws XPathExpressionException {
+	public Sac() {
 		this.contenuSac = new ArrayList<Lettre>();
 		this.remplissageSac();
 		Joker joker1 = new Joker();
 		Joker joker2 = new Joker();
 		contenuSac.add(joker1);
-		contenuSac.add(joker2);
-		
-	}
-	
-	/**
-	 * MÃ©thode liÃ© Ã© la mÃ©thode pioche du joueur 
-	 * en vue de lui complÃ©ter sa main ou de la lui remplir complÃ©tement
-	 */
-	public void pioche() {
-		/*
-		 * ajout de lettres dans la main de joueur de tel sorte que nmbre de lettre
-		 * dans sa main soit Ã©gal Ã© 0 et pioche de lettre random
-		 */
-	}
-	
-	/**
-	 * MÃ©thode liÃ© a la mÃ©thode remelange de joueur
-	 * pour pouvoir changer certaines lettres
-	 * Appel de la mÃ©thode pioche
-	 */
-	public void melangeMain() {
-		
+		contenuSac.add(joker2);	
 	}
 
 	/**
-	 * RÃ©cupÃ¨re les donnees des lettre dans le fichier dataLettre.XML et remplis la variable sac
-	 * @throws XPathExpressionException
+	 * Récupère les donnees des lettre dans le fichier dataLettre.XML et remplis la variable sac
 	 */
-	private void remplissageSac() throws XPathExpressionException {
+	private void remplissageSac() {
 	      DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 	      factory.setIgnoringElementContentWhitespace(true);
 
 	      try {
-	         //MÃ©thode qui permet d'activer la vÃ©rification du fichier
+	         //Méthode qui permet d'activer la vérification du fichier
 	         factory.setValidating(true);
 	         
 	         DocumentBuilder builder = factory.newDocumentBuilder();
-	         
-	         //crÃ©ation de notre objet d'erreurs
-	         ErrorHandler errHandler = new SimpleErrorHandler();
-	         //Affectation de notre objet au document pour interception des erreurs Ã©ventuelles
-	         builder.setErrorHandler(errHandler);
 	         
 	         // Parsing d'un XML via une URI
 	         String uri = "./ressource/dataLettre.xml";
 	         
 	         //On rajoute un bloc de capture
-	         //pour intercepter les erreurs au cas oÃ¹ il y en a
+	         //pour intercepter les erreurs au cas où il y en a
 	         try {
-	            //Document xml = builder.parse(fileXML);
-	        	 	Document xml = builder.parse(uri);
+		    //Récupère le fichier
+	            Document xml = builder.parse(uri);
+		    //Récupère l'élément racine du fichier 
 	            Element root = xml.getDocumentElement();
 	            
-	            System.out.println(root.getNodeName());
-	            
+		    //Instancie xpath, qui permet de lire le fichier 
 	            XPathFactory xpf = XPathFactory.newInstance();
 	            XPath path = xpf.newXPath();
 	             
 	            for (int i = 1; i < 27; i++){
+			    	//Pour chaque noeud case, récupère la label, la valeur et l'instancie
 	            		String expressionlabel = "/alphabet/lettre[" + i + "]/label";
 	            		String expressionValeur = "/alphabet/lettre[" + i + "]/valeur";
 	            		String expressionInstance = "/alphabet/lettre[" + i + "]/instance";
-	            		//String str = (String)path.evaluate(expressionlabel, root);
-	            		//System.out.println(str);
 	            		
-	            		char labelLettre = ((String)path.evaluate(expressionlabel, root)).charAt(0);
-	            		//System.out.println(labelLettre);
+	            		char labelLettre = '/';
+	            		int valeurLettre = 0;
+	            		int instanceLettre = 0;
 	            		
-	            		int valeurLettre = ((Double)path.evaluate(expressionValeur, root, XPathConstants.NUMBER)).intValue();
-	            		//System.out.println(valeurLettre);
+	            		try {
+	            			labelLettre = ((String)path.evaluate(expressionlabel, root)).charAt(0);
 	            		
-	            		int instanceLettre = ((Double)path.evaluate(expressionInstance, root, XPathConstants.NUMBER)).intValue();
-	            		//System.out.println(instanceLettre);
+	            			valeurLettre = ((Double)path.evaluate(expressionValeur, root, XPathConstants.NUMBER)).intValue();
+	            		
+	            			instanceLettre = ((Double)path.evaluate(expressionInstance, root, XPathConstants.NUMBER)).intValue();
+	            			
+	            		} catch (XPathExpressionException e) {
+	            			System.out.println("Erreur Système : vérifier ressource sac");
+	            		} 
 	            		
 	            		Lettre addLettre = new Lettre(labelLettre, valeurLettre);
 	            		
+			    	//Ajoute chaque lettre dans le sac
 	            		for(int j = 0; j < instanceLettre; j ++) {
 	            			contenuSac.add(addLettre);
 	            		}
 	            		
-	            }
-	            
-	            System.out.println();
-	               
+	            }      
 	            
 	         } catch (SAXParseException e){}
 	         
@@ -156,10 +148,7 @@ public class Sac {
 	         e.printStackTrace();
 	      } catch (IOException e) {
 	         e.printStackTrace();
-	      }      
+	      }    
 	   }
 
-	
 }
-
-

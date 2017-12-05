@@ -32,10 +32,12 @@ public class Lettre {
 
 	/**
 	 * Méthode permettant d'attribuer un label 
-	 * utiliser pour attribuer au joker un label 
+	 * utiliser pour attribuer au joker un label
+	 * donc mis en protected pour empêcher le changement 
+	 * d'une lettre autre que d'un joker 
 	 * @param label le label à initialiser
 	 */
-	public void setLabel(char label) {
+	protected void setLabel(char label) {
 		this.label = label;
 	}
 
