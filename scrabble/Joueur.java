@@ -240,6 +240,7 @@ public class Joueur extends Observable{
 					motMain.add(motJoue.get(i));
 				} else {
 					if(plateau[x + xPos][y - yPos].getLabelCase() != motArray[i].charAt(0)) {
+						System.out.println("Impossible de poser le mot");
 						return false;
 					}
 				}
