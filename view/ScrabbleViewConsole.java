@@ -10,7 +10,6 @@ import java.util.Scanner;
 import scrabble.Joueur;
 import scrabble.Lettre;
 import scrabble.Plateau;
-import scrabble.Dictionnaire;
 import controller.ScrabbleController;
 
 
@@ -62,15 +61,24 @@ public class ScrabbleViewConsole extends ScrabbleView implements Observer{
 						
 						if(joker == 1) {
 							affiche("Veuillez entrer le label du joker :");
-							char joker1 = (sc.next()).charAt(0);
-							//mot1 = 
-							mot1 = joueur.setJokerMain(joker1, '/', mot1);
-						} else if(joker == 2) {
+							char joker1 = '/';
+							char joker2 = '/';
+							while(joker1 == '/') {
+								joker1 = joueur.testJoker(sc.next());
+							}
+							mot1 = joueur.setJokerMain(joker1, joker2, mot1);
+							
+						} else if (joker == 2) {
 							affiche("Veuillez entrer le label du premier joker :");
-							char joker1 = (sc.next()).charAt(0);
+							char joker1 = '/';
+							char joker2 = '/';
+							while(joker1 == '/') {
+								joker1 = joueur.testJoker(sc.next());
+							}
 							affiche("Veuillez entrer le label du deuxième joker :");
-							char joker2 = (sc.next()).charAt(0);
-							//mot1 = 
+							while(joker2 == '/') {
+								joker2 = joueur.testJoker(sc.next());
+							}
 							mot1 = joueur.setJokerMain(joker1, joker2, mot1);
 						}
 						

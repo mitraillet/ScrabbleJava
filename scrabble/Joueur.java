@@ -324,6 +324,25 @@ public class Joueur extends Observable{
 	}
 	
 	/**
+	 * Vérifie le label rentré par l'utilisateur
+	 * @param joker le label rentré par le joueur
+	 * @return le label vérifié ou '$' si incorrect
+	 */
+	public char testJoker(String joker) {
+		char labelChar;
+		String labelString = joker.toLowerCase();
+		String abc = "azertyuiopqsdfghjklmwxcvbn";
+		if(abc.contains(labelString)) {
+			labelChar = labelString.charAt(0);
+		}
+		else {
+			System.out.println("Caractère non authorisé !");
+			return '/';
+		}
+		return labelChar;
+	}
+	
+	/**
 	 * Permet au joueur de passer le tour
 	 */
 	public void passer() {
