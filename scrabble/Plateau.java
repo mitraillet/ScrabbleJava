@@ -258,7 +258,6 @@ public class Plateau {
 			}
 			
 			this.calculScore(x, y, orientation, motMain);
-			System.out.println("OK mot");
 			return true;
 		}
 
@@ -289,7 +288,6 @@ public class Plateau {
 			//Empêche le crash, si le mot est au bord du plateau
 		}
 		Collections.reverse(contientLettre); //Inverse la liste
-		System.out.println("hautMot : " + this.getLabelToList(contientLettre));
 		return contientLettre;
 	}
 	
@@ -313,7 +311,6 @@ public class Plateau {
 		} catch(IndexOutOfBoundsException e) {
 			//Empêche le crash, si le mot est au bord du plateau
 		}
-		System.out.println("BasMot : " + this.getLabelToList(contientLettre));
 		return contientLettre;
 	}
 	
@@ -338,7 +335,6 @@ public class Plateau {
 			//Empêche le crash, si le mot est au bord du plateau
 		}
 		Collections.reverse(contientLettre); //Inverse la liste
-		System.out.println("GaucheMot : " + this.getLabelToList(contientLettre));
 		return contientLettre;
 	}
 	
@@ -362,7 +358,6 @@ public class Plateau {
 		} catch(IndexOutOfBoundsException e) {
 			//Empêche le crash, si le mot est au bord du plateau
 		}
-		System.out.println("DroiteMot : " + this.getLabelToList(contientLettre));
 		return contientLettre;
 	}
 	
