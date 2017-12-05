@@ -396,6 +396,23 @@ public class JoueurTest {
 		assertEquals(joueur.setJokerMain(joker1, joker2, mot), "tests");
 		
 	}
+	
+	@Test
+	public void testTestJoker() {
+		Joueur joueur = new Joueur();
+		
+		String mot = "j";
+		assertEquals(joueur.testJoker(mot), 'j');
+		
+		mot = "$";
+		assertEquals(joueur.testJoker(mot), '/');
+		
+		mot = "2";
+		assertEquals(joueur.testJoker(mot), '/');
+		
+		mot = "K";
+		assertEquals(joueur.testJoker(mot), 'k');
+	}
 
 	@Test
 	public void testPasser() {
