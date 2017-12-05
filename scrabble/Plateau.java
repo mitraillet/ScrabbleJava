@@ -706,7 +706,7 @@ public class Plateau {
 				lettreTriple.add(caseActuel.getLettre());
 			}
 			
-			caseActuel.setBonus(0);
+			//caseActuel.setBonus(0);
 			
 			if(orientation == 'h') {
 				h++;
@@ -742,6 +742,10 @@ public class Plateau {
 					
 				}
 				
+				if(scoreSecondaireTemp != 0) {
+					scoreSecondaireTemp += this.plateau[x + h][y - v].getValeurCase();
+				}
+				
 				if(this.plateau[x + h][y - v].getBonus() == 3) {
 					this.tempScore += (scoreSecondaireTemp)*2;
 				} else if (this.plateau[x + h][y - v].getBonus() == 4) {
@@ -755,9 +759,11 @@ public class Plateau {
 				} else {
 					v++;
 				}
-				//this.tempScore += scoreSecondaireTemp;
+
 			}
 		}
+		
+		this.deleteBonus(x, y, orientation);
 	}
 	
 	/**
@@ -785,6 +791,28 @@ public class Plateau {
 		}
 		
 		this.tempScore += score;
+	}
+	
+	/**
+	 * Enlève du plateau les bonus déjà utilisés
+	 * @param x la position x de départ du mot posé
+	 * @param y la position y de départ du mot posé
+	 * @param orientation l'orientation du mot posé
+	 */
+	public void deleteBonus(int x, int y, char orientation) {
+		int h = 0;
+		int v = 0;
+		
+		for(int i = 0; i < motJoue.size(); i++) {
+			this.plateau[x + h][y - v].setBonus(0);
+			
+			if(orientation == 'h') {
+				h++;
+			} else {
+				v++;
+			}
+			
+		}
 	}
 	
 	/**

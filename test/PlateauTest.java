@@ -509,7 +509,7 @@ public class PlateauTest {
 		
 		plateauTest.calculScore(10, 4, 'h', motMain);
 		
-		assertEquals(plateauTest.tempScore, 6);
+		assertEquals(plateauTest.tempScore, 10);
 		
 	}
 	
@@ -536,7 +536,7 @@ public class PlateauTest {
 		
 		plateauTest.calculScorePeripherique(10, 10, 'v');
 		
-		assertEquals(plateauTest.tempScore, 20);
+		assertEquals(plateauTest.tempScore, 22);
 	}
 
 	@Test
@@ -562,6 +562,28 @@ public class PlateauTest {
 		plateauTest.calculScoreMot(motMain);
 		
 		assertEquals(plateauTest.tempScore, 30);
+	}
+	
+	@Test
+	public void testDeleteBonus() {
+		Plateau plateauTest = new Plateau();
+		
+		List<Lettre> motJoueTest = new ArrayList<Lettre>();
+		Lettre s = new Lettre('s', 1);
+		Lettre e = new Lettre('e', 1);
+		motJoueTest.add(s);
+		motJoueTest.add(e);
+		
+		plateauTest.motJoue = motJoueTest;
+		plateauTest.plateau[7][7].setLettre(s);
+		plateauTest.plateau[8][7].setLettre(e);
+		
+		assertEquals(plateauTest.plateau[7][7].getBonus(), 5);
+		
+		plateauTest.deleteBonus(7, 7, 'h');
+		
+		assertEquals(plateauTest.plateau[7][7].getBonus(), 0);
+		
 	}
 	
 	@Test
