@@ -235,12 +235,12 @@ public class Joueur extends Observable{
 	 * @return true si la case est libre, sinon false
 	 */
 	public boolean checkCaseVide(int x, int y, char orientation, Case[][] plateau, int i){
-		if(orientation == 'v') {
+		if(orientation == 'h') {
 			if(plateau[x + i][y].getLettre() != null) {
 				return true;
 			}
 		} else {
-			if(plateau[x][y + i].getLettre() != null) {
+			if(plateau[x][y - i].getLettre() != null) {
 				return true;
 			}
 		}
@@ -268,6 +268,7 @@ public class Joueur extends Observable{
 		for(int i = 0; i < motArray.length; i++) {
 			try {
 				if(plateau[x + xPos][y - yPos].getLettre() == null && motJoue.get(i) == null) {
+					System.out.println(motJoue.get(i) + " i : " + i + " x : " + xPos + " y : " + yPos);
 					System.out.println("Vous ne possédez pas les lettres requises.");
 					return false;
 				}

@@ -1,5 +1,6 @@
 package view;
 
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Observable;
@@ -55,7 +56,8 @@ public class ScrabbleViewConsole extends ScrabbleView implements Observer{
 					case "J" : 
 						affiche("Jouer"); 
 						String mot1 = sc.next();
-						List<Lettre> saveMain = joueur.getMainJoueur(); //Sauvegarde de la main
+						List<Lettre> saveMain = new ArrayList<Lettre>();
+						saveMain.addAll(joueur.getMainJoueur());//Sauvegarde de la main
 						
 						int joker = joueur.detecteJoker(mot1);
 						
