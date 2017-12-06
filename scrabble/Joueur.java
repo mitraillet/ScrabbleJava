@@ -191,7 +191,7 @@ public class Joueur extends Observable{
 	 * @param motJoue La liste de lettre du mots sur le plateau
 	 * @return Une liste de lettre récupérée depuis la main
 	 */
-	public void verifierLettreMain(String[] mot, List<Lettre> motJoue) {
+	public void verifierLettreMain(int x , int y, char orientation, Case[][] plateau, String[] mot, List<Lettre> motJoue) {
 		//Gère les lettres de la main
 		Lettre tempLettre = null; //Lettre temporaire
 		int j = 0; //variable incrémentale 
@@ -204,11 +204,13 @@ public class Joueur extends Observable{
 			j = 0;
 			
 			//Tant qu' on n'a pas itéré toute la main et que la lettre n'est pas trouvée
-			while(j < 7 && lettreTrouve == false) {
+			while(j < this.mainJoueur.size() && lettreTrouve == false) {
 				if(mot[i].charAt(0) != (this.getLabelLettreMain(j))) {
 					tempLettre = null;
 				} else { 
-					if(lettrePrise.contains(j)) {
+					if(this.checkCaseVide(x, y, orientation, plateau, i) == true) {
+						tempLettre = null;
+					} else if(lettrePrise.contains(j)) {
 						tempLettre = null;
 					} else {
 						lettrePrise.add(j);
@@ -221,6 +223,28 @@ public class Joueur extends Observable{
 			
 			motJoue.add(tempLettre);
 		}
+	}
+	
+	/**
+	 * Vérifie si une case du plateau est remplie
+	 * @param x la position x de départ du mot
+	 * @param y la position y de départ du mot
+	 * @param orientation l'orientation du mot
+	 * @param plateau le plateau à vérifier
+	 * @param i le numéro de la case
+	 * @return true si la case est libre, sinon false
+	 */
+	public boolean checkCaseVide(int x, int y, char orientation, Case[][] plateau, int i){
+		if(orientation == 'v') {
+			if(plateau[x + i][y].getLettre() != null) {
+				return true;
+			}
+		} else {
+			if(plateau[x][y + i].getLettre() != null) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	/**

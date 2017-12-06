@@ -56,7 +56,7 @@ public class ScrabbleController {
 	
 			String[] motArray = mot.split(""); //String séparé en Array de lettre
 			
-			joueur.verifierLettreMain(motArray, motJoue);
+			joueur.verifierLettreMain(x, y, orientation, plateauJeu, motArray, motJoue);
 			
 			if(joueur.poserMotPlateau(x, y, motJoue, motMain, motArray, plateauSave, 
 					saveMain, orientation, plateauJeu) == false) {
