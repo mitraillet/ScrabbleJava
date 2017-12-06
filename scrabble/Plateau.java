@@ -752,9 +752,9 @@ public class Plateau {
 				}
 
 			}
+			this.deleteBonus(x, y, orientation);
 		}
 		
-		this.deleteBonus(x, y, orientation);
 	}
 	
 	/**
@@ -794,6 +794,7 @@ public class Plateau {
 		int h = 0;
 		int v = 0;
 		
+		// suppression boucle pour supprimer les bonus des cases en possédant
 		for(int i = 0; i < motJoue.size(); i++) {
 			this.plateau[x + h][y - v].setBonus(0);
 			
@@ -832,7 +833,7 @@ public class Plateau {
 			for(int h = 0; h < 15; h++) {
 				if(plateau[h][j].getLettre() == null) {
 						string += (plateau[h][j].getBonus() + "|");
-				}
+						}
 				else {
 					string += (plateau[h][j].getLabelCase() + "|");
 				}
