@@ -268,7 +268,6 @@ public class Joueur extends Observable{
 		for(int i = 0; i < motArray.length; i++) {
 			try {
 				if(plateau[x + xPos][y - yPos].getLettre() == null && motJoue.get(i) == null) {
-					System.out.println(motJoue.get(i) + " i : " + i + " x : " + xPos + " y : " + yPos);
 					System.out.println("Vous ne possédez pas les lettres requises.");
 					return false;
 				}

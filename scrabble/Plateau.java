@@ -46,8 +46,6 @@ public class Plateau {
 	 */
 	public boolean debutPartie;
 	
-	public List<Lettre> motJoue = new ArrayList<Lettre>();
-	
 	/**
 	* Contructeur par défaut du sac
 	*/
@@ -196,7 +194,7 @@ public class Plateau {
 			
 			if(estAdjacentH == true || estAdjacentV == true) {
 				System.out.println("Le mot est correct");
-				this.calculScore(x, y, orientation, motMain);
+				this.calculScore(x, y, orientation, motMain, motJoue);
 				return true;
 			} else {
 				System.out.println("Erreur : Placez le mot adjacent à un autre");
@@ -257,7 +255,7 @@ public class Plateau {
 				}
 			}
 			
-			this.calculScore(x, y, orientation, motMain);
+			this.calculScore(x, y, orientation, motMain, motJoue);
 			return true;
 		}
 
@@ -554,7 +552,7 @@ public class Plateau {
 	 * @param x La position x de la première lettre
 	 * @param y La position y de la première lettre
 	 */
-	public boolean checkPremierMot(int x, int y, char orientation, Joueur joueurActuel, List<Lettre> motMain){
+	public boolean checkPremierMot(int x, int y, char orientation, Joueur joueurActuel, List<Lettre> motMain, List<Lettre> motJoue){
 			int j = 0;
 			boolean estCentre = false; //Si c'est OK  --> true = au milieu du plateau
 			switch (orientation) {
@@ -581,7 +579,7 @@ public class Plateau {
 					estCentre = false;
 			}
 			if (estCentre) {
-				this.calculScore(x, y, orientation, motMain);
+				this.calculScore(x, y, orientation, motMain, motJoue); //0 car d'office pas de mot en périphérie
 				this.debutPartie = true;
 			}
 			return estCentre;
@@ -614,7 +612,7 @@ public class Plateau {
 	 * @param orientation l'orientation du mot (h ou v)
 	 * @param motMain le nombre de lettre jouée depuis la main (en cas de scrabble)
 	 */
-	public void calculScore(int x, int y, char orientation, List<Lettre> motMain) {
+	public void calculScore(int x, int y, char orientation, List<Lettre> motMain, List<Lettre> motJoue) {
 		List<Lettre> scorePrincipal = new ArrayList<Lettre>();
 		
 		//Vide les listes
@@ -704,8 +702,8 @@ public class Plateau {
 				v++;
 			}
 		}
+		this.calculScorePeripherique(x, y, orientation, motJoue);
 		this.calculScoreMot(motMain);
-		this.calculScorePeripherique(x, y, orientation);
 	}
 	
 	/**
@@ -714,7 +712,7 @@ public class Plateau {
 	 * @param y la position y de la première lettre posée
 	 * @param orientation l'orientation du mot (h ou v)
 	 */
-	public void calculScorePeripherique(int x, int y, char orientation) {
+	public void calculScorePeripherique(int x, int y, char orientation, List<Lettre> motJoue) {
 		int scoreSecondaireTemp = 0;
 		int h = 0;
 		int v = 0;
@@ -744,6 +742,7 @@ public class Plateau {
 				} else {
 					this.tempScore += scoreSecondaireTemp;
 				}
+				this.plateau[x + h][y - v].setBonus(0);
 				
 				if(orientation == 'h') {
 					h++;
@@ -752,9 +751,8 @@ public class Plateau {
 				}
 
 			}
-			this.deleteBonus(x, y, orientation);
+			this.plateau[x + h][y -v].setBonus(0);
 		}
-		
 	}
 	
 	/**
@@ -785,29 +783,6 @@ public class Plateau {
 	}
 	
 	/**
-	 * Enlève du plateau les bonus déjà utilisés
-	 * @param x la position x de départ du mot posé
-	 * @param y la position y de départ du mot posé
-	 * @param orientation l'orientation du mot posé
-	 */
-	public void deleteBonus(int x, int y, char orientation) {
-		int h = 0;
-		int v = 0;
-		
-		// suppression boucle pour supprimer les bonus des cases en possédant
-		for(int i = 0; i < motJoue.size(); i++) {
-			this.plateau[x + h][y - v].setBonus(0);
-			
-			if(orientation == 'h') {
-				h++;
-			} else {
-				v++;
-			}
-			
-		}
-	}
-	
-	/**
 	 * Actualise le score du joueur passé en paramètre
 	 * @param joueurActuel le joueur qu'on actualise
 	 */
@@ -833,7 +808,7 @@ public class Plateau {
 			for(int h = 0; h < 15; h++) {
 				if(plateau[h][j].getLettre() == null) {
 						string += (plateau[h][j].getBonus() + "|");
-						}
+				}
 				else {
 					string += (plateau[h][j].getLabelCase() + "|");
 				}

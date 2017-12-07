@@ -80,7 +80,7 @@ public class ScrabbleController {
 				
 			} else {
 				//Enlève les lettres jouée de la main
-				if(plateau.checkPremierMot(x, y, orientation, joueur, motMain)) {
+				if(plateau.checkPremierMot(x, y, orientation, joueur, motMain, motJoue)) {
 					plateau.setScoreJoueur(joueur);
 					joueur.viderLaMain(motMain, sac);	
 				} else {
@@ -89,7 +89,7 @@ public class ScrabbleController {
 					System.out.println("\nPlacement du Premier Mot incorrect");
 				}
 			}
-			motJoue = new ArrayList<Lettre>(); //Remets à zéro la variable
+			//motJoue = new ArrayList<Lettre>(); //Remets à zéro la variable
 			
 	}
 	public void addView(ScrabbleView vue) {

@@ -218,6 +218,7 @@ public class JoueurTest {
 	@Test
 	public void testVerifierLettreMain() {
 		Joueur joueur = new Joueur();
+		Plateau plateau = new Plateau();
 		
 		String [] mot = "arbre".split("");
 		String [] mot2 = "aride".split("");
@@ -256,14 +257,23 @@ public class JoueurTest {
 		motJoueCheck2.add(d);
 		motJoueCheck2.add(e);
 		
-		joueur.verifierLettreMain(mot, motJoue);
+		int x = 7;
+		int y = 7;
+		char orientation = 'h';
+		
+		joueur.verifierLettreMain(x, y, orientation, plateau.plateau, mot, motJoue);
 		assertEquals(motJoue, motJoueCheck1);
 		
 		motJoue.removeAll(motJoue);
 		
-		joueur.verifierLettreMain(mot2, motJoue);
+		joueur.verifierLettreMain(x, y, orientation, plateau.plateau, mot2, motJoue);
 		assertEquals(motJoue, motJoueCheck2);
 		
+	}
+	
+	@Test
+	public void checkCaseVide(){
+		fail("not yet implemented");
 	}
 
 	@Test

@@ -466,15 +466,18 @@ public class PlateauTest {
 		plateauTest.plateau[7][7].setLettre(t);
 		plateauTest.plateau[8][7].setLettre(s);
 		
+		List<Lettre> motJoue = new ArrayList<Lettre>();
+		motJoue.addAll(motMain);
 		
-		assertEquals(plateauTest.checkPremierMot(5, 7, 'h', joueur, motMain), true);
+		
+		assertEquals(plateauTest.checkPremierMot(5, 7, 'h', joueur, motMain, motJoue), true);
 		
 		Plateau plateauTest2 = new Plateau();
 		plateauTest2.plateau[5][8].setLettre(m);
 		plateauTest2.plateau[6][8].setLettre(o);
 		plateauTest2.plateau[7][8].setLettre(t);
 		plateauTest2.plateau[8][8].setLettre(s);
-		assertEquals(plateauTest2.checkPremierMot(5, 8, 'h', joueur, motMain), false);
+		assertEquals(plateauTest2.checkPremierMot(5, 8, 'h', joueur, motMain, motJoue), false);
 	}
 	
 	@Test
@@ -503,11 +506,10 @@ public class PlateauTest {
 		
 		motJoue.add(e);
 		motJoue.add(n);
-		plateauTest.motJoue = motJoue;
 		
 		System.out.println(plateauTest);
 		
-		plateauTest.calculScore(10, 4, 'h', motMain);
+		plateauTest.calculScore(10, 4, 'h', motMain, motJoue);
 		
 		assertEquals(plateauTest.tempScore, 10);
 		
@@ -517,6 +519,7 @@ public class PlateauTest {
 	public void testCalculScorePeripherique() {
 		//fail("Not yet implemented"); 
 		Plateau plateauTest = new Plateau();
+		List<Lettre> motJoue = new ArrayList<Lettre>();
 		
 		Lettre m = new Lettre('m', 2);
 		Lettre o = new Lettre('o', 1);
@@ -528,13 +531,13 @@ public class PlateauTest {
 		plateauTest.plateau[10][8].setLettre(o);
 		plateauTest.plateau[10][10].setLettre(t);
 		
-		plateauTest.motJoue.add(t);
-		plateauTest.motJoue.add(m);
-		plateauTest.motJoue.add(o);
+		motJoue.add(t);
+		motJoue.add(m);
+		motJoue.add(o);
 		
 		System.out.println(plateauTest);
 		
-		plateauTest.calculScorePeripherique(10, 10, 'v');
+		plateauTest.calculScorePeripherique(10, 10, 'v', motJoue);
 		
 		assertEquals(plateauTest.tempScore, 22);
 	}
@@ -562,28 +565,6 @@ public class PlateauTest {
 		plateauTest.calculScoreMot(motMain);
 		
 		assertEquals(plateauTest.tempScore, 30);
-	}
-	
-	@Test
-	public void testDeleteBonus() {
-		Plateau plateauTest = new Plateau();
-		
-		List<Lettre> motJoueTest = new ArrayList<Lettre>();
-		Lettre s = new Lettre('s', 1);
-		Lettre e = new Lettre('e', 1);
-		motJoueTest.add(s);
-		motJoueTest.add(e);
-		
-		plateauTest.motJoue = motJoueTest;
-		plateauTest.plateau[7][7].setLettre(s);
-		plateauTest.plateau[8][7].setLettre(e);
-		
-		assertEquals(plateauTest.plateau[7][7].getBonus(), 5);
-		
-		plateauTest.deleteBonus(7, 7, 'h');
-		
-		assertEquals(plateauTest.plateau[7][7].getBonus(), 0);
-		
 	}
 	
 	@Test
