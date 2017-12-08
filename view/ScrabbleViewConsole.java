@@ -18,7 +18,6 @@ public class ScrabbleViewConsole extends ScrabbleView implements Observer{
 	protected Scanner sc;
 	
 	public ScrabbleViewConsole(Plateau plateau, Joueur joueur, ScrabbleController controller) {
-		// TODO Auto-generated constructor stub
 		super(plateau, joueur, controller);
 		update(null, null);
 		sc = new Scanner(System.in);

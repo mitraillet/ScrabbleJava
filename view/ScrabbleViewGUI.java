@@ -7,9 +7,6 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.List;
 import java.util.Observable;
 
@@ -21,6 +18,11 @@ import scrabble.Lettre;
 import scrabble.Plateau;
 import scrabble.Sac;
 
+/**
+ * 
+ * @author Fauconnier/Henriquet
+ * Classe contenant toute l'interface Graphique du Scrabble
+ */
 public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 	
 	private Sac sac;
@@ -216,140 +218,9 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 	}
 	/**
 	 * 
-	 * @author Mitraillet
-	 * Classe pour le bouton melanger qui va ouvrir une fenêtre pour pouvoir mélanger la main
+	 * @author Fauconnier/Henriquet
+	 * Classe créant la fenêtre pour jouer en GUI
 	 */
-	class Melanger implements ActionListener{
-		JWindow fenetreMelange;
-		JPanel copyMain;
-		JLabel text;
-		JButton melange;
-		JButton annuler;
-		String label = "";
-		Font font = new Font("Serif", Font.BOLD, 20);
-
-		
-		@Override
-		public void actionPerformed(ActionEvent e) {
-				jouerJButton.setEnabled(false);
-				melangeJButton.setEnabled(false);
-				passerJButton.setEnabled(false);
-				fenetreMelange = new JWindow();
-				copyMain = new JPanel();
-				text = new JLabel("Choisissez les lettres à remélanger dans le sac?\n");
-				melange = new JButton("Mélanger");
-				annuler = new JButton("Annuler");
-				
-				fenetreMelange.setSize(500, 150);
-				fenetreMelange.setPreferredSize(new Dimension(500, 150));
-				fenetreMelange.setLocationRelativeTo(null);
-				fenetreMelange.setAlwaysOnTop(true);
-				fenetreMelange.setVisible(true);	
-				
-				copyMain.setBackground(new Color(253, 245, 230));
-				
-				text.setFont(font);
-				text.setPreferredSize(new Dimension(450, 40));
-				text.setHorizontalAlignment(0);
-				
-				copyMain.add(text);
-				
-				ajouteMainMelange(copyMain);
-				
-				melange.addActionListener(new Melange());
-				annuler.addActionListener(new Annule());
-
-				copyMain.add(melange);
-				copyMain.add(annuler);
-				
-				fenetreMelange.setContentPane(copyMain);
-		}
-		
-		private void ajouteMainMelange(JPanel box) {
-			
-			Box boxMain = Box.createHorizontalBox();
-			
-			JPanel mainBox11 = new JPanel(new GridLayout(1,7));	
-			
-			JCheckBox img;
-			
-			for(int i =0; i < joueur.getSizeMainJoueur(); i++) {
-				char labelIMG = joueur.getLabelLettreMain(i);
-				event e = new event();
-				if(labelIMG == '?') {
-					img = new JCheckBox(new ImageIcon("ressource/image/lettre/joker.png", "?"));
-					img.setSelectedIcon(new ImageIcon("ressource/image/lettre/jokerSelected.png", "?"));
-				}
-				else {
-					img = new JCheckBox(new ImageIcon("ressource/image/lettre/" + labelIMG + ".png", labelIMG +""));
-					img.setSelectedIcon(new ImageIcon("ressource/image/lettre/" + labelIMG + "Selected.png", labelIMG +""));
-				}
-			
-				img.setBackground(new Color(253, 245, 230));
-				img.addItemListener(e);
-				
-
-				mainBox11.add(img);
-			}
-		 	boxMain.add(mainBox11);
-		 	box.add(boxMain);
-		}
-		class event implements ItemListener {
-
-			@Override
-			public void itemStateChanged(ItemEvent e) {
-				if(e.getStateChange() == 1) {
-					label += ((AbstractButton) e.getItemSelectable()).getSelectedIcon().toString();
-				}
-				else {
-					
-					String chNew = "";
-					String carAsup = ((AbstractButton) e.getItemSelectable()).getIcon().toString();
-		         
-					int inSup = label.indexOf(carAsup);
-		      	
-		            chNew = label.substring(0,inSup) + label.substring(inSup +1);
-					label = chNew;
-				}
-			}
-		}
-		
-		/**
-		 * 
-		 * @author Mitraillet
-		 * Classe du bouton annule pour fermer la fenêtre
-		 */
-		class Annule implements ActionListener{
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				fenetreMelange.removeAll();
-				fenetreMelange.dispose();
-				label = "";
-				jouerJButton.setEnabled(true);
-				melangeJButton.setEnabled(true);
-				passerJButton.setEnabled(true);
-			}
-		}
-		/**
-		 * 
-		 * @author Mitraillet
-		 * Permettra de mélanger la main suivant les lettres choisies
-		 */
-		class Melange implements ActionListener{
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if(label.length() != 0){
-					controller.melangeMain(label);
-					fenetreMelange.removeAll();
-					fenetreMelange.dispose();
-					label = "";
-				}
-			}
-			
-		}
-	}
 	class Jouer implements ActionListener {
 		JFrame fenetreJoue;
 		JButton jouer;
@@ -409,7 +280,9 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 			formContainer.add(form);
 			fenetreJoue.setContentPane(formContainer);
 		}
-		
+		/**
+		 * Crée la partie formulaire pour jouer
+		 */
 		public void creationForm() {		
 			
 			JLabel motJoueLabel = new JLabel("Le mot à jouer : ");
@@ -491,12 +364,14 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 	    
 		/**
 		 * 
-		 * @author Mitraillet
+		 * @author Fauconnier/Henriquet
 		 * Classe du bouton jouer
 		 */
 		class Joue implements ActionListener{
 			
-			
+			/**
+			 * Réecriture de la methode actionPerformed pour joue
+			 */
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				List<Lettre> saveMainJoueur = joueur.getMainJoueur();
@@ -539,7 +414,7 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 		
 		/**
 		 * 
-		 * @author Mitraillet
+		 * @author Fauconnier/Henriquet
 		 * Classe du bouton annule pour fermer la fenêtre
 		 */
 		class AnnuleJoue implements ActionListener{
@@ -559,7 +434,161 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 		}
 	}
 	
-	
+	/**
+	 * 
+	 * @author Fauconnier/Henriquet
+	 * Classe pour le bouton melanger qui va ouvrir une fenêtre pour pouvoir mélanger la main
+	 */
+	class Melanger implements ActionListener{
+		JWindow fenetreMelange;
+		JPanel copyMain;
+		JLabel text;
+		JButton melange;
+		JButton annuler;
+		String label = "";
+		Font font = new Font("Serif", Font.BOLD, 20);
+
+		/**
+		 * Réecriture de la méthode actionPerformed pour l'utilisation de melanger
+		 */
+		@Override
+		public void actionPerformed(ActionEvent e) {
+				jouerJButton.setEnabled(false);
+				melangeJButton.setEnabled(false);
+				passerJButton.setEnabled(false);
+				fenetreMelange = new JWindow();
+				copyMain = new JPanel();
+				text = new JLabel("Choisissez les lettres à remélanger dans le sac?\n");
+				melange = new JButton("Mélanger");
+				annuler = new JButton("Annuler");
+				
+				fenetreMelange.setSize(500, 150);
+				fenetreMelange.setPreferredSize(new Dimension(500, 150));
+				fenetreMelange.setLocationRelativeTo(null);
+				fenetreMelange.setAlwaysOnTop(true);
+				fenetreMelange.setVisible(true);	
+				
+				copyMain.setBackground(new Color(253, 245, 230));
+				
+				text.setFont(font);
+				text.setPreferredSize(new Dimension(450, 40));
+				text.setHorizontalAlignment(0);
+				
+				copyMain.add(text);
+				
+				ajouteMainMelange(copyMain);
+				
+				melange.addActionListener(new Melange());
+				annuler.addActionListener(new Annule());
+
+				copyMain.add(melange);
+				copyMain.add(annuler);
+				
+				fenetreMelange.setContentPane(copyMain);
+		}
+		/**
+		 * Crée une copie de la main utilisable pour le mélange
+		 * et instancie des JCheckBox personnalisées
+		 * @param box contenant graphique de la copie de la  main
+		 * 
+		 */
+		private void ajouteMainMelange(JPanel box) {
+			
+			Box boxMain = Box.createHorizontalBox();
+			
+			JPanel mainBox11 = new JPanel(new GridLayout(1,7));	
+			
+			JCheckBox img;
+			
+			for(int i =0; i < joueur.getSizeMainJoueur(); i++) {
+				char labelIMG = joueur.getLabelLettreMain(i);
+				event e = new event();
+				if(labelIMG == '?') {
+					img = new JCheckBox(new ImageIcon("ressource/image/lettre/joker.png", "?"));
+					img.setSelectedIcon(new ImageIcon("ressource/image/lettre/jokerSelected.png", "?"));
+				}
+				else {
+					img = new JCheckBox(new ImageIcon("ressource/image/lettre/" + labelIMG + ".png", labelIMG +""));
+					img.setSelectedIcon(new ImageIcon("ressource/image/lettre/" + labelIMG + "Selected.png", labelIMG +""));
+				}
+			
+				img.setBackground(new Color(253, 245, 230));
+				img.addItemListener(e);
+				
+
+				mainBox11.add(img);
+			}
+		 	boxMain.add(mainBox11);
+		 	box.add(boxMain);
+		}
+		/**
+		 * 
+		 * @author Fauconnier/Henriquet
+		 * Classe permettant l'interaction avec les JCheckBox personnalisées
+		 */
+		class event implements ItemListener {
+
+			/**
+			 * Redéfinition de l'action de itemStateChanged
+			 */
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				if(e.getStateChange() == 1) {
+					label += ((AbstractButton) e.getItemSelectable()).getSelectedIcon().toString();
+				}
+				else {
+					
+					String chNew = "";
+					String carAsup = ((AbstractButton) e.getItemSelectable()).getIcon().toString();
+		         
+					int inSup = label.indexOf(carAsup);
+		      	
+		            chNew = label.substring(0,inSup) + label.substring(inSup +1);
+					label = chNew;
+				}
+			}
+		}
+		
+		/**
+		 * 
+		 * @author Fauconnier/Henriquet
+		 * Classe du bouton annule pour fermer la fenêtre
+		 */
+		class Annule implements ActionListener{
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				fenetreMelange.removeAll();
+				fenetreMelange.dispose();
+				label = "";
+				jouerJButton.setEnabled(true);
+				melangeJButton.setEnabled(true);
+				passerJButton.setEnabled(true);
+			}
+		}
+		/**
+		 * 
+		 * @author Fauconnier/Henriquet
+		 * Permettra de mélanger la main suivant les lettres choisies
+		 */
+		class Melange implements ActionListener{
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(label.length() != 0){
+					controller.melangeMain(label);
+					fenetreMelange.removeAll();
+					fenetreMelange.dispose();
+					label = "";
+				}
+			}
+			
+		}
+	}
+	/**
+	 * @author Fauconnier/Henriquet
+	 * Class permettant la création d'une fenêtre pour pouvoir passer
+	 */
 	class Passer implements ActionListener{
 
 		JWindow fenetrePasser;
@@ -604,7 +633,7 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 		
 		/**
 		 * 
-		 * @author Mitraillet
+		 * @author Fauconnier/Henriquet
 		 * Classe du bouton Passer
 		 */
 		class Passe implements ActionListener{
@@ -616,7 +645,7 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 		}
 		/**
 		 * 
-		 * @author Mitraillet
+		 * @author Fauconnier/Henriquet
 		 * Classe du bouton annule pour fermer la fenêtre
 		 */
 		class Annule implements ActionListener{

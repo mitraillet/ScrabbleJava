@@ -3,6 +3,11 @@ package view;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
+/**
+ * 
+ * @author Fauconnier/Henriquet
+ * Classe ayant permit la création de bouton personnalisé
+ */
 public class Bouton extends JButton {
 	public Bouton(ImageIcon icon, ImageIcon iconHover, ImageIcon disabledIcon) {
 		super();
