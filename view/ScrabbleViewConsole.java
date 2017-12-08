@@ -86,11 +86,46 @@ public class ScrabbleViewConsole extends ScrabbleView implements Observer{
 						if(plateau.verification(mot1)) {
 							affiche("Mot Correct");
 							affiche("Veuillez entrer la position X");
-							int intPosX = Integer.parseInt((sc.next()));
+							
+							int intPosX = -1;
+							int intPosY = -1;
+							
+							while(true) {
+								try {
+									intPosX = sc.nextInt();
+									break;
+								} catch(InputMismatchException e){
+									System.out.println("Erreur, veuillez entrer un nombre valide");
+									sc.next(); // Vide le scanner 
+									continue;
+								}
+							}
+							
 							affiche("Veuillez entrer la position Y");
-							int intPosY = Integer.parseInt((sc.next()));
+							
+							while(true) {
+								try {
+									intPosY = sc.nextInt();
+									break;
+								} catch(InputMismatchException e){
+									System.out.println("Erreur, veuillez entrer un nombre valide");
+									sc.next(); // Vide le scanner 
+									continue;
+								}
+							}
+							
 							affiche("Veuillez entrer l'orientation (h ou v)");
-							char orientation = (sc.next()).charAt(0);
+							char orientation = '/';
+							
+							while(true) {
+								orientation = (sc.next()).charAt(0);
+								if(orientation == 'h' || orientation == 'v') {
+									break;
+								} else {
+									System.out.println("L'orienation est incorrecte. (h / v)");
+									continue;
+								}
+							}
 							
 							controller.poserMot(intPosX, intPosY, orientation, mot1, saveMain);
 						}
