@@ -29,6 +29,7 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 	
 	private JFrame fenetreJeu = new JFrame();
 	private JPanel container = new JPanel();
+	private JFrame fenetreMessage;
 	private JLabel message = new JLabel(" ");
 	
 	private ImageIcon plateauIMG = new ImageIcon("ressource/image/plateau/PlateauScrabble.png");
@@ -48,6 +49,10 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 	private Bouton jouerJButton;
 	private Bouton melangeJButton;
 	private Bouton passerJButton;
+	
+	private	Font font = new Font("Serif", Font.BOLD, 20);
+	private Color color = new Color(253, 245, 230);
+	private Boolean msgAlertIsUp = false;
 	
 	
 	public ScrabbleViewGUI(Plateau plateau, Joueur joueur, Sac sac,ScrabbleController controller) {
@@ -69,7 +74,7 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 
 		updateMain();
 
-		container.setBackground(new Color(253, 245, 230));
+		container.setBackground(color);
 		
 		fenetreJeu.setContentPane(container);
 		fenetreJeu.setVisible(true);
@@ -158,7 +163,6 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 	 */
 	private void updateScore() {
 		String scoreMsg = "Score : " + joueur.getScore();
-		Font font = new Font("Serif", Font.BOLD, 20);
 		JLabel  scoreAffiche = new JLabel (scoreMsg);
 		scoreAffiche.setPreferredSize(new Dimension(150, 40));
 		scoreAffiche.setSize(150, 40);
@@ -179,7 +183,7 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 		boxMain.setSize(400, 80);
 		
 		JPanel mainBox11 = new JPanel(new GridLayout(1,7));
-		mainBox11.setBackground(new Color(253, 245, 230));
+		mainBox11.setBackground(color);
 		for(int i = 0; i < joueur.getSizeMainJoueur(); i++) {
 			JLabel img;
 			char labelIMG = joueur.getLabelLettreMain(i);
@@ -198,7 +202,33 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 
 	@Override
 	public void affiche(String msg) {
+		msgAlertIsUp = true;
+		fenetreMessage = new JFrame();
+		JPanel boxMessage = new JPanel();
+		fenetreMessage.setUndecorated(true);
+		JButton ok = new JButton("D'accord");
+		ok.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				fenetreMessage.removeAll();
+				fenetreMessage.dispose();
+				msgAlertIsUp = false;
+			}
+		});
 		message.setText(msg);
+		message.setFont(font);
+		message.setHorizontalAlignment(0);
+		ok.setHorizontalAlignment(0);
+		boxMessage.add(message);
+		boxMessage.add(ok);
+		boxMessage.setBackground(color);
+		fenetreMessage.setContentPane(boxMessage);
+		fenetreMessage.setLocationRelativeTo(null);
+		fenetreMessage.setAlwaysOnTop(true);
+		fenetreMessage.setSize(350, 60);
+		fenetreMessage.setPreferredSize(new Dimension(350, 60));
+		fenetreMessage.setBackground(color);
+		fenetreMessage.setVisible(true);
 	}
 	
 	@Override
@@ -270,13 +300,13 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 			
 			creationForm();
 			
-			form.setBackground(new Color(253, 245, 230));
+			form.setBackground(color);
 			form.add(new JLabel());
 			form.add(new JLabel());
 			form.add(jouer);
 			form.add(annulerJoue);
 			
-			formContainer.setBackground(new Color(253, 245, 230));
+			formContainer.setBackground(color);
 			formContainer.add(form);
 			fenetreJoue.setContentPane(formContainer);
 		}
@@ -405,7 +435,7 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 							fenetreJoue.dispose();
 						}
 						else {
-							message.setText(messageError);
+							affiche(messageError);
 						}
 					}
 				}
@@ -430,6 +460,11 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 					jokerFenetre.removeAll();
 					jokerFenetre.dispose();
 				}
+				if(msgAlertIsUp) {
+					fenetreMessage.removeAll();
+					fenetreMessage.dispose();
+					msgAlertIsUp = false;
+				}
 			}
 		}
 	}
@@ -446,7 +481,6 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 		JButton melange;
 		JButton annuler;
 		String label = "";
-		Font font = new Font("Serif", Font.BOLD, 20);
 
 		/**
 		 * Réecriture de la méthode actionPerformed pour l'utilisation de melanger
@@ -468,7 +502,7 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 				fenetreMelange.setAlwaysOnTop(true);
 				fenetreMelange.setVisible(true);	
 				
-				copyMain.setBackground(new Color(253, 245, 230));
+				copyMain.setBackground(color);
 				
 				text.setFont(font);
 				text.setPreferredSize(new Dimension(450, 40));
@@ -512,7 +546,7 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 					img.setSelectedIcon(new ImageIcon("ressource/image/lettre/" + labelIMG + "Selected.png", labelIMG +""));
 				}
 			
-				img.setBackground(new Color(253, 245, 230));
+				img.setBackground(color);
 				img.addItemListener(e);
 				
 
@@ -564,6 +598,11 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 				jouerJButton.setEnabled(true);
 				melangeJButton.setEnabled(true);
 				passerJButton.setEnabled(true);
+				if(msgAlertIsUp) {
+					fenetreMessage.removeAll();
+					fenetreMessage.dispose();
+					msgAlertIsUp = false;
+				}
 			}
 		}
 		/**
@@ -581,6 +620,9 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 					fenetreMelange.dispose();
 					label = "";
 				}
+				else {
+					affiche("Veuillez faire votre sélection.");
+				}
 			}
 			
 		}
@@ -596,7 +638,6 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 		JLabel text;
 		JButton passer;
 		JButton annuler;
-		Font font = new Font("Serif", Font.BOLD, 20);
 		
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
@@ -623,7 +664,7 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 			annuler.addActionListener(new Annule());
 			
 			
-			container.setBackground(new Color(253, 245, 230));
+			container.setBackground(color);
 			container.add(text);
 			container.add(passer);
 			container.add(annuler);
