@@ -29,7 +29,7 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 	private JPanel container = new JPanel();
 	private JLabel message = new JLabel(" ");
 	
-	private ImageIcon plateauIMG = new ImageIcon("ressource/image/plateau/PlateauScrabblePerso.png");
+	private ImageIcon plateauIMG = new ImageIcon("ressource/image/plateau/PlateauScrabble.png");
 	
 	private ImageIcon boutonJouer = new ImageIcon("ressource/image/BoutonJouer.png");
 	private ImageIcon boutonJouerHoover = new ImageIcon("ressource/image/BoutonJouerHoover.png");
@@ -52,8 +52,8 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 		super(plateau, joueur, controller);
 		this.sac = sac;
 		
-		fenetreJeu.setSize(1000, 940);
-		fenetreJeu.setPreferredSize(new Dimension(1000, 940));
+		fenetreJeu.setSize(1050, 990);
+		fenetreJeu.setPreferredSize(new Dimension(1050, 990));
 		fenetreJeu.setTitle("Scrabble");
 		fenetreJeu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		fenetreJeu.setLocationRelativeTo(null);
@@ -103,15 +103,25 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 		JPanel plateauGraphicBackground = new JPanel();
 		plateauGraphicBackground.setLayout(new BorderLayout(0,0));
 		plateauGraphicBackground.add(new JLabel(plateauIMG));
-		plateauGraphicBackground.setPreferredSize(new Dimension(784, 784));
-		plateauGraphicBackground.setSize(784, 784);
+		plateauGraphicBackground.setPreferredSize(new Dimension(836, 836));
+		plateauGraphicBackground.setSize(836, 836);
 		
-		JPanel plateauGraphic = new JPanel(new GridLayout(15,15));
-		plateauGraphic.setPreferredSize(new Dimension(784, 784));
-		plateauGraphic.setSize(784, 784);
+		JPanel plateauGraphic = new JPanel(new GridLayout(16,16));
+		plateauGraphic.setPreferredSize(new Dimension(836, 836));
+		plateauGraphic.setSize(836, 836);
 		
 	    int j = 14;
+	    for (int i = 0; i < 16; i ++) {
+	    	JLabel vide = new JLabel();
+	    	vide.setOpaque(false);
+			vide.setBackground(new Color(0,0,0,0));
+			plateauGraphic.add(vide);
+	    }
 	    for(int i = 0; i < 15; i++) {
+	    	JLabel vide = new JLabel();
+	    	vide.setOpaque(false);
+			vide.setBackground(new Color(0,0,0,0));
+			plateauGraphic.add(vide);
 			for(int h = 0; h < 15; h++) {
 				JLabel pic;
 				if(plateau.getCase(h, j).getLettre() == null) {
@@ -137,8 +147,8 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 	    plateauGraphic.setBackground(new Color(0,0,0,0));
 	    layeredPane.add(plateauGraphicBackground, JLayeredPane.DEFAULT_LAYER);
 	    layeredPane.add(plateauGraphic, JLayeredPane.DRAG_LAYER);
-	    layeredPane.setSize(784, 784);
-	    layeredPane.setPreferredSize(new Dimension(784, 784));
+	    layeredPane.setSize(836, 836);
+	    layeredPane.setPreferredSize(new Dimension(836, 836));
 		container.add(layeredPane);
 	}
 	/**
@@ -429,6 +439,12 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 								joker2TxtF.setVisible(false);
 					    	}
 					    }
+					    else {
+				    		joker1Label.setVisible(false);
+							joker2Label.setVisible(false);
+							joker1TxtF.setVisible(false);
+							joker2TxtF.setVisible(false);
+				    	}
 					  }
 					});//TODO
 			
