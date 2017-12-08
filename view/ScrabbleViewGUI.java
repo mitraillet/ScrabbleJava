@@ -291,7 +291,11 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 			fenetreJoue.setUndecorated(true);
 			fenetreJoue.setSize(350, 220);
 			fenetreJoue.setPreferredSize(new Dimension(350, 220));
-			fenetreJoue.setLocationRelativeTo(null);
+			Toolkit tk = Toolkit.getDefaultToolkit();
+		    Dimension screenSize = tk.getScreenSize();
+		    int screenHeight = screenSize.height;
+		    int screenWidth = screenSize.width;
+		    fenetreJoue.setLocation(screenWidth / 8, screenHeight /2 - 220);
 			fenetreJoue.setAlwaysOnTop(true);
 			fenetreJoue.setVisible(true);
 			
