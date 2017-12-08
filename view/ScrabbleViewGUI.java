@@ -418,6 +418,7 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 				}
 				if(motJoue.getText().length() != 0) {
 					mot = motJoue.getText();
+					String motJoker = mot;
 					joker = joueur.detecteJoker(motJoue.getText());
 					if(joker != 0) {
 						if(joker == 1) {
@@ -429,7 +430,7 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 						}
 						mot = joueur.setJokerMain(joker1, joker2, mot);
 					}
-					messageError = controller.poserMot(abscisse, ordonnee, orient, mot, saveMainJoueur);
+					messageError = controller.poserMot(abscisse, ordonnee, orient, mot, saveMainJoueur, joker, motJoker);
 					if(messageError == null){
 							fenetreJoue.removeAll();
 							fenetreJoue.dispose();

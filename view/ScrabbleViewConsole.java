@@ -59,6 +59,7 @@ public class ScrabbleViewConsole extends ScrabbleView implements Observer{
 						saveMain.addAll(joueur.getMainJoueur());//Sauvegarde de la main
 						
 						int joker = joueur.detecteJoker(mot1);
+						String motJoker = mot1;
 						
 						if(joker == 1) {
 							affiche("Veuillez entrer le label du joker :");
@@ -127,7 +128,7 @@ public class ScrabbleViewConsole extends ScrabbleView implements Observer{
 								}
 							}
 							
-							controller.poserMot(intPosX, intPosY, orientation, mot1, saveMain);
+							controller.poserMot(intPosX, intPosY, orientation, mot1, saveMain, joker, motJoker);
 						}
 						else {
 							printPlateauMain();

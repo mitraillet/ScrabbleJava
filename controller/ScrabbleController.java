@@ -50,9 +50,11 @@ public class ScrabbleController {
 	 * @param orientation sens d'écriture du mot
 	 * @param mot Le mot à poser sur le plateau
 	 * @param saveMainJoueur Une sauvegarde de la main pour éviter une perte de Lettre
+	 * @param nbrJoker le nombre de joker joué
+	 * @param motJoker le mot avec les jokers (joker = ?)
 	 * @return un Array d'oBjet pour pouvoir faire passer les messages d'erreurs et si l'opération s'est bien passé
 	 */
-	public String poserMot(int x, int y, char orientation, String mot, List<Lettre> saveMainJoueur){
+	public String poserMot(int x, int y, char orientation, String mot, List<Lettre> saveMainJoueur, int nbrJoker, String motJoker){
 		//TODO modif le code pour que les vérif se passe au niveau du controller
 		String messageErreur = null;
 		
@@ -62,9 +64,10 @@ public class ScrabbleController {
 		List<Lettre> motJoue = new ArrayList<Lettre>(); //La liste de lettre du mots sur le plateau
 		List<Lettre> motMain = new ArrayList<Lettre>(); //liste des lettres enlevée de la main
 
+		String[] jokerArray = motJoker.split("");
 		String[] motArray = mot.split(""); //String séparé en Array de lettre
 		
-		joueur.verifierLettreMain(x, y, orientation, plateauJeu, motArray, motJoue);
+		joueur.verifierLettreMain(x, y, orientation, plateauJeu, motArray, jokerArray, motJoue, nbrJoker);
 		
 		if(joueur.poserMotPlateau(x, y, motJoue, motMain, motArray, plateauSave, 
 				saveMain, orientation, plateauJeu) == false) {

@@ -42,21 +42,23 @@ public class Joueur extends Observable{
 		}
 	
 	/**
-	 * @param actualise le score du joueur
+	 * actualise le score du joueur
+	 * @param score le nouveau score
 	 */
 	public void setScore(int score) {
 		this.score = score;
 	}
 	
 	/**
-	 * @param actualise le score du joueur
+	 * renvoie le score du joueur
 	 */
 	public int getScore() {
 		return this.score;
 	}
 	
 	/**
-	 * @param ajoute le score d'un mot au joueur
+	 * Ajoute le score d'un mot au joueur
+	 * @param score le score à rajouter
 	 */
 	public void addScore(int score) {
 		this.score += score;
@@ -89,11 +91,19 @@ public class Joueur extends Observable{
 	}
 	
 	/**
-	* Récupère le label d'un lettre (se situant dans la main du joueur)
+	* Récupère le label d'une lettre (se situant dans la main du joueur)
 	* @param positionMain la position de la lettre
 	*/
 	public char getLabelLettreMain(int positionMain) {
 		return getLettreMain(positionMain).getLabel();
+	}
+	
+	/**
+	* Récupère la valeur d'une lettre (se situant dans la main du joueur)
+	* @param positionMain la position de la lettre
+	*/
+	public int getValeurLettreMain(int positionMain) {
+		return getLettreMain(positionMain).getValeur();
 	}
 	
 	/**
@@ -187,11 +197,17 @@ public class Joueur extends Observable{
 	
 	/**
 	 * Vérifie que les lettres rentrées en console sont dans la main
-	 * @param mot le mot à  jouer
+	 * @param x la position x de la première lettre du mot posé
+	 * @param y la position x de la première lettre du mot posé
+	 * @param orientation l'orientation du mot
+	 * @param plateau le plateau sur lequel le mot est posé
+	 * @param mot le mot à jouer
+	 * @param motJoker le mot à jouer avec la position des jokers (joker == ?)
 	 * @param motJoue La liste de lettre du mots sur le plateau
-	 * @return Une liste de lettre récupérée depuis la main
+	 * @return Une liste de lettre constituée de : La lettre, si touvée dans la main sinon null
 	 */
-	public void verifierLettreMain(int x , int y, char orientation, Case[][] plateau, String[] mot, List<Lettre> motJoue) {
+	public void verifierLettreMain(int x , int y, char orientation, Case[][] plateau, String[] mot, 
+			String[] motJoker, List<Lettre> motJoue, int nbrJoker) {
 		//Gère les lettres de la main
 		Lettre tempLettre = null; //Lettre temporaire
 		int j = 0; //variable incrémentale 
@@ -205,13 +221,25 @@ public class Joueur extends Observable{
 			
 			//Tant qu' on n'a pas itéré toute la main et que la lettre n'est pas trouvée
 			while(j < this.mainJoueur.size() && lettreTrouve == false) {
-				if(mot[i].charAt(0) != (this.getLabelLettreMain(j))) {
+				if(mot[i].charAt(0) != (this.getLabelLettreMain(j))) { //Si la lettre n'est pas dans la main
 					tempLettre = null;
 				} else { 
-					if(this.checkCaseVide(x, y, orientation, plateau, i) == true) {
+					if(this.checkCaseVide(x, y, orientation, plateau, i) == true) {//Si la case du plateau est remplie
 						tempLettre = null;
-					} else if(lettrePrise.contains(j)) {
+					} else if(lettrePrise.contains(j)) {//Si la lettre de la main est déja prise
 						tempLettre = null;
+					} else if(nbrJoker > 0) { //Si il y a des jokers
+						if(motJoker[i].charAt(0) == '?') {
+							if(this.getValeurLettreMain(j) == 0) {
+								lettrePrise.add(j);
+								tempLettre = this.getLettreMain(j);
+								lettreTrouve = true;
+							} 
+						} else {
+							lettrePrise.add(j);
+							tempLettre = this.getLettreMain(j);
+							lettreTrouve = true;
+						}
 					} else {
 						lettrePrise.add(j);
 						tempLettre = this.getLettreMain(j);
@@ -341,7 +369,7 @@ public class Joueur extends Observable{
 	 */
 	public String setJokerMain(char joker1, char joker2, String mot) {
 		
-		boolean joker1ok = false;
+		boolean joker1ok = false; //flag, true si le 1er joker est set
 		for(int i = 0; i < this.mainJoueur.size(); i++) {
 			
 			if(this.mainJoueur.get(i).getLabel() == '?') {
