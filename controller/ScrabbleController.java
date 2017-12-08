@@ -43,53 +43,64 @@ public class ScrabbleController {
 	}
 
 	/**
+	 * 
 	 * Permet de placer un mot sur le plateau
 	 * @param x La position x de la première lettre
 	 * @param y La position y de la première lettre
+	 * @param orientation sens d'écriture du mot
+	 * @param mot Le mot à poser sur le plateau
+	 * @param saveMainJoueur Une sauvegarde de la main pour éviter une perte de Lettre
+	 * @return un Array d'oBjet pour pouvoir faire passer les messages d'erreurs et si l'opération s'est bien passé
 	 */
-	public void poserMot(int x, int y, char orientation, String mot, List<Lettre> saveMainJoueur){
-			Case[][] plateauJeu = plateau.plateau; //Plateau de jeu
-			Case[][] plateauSave = plateau.copyPlateau(); //Sauvegarde du plateau
-			List<Lettre> saveMain = saveMainJoueur;
-			List<Lettre> motJoue = new ArrayList<Lettre>(); //La liste de lettre du mots sur le plateau
-			List<Lettre> motMain = new ArrayList<Lettre>(); //liste des lettres enlevée de la main
-	
-			String[] motArray = mot.split(""); //String séparé en Array de lettre
-			
-			joueur.verifierLettreMain(x, y, orientation, plateauJeu, motArray, motJoue);
-			
-			if(joueur.poserMotPlateau(x, y, motJoue, motMain, motArray, plateauSave, 
-					saveMain, orientation, plateauJeu) == false) {
+	public String poserMot(int x, int y, char orientation, String mot, List<Lettre> saveMainJoueur){
+		//TODO modif le code pour que les vérif se passe au niveau du controller
+		String messageErreur = null;
+		
+		Case[][] plateauJeu = plateau.plateau; //Plateau de jeu
+		Case[][] plateauSave = plateau.copyPlateau(); //Sauvegarde du plateau
+		List<Lettre> saveMain = saveMainJoueur;
+		List<Lettre> motJoue = new ArrayList<Lettre>(); //La liste de lettre du mots sur le plateau
+		List<Lettre> motMain = new ArrayList<Lettre>(); //liste des lettres enlevée de la main
+
+		String[] motArray = mot.split(""); //String séparé en Array de lettre
+		
+		joueur.verifierLettreMain(x, y, orientation, plateauJeu, motArray, motJoue);
+		
+		if(joueur.poserMotPlateau(x, y, motJoue, motMain, motArray, plateauSave, 
+				saveMain, orientation, plateauJeu) == false) {
+			joueur.setMainJoueur(saveMain);
+			plateau.plateau = plateauSave;
+			messageErreur = "Mot impossible à placer";
+			return messageErreur;
+		} else {
+			plateau.plateau = plateauJeu;
+		}
+		
+		//Vérifie les mots
+		if(plateau.debutPartie == true) {
+			if(plateau.verificationPeripherique(x, y, orientation, motMain, motJoue)) {
+				plateau.setScoreJoueur(joueur);
+				joueur.viderLaMain(motMain, sac);
+			} else {
 				joueur.setMainJoueur(saveMain);
 				plateau.plateau = plateauSave;
-				return;
-			} else {
-				plateau.plateau = plateauJeu;
+				messageErreur = "Placement du Mot incorrect";
+				return messageErreur;
 			}
 			
-			//Vérifie les mots
-			if(plateau.debutPartie == true) {
-				if(plateau.verificationPeripherique(x, y, orientation, motMain, motJoue)) {
-					plateau.setScoreJoueur(joueur);
-					joueur.viderLaMain(motMain, sac);
-				} else {
-					joueur.setMainJoueur(saveMain);
-					plateau.plateau = plateauSave;
-					System.out.println("\nPlacement du Mot incorrect");
-				}
-				
+		} else {
+			//Enlève les lettres jouée de la main
+			if(plateau.checkPremierMot(x, y, orientation, joueur, motMain, motJoue)) {
+				plateau.setScoreJoueur(joueur);
+				joueur.viderLaMain(motMain, sac);	
 			} else {
-				//Enlève les lettres jouée de la main
-				if(plateau.checkPremierMot(x, y, orientation, joueur, motMain, motJoue)) {
-					plateau.setScoreJoueur(joueur);
-					joueur.viderLaMain(motMain, sac);	
-				} else {
-					joueur.setMainJoueur(saveMain);
-					plateau.plateau = plateauSave;
-					System.out.println("\nPlacement du Premier Mot incorrect");
-				}
+				joueur.setMainJoueur(saveMain);
+				plateau.plateau = plateauSave;
+				messageErreur = "Placement du Premier Mot incorrect";
+				return messageErreur;
 			}
-			//motJoue = new ArrayList<Lettre>(); //Remets à zéro la variable
+		}
+		return messageErreur;
 			
 	}
 	public void addView(ScrabbleView vue) {

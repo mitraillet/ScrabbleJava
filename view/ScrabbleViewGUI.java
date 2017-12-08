@@ -5,12 +5,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.List;
 import java.util.Observable;
 
 import javax.swing.*;
 
 import controller.ScrabbleController;
 import scrabble.Joueur;
+import scrabble.Lettre;
 import scrabble.Plateau;
 import scrabble.Sac;
 
@@ -23,12 +30,23 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 	private JLabel message = new JLabel(" ");
 	
 	private ImageIcon plateauIMG = new ImageIcon("ressource/image/plateau/PlateauScrabblePerso.png");
+	
 	private ImageIcon boutonJouer = new ImageIcon("ressource/image/BoutonJouer.png");
 	private ImageIcon boutonJouerHoover = new ImageIcon("ressource/image/BoutonJouerHoover.png");
+	private ImageIcon boutonJouerDisabled = new ImageIcon("ressource/image/BoutonJouerDisabled.png");
+	
 	private ImageIcon boutonMelanger = new ImageIcon("ressource/image/BoutonMelanger.png");
 	private ImageIcon boutonMelangerHoover = new ImageIcon("ressource/image/BoutonMelangerHoover.png");
+	private ImageIcon boutonMelangerDisabled = new ImageIcon("ressource/image/BoutonMelangerDisabled.png");
+	
 	private ImageIcon boutonPasser = new ImageIcon("ressource/image/BoutonPasser.png");
 	private ImageIcon boutonPasserHoover = new ImageIcon("ressource/image/BoutonPasserHoover.png");
+	private ImageIcon boutonPasserDisabled = new ImageIcon("ressource/image/BoutonPasserDisabled.png");
+	
+	private Bouton jouerJButton;
+	private Bouton melangeJButton;
+	private Bouton passerJButton;
+	
 	
 	public ScrabbleViewGUI(Plateau plateau, Joueur joueur, Sac sac,ScrabbleController controller) {
 		super(plateau, joueur, controller);
@@ -61,13 +79,15 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 	 */
 	private void updateBouton(Sac sac) {
 		Box buttonBox = Box.createVerticalBox();
-		Bouton jouerJButton = new Bouton(boutonJouer, boutonJouerHoover);
-		Bouton melangeJButton = new Bouton(boutonMelanger, boutonMelangerHoover);
-		Bouton passerJButton = new Bouton(boutonPasser, boutonPasserHoover);
+		jouerJButton = new Bouton(boutonJouer, boutonJouerHoover, boutonJouerDisabled);
+		melangeJButton = new Bouton(boutonMelanger, boutonMelangerHoover, boutonMelangerDisabled);
+		passerJButton = new Bouton(boutonPasser, boutonPasserHoover, boutonPasserDisabled);
+		jouerJButton.addActionListener(new Jouer());
 		buttonBox.add(jouerJButton);
 		melangeJButton.addActionListener(new Melanger());
 		melangeJButton.setEnabled(sac.tailleContenuSac() != 0);
 		buttonBox.add(melangeJButton);
+		passerJButton.addActionListener(new Passer());
 		buttonBox.add(passerJButton);
 		
 		container.add(buttonBox);
@@ -182,8 +202,7 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
+		//Vide car pas d'action à y implémenter
 	}
 	/**
 	 * 
@@ -193,37 +212,47 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 	class Melanger implements ActionListener{
 		JWindow fenetreMelange;
 		JPanel copyMain;
+		JLabel text;
 		JButton melange;
 		JButton annuler;
 		String label = "";
-		Boolean isUp = false;
+		Font font = new Font("Serif", Font.BOLD, 20);
+
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if(!isUp) {
+				jouerJButton.setEnabled(false);
+				melangeJButton.setEnabled(false);
+				passerJButton.setEnabled(false);
 				fenetreMelange = new JWindow();
 				copyMain = new JPanel();
+				text = new JLabel("Choisissez les lettres à remélanger dans le sac?\n");
 				melange = new JButton("Mélanger");
 				annuler = new JButton("Annuler");
 				
-				fenetreMelange.setSize(500, 100);
-				fenetreMelange.setPreferredSize(new Dimension(500, 100));
+				fenetreMelange.setSize(500, 150);
+				fenetreMelange.setPreferredSize(new Dimension(500, 150));
 				fenetreMelange.setLocationRelativeTo(null);
 				fenetreMelange.setAlwaysOnTop(true);
-				fenetreMelange.setVisible(true);
+				fenetreMelange.setVisible(true);	
 				
-				melange.addActionListener(new Melange());
-				annuler.addActionListener(new Annule());
+				copyMain.setBackground(new Color(253, 245, 230));
+				
+				text.setFont(font);
+				text.setPreferredSize(new Dimension(450, 40));
+				text.setHorizontalAlignment(0);
+				
+				copyMain.add(text);
 				
 				ajouteMainMelange(copyMain);
 				
-				copyMain.setBackground(new Color(253, 245, 230));
+				melange.addActionListener(new Melange());
+				annuler.addActionListener(new Annule());
+
 				copyMain.add(melange);
 				copyMain.add(annuler);
 				
 				fenetreMelange.setContentPane(copyMain);
-				isUp = true;
-			}
 		}
 		
 		private void ajouteMainMelange(JPanel box) {
@@ -259,7 +288,6 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 
 			@Override
 			public void itemStateChanged(ItemEvent e) {
-				// TODO Auto-generated method stub
 				if(e.getStateChange() == 1) {
 					label += ((AbstractButton) e.getItemSelectable()).getSelectedIcon().toString();
 				}
@@ -288,7 +316,9 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 				fenetreMelange.removeAll();
 				fenetreMelange.dispose();
 				label = "";
-				isUp = false;
+				jouerJButton.setEnabled(true);
+				melangeJButton.setEnabled(true);
+				passerJButton.setEnabled(true);
 			}
 		}
 		/**
@@ -300,14 +330,290 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				controller.melangeMain(label);
-				fenetreMelange.removeAll();
-				fenetreMelange.dispose();
-				label = "";
-				isUp = false;
+				if(label.length() != 0){
+					controller.melangeMain(label);
+					fenetreMelange.removeAll();
+					fenetreMelange.dispose();
+					label = "";
+				}
 			}
 			
 		}
+	}
+	class Jouer implements ActionListener {
+		JFrame fenetreJoue;
+		JButton jouer;
+		JButton annulerJoue;
+		//formulaire
+		JPanel form;
+		JPanel formContainer;
+		JComboBox<String> orientation;
+		JTextField motJoue;
+	 	JComboBox<Integer>  x;
+	 	JComboBox<Integer>  y;
+	 	
+	 	// Joker
+	 	JFrame jokerFenetre;
+		JPanel jokerJPanel;
+		char joker1 = '/';
+		char joker2 = '/';
+		JLabel joker1Label;
+		JLabel joker2Label;
+		JTextField joker1TxtF;
+		JTextField joker2TxtF;
+		String mot;
+		int joker;
+		boolean jokerFenetreIsUp = false;
+		
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			// TODO Auto-generated method stub
+			jouerJButton.setEnabled(false);
+			melangeJButton.setEnabled(false);
+			passerJButton.setEnabled(false);
+			fenetreJoue = new JFrame();
+			form = new JPanel(new GridLayout(8,2));
+			formContainer = new JPanel();
+			jouer = new JButton("Jouer");
+			annulerJoue = new JButton("Annuler");
+
+			fenetreJoue.setUndecorated(true);
+			fenetreJoue.setSize(350, 220);
+			fenetreJoue.setPreferredSize(new Dimension(350, 220));
+			fenetreJoue.setLocationRelativeTo(null);
+			fenetreJoue.setAlwaysOnTop(true);
+			fenetreJoue.setVisible(true);
+			
+			jouer.addActionListener(new Joue());
+			annulerJoue.addActionListener(new AnnuleJoue());
+			
+			creationForm();
+			
+			form.setBackground(new Color(253, 245, 230));
+			form.add(new JLabel());
+			form.add(new JLabel());
+			form.add(jouer);
+			form.add(annulerJoue);
+			
+			formContainer.setBackground(new Color(253, 245, 230));
+			formContainer.add(form);
+			fenetreJoue.setContentPane(formContainer);
+		}
+		
+		public void creationForm() {		
+			
+			JLabel motJoueLabel = new JLabel("Le mot à jouer : ");
+			motJoue = new JTextField();
+			motJoue.addKeyListener(new KeyAdapter() {
+				  public void keyReleased(KeyEvent k) {
+					    if(motJoue.getText().length() != 0) {
+					    	if(motJoue.getText().contains("?") || k.getKeyChar() == '?') {
+					    		joker = 0;
+					    		joker = joueur.detecteJoker(motJoue.getText());
+								
+								if(joker == 1) {
+						    		joker1Label.setVisible(true);
+									joker1TxtF.setVisible(true);
+								}
+								else if(joker == 2) {
+						    		joker1Label.setVisible(true);
+									joker1TxtF.setVisible(true);
+									joker2Label.setVisible(true);
+									joker2TxtF.setVisible(true);
+								}
+					    	}
+					    	else {
+					    		joker1Label.setVisible(false);
+								joker2Label.setVisible(false);
+								joker1TxtF.setVisible(false);
+								joker2TxtF.setVisible(false);
+					    	}
+					    }
+					  }
+					});//TODO
+			
+			joker1Label = new JLabel("Premier Joker :");
+			joker1Label.setVisible(false);
+			joker2Label = new JLabel("Deuxième Joker :");
+			joker2Label.setVisible(false);
+			joker1TxtF = new JTextField();
+			joker1TxtF.setVisible(false);
+			joker2TxtF = new JTextField();
+			joker2TxtF.setVisible(false);
+			
+			JLabel xLabel = new JLabel("Position horizontale : ");
+			x = new JComboBox<Integer> ();
+			JLabel yLabel = new JLabel("Position verticale : ");
+			y = new JComboBox<Integer> ();
+			for(int i = 0 ; i < 15; i++){
+				x.addItem(i);
+				y.addItem(i);
+			}
+			
+			JLabel sens = new JLabel("Orientation du mot : ");
+			orientation = new JComboBox<String>();
+			orientation.addItem("Horizontal");
+			orientation.addItem("Vertical");
+			
+			form.add(motJoueLabel);
+			form.add(motJoue);
+			form.add(joker1Label);
+			form.add(joker1TxtF);
+			form.add(joker2Label);
+			form.add(joker2TxtF);
+			
+			form.add(xLabel);
+			form.add(x);
+			form.add(yLabel);
+			form.add(y);
+			form.add(sens);
+			form.add(orientation);
+
+		    //TODO
+		    
+		}
+	    
+		/**
+		 * 
+		 * @author Mitraillet
+		 * Classe du bouton jouer
+		 */
+		class Joue implements ActionListener{
+			
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				List<Lettre> saveMainJoueur = joueur.getMainJoueur();
+				String messageError;
+				
+				char orient;
+				int abscisse = (int)x.getSelectedItem();
+				int ordonnee = (int)y.getSelectedItem();
+				if(orientation.getSelectedItem() == "Horizontal") {
+					orient = 'h';
+				}
+				else {
+					orient = 'v';
+				}
+				if(motJoue.getText().length() != 0) {
+					mot = motJoue.getText();
+					joker = joueur.detecteJoker(motJoue.getText());
+					if(joker != 0) {
+						if(joker == 1) {
+							joker1 = joker1TxtF.getText().charAt(0);
+						}
+						else if(joker == 2) {
+							joker1 = joker1TxtF.getText().charAt(0);
+							joker2 = joker2TxtF.getText().charAt(0);
+						}
+						mot = joueur.setJokerMain(joker1, joker2, mot);
+					}
+					messageError = controller.poserMot(abscisse, ordonnee, orient, mot, saveMainJoueur);
+					if(messageError == null){
+							fenetreJoue.removeAll();
+							fenetreJoue.dispose();
+						}
+						else {
+							message.setText(messageError);
+						}
+					}
+				}
+			
+		}
+		
+		/**
+		 * 
+		 * @author Mitraillet
+		 * Classe du bouton annule pour fermer la fenêtre
+		 */
+		class AnnuleJoue implements ActionListener{
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				fenetreJoue.removeAll();
+				fenetreJoue.dispose();
+				jouerJButton.setEnabled(true);
+				melangeJButton.setEnabled(true);
+				passerJButton.setEnabled(true);
+				if(jokerFenetreIsUp) {
+					jokerFenetre.removeAll();
+					jokerFenetre.dispose();
+				}
+			}
+		}
+	}
+	
+	
+	class Passer implements ActionListener{
+
+		JWindow fenetrePasser;
+		JPanel container;
+		JLabel text;
+		JButton passer;
+		JButton annuler;
+		Font font = new Font("Serif", Font.BOLD, 20);
+		
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			// TODO Auto-generated method stub
+			jouerJButton.setEnabled(false);
+			melangeJButton.setEnabled(false);
+			passerJButton.setEnabled(false);
+			fenetrePasser = new JWindow();
+			container = new JPanel();
+			text = new JLabel("Êtes-vous sûr de vouloir passer votre tour?\n");
+			passer = new JButton("Passer");
+			annuler = new JButton("Annuler");
+			
+			fenetrePasser.setSize(400, 80);
+			fenetrePasser.setPreferredSize(new Dimension(400, 80));
+			fenetrePasser.setLocationRelativeTo(null);
+			fenetrePasser.setAlwaysOnTop(true);
+			fenetrePasser.setVisible(true);
+			
+			text.setFont(font);
+			text.setHorizontalAlignment(0);
+			
+			passer.addActionListener(new Passe());
+			annuler.addActionListener(new Annule());
+			
+			
+			container.setBackground(new Color(253, 245, 230));
+			container.add(text);
+			container.add(passer);
+			container.add(annuler);
+			
+			fenetrePasser.setContentPane(container);
+		}
+		
+		/**
+		 * 
+		 * @author Mitraillet
+		 * Classe du bouton Passer
+		 */
+		class Passe implements ActionListener{
+			//TODO
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+			}
+		}
+		/**
+		 * 
+		 * @author Mitraillet
+		 * Classe du bouton annule pour fermer la fenêtre
+		 */
+		class Annule implements ActionListener{
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				fenetrePasser.removeAll();
+				fenetrePasser.dispose();
+				jouerJButton.setEnabled(true);
+				melangeJButton.setEnabled(true);
+				passerJButton.setEnabled(true);
+			}
+		}
+		
 	}
 }
