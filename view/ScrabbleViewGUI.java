@@ -162,15 +162,21 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 	 * Création et mise à jour du score
 	 */
 	private void updateScore() {
-		String scoreMsg = "Score : " + joueur.getScore();
-		JLabel  scoreAffiche = new JLabel (scoreMsg);
-		scoreAffiche.setPreferredSize(new Dimension(150, 40));
-		scoreAffiche.setSize(150, 40);
+		Box scoreBox = Box.createVerticalBox();
+		String scoreMsg = "Votre score : " + joueur.getScore();
+		String scoreMsgAdv = "Score de l'adversaire : ";
+		JLabel scoreAffiche = new JLabel (scoreMsg);
+		JLabel scoreAfficheAdv = new JLabel(scoreMsgAdv);
+
 		scoreAffiche.setFont(font);
-		scoreAffiche.setBackground(new Color(0,0,0,0));
-		scoreAffiche.setHorizontalAlignment(2);
+		scoreAfficheAdv.setFont(font);
 		
-		container.add(scoreAffiche);
+		scoreBox.setPreferredSize(new Dimension(250, 60));
+		scoreBox.setSize(250, 60);
+		scoreBox.setBackground(new Color(0,0,0,0));
+		scoreBox.add(scoreAffiche);
+		scoreBox.add(scoreAfficheAdv);
+		container.add(scoreBox);
 	}
 	
 	/**
