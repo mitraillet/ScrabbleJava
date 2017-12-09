@@ -1,6 +1,5 @@
 package view;
 
-import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Observable;
@@ -96,7 +95,7 @@ public class ScrabbleViewConsole extends ScrabbleView implements Observer{
 									intPosX = sc.nextInt();
 									break;
 								} catch(InputMismatchException e){
-									System.out.println("Erreur, veuillez entrer un nombre valide");
+									affiche("Erreur, veuillez entrer un nombre valide");
 									sc.next(); // Vide le scanner 
 									continue;
 								}
@@ -109,7 +108,7 @@ public class ScrabbleViewConsole extends ScrabbleView implements Observer{
 									intPosY = sc.nextInt();
 									break;
 								} catch(InputMismatchException e){
-									System.out.println("Erreur, veuillez entrer un nombre valide");
+									affiche("Erreur, veuillez entrer un nombre valide");
 									sc.next(); // Vide le scanner 
 									continue;
 								}
@@ -123,7 +122,7 @@ public class ScrabbleViewConsole extends ScrabbleView implements Observer{
 								if(orientation == 'h' || orientation == 'v') {
 									break;
 								} else {
-									System.out.println("L'orientation est incorrecte. (h / v)");
+									affiche("L'orientation est incorrecte. (h / v)");
 									continue;
 								}
 							}
