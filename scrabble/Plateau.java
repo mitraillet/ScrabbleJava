@@ -740,7 +740,13 @@ public class Plateau {
 				}
 				
 				if(scoreSecondaireTemp != 0) {
-					scoreSecondaireTemp += this.getCase(x + h, y - v).getValeurCase();
+					if(this.getPlateauBonus(x + h, y - v) == 1) {
+						scoreSecondaireTemp += (this.getCase(x + h, y - v).getValeurCase())*2;
+					} else if (this.getPlateauBonus(x + h, y - v) == 2) {
+						scoreSecondaireTemp += (this.getCase(x + h, y - v).getValeurCase())*3;
+					} else {
+						scoreSecondaireTemp += this.getCase(x + h, y - v).getValeurCase();
+					}
 				}
 				
 				if(this.getPlateauBonus(x + h, y - v) == 3) {
