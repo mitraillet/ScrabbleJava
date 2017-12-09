@@ -223,6 +223,9 @@ public class JoueurTest {
 		String [] mot = "arbre".split("");
 		String [] mot2 = "aride".split("");
 		
+		String [] motJoker1 = mot;
+		String [] motJoker2 = mot2;
+		
 		List<Lettre> motJoue = new ArrayList<Lettre>();
 		
 		Lettre a = new Lettre('a', 15);
@@ -261,12 +264,12 @@ public class JoueurTest {
 		int y = 7;
 		char orientation = 'h';
 		
-		joueur.verifierLettreMain(x, y, orientation, plateau.plateau, mot, motJoue);
+		joueur.verifierLettreMain(x, y, orientation, plateau.plateau, mot, motJoker1, motJoue, 0);
 		assertEquals(motJoue, motJoueCheck1);
 		
 		motJoue.removeAll(motJoue);
 		
-		joueur.verifierLettreMain(x, y, orientation, plateau.plateau, mot2, motJoue);
+		joueur.verifierLettreMain(x, y, orientation, plateau.plateau, mot2, motJoker2, motJoue, 0);
 		assertEquals(motJoue, motJoueCheck2);
 		
 	}
@@ -424,6 +427,11 @@ public class JoueurTest {
 		assertEquals(joueur.testJoker(mot), 'k');
 	}
 
+	@Test
+	public void testCopieMainJoueur() {
+		fail("Not yet implemented"); // TODO
+	}
+	
 	@Test
 	public void testPasser() {
 		fail("Not yet implemented"); // TODO

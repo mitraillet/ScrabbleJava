@@ -83,7 +83,7 @@ public class ScrabbleController {
 		
 		//Vérifie les mots
 		if(plateau.debutPartie == true) {
-			if(plateau.verificationPeripherique(x, y, orientation, motMain, motJoue, score)) {
+			if(plateau.verificationPeripherique(x, y, orientation, motMain, motJoue)) {
 				score = plateau.calculScore(x, y, orientation, motMain, motJoue);
 				plateau.setScoreJoueur(joueur, score);
 				joueur.viderLaMain(motMain, sac);

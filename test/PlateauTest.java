@@ -408,6 +408,11 @@ public class PlateauTest {
 	}
 	
 	@Test
+	public void testGetPlateauLettre() {
+		fail("");
+	}
+	
+	@Test
 	public void testCopyPlateau() {
 		//fail("Not yet implemented"); 
 		Plateau plateauTest = new Plateau();
@@ -509,9 +514,9 @@ public class PlateauTest {
 		
 		System.out.println(plateauTest);
 		
-		plateauTest.calculScore(10, 4, 'h', motMain, motJoue);
+		int tempScore = plateauTest.calculScore(10, 4, 'h', motMain, motJoue);
 		
-		assertEquals(plateauTest.tempScore, 10);
+		assertEquals(tempScore, 10);
 		
 	}
 	
@@ -537,9 +542,9 @@ public class PlateauTest {
 		
 		System.out.println(plateauTest);
 		
-		plateauTest.calculScorePeripherique(10, 10, 'v', motJoue);
+		int tempScore = plateauTest.calculScorePeripherique(10, 10, 'v', motJoue);
 		
-		assertEquals(plateauTest.tempScore, 22);
+		assertEquals(tempScore, 22);
 	}
 
 	@Test
@@ -556,15 +561,19 @@ public class PlateauTest {
 		
 		motMain.add(z);
 		motMain.add(m);
+		
+		List<Lettre> lettreDouble = new ArrayList<Lettre>();
+		List<Lettre> lettreTriple = new ArrayList<Lettre>();
+		List<Lettre> lettreScore = new ArrayList<Lettre>();
 
-		plateauTest.lettreDouble.add(z);
-		plateauTest.lettreTriple.add(m);
-		plateauTest.lettreTriple.add(o);
-		plateauTest.lettreScore.add(t);
+		lettreDouble.add(z);
+		lettreTriple.add(m);
+		lettreTriple.add(o);
+		lettreScore.add(t);
 		
-		plateauTest.calculScoreMot(motMain);
+		int tempScore = plateauTest.calculScoreMot(motMain, lettreDouble, lettreTriple, lettreScore);
 		
-		assertEquals(plateauTest.tempScore, 30);
+		assertEquals(tempScore, 30);
 	}
 	
 	@Test
@@ -572,13 +581,12 @@ public class PlateauTest {
 		Joueur joueur = new Joueur();
 		Plateau plateauTest = new Plateau();
 		
-		plateauTest.tempScore = 30;
-		plateauTest.setScoreJoueur(joueur);
+		plateauTest.setScoreJoueur(joueur, 30);
 		
 		assertEquals(joueur.getScore(), 30);
 		
-		plateauTest.tempScore = 17;
-		plateauTest.setScoreJoueur(joueur);
+		
+		plateauTest.setScoreJoueur(joueur, 17);
 		
 		assertEquals(joueur.getScore(), 47);
 		

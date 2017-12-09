@@ -181,8 +181,9 @@ public class Plateau {
 	 * @param orientation l'orientation du mot, h = horizontal, v = vertical
 	 * @param motMain Les lettres tirées de la main
 	 * @param motJoue Les lettres à mettre sur le plateau
+	 * @return true si les vérifications sont correctes, sinon false
 	 */
-	public boolean verificationPeripherique(int x, int y, char orientation, List<Lettre> motMain, List<Lettre> motJoue, int score) {
+	public boolean verificationPeripherique(int x, int y, char orientation, List<Lettre> motMain, List<Lettre> motJoue) {
 		estAdjacentH = false;
 		estAdjacentV = false;
 		
@@ -576,6 +577,7 @@ public class Plateau {
 	 * @param joueurActuel le joueur qui a posé le mot
 	 * @param motMain les lettres tirées de la main
 	 * @param motJoue le mot joué
+	 * @return true si la premier mot est correct et bien placé, sinon false
 	 */
 	public boolean checkPremierMot(int x, int y, char orientation, Joueur joueurActuel, 
 			List<Lettre> motMain, List<Lettre> motJoue){
