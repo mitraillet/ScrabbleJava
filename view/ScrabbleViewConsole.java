@@ -56,8 +56,7 @@ public class ScrabbleViewConsole extends ScrabbleView implements Observer{
 					case "J" : 
 						affiche("Jouer"); 
 						String mot1 = sc.next();
-						List<Lettre> saveMain = new ArrayList<Lettre>();
-						saveMain.addAll(joueur.getMainJoueur());//Sauvegarde de la main
+						List<Lettre> saveMain = joueur.copieMainJoueur();
 						
 						int joker = joueur.detecteJoker(mot1);
 						String motJoker = mot1;

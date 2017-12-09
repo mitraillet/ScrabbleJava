@@ -413,6 +413,25 @@ public class Joueur extends Observable{
 	}
 	
 	/**
+	 * Copie la main du joueur
+	 * @return la copie de la main
+	 */
+	public List<Lettre> copieMainJoueur() {
+		List<Lettre> copieMain = new ArrayList<Lettre>();
+		
+		for(int i = 0; i < this.getSizeMainJoueur(); i++) {
+			if(this.getLettreMain(i).getValeur() == 0) {
+				Joker joker = new Joker();
+				copieMain.add(joker);
+			} else {
+				copieMain.add(this.getLettreMain(i));
+			}
+		}
+		
+		return copieMain;
+		
+	}
+	/**
 	 * Permet au joueur de passer le tour
 	 */
 	public void passer() {

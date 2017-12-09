@@ -408,7 +408,7 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 			 */
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				List<Lettre> saveMainJoueur = joueur.getMainJoueur();
+				List<Lettre> saveMainJoueur = joueur.copieMainJoueur();
 				String messageError;
 				
 				char orient;
