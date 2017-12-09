@@ -264,12 +264,18 @@ public class Joueur extends Observable{
 	 */
 	public boolean checkCaseVide(int x, int y, char orientation, Case[][] plateau, int i){
 		if(orientation == 'h') {
-			if(plateau[x + i][y].getLettre() != null) {
-				return true;
+			try {
+				if(plateau[x + i][y].getLettre() != null) {
+					return true;
+				}	
+			} catch (ArrayIndexOutOfBoundsException e) {
 			}
 		} else {
-			if(plateau[x][y - i].getLettre() != null) {
-				return true;
+			try {
+				if(plateau[x][y - i].getLettre() != null) {
+					return true;
+				}
+			} catch (ArrayIndexOutOfBoundsException e) {
 			}
 		}
 		return false;
@@ -312,7 +318,6 @@ public class Joueur extends Observable{
 			} catch (ArrayIndexOutOfBoundsException e) {
 				this.setMainJoueur(saveMain);
 				plateau = plateauSave;
-				System.out.println(plateau);
 				System.out.println("Erreur : votre mot sort du plateau");
 				return false;
 			}
@@ -322,7 +327,7 @@ public class Joueur extends Observable{
 			} else if (orientation == 'v') {
 				yPos ++;
 			} else {
-				System.out.println("Erreur");
+				System.out.println("Erreur d'orientation");
 				plateau = plateauSave;
 				return false;
 			}

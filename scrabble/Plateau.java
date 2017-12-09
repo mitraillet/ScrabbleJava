@@ -659,7 +659,7 @@ public class Plateau {
 					doubleMot += 1;
 					break;
 				default:
-				
+					break;
 			}
 		
 			if(orientation == 'h') {
@@ -742,16 +742,14 @@ public class Plateau {
 				} else {
 					this.tempScore += scoreSecondaireTemp;
 				}
-				this.plateau[x + h][y - v].setBonus(0);
-				
-				if(orientation == 'h') {
-					h++;
-				} else {
-					v++;
-				}
 
 			}
-			this.plateau[x + h][y -v].setBonus(0);
+			this.plateau[x + h][y - v].setBonus(0);
+			if(orientation == 'h') {
+				h++;
+			} else {
+				v++;
+			}
 		}
 	}
 	
