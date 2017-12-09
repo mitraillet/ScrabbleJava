@@ -4,6 +4,7 @@
 package scrabble;
 
 import java.io.BufferedReader;
+
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileNotFoundException;
@@ -216,7 +217,7 @@ public class Plateau {
 			if(motJoue.get(0) != null) {
 				labelLettre = motJoue.get(0).getLabel();
 			} else {
-				labelLettre = this.plateau[x][y].getLabelCase();
+				labelLettre = this.getPlateauLabel(x, y);
 			}
 			
 			//Création du mot principal
@@ -284,9 +285,9 @@ public class Plateau {
 		List<Case> contientLettre = new ArrayList<Case>();
 		int j = 1;
 		try {
-			if(plateau[x][y+1].lettre != null) {
-				while(plateau[x][y+j].lettre != null) {
-					contientLettre.add(plateau[x][y+j]);
+			if(this.getPlateauLettre(x, y + 1) != null) {
+				while(this.getPlateauLettre(x, y + j) != null) {
+					contientLettre.add(this.getCase(x, y + j));
 					j++;
 				}
 				estAdjacentH = true;
@@ -308,9 +309,9 @@ public class Plateau {
 		List<Case> contientLettre = new ArrayList<Case>();
 		int j = 1;
 		try {
-			if(plateau[x][y-1].lettre != null) {
-				while(plateau[x][y-j].lettre != null) {
-					contientLettre.add(plateau[x][y-j]);
+			if(this.getPlateauLettre(x, y - 1) != null) {
+				while(this.getPlateauLettre(x, y - j) != null) {
+					contientLettre.add(this.getCase(x, y - j));
 					j++;
 				}
 				estAdjacentH = true;
@@ -331,9 +332,9 @@ public class Plateau {
 		List<Case> contientLettre = new ArrayList<Case>();
 		int j = 1;
 		try {
-			if(plateau[x-1][y].lettre != null) {
-				while(plateau[x-j][y].lettre != null) {
-					contientLettre.add(plateau[x-j][y]);
+			if(this.getPlateauLettre(x - 1, y) != null) {
+				while(this.getPlateauLettre(x - j, y) != null) {
+					contientLettre.add(this.getCase(x - j, y));
 					j++;
 				}
 				estAdjacentV = true;
@@ -355,9 +356,9 @@ public class Plateau {
 		List<Case> contientLettre = new ArrayList<Case>();
 		int j = 1;
 		try {
-			if(this.plateau[x+1][y].lettre != null) {
-				while(this.plateau[x+j][y].lettre != null) {
-					contientLettre.add(plateau[x+j][y]);
+			if(this.getPlateauLettre(x + 1, y) != null) {
+				while(this.getPlateauLettre(x + j, y) != null) {
+					contientLettre.add(this.getCase(x + j, y));
 					j++;
 				}
 				estAdjacentV = true;
@@ -382,7 +383,7 @@ public class Plateau {
 		if(motJoue.get(getNum) != null) {
 			labelLettre = motJoue.get(getNum).getLabel();
 		} else {
-			labelLettre = this.plateau[x][y].getLabelCase();
+			labelLettre = this.getPlateauLabel(x, y);
 		}
 		
 		String motHaut = this.getLabelToList(checkHaut(x, y));
@@ -424,7 +425,7 @@ public class Plateau {
 		if(motJoue.get(getNum) != null) {
 			labelLettre = motJoue.get(getNum).getLabel();
 		} else {
-			labelLettre = this.plateau[x][y].getLabelCase();
+			labelLettre = this.getPlateauLabel(x, y);
 		}
 		
 		String motGauche = this.getLabelToList(checkGauche(x, y));
@@ -506,6 +507,16 @@ public class Plateau {
 	}
 	
 	/**
+	 * Récupère le lettre d'une Case du plateau en fonction des coordonées de celle-ci
+	 * @param x La position x de la case
+	 * @param y La position y de la case
+	 * @return le lettre contenue dans la case
+	 */
+	public Lettre getPlateauLettre(int x, int y) {
+		return this.plateau[x][y].getLettre();
+	}
+	
+	/**
 	 * Récupère les bonus de Case du plateau en fonction des coordonées de celle-ci
 	 * @param x La position x de la première case
 	 * @param y La position y de la première case
@@ -532,10 +543,10 @@ public class Plateau {
 		Case[][] tempArray = new Case [15][15];
 		for(int i = 0; i < 15; i++) { //X
 			for(int h = 0; h < 15; h++) { //Y
-				if(this.plateau[0 + i][0 + h].getLettre() != null) {
-					tempArray[0 + i][0 + h] = new Case(this.plateau[0 + i][0 + h].getBonus(), this.plateau[0 + i][0 + h].getLettre());
+				if(this.getPlateauLettre(0 + i, 0 + h) != null) {
+					tempArray[0 + i][0 + h] = new Case(this.getPlateauBonus(0 + i, 0 + h), this.getPlateauLettre(0 + i, 0 + h));
 				} else {
-					tempArray[0 + i][0 + h] = new Case(this.plateau[0 + i][0 + h].getBonus(), null);
+					tempArray[0 + i][0 + h] = new Case(this.getPlateauBonus(0 + i, 0 + h), null);
 				}
 			}
 		}
@@ -574,8 +585,8 @@ public class Plateau {
 			int v = 0;
 			
 			//Test si le mot passe par la casse du millieu (bonus = 5)
-			while(plateau[x + h][y - v].lettre != null) {
-				if(plateau[x + h][y - v ].getBonus() == 5) {
+			while(this.getPlateauLettre(x + h, y -v) != null) {
+				if(this.getPlateauBonus(x + h, y -v) == 5) {
 					estCentre = true;
 				}
 				if(orientation == 'v') {
@@ -619,14 +630,14 @@ public class Plateau {
 		//Calcul la longueur du mot posé
 		if(orientation == 'h') {
 			scorePrincipal.addAll(this.convertListCaseToListLettre(this.checkGauche(x, y)));
-			scorePrincipal.add(this.plateau[x][y].getLettre());
+			scorePrincipal.add(this.getPlateauLettre(x, y));
 			scorePrincipal.addAll(this.convertListCaseToListLettre(this.checkDroite(x, y)));
 			
 			xDebut = x - this.checkGauche(x, y).size();
 			
 		} else { //orientation == 'v'
 			scorePrincipal.addAll(this.convertListCaseToListLettre(this.checkHaut(x, y)));
-			scorePrincipal.add(this.plateau[x][y].getLettre());
+			scorePrincipal.add(this.getPlateauLettre(x, y));
 			scorePrincipal.addAll(this.convertListCaseToListLettre(this.checkBas(x, y)));
 			
 			yDebut = y + this.checkHaut(x, y).size();
@@ -638,7 +649,7 @@ public class Plateau {
 		
 		//Comptabilise les bonus
 		for(int i = 0; i < scorePrincipal.size(); i++) {
-			switch (this.plateau[xDebut + h][yDebut - v].getBonus()) {
+			switch (this.getPlateauBonus(xDebut + h, yDebut - v)) {
 				case 3:
 					doubleMot += 1;
 					break;
@@ -665,7 +676,7 @@ public class Plateau {
 		//Ajoute les lettres dans les listes de score suivant les bonus
 		for(int i = 0; i < scorePrincipal.size(); i++) {
 			
-			Case caseActuel = this.plateau[xDebut + h][yDebut - v];
+			Case caseActuel = this.getCase(xDebut + h, yDebut - v);
 			
 			int bonusActuel = caseActuel.getBonus();
 			boolean flagEstCompte = false; //Flag, true si la lettre est comptabilisé
@@ -727,12 +738,12 @@ public class Plateau {
 				}
 				
 				if(scoreSecondaireTemp != 0) {
-					scoreSecondaireTemp += this.plateau[x + h][y - v].getValeurCase();
+					scoreSecondaireTemp += this.getCase(x + h, y - v).getValeurCase();
 				}
 				
-				if(this.plateau[x + h][y - v].getBonus() == 3) {
+				if(this.getPlateauBonus(x + h, y - v) == 3) {
 					tempScore += (scoreSecondaireTemp)*2;
-				} else if (this.plateau[x + h][y - v].getBonus() == 4) {
+				} else if (this.getPlateauBonus(x + h, y - v) == 4) {
 					tempScore += (scoreSecondaireTemp)*3;
 				} else {
 					tempScore += scoreSecondaireTemp;
@@ -805,11 +816,11 @@ public class Plateau {
 				string += j + "|";
 			}
 			for(int h = 0; h < 15; h++) {
-				if(plateau[h][j].getLettre() == null) {
-						string += (plateau[h][j].getBonus() + "|");
+				if(this.getPlateauLettre(h, j) == null) {
+						string += (this.getPlateauBonus(h, j) + "|");
 				}
 				else {
-					string += (plateau[h][j].getLabelCase() + "|");
+					string += (this.getPlateauLabel(h, j) + "|");
 				}
 			}
 			string += "\n";
