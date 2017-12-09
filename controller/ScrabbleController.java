@@ -60,9 +60,11 @@ public class ScrabbleController {
 		
 		Case[][] plateauJeu = plateau.plateau; //Plateau de jeu
 		Case[][] plateauSave = plateau.copyPlateau(); //Sauvegarde du plateau
+		
 		List<Lettre> saveMain = saveMainJoueur;
 		List<Lettre> motJoue = new ArrayList<Lettre>(); //La liste de lettre du mots sur le plateau
 		List<Lettre> motMain = new ArrayList<Lettre>(); //liste des lettres enlevée de la main
+		int score = 0;
 
 		String[] jokerArray = motJoker.split("");
 		String[] motArray = mot.split(""); //String séparé en Array de lettre
@@ -81,8 +83,9 @@ public class ScrabbleController {
 		
 		//Vérifie les mots
 		if(plateau.debutPartie == true) {
-			if(plateau.verificationPeripherique(x, y, orientation, motMain, motJoue)) {
-				plateau.setScoreJoueur(joueur);
+			if(plateau.verificationPeripherique(x, y, orientation, motMain, motJoue, score)) {
+				score = plateau.calculScore(x, y, orientation, motMain, motJoue);
+				plateau.setScoreJoueur(joueur, score);
 				joueur.viderLaMain(motMain, sac);
 			} else {
 				joueur.setMainJoueur(saveMain);
@@ -94,7 +97,8 @@ public class ScrabbleController {
 		} else {
 			//Enlève les lettres jouée de la main
 			if(plateau.checkPremierMot(x, y, orientation, joueur, motMain, motJoue)) {
-				plateau.setScoreJoueur(joueur);
+				score = plateau.calculScore(x, y, orientation, motMain, motJoue);
+				plateau.setScoreJoueur(joueur, score);
 				joueur.viderLaMain(motMain, sac);	
 			} else {
 				joueur.setMainJoueur(saveMain);

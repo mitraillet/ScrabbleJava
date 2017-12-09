@@ -43,6 +43,7 @@ public class ScrabbleViewConsole extends ScrabbleView implements Observer{
 			while(true){
 				try{
 					String c = sc.next();
+					String messageError;
 					switch(c){
 					case "M" :
 						affiche("Mélanger");
@@ -123,12 +124,15 @@ public class ScrabbleViewConsole extends ScrabbleView implements Observer{
 								if(orientation == 'h' || orientation == 'v') {
 									break;
 								} else {
-									System.out.println("L'orienation est incorrecte. (h / v)");
+									System.out.println("L'orientation est incorrecte. (h / v)");
 									continue;
 								}
 							}
 							
-							controller.poserMot(intPosX, intPosY, orientation, mot1, saveMain, joker, motJoker);
+							messageError = controller.poserMot(intPosX, intPosY, orientation, mot1, saveMain, joker, motJoker);
+							if(messageError != null){
+								affiche(messageError);
+							}
 						}
 						else {
 							printPlateauMain();

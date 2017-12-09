@@ -436,14 +436,14 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 					}
 					messageError = controller.poserMot(abscisse, ordonnee, orient, mot, saveMainJoueur, joker, motJoker);
 					if(messageError == null){
-							fenetreJoue.removeAll();
-							fenetreJoue.dispose();
-						}
-						else {
-							affiche(messageError);
-						}
+						fenetreJoue.removeAll();
+						fenetreJoue.dispose();
+					}
+					else {
+						affiche(messageError);
 					}
 				}
+			}
 			
 		}
 		
