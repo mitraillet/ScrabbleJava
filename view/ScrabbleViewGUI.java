@@ -52,7 +52,6 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 	
 	private	Font font = new Font("Serif", Font.BOLD, 20);
 	private Color color = new Color(253, 245, 230);
-	private Boolean msgAlertIsUp = false;
 	
 	
 	public ScrabbleViewGUI(Plateau plateau, Joueur joueur, Sac sac,ScrabbleController controller) {
@@ -208,33 +207,12 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 
 	@Override
 	public void affiche(String msg) {
-		msgAlertIsUp = true;
 		fenetreMessage = new JFrame();
-		JPanel boxMessage = new JPanel();
-		fenetreMessage.setUndecorated(true);
-		JButton ok = new JButton("D'accord");
-		ok.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				fenetreMessage.removeAll();
-				fenetreMessage.dispose();
-				msgAlertIsUp = false;
-			}
-		});
-		message.setText(msg);
-		message.setFont(font);
-		message.setHorizontalAlignment(0);
-		ok.setHorizontalAlignment(0);
-		boxMessage.add(message);
-		boxMessage.add(ok);
-		boxMessage.setBackground(color);
-		fenetreMessage.setContentPane(boxMessage);
-		fenetreMessage.setLocationRelativeTo(null);
-		fenetreMessage.setAlwaysOnTop(true);
-		fenetreMessage.setSize(350, 60);
-		fenetreMessage.setPreferredSize(new Dimension(350, 60));
 		fenetreMessage.setBackground(color);
-		fenetreMessage.setVisible(true);
+		JOptionPane.showMessageDialog(fenetreMessage,
+			    msg,"Erreur",
+			    JOptionPane.ERROR_MESSAGE);
+
 	}
 	
 	@Override
@@ -471,11 +449,6 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 					jokerFenetre.removeAll();
 					jokerFenetre.dispose();
 				}
-				if(msgAlertIsUp) {
-					fenetreMessage.removeAll();
-					fenetreMessage.dispose();
-					msgAlertIsUp = false;
-				}
 			}
 		}
 	}
@@ -609,11 +582,6 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 				jouerJButton.setEnabled(true);
 				melangeJButton.setEnabled(true);
 				passerJButton.setEnabled(true);
-				if(msgAlertIsUp) {
-					fenetreMessage.removeAll();
-					fenetreMessage.dispose();
-					msgAlertIsUp = false;
-				}
 			}
 		}
 		/**
