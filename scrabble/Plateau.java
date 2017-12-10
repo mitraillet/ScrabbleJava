@@ -164,16 +164,6 @@ public class Plateau {
 	}
 	
 	/**
-	 * Flag, un mot est-il adjacent (mot horizontal) ? Si oui --> true
-	 */
-	private boolean	estAdjacentH;
-	
-	/**
-	 * Flag, un mot est-il adjacent (Mot vertical) ? Si oui --> true
-	 */
-	private boolean estAdjacentV;
-	
-	/**
 	 * Recherche des mots périphériques à celui placé par le joueur
 	 * qui se seraient créés et appel de la méthode vérification
 	 * @param x La position x de la première lettre
@@ -184,91 +174,64 @@ public class Plateau {
 	 * @return true si les vérifications sont correctes, sinon false
 	 */
 	public boolean verificationPeripherique(int x, int y, char orientation, List<Lettre> motMain, List<Lettre> motJoue) {
-		estAdjacentH = false;
-		estAdjacentV = false;
-		
-		if(motJoue.size() == 1) { //Si le joueur ne place qu'une seule lettre
 			
-			//Si le mot formé par la lettre à gauche et à droite est faux
-			if(this.checkGaucheDroite(x, y, 0, motJoue) != true) { 
+		String motPrincipal = ""; //Le mot formé par les lettres posées
+			
+		char labelLettre; //Le label de la première lettre du mot
+			
+		//Définis le label de la première lettre du mot
+		if(motJoue.get(0) != null) {
+			labelLettre = motJoue.get(0).getLabel();
+		} else {
+			labelLettre = this.getPlateauLabel(x, y);
+		}
+			
+		//Création du mot principal
+		if(orientation == 'v') {
+			motPrincipal += getLabelToList(checkHaut(x, y)) + labelLettre + getLabelToList(checkBas(x, y));
+			if(this.checkHaut(x, y).size() < 1 && this.checkBas(x, y).size() < 1) {
+				System.out.println("Erreur : Placez le mot adjacent à un autre");
 				return false;
-			}
-			
-			//Si le mot formé par la lettre en haut et en bas est faux
-			if(this.checkHautBas(x, y, 0, motJoue) != true) {
-				return false;
-			}
-			
-			//Si le mot est adjacent a un autre
-			if(estAdjacentH == true || estAdjacentV == true) {
-				System.out.println("Le mot est correct");
-				return true;
-			} else {
+			} else if (motPrincipal.length() <= motMain.size()){
 				System.out.println("Erreur : Placez le mot adjacent à un autre");
 				return false;
 			}
-
-		} else { //Si le joueur pose plus q'une lettre
-			
-			String motPrincipal = ""; //Le mot formé par les lettres posées
-			
-			char labelLettre; //Le label de la première lettre du mot
-			
-			//Définis le label de la première lettre du mot
-			if(motJoue.get(0) != null) {
-				labelLettre = motJoue.get(0).getLabel();
-			} else {
-				labelLettre = this.getPlateauLabel(x, y);
-			}
-			
-			//Création du mot principal
-			if(orientation == 'v') {
-				motPrincipal += getLabelToList(checkHaut(x, y)) + labelLettre + getLabelToList(checkBas(x, y));
-			} else if (orientation == 'h') {
-				motPrincipal += getLabelToList(checkGauche(x, y)) + labelLettre + getLabelToList(checkDroite(x, y));
-			} else {
-				System.out.println("Orientation incorrecte");
+		} else if (orientation == 'h') {
+			motPrincipal += getLabelToList(checkGauche(x, y)) + labelLettre + getLabelToList(checkDroite(x, y));
+			if(this.checkGauche(x, y).size() < 1 && this.checkDroite(x, y).size() < 1) {
+				System.out.println("Erreur : Placez le mot adjacent à un autre");
+				return false;
+			} else if (motPrincipal.length() <= motMain.size()){
+				System.out.println("Erreur : Placez le mot adjacent à un autre");
 				return false;
 			}
+		} 
 			
-			//Si le mot principal est faux
-			if (this.verification(motPrincipal) == false) {
-				System.out.println("Le mot " + motPrincipal + " est incorrect");
-				return false;
-			}
-			
-			//Pour chaque lettre du mot, vérifie les mots périphériques formés
-			for(int i = 0; i < (motJoue.size()); i++) {
-				
-				if(orientation =='h') {
-					if(this.checkHautBas(x+i, y, i, motJoue) != true) {
-						System.out.println("Le mot vertical n'est pas correct");
-						return false;
-					}
-				}
-				
-				if(orientation =='v') {
-					if(this.checkGaucheDroite(x, y-i, i, motJoue) != true) {
-						System.out.println("Le mot horizontal n'est pas correct");
-						return false;
-					}
-				}
-			}
-			
-			//Vérifie si le mot est adjacent à un autre déjà sur le plateau
-			if(orientation =='h') {
-				if(estAdjacentH != true && motPrincipal.length() <= motMain.size()) {
-					System.out.println("Placez le mot adjacent à un autre");
-					return false;
-				}
-			} else {
-				if(estAdjacentV != true && motPrincipal.length() <= motMain.size()) {
-					System.out.println("Placez le mot adjacent à un autre");
-					return false;
-				}
-			}
-			return true;
+		//Si le mot principal est faux
+		if (this.verification(motPrincipal) == false) {
+			System.out.println("Le mot " + motPrincipal + " est incorrect");
+			return false;
 		}
+			
+		//Pour chaque lettre du mot, vérifie les mots périphériques formés
+		for(int i = 0; i < (motJoue.size()); i++) {
+				
+			if(orientation =='h') {
+				if(this.checkHautBas(x+i, y, i, motJoue) != true) {
+					System.out.println("Le mot vertical n'est pas correct");
+					return false;
+				}
+			}
+				
+			if(orientation =='v') {
+				if(this.checkGaucheDroite(x, y-i, i, motJoue) != true) {
+					System.out.println("Le mot horizontal n'est pas correct");
+					return false;
+				}
+			}
+		}
+			
+		return true;
 
 	}
 	
@@ -291,7 +254,6 @@ public class Plateau {
 					contientLettre.add(this.getCase(x, y + j));
 					j++;
 				}
-				estAdjacentH = true;
 			} 
 		} catch(IndexOutOfBoundsException e) {
 			//Empêche le crash, si le mot est au bord du plateau
@@ -315,7 +277,6 @@ public class Plateau {
 					contientLettre.add(this.getCase(x, y - j));
 					j++;
 				}
-				estAdjacentH = true;
 			} 
 		} catch(IndexOutOfBoundsException e) {
 			//Empêche le crash, si le mot est au bord du plateau
@@ -338,7 +299,6 @@ public class Plateau {
 					contientLettre.add(this.getCase(x - j, y));
 					j++;
 				}
-				estAdjacentV = true;
 			} 
 		} catch(IndexOutOfBoundsException e) {
 			//Empêche le crash, si le mot est au bord du plateau
@@ -362,7 +322,6 @@ public class Plateau {
 					contientLettre.add(this.getCase(x + j, y));
 					j++;
 				}
-				estAdjacentV = true;
 			} 	
 		} catch(IndexOutOfBoundsException e) {
 			//Empêche le crash, si le mot est au bord du plateau
@@ -388,7 +347,7 @@ public class Plateau {
 		}
 		
 		String motHaut = this.getLabelToList(checkHaut(x, y));
-		String motBas = this.getLabelToList(checkBas(x, y));		
+		String motBas = this.getLabelToList(checkBas(x, y));	
 		
 		//Vérification des mots formés
 		if(motHaut != "" && motBas != "") {
