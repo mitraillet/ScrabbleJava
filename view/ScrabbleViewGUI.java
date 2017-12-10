@@ -29,7 +29,6 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 	
 	private JFrame fenetreJeu = new JFrame();
 	private JPanel container = new JPanel();
-	private JFrame fenetreMessage;
 	
 	private ImageIcon plateauIMG = new ImageIcon("ressource/image/plateau/PlateauScrabble.png");
 	
@@ -213,11 +212,13 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 
 	@Override
 	public void affiche(String msg) {
-		fenetreMessage = new JFrame();
-		fenetreMessage.setBackground(color);
-		JOptionPane.showMessageDialog(fenetreMessage,
-			    msg,"Erreur",
-			    JOptionPane.ERROR_MESSAGE);
+		JLabel msgLab = new JLabel(msg);
+		msgLab.setFont(font);
+		JOptionPane optionPane = new JOptionPane(msgLab);
+		optionPane.setIcon(new ImageIcon("ressource/image/erreur.png"));
+		JDialog dialog = optionPane.createDialog("Erreur");
+		dialog.setAlwaysOnTop(true);
+		dialog.setVisible(true);
 
 	}
 	
