@@ -73,6 +73,8 @@ public class PlateauTest {
 		
 		plateauTest.plateau[8][6].setLettre(u);
 		
+		System.out.println(plateauTest);
+		
 		assertEquals(plateauTest.verificationPeripherique(7, 7, 'h', motMain, motJoue), true); 
 		
 		plateauTest.plateau[10][7].setLettre(s);
@@ -409,7 +411,12 @@ public class PlateauTest {
 	
 	@Test
 	public void testGetPlateauLettre() {
-		fail("");
+		Plateau plateauTest = new Plateau();
+		
+		Lettre test = new Lettre('$', 17);
+		plateauTest.plateau[7][8].setLettre(test);
+		
+		assertEquals(plateauTest.getPlateauLettre(7, 8), test);
 	}
 	
 	@Test

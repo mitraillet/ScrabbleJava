@@ -189,22 +189,8 @@ public class Plateau {
 		//Création du mot principal
 		if(orientation == 'v') {
 			motPrincipal += getLabelToList(checkHaut(x, y)) + labelLettre + getLabelToList(checkBas(x, y));
-			if(this.checkHaut(x, y).size() < 1 && this.checkBas(x, y).size() < 1) {
-				System.out.println("Erreur : Placez le mot adjacent à un autre");
-				return false;
-			} else if (motPrincipal.length() <= motMain.size()){
-				System.out.println("Erreur : Placez le mot adjacent à un autre");
-				return false;
-			}
 		} else if (orientation == 'h') {
 			motPrincipal += getLabelToList(checkGauche(x, y)) + labelLettre + getLabelToList(checkDroite(x, y));
-			if(this.checkGauche(x, y).size() < 1 && this.checkDroite(x, y).size() < 1) {
-				System.out.println("Erreur : Placez le mot adjacent à un autre");
-				return false;
-			} else if (motPrincipal.length() <= motMain.size()){
-				System.out.println("Erreur : Placez le mot adjacent à un autre");
-				return false;
-			}
 		} 
 			
 		//Si le mot principal est faux
@@ -213,6 +199,9 @@ public class Plateau {
 			return false;
 		}
 			
+		boolean estAdjacentH = false;
+		boolean estAdjacentV = false;
+		
 		//Pour chaque lettre du mot, vérifie les mots périphériques formés
 		for(int i = 0; i < (motJoue.size()); i++) {
 				
@@ -221,6 +210,13 @@ public class Plateau {
 					System.out.println("Le mot vertical n'est pas correct");
 					return false;
 				}
+				
+				if(estAdjacentH == false) {
+					if(checkHaut(x+i, y).size() != 0 || checkBas(x+i, y).size() != 0) {
+						estAdjacentH = true;
+					}
+				}
+				
 			}
 				
 			if(orientation =='v') {
@@ -228,10 +224,21 @@ public class Plateau {
 					System.out.println("Le mot horizontal n'est pas correct");
 					return false;
 				}
+				
+				if(estAdjacentV == false) {
+					if(checkGauche(x, y - i).size() > 1 || checkDroite(x, y - 1).size() > 1) {
+						estAdjacentV = true;
+					}
+				}
 			}
 		}
-			
-		return true;
+		
+		if(estAdjacentV == false && estAdjacentH == false && motPrincipal.length() <= motMain.size()) {
+			System.out.println("Erreur : Placez le mot adjacent à un autre");
+			return false;
+		} else {
+			return true;
+		}
 
 	}
 	
