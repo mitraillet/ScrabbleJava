@@ -153,7 +153,7 @@ public class ScrabbleViewConsole extends ScrabbleView implements Observer{
 	/**
 	 * Méthode pour afficher les lettres et les commandes associées
 	 */
-	private void printHelp(){
+	private void printHelp(){ // TODO ajouté affichage si sac plein uniquement
 		affiche("Pour mélanger : M + lettre à mélanger.");
 		affiche("Pour jouer : J + mot à jouer.");
 		affiche("Pour passer : P");

@@ -30,7 +30,6 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 	private JFrame fenetreJeu = new JFrame();
 	private JPanel container = new JPanel();
 	private JFrame fenetreMessage;
-	private JLabel message = new JLabel(" ");
 	
 	private ImageIcon plateauIMG = new ImageIcon("ressource/image/plateau/PlateauScrabble.png");
 	
@@ -53,7 +52,13 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 	private	Font font = new Font("Serif", Font.BOLD, 20);
 	private Color color = new Color(253, 245, 230);
 	
-	
+	/**
+	 * Constructeur de l'interface graphique
+	 * @param plateau le plateau créant de part ce qu'il contient le tableau graphique 
+	 * @param joueur le joueur qui joue
+	 * @param sac le sac dans lequel sont piochées toutes les lettres
+	 * @param controller le controller qui va permettre les vérifications
+	 */
 	public ScrabbleViewGUI(Plateau plateau, Joueur joueur, Sac sac,ScrabbleController controller) {
 		super(plateau, joueur, controller);
 		this.sac = sac;
@@ -204,6 +209,7 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 	 	boxMain.add(mainBox11);
 	 	container.add(boxMain);
 	}
+	
 
 	@Override
 	public void affiche(String msg) {
@@ -230,6 +236,7 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		//Vide car pas d'action à y implémenter
 	}
+	
 	/**
 	 * 
 	 * @author Fauconnier/Henriquet
@@ -337,7 +344,7 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 							joker2TxtF.setVisible(false);
 				    	}
 					  }
-					});//TODO
+					});
 			
 			joker1Label = new JLabel("Premier Joker :");
 			joker1Label.setVisible(false);
@@ -375,8 +382,6 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 			form.add(y);
 			form.add(sens);
 			form.add(orientation);
-
-		    //TODO
 		    
 		}
 	    
@@ -661,6 +666,7 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
+				//Vide car pas d'action encore implémenter
 			}
 		}
 		/**
