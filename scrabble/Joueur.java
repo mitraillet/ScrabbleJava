@@ -51,6 +51,7 @@ public class Joueur extends Observable{
 	
 	/**
 	 * renvoie le score du joueur
+	 * @return le score du joueur
 	 */
 	public int getScore() {
 		return this.score;
@@ -85,6 +86,7 @@ public class Joueur extends Observable{
 	/**
 	* Récupère une lettre dans la main du joueur
 	* @param positionMain la position de la lettre à récupérer
+	* @return la lettre tirée de la main
 	*/
 	public Lettre getLettreMain(int positionMain) {
 		return this.getMainJoueur().get(positionMain);
@@ -93,6 +95,7 @@ public class Joueur extends Observable{
 	/**
 	* Récupère le label d'une lettre (se situant dans la main du joueur)
 	* @param positionMain la position de la lettre
+	* @return Le label de la lettre
 	*/
 	public char getLabelLettreMain(int positionMain) {
 		return getLettreMain(positionMain).getLabel();
@@ -101,6 +104,7 @@ public class Joueur extends Observable{
 	/**
 	* Récupère la valeur d'une lettre (se situant dans la main du joueur)
 	* @param positionMain la position de la lettre
+	* @return La lettre tirée de la main
 	*/
 	public int getValeurLettreMain(int positionMain) {
 		return getLettreMain(positionMain).getValeur();
@@ -116,7 +120,7 @@ public class Joueur extends Observable{
 	
 	/**
 	* Retourne toute la main du joueur
-	* @return the mainJoueur
+	* @return la main du joueur
 	*/
 	public List<Lettre> getMainJoueur() {
 		return this.mainJoueur;
@@ -137,7 +141,7 @@ public class Joueur extends Observable{
 	public void pioche(Sac sac){
 		System.out.println("Pioche");
 		
-		if(sac.tailleContenuSac() == 0) {
+		if(sac.tailleContenuSac() == 0) { //Si le sac est vide
 			if( this.getSizeMainJoueur() > 1) {
 				System.out.println("L'adversaire n'a plus que " + this.getSizeMainJoueur() + " lettres dans sa main.");
 				setChanged();
@@ -150,9 +154,10 @@ public class Joueur extends Observable{
 			}
 		}
 		else {
-			if(this.getSizeMainJoueur() < 7 ) {
+			if(this.getSizeMainJoueur() < 7 ) { //Si il y a moins de 7 lettres dans la main du joueur
 				
 				int nombrePieceAPrendre = 7 - getMainJoueur().size();
+				
 				if(sac.tailleContenuSac() < nombrePieceAPrendre) {
 					nombrePieceAPrendre = sac.tailleContenuSac();
 				}
@@ -178,6 +183,7 @@ public class Joueur extends Observable{
 	 */
 	public void melanger(List<Lettre> exitLettre, Sac sac){
 		System.out.println("Melange");
+		
 		if(!getMainJoueur().isEmpty()) {
 			for(int i = 0; i < exitLettre.size(); i++) {
 				if(getMainJoueur().contains(exitLettre.get(i))) {
@@ -204,6 +210,7 @@ public class Joueur extends Observable{
 	 * @param mot le mot à jouer
 	 * @param motJoker le mot à jouer avec la position des jokers (joker == ?)
 	 * @param motJoue La liste de lettre du mots sur le plateau
+	 * @param nbrJoker le nombre de joker joués (1-2)
 	 * @return Une liste de lettre constituée de : La lettre, si touvée dans la main sinon null
 	 */
 	public void verifierLettreMain(int x , int y, char orientation, Case[][] plateau, String[] mot, 
@@ -259,20 +266,20 @@ public class Joueur extends Observable{
 	 * @param y la position y de départ du mot
 	 * @param orientation l'orientation du mot
 	 * @param plateau le plateau à vérifier
-	 * @param i le numéro de la case
+	 * @param nbrCase le numéro de la case
 	 * @return true si la case est libre, sinon false
 	 */
-	public boolean checkCaseVide(int x, int y, char orientation, Case[][] plateau, int i){
+	public boolean checkCaseVide(int x, int y, char orientation, Case[][] plateau, int nbrCase){
 		if(orientation == 'h') {
 			try {
-				if(plateau[x + i][y].getLettre() != null) {
+				if(plateau[x + nbrCase][y].getLettre() != null) {
 					return true;
 				}	
 			} catch (ArrayIndexOutOfBoundsException e) {
 			}
 		} else {
 			try {
-				if(plateau[x][y - i].getLettre() != null) {
+				if(plateau[x][y - nbrCase].getLettre() != null) {
 					return true;
 				}
 			} catch (ArrayIndexOutOfBoundsException e) {
@@ -291,7 +298,7 @@ public class Joueur extends Observable{
 	 * @param plateauSave la sauvegarde du plateau
 	 * @param saveMain la sauvegarde de la main
 	 * @param orientation l'orienation du mot
-	 * @param plateau le plateau sur lequel posé le mot
+	 * @param plateau le plateau sur lequel poser le mot
 	 * @return true si le mot est posé sans erreur, sinon false
 	 */
 	public boolean poserMotPlateau(int x, int y, List<Lettre> motJoue, List<Lettre> motMain, 
@@ -396,7 +403,7 @@ public class Joueur extends Observable{
 	/**
 	 * Vérifie le label rentré par l'utilisateur
 	 * @param joker le label rentré par le joueur
-	 * @return le label vérifié ou '$' si incorrect
+	 * @return le label vérifié ou '/' si incorrect
 	 */
 	public char testJoker(String joker) {
 		char labelChar;
