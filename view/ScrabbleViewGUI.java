@@ -323,6 +323,10 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 								if(joker == 1) {
 						    		joker1Label.setVisible(true);
 									joker1TxtF.setVisible(true);
+									joker2Label.setVisible(false);
+									joker2TxtF.setVisible(false);
+									joker2TxtF.setText("");
+
 								}
 								else if(joker == 2) {
 						    		joker1Label.setVisible(true);
@@ -336,6 +340,9 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 								joker2Label.setVisible(false);
 								joker1TxtF.setVisible(false);
 								joker2TxtF.setVisible(false);
+								joker1TxtF.setText("");
+								joker2TxtF.setText("");								joker2TxtF.setText("");
+
 					    	}
 					    }
 					    else {
@@ -343,6 +350,9 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 							joker2Label.setVisible(false);
 							joker1TxtF.setVisible(false);
 							joker2TxtF.setVisible(false);
+							joker1TxtF.setText("");
+							joker2TxtF.setText("");		
+
 				    	}
 					  }
 					});
@@ -518,9 +528,7 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 		 */
 		private void ajouteMainMelange(JPanel box) {
 			
-			Box boxMain = Box.createHorizontalBox();
-			
-			JPanel mainBox11 = new JPanel(new GridLayout(1,7));	
+			JPanel boxMain = new JPanel(new GridLayout(1,7));	
 			
 			JCheckBox img;
 			
@@ -539,10 +547,9 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 				img.setBackground(color);
 				img.addItemListener(e);
 				
-
-				mainBox11.add(img);
+				boxMain.add(img);
 			}
-		 	boxMain.add(mainBox11);
+		 	boxMain.setBackground(color);
 		 	box.add(boxMain);
 		}
 		/**
