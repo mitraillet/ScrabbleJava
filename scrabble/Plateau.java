@@ -593,6 +593,13 @@ public class Plateau {
 		
 		int xDebut = x;
 		int yDebut = y;
+		boolean estScrabble = false;
+		Lettre scrabble = new Lettre('/', 0);
+		
+		if(motMain.size() == 7) {
+			scrabble = new Lettre('$', 50); //Création d'une lettre de 50 points pour le scrabble
+			estScrabble = true;
+		}
 		
 		
 		//Calcul la longueur du mot posé
@@ -671,6 +678,15 @@ public class Plateau {
 				v++;
 			}
 		}
+		
+		if(doubleMot == 0 && tripleMot == 0 && estScrabble == true) {
+			lettreScore.add(scrabble);
+		} else if(doubleMot > 0 && estScrabble == true) {
+			lettreDouble.add(scrabble);
+		} else if(tripleMot > 0 && estScrabble == true) {
+			lettreTriple.add(scrabble);
+		}
+		
 		tempScore += this.calculScorePeripherique(x, y, orientation, motJoue);
 		tempScore += this.calculScoreMot(motMain, lettreDouble, lettreTriple, lettreScore);
 		return tempScore;
@@ -745,11 +761,6 @@ public class Plateau {
 	public int calculScoreMot(List<Lettre> motMain, List<Lettre> lettreDouble, 
 			List<Lettre> lettreTriple, List<Lettre> lettreScore) {
 		int score = 0;
-		
-		if(motMain.size() == 7) {
-			Lettre scrabble = new Lettre('$', 50); //Création d'une lettre de 50points pour le scrabble
-			lettreScore.add(scrabble);
-		}
 		
 		for(int i = 0; i < lettreDouble.size(); i++) {
 			score += (lettreDouble.get(i).getValeur() * 2);
