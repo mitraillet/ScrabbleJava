@@ -492,7 +492,7 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 				passerJButton.setEnabled(false);
 				fenetreMelange = new JWindow();
 				copyMain = new JPanel();
-				text = new JLabel("Choisissez les lettres à remélanger dans le sac?\n");
+				text = new JLabel("Choisissez les lettres à remélanger dans le sac.\n");
 				melange = new JButton("Mélanger");
 				annuler = new JButton("Annuler");
 				
