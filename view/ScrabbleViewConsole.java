@@ -133,6 +133,7 @@ public class ScrabbleViewConsole extends ScrabbleView implements Observer{
 							}
 						}
 						else {
+							joueur.setMainJoueur(saveMain);
 							printPlateauMain();
 							affiche(mot1 + " est un mot incorrect");
 						}
