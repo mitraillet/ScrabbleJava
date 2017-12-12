@@ -74,6 +74,7 @@ public class ScrabbleController {
 			messageErreur = "Mot incorrect";
 			return messageErreur;
 		}
+		
 		if(joueur.poserMotPlateau(x, y, motJoue, motMain, motArray, plateauSave, 
 				saveMain, orientation, plateauJeu) == false) {
 			joueur.setMainJoueur(saveMain);

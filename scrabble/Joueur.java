@@ -39,7 +39,7 @@ public class Joueur extends Observable{
 	public int generateNumber(int minNum, int maxNum) {
 		int random = (int)(Math.random() * maxNum + minNum);
 		return random;
-		}
+	}
 	
 	/**
 	 * actualise le score du joueur
@@ -242,6 +242,9 @@ public class Joueur extends Observable{
 								tempLettre = this.getLettreMain(j);
 								lettreTrouve = true;
 							} 
+						} else if(this.getValeurLettreMain(j) == 0) { 
+							//Gère le cas où le joker est détecté comme correct, mais mauvaise place dans le mot
+							tempLettre = null;
 						} else {
 							lettrePrise.add(j);
 							tempLettre = this.getLettreMain(j);
