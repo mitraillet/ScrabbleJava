@@ -802,10 +802,15 @@ public class Plateau {
 			}
 			for(int h = 0; h < 15; h++) {
 				if(this.getPlateauLettre(h, j) == null) {
+					if(this.getPlateauBonus(h, j) == 0) {
+						string += (" |");
+					}
+					else {
 						string += (this.getPlateauBonus(h, j) + "|");
+					}
 				}
 				else {
-					string += (this.getPlateauLabel(h, j) + "|");
+					string += (this.getPlateauLabel(h, j) + "|" );
 				}
 			}
 			string += "\n";
