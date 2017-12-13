@@ -3,6 +3,7 @@
  */
 package scrabble;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.Observable;
  * @author Fauconnier/Henriquet
  * Classe gérant les joueurs
  */
-public class Joueur extends Observable{
+public class Joueur extends Observable implements Serializable {
 
 	/**
 	 * Score total du joueur
@@ -27,7 +28,7 @@ public class Joueur extends Observable{
 	/**
 	 * Tableau de Lettre représentant les Lettres du joueur
 	 */
-	private  List<Lettre> mainJoueur;
+	private transient List<Lettre> mainJoueur;
 	
 	
 	/**

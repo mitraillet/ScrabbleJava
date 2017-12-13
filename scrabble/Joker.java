@@ -3,11 +3,13 @@
  */
 package scrabble;
 
+import java.io.Serializable;
+
 /**
  * @author Fauconnier/Henriquet
  *
  */
-public class Joker extends Lettre {
+public class Joker extends Lettre implements Serializable {
 
 	/**
 	 * Permet de définir la valeur du label du joker 

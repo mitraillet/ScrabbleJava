@@ -3,11 +3,13 @@
  */
 package scrabble;
 
+import java.io.Serializable;
+
 /**
  * @author Fauconnier/Henriquet
  *
  */
-public class Case {
+public class Case implements Serializable {
 	
 	/**
 	 * Contient la lettre "posée" sur la case
