@@ -69,7 +69,7 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 		fenetreJeu.setLocationRelativeTo(null);
 		fenetreJeu.setResizable(false);
 		
-		updateBouton(sac);
+		updateBouton();
 
 		updatePlateau();
 		
@@ -87,17 +87,19 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 	 * Création des boutons
 	 * @param sac utilisé pour disabled les boutons
 	 */
-	private void updateBouton(Sac sac) {
+	private void updateBouton() {
 		Box buttonBox = Box.createVerticalBox();
 		jouerJButton = new Bouton(boutonJouer, boutonJouerHoover, boutonJouerDisabled);
 		melangeJButton = new Bouton(boutonMelanger, boutonMelangerHoover, boutonMelangerDisabled);
 		passerJButton = new Bouton(boutonPasser, boutonPasserHoover, boutonPasserDisabled);
 		jouerJButton.addActionListener(new Jouer());
+		jouerJButton.setEnabled(joueur.getTourJoueur());
 		buttonBox.add(jouerJButton);
 		melangeJButton.addActionListener(new Melanger());
-		melangeJButton.setEnabled(sac.tailleContenuSac() != 0);
+		melangeJButton.setEnabled(sac.tailleContenuSac() != 0 || joueur.getTourJoueur());
 		buttonBox.add(melangeJButton);
 		passerJButton.addActionListener(new Passer());
+		passerJButton.setEnabled(joueur.getTourJoueur());
 		buttonBox.add(passerJButton);
 		
 		container.add(buttonBox);
@@ -225,7 +227,7 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 	@Override
 	public void update(Observable o, Object arg) {
 		container.removeAll();
-		updateBouton(sac);
+		updateBouton();
 		updatePlateau();
 		updateScore();
 		updateMain();
@@ -427,6 +429,7 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 					if(joker != 0) {
 						if(joker == 1) {
 							joker1 = joker1TxtF.getText().charAt(0);
+							joker2 = '/';
 						}
 						else if(joker == 2) {
 							joker1 = joker1TxtF.getText().charAt(0);
