@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!ELEMENT alphabet (lettre)+ >
-
-<!ELEMENT lettre (label+, valeur+, instance+) >
-
-<!ELEMENT label (#PCDATA) >
-<!ELEMENT valeur (#PCDATA) >
-<!ELEMENT instance (#PCDATA) >
