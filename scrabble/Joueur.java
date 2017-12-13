@@ -16,6 +16,11 @@ import java.util.Observable;
 public class Joueur extends Observable implements Serializable {
 
 	/**
+	 * Variable d'incrément pour arrêter le jeu une fois à 6
+	 */
+	int nbreTourPasser = 0;
+	
+	/**
 	 * Score total du joueur
 	 */
 	private int score;
@@ -77,13 +82,28 @@ public class Joueur extends Observable implements Serializable {
 	}
 	
 	/**
+	 * renvoie le nombre de tour passer
+	 * @return le nombre de tour passer
+	 */
+	public int getNbreTourPasser() {
+		return this.nbreTourPasser;
+	}
+	
+	/**
+	 * actualise le nombre de tour passer
+	 * @param tourPasser variable s'incrémentant à chaque fois que l'on passe
+	 */
+	public void setNbreTourPasser(int nbreTourPasser) {
+		this.nbreTourPasser = nbreTourPasser;
+	}
+	
+	/**
 	 * renvoie le tour du joueur
 	 * @return le tour du joueur (true si le joueur doit jouer, sinon false)
 	 */
 	public boolean getTourJoueur() {
 		return this.tourJoueur;
 	}
-	
 	/**
 	* Constructeur par défaut de la classe Joueur
 	*/
@@ -186,6 +206,7 @@ public class Joueur extends Observable implements Serializable {
 				System.out.println("Pioche impossible");
 			}
 		}
+		nbreTourPasser = 0;
 	}
 
 
@@ -459,6 +480,8 @@ public class Joueur extends Observable implements Serializable {
 	 */
 	public void passer() {
 		System.out.println("Passer");
+		int newNbreTourPasser = this.getNbreTourPasser() + 1;
+		this.setNbreTourPasser(newNbreTourPasser);
 		this.setTourJoueur(false);
 	}
 	
