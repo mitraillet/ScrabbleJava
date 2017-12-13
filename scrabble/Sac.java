@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import java.io.IOException;
+import java.io.Serializable;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -25,7 +26,7 @@ import javax.xml.xpath.XPathFactory;
  * @author Fauconnier/Henriquet
  * Sac contenant les Lettres
  */
-public class Sac {
+public class Sac implements Serializable {
 	
 	private final List<Lettre> contenuSac;
 	

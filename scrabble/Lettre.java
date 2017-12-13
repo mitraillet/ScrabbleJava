@@ -5,11 +5,13 @@
  */
 package scrabble;
 
+import java.io.Serializable;
+
 /**
  * @author Fauconnier/Henriquet
  *
  */
-public class Lettre {
+public class Lettre implements Serializable {
 
 	/**
 	 * Le libellé du caractère

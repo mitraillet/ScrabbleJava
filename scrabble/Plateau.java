@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.Serializable;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -30,12 +31,20 @@ import java.util.*;
  * Classe de gestion du plateau. 
  * Contient la vérification des mots et le calcul des scores
  */
-public class Plateau {
+public class Plateau implements Serializable {
 
+	public void setPlateau(Case[][] newPlateau) {
+		this.plateau = newPlateau;
+	}
+	
+	public Case[][] getPlateau() {
+		return this.plateau;
+	}
+	
 	/**
 	* dictionnaire Contient tous les mots de la langues française 
 	*/
-	public HashSet<String> dictionnaire = new HashSet<String>();
+	public transient HashSet<String> dictionnaire = new HashSet<String>();
 	
 	/**
 	* Tableau à double entrée représentant le plateau
