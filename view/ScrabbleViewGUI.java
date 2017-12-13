@@ -96,7 +96,7 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 		jouerJButton.setEnabled(joueur.getTourJoueur());
 		buttonBox.add(jouerJButton);
 		melangeJButton.addActionListener(new Melanger());
-		melangeJButton.setEnabled(sac.tailleContenuSac() != 0 || joueur.getTourJoueur());
+		melangeJButton.setEnabled(sac.tailleContenuSac() != 0 && joueur.getTourJoueur());
 		buttonBox.add(melangeJButton);
 		passerJButton.addActionListener(new Passer());
 		passerJButton.setEnabled(joueur.getTourJoueur());
@@ -429,7 +429,6 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 					if(joker != 0) {
 						if(joker == 1) {
 							joker1 = joker1TxtF.getText().charAt(0);
-							joker2 = '/';
 						}
 						else if(joker == 2) {
 							joker1 = joker1TxtF.getText().charAt(0);
