@@ -23,7 +23,7 @@ public class Joueur extends Observable implements Serializable {
 	/**
 	 * True si c'est le tour du joueur, sinon False
 	 */
-	private boolean doitJouer = false;
+	private boolean tourJoueur = false;
 	
 	/**
 	 * Tableau de Lettre représentant les Lettres du joueur
@@ -67,6 +67,24 @@ public class Joueur extends Observable implements Serializable {
 	}
 
 	/**
+	 * actualise le tour du joueur
+	 * @param tourJoueur true si le joueur doit jouer, sinon false
+	 */
+	public void setTourJoueur(boolean tourJoueur) {
+		this.tourJoueur = tourJoueur;
+		setChanged();
+		notifyObservers();
+	}
+	
+	/**
+	 * renvoie le tour du joueur
+	 * @return le tour du joueur (true si le joueur doit jouer, sinon false)
+	 */
+	public boolean getTourJoueur() {
+		return this.tourJoueur;
+	}
+	
+	/**
 	* Constructeur par défaut de la classe Joueur
 	*/
 	public Joueur(){
@@ -80,7 +98,7 @@ public class Joueur extends Observable implements Serializable {
 	 */
 	public Joueur(int score, boolean tour) {
 		this.score = score;
-		this.doitJouer = tour;
+		this.tourJoueur = tour;
 		this.setMainJoueur(new ArrayList<Lettre>());
 	}
 
@@ -145,13 +163,9 @@ public class Joueur extends Observable implements Serializable {
 		if(sac.tailleContenuSac() == 0) { //Si le sac est vide
 			if( this.getSizeMainJoueur() > 1) {
 				System.out.println("L'adversaire n'a plus que " + this.getSizeMainJoueur() + " lettres dans sa main.");
-				setChanged();
-				notifyObservers();
 			}
 			else {
 				System.out.println("L'adversaire n'a plus qu'une lettre dans sa main.");
-				setChanged();
-				notifyObservers();
 			}
 		}
 		else {
@@ -167,8 +181,6 @@ public class Joueur extends Observable implements Serializable {
 					getMainJoueur().add(sac.getPositionLettreDansSac(positionSac));
 					sac.removeLettreDuSac(positionSac);
 				}
-				setChanged();
-				notifyObservers();
 			}
 			else{
 				System.out.println("Pioche impossible");
@@ -447,6 +459,7 @@ public class Joueur extends Observable implements Serializable {
 	 */
 	public void passer() {
 		System.out.println("Passer");
+		this.setTourJoueur(false);
 	}
 	
 	/**

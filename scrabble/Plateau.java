@@ -52,9 +52,9 @@ public class Plateau implements Serializable {
 	public Case[][] plateau;
 	
 	/**
-	 * True si début de la partie, sinon false;
+	 * True si partie déjà commencée, sinon false;
 	 */
-	public boolean debutPartie;
+	public boolean debutPartie = false;
 	
 	/**
 	* Contructeur par défaut du sac

@@ -39,10 +39,12 @@ public class ScrabbleViewConsole extends ScrabbleView implements Observer{
 	
 	private class ReadInput implements Runnable {
 		public void run() { //TODO modif le code pour que les vérif se passe au niveau du controller
-			while(joueur.getTourJoueur()){
+			while(true){
 				try{
 					String c = sc.next();
 					String messageError;
+					
+					if(joueur.getTourJoueur() == true) {
 					switch(c){
 					case "M" :
 						affiche("Mélanger");
@@ -141,6 +143,10 @@ public class ScrabbleViewConsole extends ScrabbleView implements Observer{
 					default : 
 						affiche("Opération incorrecte");
 				}
+				} else {
+					affiche("C'est le tour de l'autre joueur");
+				}
+					
 				}
 				catch(InputMismatchException e){
 					printPlateauMain();
@@ -155,8 +161,8 @@ public class ScrabbleViewConsole extends ScrabbleView implements Observer{
 	 * Méthode pour afficher les lettres et les commandes associées
 	 */
 	private void printHelp(){ // TODO ajouté affichage si sac plein uniquement
-		affiche("Pour jouer : J + mot à jouer");
 		affiche("Pour mélanger : M + lettre à mélanger.");
+		affiche("Pour jouer : J + mot à jouer.");
 		affiche("Pour passer : P");
 	}
 	/**

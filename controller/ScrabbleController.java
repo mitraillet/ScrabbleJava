@@ -10,15 +10,19 @@ import scrabble.Sac;
 import scrabble.Case;
 import view.ScrabbleView;
 
+import ScrabbleLancement.gestionSocket;
+
 public class ScrabbleController {
 	Plateau plateau; 
 	Joueur joueur;
 	Sac sac;
+	gestionSocket socket;
 	ScrabbleView vue;
-	public ScrabbleController(Plateau plateau, Joueur joueur, Sac sac) {
+	public ScrabbleController(Plateau plateau, Joueur joueur, Sac sac, gestionSocket socket) {
 		this.plateau = plateau;
 		this.joueur = joueur;
 		this.sac = sac;
+		this.socket = socket;
 	}
 	
 	public void melangeMain(String label) {
@@ -91,6 +95,7 @@ public class ScrabbleController {
 				score = plateau.calculScore(x, y, orientation, motMain, motJoue);
 				plateau.setScoreJoueur(joueur, score);
 				joueur.viderLaMain(motMain, sac);
+				joueur.passer();
 			} else {
 				joueur.setMainJoueur(saveMain);
 				plateau.plateau = plateauSave;
@@ -103,7 +108,8 @@ public class ScrabbleController {
 			if(plateau.checkPremierMot(x, y, orientation, joueur, motMain, motJoue)) {
 				score = plateau.calculScore(x, y, orientation, motMain, motJoue);
 				plateau.setScoreJoueur(joueur, score);
-				joueur.viderLaMain(motMain, sac);	
+				joueur.viderLaMain(motMain, sac);
+				joueur.passer();
 			} else {
 				joueur.setMainJoueur(saveMain);
 				plateau.plateau = plateauSave;
@@ -111,6 +117,11 @@ public class ScrabbleController {
 				return messageErreur;
 			}
 		}
+		
+		if(joueur.getTourJoueur() == false) {
+			socket.envoyerDonnee(joueur, plateau);
+		}
+		
 		return messageErreur;
 			
 	}
