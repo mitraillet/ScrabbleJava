@@ -53,6 +53,7 @@ public class ScrabbleViewConsole extends ScrabbleView implements Observer{
 						break;
 					case "P" :
 						affiche("Passer");
+						controller.passer();
 						break;
 					case "J" : 
 						affiche("Jouer"); 
