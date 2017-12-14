@@ -100,6 +100,7 @@ public class gestionSocket {
 	 */
 	public void envoyerDonnee(Joueur joueur, Plateau objet) {
 		try {
+			objectOut.reset();
 			objectOut.writeObject(objet);
 			objectOut.flush();
 			//joueur.setTourJoueur(false);
