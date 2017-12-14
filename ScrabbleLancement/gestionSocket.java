@@ -136,15 +136,11 @@ public class gestionSocket {
 				plateau.setPlateau(plateauActuel);
 				sac.setSac(sacActuel);
 				
-				if(plateau.debutPartie == true) {
-					joueur.setTourJoueur(true);
-					plateau.debutPartie = true;
+				joueur.setTourJoueur(true);
+				plateau.debutPartie = true;
 					
-					System.out.println("Taille du sac : " + sac.tailleContenuSac());
-					System.out.println("C'est à votre tour !");
-				} else {
-					joueur.setTourJoueur(false);
-				}
+				System.out.println("Taille du sac : " + sac.tailleContenuSac());
+				System.out.println("C'est à votre tour !");
 			}
 		} catch (ClassNotFoundException | IOException e) {
 			System.out.println("Erreur lors de la réception des données.");
