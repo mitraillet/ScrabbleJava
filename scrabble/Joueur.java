@@ -38,7 +38,7 @@ public class Joueur extends Observable implements Serializable {
 	/**
 	 * Variable d'incrément pour arrêter le jeu une fois à 6
 	 */
-	int nbreTourPasser = 0;
+	private int nbreTourPasser = 0;
 	
 	/**
 	 * Génération d'un nombre random compris entre deux chiffres
@@ -228,6 +228,7 @@ public class Joueur extends Observable implements Serializable {
 			}
 		}
 		nbreTourPasser = 0;
+		setTourJoueur(!getTourJoueur());
 	}
 
 
@@ -238,7 +239,6 @@ public class Joueur extends Observable implements Serializable {
 	 */
 	public void melanger(List<Lettre> exitLettre, Sac sac){
 		System.out.println("Melange");
-		List<Lettre> mainSave = getMainJoueur();
 		
 		if(!getMainJoueur().isEmpty()) {
 			for(int i = 0; i < exitLettre.size(); i++) {
@@ -247,10 +247,6 @@ public class Joueur extends Observable implements Serializable {
 					getMainJoueur().remove(exitLettre.get(i));
 				}
 				else {
-					for(int j = 0; j < i; j++) {
-						sac.addLettreAuSac(exitLettre.get(j));
-					}
-					setMainJoueur(mainSave);
 					System.out.println("Lettre inexistante dans la main");
 					return;
 				}

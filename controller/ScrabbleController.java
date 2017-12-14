@@ -75,6 +75,7 @@ public class ScrabbleController {
 		}
 		
 		joueur.melanger(exitLettre, sac);
+		socket.envoyerDonnee(joueur, plateau, sac);
 	}
 
 	/**
@@ -134,7 +135,6 @@ public class ScrabbleController {
 				score = plateau.calculScore(x, y, orientation, motMain, motJoue);
 				plateau.setScoreJoueur(joueur, score);
 				joueur.viderLaMain(motMain, sac);
-				joueur.passer();
 			} else {
 				joueur.setMainJoueur(saveMain);
 				plateau.plateau = plateauSave;
@@ -148,7 +148,6 @@ public class ScrabbleController {
 				score = plateau.calculScore(x, y, orientation, motMain, motJoue);
 				plateau.setScoreJoueur(joueur, score);
 				joueur.viderLaMain(motMain, sac);
-				joueur.passer();
 			} else {
 				joueur.setMainJoueur(saveMain);
 				plateau.plateau = plateauSave;
@@ -165,6 +164,9 @@ public class ScrabbleController {
 			
 	}
 	
+	public void finDuJeu() {
+		
+	}
 	
 	public void addView(ScrabbleView vue) {
 		this.vue = vue;
