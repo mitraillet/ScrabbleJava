@@ -15,15 +15,24 @@ public class Jeu {
 	public Jeu(boolean estServeur) throws IOException {
 		// TODO Auto-generated constructor stub
 		
+		
 		Plateau plateau = new Plateau();
 		Joueur joueur = new Joueur(0, estServeur);
 		Sac sac = new Sac();
-		joueur.pioche(sac);
 		
-		
-		gestionSocket socket = new gestionSocket(plateau);
+		gestionSocket socket = new gestionSocket(plateau, sac);
 		socket.setSocket(estServeur, 12345, "localhost");
 		
+		//Les 2 joueurs piochent leurs premières lettres dans le même sac.
+		if(estServeur) {
+			joueur.pioche(sac);
+			socket.envoyerDonnee(joueur, plateau, sac);
+			socket.recevoirSac(joueur);
+		} else {
+			socket.recevoirSac(joueur);
+			joueur.pioche(sac);
+			socket.envoyerDonnee(joueur, plateau, sac);
+		}
 		
 		ScrabbleController controller = new ScrabbleController(plateau, joueur, sac, socket);
 		ScrabbleViewConsole console = new ScrabbleViewConsole(plateau, joueur, controller);
@@ -33,13 +42,6 @@ public class Jeu {
 		controller.addView(GUI);
 		
 		socket.recevoirDonnee(joueur);
-		
-		/*while(true) {
-			if(socket.recevoirDonnee()) {
-				joueur.setTourJoueur(true);
-				System.out.println("C'est à votre tour !");
-			}
-		}*/
 	}
 	
 	public static void main(String args[]) throws IOException {

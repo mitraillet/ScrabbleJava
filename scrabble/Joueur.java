@@ -16,14 +16,14 @@ import java.util.Observable;
 public class Joueur extends Observable implements Serializable {
 
 	/**
-	 * Variable d'incrément pour arrêter le jeu une fois à 6
-	 */
-	int nbreTourPasser = 0;
-	
-	/**
 	 * Score total du joueur
 	 */
 	private int score;
+	
+	/**
+	 * Score total du joueur adverse
+	 */
+	private int scoreAdverse;
 	
 	/**
 	 * True si c'est le tour du joueur, sinon False
@@ -64,6 +64,22 @@ public class Joueur extends Observable implements Serializable {
 	}
 	
 	/**
+	 * actualise le score du joueur adverse
+	 * @param score le nouveau score adverse
+	 */
+	public void setScoreAdverse(int score) {
+		this.scoreAdverse = score;
+	}
+	
+	/**
+	 * renvoie le score du joueur adverse
+	 * @return le score du joueur adverse
+	 */
+	public int getScoreAdverse() {
+		return this.scoreAdverse;
+	}
+	
+	/**
 	 * Ajoute le score d'un mot au joueur
 	 * @param score le score à rajouter
 	 */
@@ -82,28 +98,13 @@ public class Joueur extends Observable implements Serializable {
 	}
 	
 	/**
-	 * renvoie le nombre de tour passer
-	 * @return le nombre de tour passer
-	 */
-	public int getNbreTourPasser() {
-		return this.nbreTourPasser;
-	}
-	
-	/**
-	 * actualise le nombre de tour passer
-	 * @param tourPasser variable s'incrémentant à chaque fois que l'on passe
-	 */
-	public void setNbreTourPasser(int nbreTourPasser) {
-		this.nbreTourPasser = nbreTourPasser;
-	}
-	
-	/**
 	 * renvoie le tour du joueur
 	 * @return le tour du joueur (true si le joueur doit jouer, sinon false)
 	 */
 	public boolean getTourJoueur() {
 		return this.tourJoueur;
 	}
+	
 	/**
 	* Constructeur par défaut de la classe Joueur
 	*/
@@ -206,7 +207,6 @@ public class Joueur extends Observable implements Serializable {
 				System.out.println("Pioche impossible");
 			}
 		}
-		nbreTourPasser = 0;
 	}
 
 
@@ -480,8 +480,6 @@ public class Joueur extends Observable implements Serializable {
 	 */
 	public void passer() {
 		System.out.println("Passer");
-		int newNbreTourPasser = this.getNbreTourPasser() + 1;
-		this.setNbreTourPasser(newNbreTourPasser);
 		this.setTourJoueur(false);
 	}
 	
@@ -491,13 +489,14 @@ public class Joueur extends Observable implements Serializable {
 	 */
 	public String toString() {
 		String joueur;
-		String score = "Score : " + this.score;
+		String score = "Vous avez : " + this.score + " point(s).";
+		String scoreAdverse = "Votre adversaire à : " + this.scoreAdverse + " point(s).";
 		String string = "Votre main : ";
 		for(int i = 0; i < this.getSizeMainJoueur(); i++)
 	    {
 			string +=this.getLabelLettreMain(i) + " ";
 	    }
-		joueur = score + '\n' + string;
+		joueur = score + '\n' + scoreAdverse + '\n' + string;
 		return joueur;
 	}
 

@@ -28,7 +28,7 @@ import javax.xml.xpath.XPathFactory;
  */
 public class Sac implements Serializable {
 	
-	private final List<Lettre> contenuSac;
+	private List<Lettre> contenuSac;
 	
 	/**
 	 * Retourne le sac
@@ -36,6 +36,14 @@ public class Sac implements Serializable {
 	 */
 	public List<Lettre> getSac() {
 		return contenuSac;
+	}
+	
+	/**
+	 * Actualise le contenu du sac
+	 * @param sac le nouveau contenu du sac
+	 */
+	public void setSac(List<Lettre> sac) {
+		this.contenuSac = sac;
 	}
 	
 	/**

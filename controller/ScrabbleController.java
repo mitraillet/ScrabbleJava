@@ -119,7 +119,7 @@ public class ScrabbleController {
 		}
 		
 		if(joueur.getTourJoueur() == false) {
-			socket.envoyerDonnee(joueur, plateau);
+			socket.envoyerDonnee(joueur, plateau, sac);
 		}
 		
 		return messageErreur;

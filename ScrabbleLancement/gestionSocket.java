@@ -5,9 +5,13 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.List;
 
 import scrabble.Plateau;
+import scrabble.Case;
 import scrabble.Joueur;
+import scrabble.Lettre;
+import scrabble.Sac;
 
 /**
  * Gère les interactions avec les sockets
@@ -39,13 +43,15 @@ public class gestionSocket {
 	 * Le plateau de jeu
 	 */
 	Plateau plateau;
+	Sac sac;
 	
 	/**
 	 * Le constructeur de la classe
 	 * @param plateau le plateau de jeu
 	 */
-	public gestionSocket(Plateau plateau) {
+	public gestionSocket(Plateau plateau, Sac sac) {
 		this.plateau = plateau;
+		this.sac = sac;
 	}
 	
 	/**
@@ -90,22 +96,25 @@ public class gestionSocket {
 		
 		objectOut = new ObjectOutputStream(socket.getOutputStream());
 		objectIn = new ObjectInputStream(socket.getInputStream());
-		
-		System.out.println(objectOut);
 	}
 	
 	/**
 	 * Envoie les données à l'autre joueur
 	 * @param objet les données à envoyer
 	 */
-	public void envoyerDonnee(Joueur joueur, Plateau objet) {
+	public void envoyerDonnee(Joueur joueur, Plateau plateau, Sac sac) {
 		try {
 			objectOut.reset();
-			objectOut.writeObject(objet);
-			objectOut.flush();
-			//joueur.setTourJoueur(false);
-		} catch (IOException e) {
 			
+			objectOut.writeInt(joueur.getScore());
+			objectOut.writeObject(plateau.getPlateau());
+			objectOut.writeObject(sac.getSac());
+			
+			
+			objectOut.flush();
+			
+		} catch (IOException e) {
+			System.out.println("Erreur lors de l'envoi des données.");
 		}
 	}
 	
@@ -116,14 +125,47 @@ public class gestionSocket {
 	public void recevoirDonnee(Joueur joueur) {
 		try {
 			while(true) {
-				Plateau plateauTest = (Plateau) objectIn.readObject();
-				plateau.setPlateau(plateauTest.getPlateau());
-				joueur.setTourJoueur(true);
-				plateau.debutPartie = true;
-				System.out.println("C'est à votre tour !");
+				int scoreAdverse = (int) objectIn.readInt();
+				
+				Case[][] plateauActuel = (Case[][]) objectIn.readObject();
+				
+				@SuppressWarnings("unchecked") //On est sûr que le paramètre est une liste de lettre
+				List<Lettre> sacActuel = (List<Lettre>) objectIn.readObject();
+				
+				joueur.setScoreAdverse(scoreAdverse);
+				plateau.setPlateau(plateauActuel);
+				sac.setSac(sacActuel);
+				
+				if(plateau.debutPartie == true) {
+					joueur.setTourJoueur(true);
+					plateau.debutPartie = true;
+					
+					System.out.println("Taille du sac : " + sac.tailleContenuSac());
+					System.out.println("C'est à votre tour !");
+				} else {
+					joueur.setTourJoueur(false);
+				}
 			}
 		} catch (ClassNotFoundException | IOException e) {
-			e.printStackTrace();
+			System.out.println("Erreur lors de la réception des données.");
+		}
+	}
+	
+	/**
+	 * Reçois les données de l'autres joueur
+	 * @return true si des données on été reçues, sinon false
+	 */
+	public void recevoirSac(Joueur joueur) {
+		try {
+			int scoreAdverse = (int) objectIn.readInt();
+			Case[][] plateauActuel = (Case[][]) objectIn.readObject();
+				
+			@SuppressWarnings("unchecked") //On est sûr que le paramètre est une liste de lettre
+			List<Lettre> sacActuel = (List<Lettre>) objectIn.readObject();
+				
+			sac.setSac(sacActuel);
+		} catch (ClassNotFoundException | IOException e) {
+			System.out.println("Erreur lors de la réception du sac.");
 		}
 	}
 	
@@ -134,7 +176,7 @@ public class gestionSocket {
 		try {
 			socket.close();
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println("Erreur lors de la fermeture de la connexion.");
 		}
 	}
 }
