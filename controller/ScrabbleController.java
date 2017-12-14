@@ -13,11 +13,38 @@ import view.ScrabbleView;
 import ScrabbleLancement.gestionSocket;
 
 public class ScrabbleController {
+	/**
+	 * Le plateau de jeu
+	 */
 	Plateau plateau; 
+	
+	/**
+	 * Le joueur
+	 */
 	Joueur joueur;
+	
+	/**
+	 * Le sac
+	 */
 	Sac sac;
+	
+	/**
+	 * La gestion des sockets
+	 */
 	gestionSocket socket;
+	
+	/**
+	 * La vue
+	 */
 	ScrabbleView vue;
+	
+	/**
+	 * 
+	 * @param plateau le plateau de jeu
+	 * @param joueur le joueur
+	 * @param sac le sac
+	 * @param socket la gestion des sockets
+	 */
 	public ScrabbleController(Plateau plateau, Joueur joueur, Sac sac, gestionSocket socket) {
 		this.plateau = plateau;
 		this.joueur = joueur;
@@ -25,6 +52,10 @@ public class ScrabbleController {
 		this.socket = socket;
 	}
 	
+	/**
+	 * Mélange la main du joueur
+	 * @param label les Lettres à remettre dans le sac
+	 */
 	public void melangeMain(String label) {
 		List<Lettre> exitLettre = new ArrayList<Lettre>();
 	
@@ -46,6 +77,14 @@ public class ScrabbleController {
 		joueur.melanger(exitLettre, sac);
 	}
 
+	/**
+	 * Passe le tour du joueur
+	 */
+	public void passer() {
+		joueur.passer();
+		socket.envoyerDonnee(joueur, plateau, sac);
+	}
+	
 	/**
 	 * 
 	 * Permet de placer un mot sur le plateau
@@ -125,6 +164,8 @@ public class ScrabbleController {
 		return messageErreur;
 			
 	}
+	
+	
 	public void addView(ScrabbleView vue) {
 		this.vue = vue;
 		
