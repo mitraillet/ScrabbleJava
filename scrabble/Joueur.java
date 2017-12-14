@@ -217,6 +217,7 @@ public class Joueur extends Observable implements Serializable {
 	 */
 	public void melanger(List<Lettre> exitLettre, Sac sac){
 		System.out.println("Melange");
+		List<Lettre> mainSave = getMainJoueur();
 		
 		if(!getMainJoueur().isEmpty()) {
 			for(int i = 0; i < exitLettre.size(); i++) {
@@ -225,7 +226,12 @@ public class Joueur extends Observable implements Serializable {
 					getMainJoueur().remove(exitLettre.get(i));
 				}
 				else {
+					for(int j = 0; j < i; j++) {
+						sac.addLettreAuSac(exitLettre.get(j));
+					}
+					setMainJoueur(mainSave);
 					System.out.println("Lettre inexistante dans la main");
+					return;
 				}
 			}
 			this.pioche(sac);
