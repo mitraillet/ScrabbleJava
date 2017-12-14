@@ -169,7 +169,7 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 	private void updateScore() {
 		Box scoreBox = Box.createVerticalBox();
 		String scoreMsg = "Votre score : " + joueur.getScore();
-		String scoreMsgAdv = "Score de l'adversaire : ";
+		String scoreMsgAdv = "Score de l'adversaire : " + joueur.getScoreAdverse();
 		JLabel scoreAffiche = new JLabel (scoreMsg);
 		JLabel scoreAfficheAdv = new JLabel(scoreMsgAdv);
 
@@ -675,7 +675,9 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 			//TODO
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
+				joueur.passer();
+				fenetrePasser.removeAll();
+				fenetrePasser.dispose();
 				//Vide car pas d'action encore implémenter
 			}
 		}
