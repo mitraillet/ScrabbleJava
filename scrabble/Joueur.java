@@ -35,6 +35,10 @@ public class Joueur extends Observable implements Serializable {
 	 */
 	private transient List<Lettre> mainJoueur;
 	
+	/**
+	 * Variable d'incrément pour arrêter le jeu une fois à 6
+	 */
+	int nbreTourPasser = 0;
 	
 	/**
 	 * Génération d'un nombre random compris entre deux chiffres
@@ -45,6 +49,22 @@ public class Joueur extends Observable implements Serializable {
 	public int generateNumber(int minNum, int maxNum) {
 		int random = (int)(Math.random() * maxNum + minNum);
 		return random;
+	}
+	
+	/**
+	 * renvoie le nombre de tour passer
+	 * @return le nombre de tour passer
+	 */
+	public int getNbreTourPasser() {
+		return this.nbreTourPasser;
+	}
+	
+	/**
+	 * actualise le nombre de tour passer
+	 * @param tourPasser variable s'incrémentant à chaque fois que l'on passe
+	 */
+	public void setNbreTourPasser(int nbreTourPasser) {
+		this.nbreTourPasser = nbreTourPasser;
 	}
 	
 	/**
@@ -207,6 +227,7 @@ public class Joueur extends Observable implements Serializable {
 				System.out.println("Pioche impossible");
 			}
 		}
+		nbreTourPasser = 0;
 	}
 
 
@@ -481,11 +502,13 @@ public class Joueur extends Observable implements Serializable {
 		return copieMain;
 		
 	}
+	
 	/**
 	 * Permet au joueur de passer le tour
 	 */
 	public void passer() {
-		System.out.println("Passer");
+		int newNbreTourPasser = this.getNbreTourPasser() + 1;
+		this.setNbreTourPasser(newNbreTourPasser);
 		this.setTourJoueur(false);
 	}
 	
