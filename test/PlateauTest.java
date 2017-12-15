@@ -596,6 +596,20 @@ public class PlateauTest {
 		
 	}
 	
+	@Test
+	public void checkCaseRemplie(){
+		//fail("not yet implemented");
+		
+		Plateau plateauTest = new Plateau();
+		Lettre x = new Lettre('x', 10);
+		
+		plateauTest.getPlateau()[7][7].setLettre(x);
+		
+		assertEquals(plateauTest.checkCaseRemplie(7, 7, 'h', 0), true);
+		assertEquals(plateauTest.checkCaseRemplie(7, 7, 'h', 1), false);
+		
+	}
+	
 
 	@Test
 	public void testToString() {
@@ -603,21 +617,21 @@ public class PlateauTest {
 		Plateau plateauTest = new Plateau();
 		Lettre testLettre = new Lettre('w', 10);
 		plateauTest.getCase(8, 7).setLettre(testLettre);
-		String affichage = "14|4|0|0|1|0|0|0|4|0|0|0|1|0|0|4|\n";
-		affichage +=	 "13|0|3|0|0|0|2|0|0|0|2|0|0|0|3|0|\n";
-		affichage +=	 "12|0|0|3|0|0|0|1|0|1|0|0|0|3|0|0|\n";
-		affichage +=	 "11|1|0|0|3|0|0|0|1|0|0|0|3|0|0|1|\n";
-		affichage +=	 "10|0|0|0|0|3|0|0|0|0|0|3|0|0|0|0|\n";
-		affichage +=	 "9 |0|2|0|0|0|2|0|0|0|2|0|0|0|2|0|\n";
-		affichage +=	 "8 |0|0|1|0|0|0|1|0|1|0|0|0|1|0|0|\n";
-		affichage +=	 "7 |4|0|0|1|0|0|0|5|w|0|0|1|0|0|4|\n";
-		affichage +=	 "6 |0|0|1|0|0|0|1|0|1|0|0|0|1|0|0|\n";
-		affichage +=	 "5 |0|2|0|0|0|2|0|0|0|2|0|0|0|2|0|\n";
-		affichage +=	 "4 |0|0|0|0|3|0|0|0|0|0|3|0|0|0|0|\n";
-		affichage +=	 "3 |1|0|0|3|0|0|0|1|0|0|0|3|0|0|1|\n";
-		affichage +=	 "2 |0|0|3|0|0|0|1|0|1|0|0|0|3|0|0|\n";
-		affichage += "1 |0|3|0|0|0|2|0|0|0|2|0|0|0|3|0|\n";
-		affichage += "0 |4|0|0|1|0|0|0|4|0|0|0|1|0|0|4|\n";
+		String affichage = "14|4| | |1| | | |4| | | |1| | |4|\n";
+		affichage +=	 "13| |3| | | |2| | | |2| | | |3| |\n";
+		affichage +=	 "12| | |3| | | |1| |1| | | |3| | |\n";
+		affichage +=	 "11|1| | |3| | | |1| | | |3| | |1|\n";
+		affichage +=	 "10| | | | |3| | | | | |3| | | | |\n";
+		affichage +=	 "9 | |2| | | |2| | | |2| | | |2| |\n";
+		affichage +=	 "8 | | |1| | | |1| |1| | | |1| | |\n";
+		affichage +=	 "7 |4| | |1| | | |5|w| | |1| | |4|\n";
+		affichage +=	 "6 | | |1| | | |1| |1| | | |1| | |\n";
+		affichage +=	 "5 | |2| | | |2| | | |2| | | |2| |\n";
+		affichage +=	 "4 | | | | |3| | | | | |3| | | | |\n";
+		affichage +=	 "3 |1| | |3| | | |1| | | |3| | |1|\n";
+		affichage +=	 "2 | | |3| | | |1| |1| | | |3| | |\n";
+		affichage += "1 | |3| | | |2| | | |2| | | |3| |\n";
+		affichage += "0 |4| | |1| | | |4| | | |1| | |4|\n";
 		affichage += "  |0|1|2|3|4|5|6|7|8|9|1011121314\n";
 		assertEquals(plateauTest.toString(), affichage);
 	}

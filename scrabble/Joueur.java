@@ -270,7 +270,7 @@ public class Joueur extends Observable implements Serializable {
 	 * @param nbrJoker le nombre de joker joués (1-2)
 	 * @return Une liste de lettre constituée de : La lettre, si touvée dans la main sinon null
 	 */
-	public void verifierLettreMain(int x , int y, char orientation, Case[][] plateau, String[] mot, 
+	public void verifierLettreMain(int x , int y, char orientation, Plateau plateau, String[] mot, 
 			String[] motJoker, List<Lettre> motJoue, int nbrJoker) {
 		//Gère les lettres de la main
 		Lettre tempLettre = null; //Lettre temporaire
@@ -288,7 +288,7 @@ public class Joueur extends Observable implements Serializable {
 				if(mot[i].charAt(0) != (this.getLabelLettreMain(j))) { //Si la lettre n'est pas dans la main
 					tempLettre = null;
 				} else { 
-					if(this.checkCaseVide(x, y, orientation, plateau, i) == true) {//Si la case du plateau est remplie
+					if(plateau.checkCaseRemplie(x, y, orientation, i) == true) {//Si la case du plateau est remplie
 						tempLettre = null;
 					} else if(lettrePrise.contains(j)) {//Si la lettre de la main est déja prise
 						tempLettre = null;
@@ -318,34 +318,6 @@ public class Joueur extends Observable implements Serializable {
 			
 			motJoue.add(tempLettre);
 		}
-	}
-	
-	/**
-	 * Vérifie si une case du plateau est remplie
-	 * @param x la position x de départ du mot
-	 * @param y la position y de départ du mot
-	 * @param orientation l'orientation du mot
-	 * @param plateau le plateau à vérifier
-	 * @param nbrCase le numéro de la case
-	 * @return true si la case est libre, sinon false
-	 */
-	public boolean checkCaseVide(int x, int y, char orientation, Case[][] plateau, int nbrCase){
-		if(orientation == 'h') {
-			try {
-				if(plateau[x + nbrCase][y].getLettre() != null) {
-					return true;
-				}	
-			} catch (ArrayIndexOutOfBoundsException e) {
-			}
-		} else {
-			try {
-				if(plateau[x][y - nbrCase].getLettre() != null) {
-					return true;
-				}
-			} catch (ArrayIndexOutOfBoundsException e) {
-			}
-		}
-		return false;
 	}
 	
 	/**

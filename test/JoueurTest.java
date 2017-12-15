@@ -13,6 +13,7 @@ import scrabble.Lettre;
 import scrabble.Plateau;
 import scrabble.Sac;
 import scrabble.Case;
+import scrabble.Joker;
 
 public class JoueurTest {
 
@@ -264,19 +265,14 @@ public class JoueurTest {
 		int y = 7;
 		char orientation = 'h';
 		
-		joueur.verifierLettreMain(x, y, orientation, plateau.getPlateau(), mot, motJoker1, motJoue, 0);
+		joueur.verifierLettreMain(x, y, orientation, plateau, mot, motJoker1, motJoue, 0);
 		assertEquals(motJoue, motJoueCheck1);
 		
 		motJoue.removeAll(motJoue);
 		
-		joueur.verifierLettreMain(x, y, orientation, plateau.getPlateau(), mot2, motJoker2, motJoue, 0);
+		joueur.verifierLettreMain(x, y, orientation, plateau, mot2, motJoker2, motJoue, 0);
 		assertEquals(motJoue, motJoueCheck2);
 		
-	}
-	
-	@Test
-	public void checkCaseVide(){
-		fail("not yet implemented");
 	}
 
 	@Test
@@ -429,12 +425,46 @@ public class JoueurTest {
 
 	@Test
 	public void testCopieMainJoueur() {
-		fail("Not yet implemented"); // TODO
+		Joueur joueur = new Joueur();
+		
+		Lettre a = new Lettre('a', 1);
+		Lettre b = new Lettre('b', 2);
+		Lettre c = new Lettre('c', 3);
+		Lettre t = new Lettre('t', 2);
+		Lettre e = new Lettre('e', 1);
+		Lettre s = new Lettre('s', 1);
+		Joker $ = new Joker();
+		
+		List<Lettre> mainJoueur = new ArrayList<Lettre>();
+		mainJoueur.add(a);
+		mainJoueur.add(b);
+		mainJoueur.add(c);
+		mainJoueur.add(t);
+		mainJoueur.add(e);
+		mainJoueur.add(s);
+		mainJoueur.add($);
+		
+		joueur.setMainJoueur(mainJoueur);
+		
+		assertEquals(joueur.getMainJoueur().get(0), joueur.copieMainJoueur().get(0));
+		assertEquals(joueur.getMainJoueur().get(1), joueur.copieMainJoueur().get(1));
+		assertEquals(joueur.getMainJoueur().get(2), joueur.copieMainJoueur().get(2));
+		assertEquals(joueur.getMainJoueur().get(3), joueur.copieMainJoueur().get(3));
+		assertEquals(joueur.getMainJoueur().get(4), joueur.copieMainJoueur().get(4));
+		assertEquals(joueur.getMainJoueur().get(5), joueur.copieMainJoueur().get(5));
+		assertEquals(joueur.getMainJoueur().get(6).getLabel(), joueur.copieMainJoueur().get(6).getLabel());
 	}
 	
 	@Test
 	public void testPasser() {
-		fail("Not yet implemented"); // TODO
+		Joueur joueur = new Joueur();
+		joueur.passer();
+		
+		assertFalse(joueur.getTourJoueur());
+		
+		joueur.passer();
+		
+		assertEquals(joueur.getNbreTourPasser(), 2);
 	}
 
 }

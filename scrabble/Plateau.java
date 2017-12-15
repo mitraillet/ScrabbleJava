@@ -243,7 +243,7 @@ public class Plateau implements Serializable {
 				}
 				
 				if(estAdjacentV == false) {
-					if(checkGauche(x, y - i).size() > 1 || checkDroite(x, y - 1).size() > 1) {
+					if(checkGauche(x, y - i).size() != 0 || checkDroite(x, y - i).size() != 0) {
 						estAdjacentV = true;
 					}
 				}
@@ -801,6 +801,34 @@ public class Plateau implements Serializable {
 	 */
 	public void setScoreJoueur(Joueur joueurActuel, int score) {
 		joueurActuel.addScore(score);
+	}
+	
+	/**
+	 * Vérifie si une case du plateau est remplie
+	 * @param x la position x de départ du mot
+	 * @param y la position y de départ du mot
+	 * @param orientation l'orientation du mot
+	 * @param plateau le plateau à vérifier
+	 * @param nbrCase le numéro de la case
+	 * @return true si la case est remplie, sinon false
+	 */
+	public boolean checkCaseRemplie(int x, int y, char orientation, int nbrCase){
+		if(orientation == 'h') {
+			try {
+				if(this.plateau[x + nbrCase][y].getLettre() != null) {
+					return true;
+				}	
+			} catch (ArrayIndexOutOfBoundsException e) {
+			}
+		} else {
+			try {
+				if(this.plateau[x][y - nbrCase].getLettre() != null) {
+					return true;
+				}
+			} catch (ArrayIndexOutOfBoundsException e) {
+			}
+		}
+		return false;
 	}
 	
 	/**

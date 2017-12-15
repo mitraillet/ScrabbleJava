@@ -113,7 +113,7 @@ public class ScrabbleController {
 		String[] jokerArray = motJoker.split("");
 		String[] motArray = mot.split(""); //String séparé en Array de lettre
 		
-		joueur.verifierLettreMain(x, y, orientation, plateauJeu, motArray, jokerArray, motJoue, nbrJoker);
+		joueur.verifierLettreMain(x, y, orientation, plateau, motArray, jokerArray, motJoue, nbrJoker);
 		if(!plateau.verification(mot)) {
 			messageErreur = "Mot incorrect";
 			return messageErreur;
