@@ -32,24 +32,16 @@ import java.util.*;
  * Contient la vérification des mots et le calcul des scores
  */
 public class Plateau implements Serializable {
-
-	public void setPlateau(Case[][] newPlateau) {
-		this.plateau = newPlateau;
-	}
-	
-	public Case[][] getPlateau() {
-		return this.plateau;
-	}
 	
 	/**
-	* dictionnaire Contient tous les mots de la langues française 
+	* Dictionnaire contenant tous les mots éligibles au scrabble
 	*/
-	public transient HashSet<String> dictionnaire = new HashSet<String>();
+	private transient HashSet<String> dictionnaire = new HashSet<String>();
 	
 	/**
 	* Tableau à double entrée représentant le plateau
 	*/
-	public Case[][] plateau;
+	private Case[][] plateau;
 	
 	/**
 	 * True si partie déjà commencée, sinon false;
@@ -57,12 +49,28 @@ public class Plateau implements Serializable {
 	public boolean debutPartie = false;
 	
 	/**
-	* Contructeur par défaut du sac
+	* Contructeur par défaut du plateau
 	*/
 	public Plateau() {
 		this.construireDico();
 		this.plateau = new Case [15][15];
 		this.initPlateau();
+	}
+	
+	/**
+	 * Permet de changer le plateau par un autre
+	 * @param newPlateau variable contenant un double array de Case
+	 */
+	public void setPlateau(Case[][] newPlateau) {
+		this.plateau = newPlateau;
+	}
+	
+	/**
+	 * Permet de récupérer le plateau en cours
+	 * @return le plateau de jeu
+	 */
+	public Case[][] getPlateau() {
+		return this.plateau;
 	}
 	
 	/**

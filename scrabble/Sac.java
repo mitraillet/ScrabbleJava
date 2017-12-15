@@ -28,6 +28,9 @@ import javax.xml.xpath.XPathFactory;
  */
 public class Sac implements Serializable {
 	
+	/**
+	 * Collection contenant l'entièreté des objets Lettres du scrabble à l'initialisation
+	 */
 	private List<Lettre> contenuSac;
 	
 	/**
@@ -92,7 +95,7 @@ public class Sac implements Serializable {
 	}
 
 	/**
-	 * Récupère les donnees des lettre dans le fichier dataLettre.XML et remplis la variable sac
+	 * Récupère les donnees des lettres dans le fichier dataLettre.XML et remplis la variable sac
 	 */
 	private void remplissageSac() {
 	      DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();

@@ -16,17 +16,8 @@ public class Joker extends Lettre implements Serializable {
 	 * et ce seulement si c'est une lettre
 	 * @param label de la lettre de type String pour plus de flexibilité
 	 */
-	public void setJoker(String labelString) {
-		char labelChar;
-		labelString = labelString.toLowerCase();
-		String abc = "azertyuiopqsdfghjklmwxcvbn";
-		if(abc.contains(labelString)) {
-			labelChar = labelString.charAt(0);
-			this.setLabel(labelChar);
-		}
-		else {
-			System.out.println("Caractère non authorisé !");
-		}
+	public void setJoker(char label) {
+			this.setLabel(label);
 	}
 	
 	public Joker() {

@@ -23,7 +23,6 @@ public abstract class ScrabbleView  implements Observer {
 			this.plateau = plateau;
 			this.joueur = joueur;
 			this.controller = controller;
-			//plateau.addObserver(this);
 			joueur.addObserver(this);
 		}
 
@@ -31,8 +30,6 @@ public abstract class ScrabbleView  implements Observer {
 	 * La méthode permettant l'affichage des messages quand l'action est impossible
 	 * @param string le message à afficher
 	 */
-		public abstract void affiche(String string) ; {
-		// TODO Auto-generated constructor stub
-	}
+		public abstract void affiche(String string);
 
 }

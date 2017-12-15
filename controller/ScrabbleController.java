@@ -102,7 +102,7 @@ public class ScrabbleController {
 		//TODO modif le code pour que les vérif se passe au niveau du controller
 		String messageErreur = null;
 		
-		Case[][] plateauJeu = plateau.plateau; //Plateau de jeu
+		Case[][] plateauJeu = plateau.getPlateau(); //Plateau de jeu
 		Case[][] plateauSave = plateau.copyPlateau(); //Sauvegarde du plateau
 		
 		List<Lettre> saveMain = saveMainJoueur;
@@ -122,11 +122,11 @@ public class ScrabbleController {
 		if(joueur.poserMotPlateau(x, y, motJoue, motMain, motArray, plateauSave, 
 				saveMain, orientation, plateauJeu) == false) {
 			joueur.setMainJoueur(saveMain);
-			plateau.plateau = plateauSave;
+			plateau.setPlateau(plateauSave);
 			messageErreur = "Mot impossible à placer";
 			return messageErreur;
 		} else {
-			plateau.plateau = plateauJeu;
+			plateau.setPlateau(plateauJeu);
 		}
 		
 		//Vérifie les mots
@@ -137,7 +137,7 @@ public class ScrabbleController {
 				joueur.viderLaMain(motMain, sac);
 			} else {
 				joueur.setMainJoueur(saveMain);
-				plateau.plateau = plateauSave;
+				plateau.setPlateau(plateauSave);
 				messageErreur = "Placement du Mot incorrect";
 				return messageErreur;
 			}
@@ -150,7 +150,7 @@ public class ScrabbleController {
 				joueur.viderLaMain(motMain, sac);
 			} else {
 				joueur.setMainJoueur(saveMain);
-				plateau.plateau = plateauSave;
+				plateau.setPlateau(plateauSave);
 				messageErreur = "Placement du Premier Mot incorrect";
 				return messageErreur;
 			}
@@ -165,9 +165,26 @@ public class ScrabbleController {
 	}
 	
 	public void finDuJeu() {
-		
+		if(joueur.getNbreTourPasser() == 6) {
+			System.out.println("Vous avez mis fin à la partie");
+			if(joueur.getScore() < joueur.getScoreAdverse()) {
+				System.out.println("L'adversaire a gagné!");
+			}
+			else if(joueur.getScore() > joueur.getScoreAdverse()) {
+				System.out.println("Vous avez gagné!!!");
+			}
+			else {
+				System.out.println("Egalité!");
+			}
+		}
+		else if(joueur.getMainJoueur().isEmpty()) {
+			
+		}
 	}
-	
+	/**
+	 * Active l'interaction entre la vue et le code
+	 * @param vue à ajouter au controller
+	 */
 	public void addView(ScrabbleView vue) {
 		this.vue = vue;
 		

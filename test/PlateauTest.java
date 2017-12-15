@@ -15,7 +15,7 @@ public class PlateauTest {
 	@Test
 	public void testPlateau() {
 		Plateau plateauTest = new Plateau();
-		assertEquals(plateauTest.plateau.length, 15);
+		assertEquals(plateauTest.getPlateau().length, 15);
 	}
 
 	@Test
@@ -24,7 +24,7 @@ public class PlateauTest {
 		Plateau plateauTest = new Plateau();
 		Case caseTest = new Case(6);
 		plateauTest.initCasePlateau(caseTest, 0, 0);
-		assertEquals(plateauTest.plateau[0][0].getBonus(), 6);
+		assertEquals(plateauTest.getPlateauBonus(0, 0), 6);
 	}
 
 	@Test
@@ -67,17 +67,17 @@ public class PlateauTest {
 		motMain.add(o);
 		motMain.add(t);
 		
-		plateauTest.plateau[7][7].setLettre(m);
-		plateauTest.plateau[8][7].setLettre(o);
-		plateauTest.plateau[9][7].setLettre(t);
+		plateauTest.getCase(7, 7).setLettre(m);
+		plateauTest.getCase(8, 7).setLettre(o);
+		plateauTest.getCase(9, 7).setLettre(t);
 		
-		plateauTest.plateau[8][6].setLettre(u);
+		plateauTest.getCase(8, 6).setLettre(u);
 		
 		System.out.println(plateauTest);
 		
 		assertEquals(plateauTest.verificationPeripherique(7, 7, 'h', motMain, motJoue), true); 
 		
-		plateauTest.plateau[10][7].setLettre(s);
+		plateauTest.getCase(10, 7).setLettre(s);
 		
 		motMain.removeAll(motMain);
 		motMain.add(s);
@@ -98,7 +98,7 @@ public class PlateauTest {
 		motMain.removeAll(motMain);
 		motMain.add(e);
 		
-		plateauTest.plateau[11][7].setLettre(e);
+		plateauTest.getCase(11, 7).setLettre(e);
 		
 		assertEquals(plateauTest.verificationPeripherique(7, 7, 'h', motMain, motJoue), false);
 		
@@ -115,10 +115,10 @@ public class PlateauTest {
 		motJoue.add(u);
 		motJoue.add(s);
 		
-		plateauTest.plateau[2][10].setLettre(t);
-		plateauTest.plateau[2][9].setLettre(o);
-		plateauTest.plateau[2][8].setLettre(u);
-		plateauTest.plateau[2][7].setLettre(s);
+		plateauTest.getCase(2, 10).setLettre(t);
+		plateauTest.getCase(2, 9).setLettre(o);
+		plateauTest.getCase(2, 8).setLettre(u);
+		plateauTest.getCase(2, 7).setLettre(s);
 		
 		assertEquals(plateauTest.verificationPeripherique(2, 10, 'v', motMain, motJoue), false);
 		
@@ -132,10 +132,10 @@ public class PlateauTest {
 		motMain.add(o);
 		motMain.add(u);
 		
-		plateauTest.plateau[7][6].setLettre(o);
-		plateauTest.plateau[7][5].setLettre(u);
+		plateauTest.getCase(7, 6).setLettre(o);
+		plateauTest.getCase(7, 5).setLettre(u);
 		
-		plateauTest.plateau[11][7].setLettre(null);
+		plateauTest.getCase(11, 7).setLettre(null);
 		
 		assertEquals(plateauTest.verificationPeripherique(7, 7, 'v', motMain, motJoue), true);
 
@@ -152,17 +152,17 @@ public class PlateauTest {
 		Lettre s = new Lettre('s', 1);
 		Lettre e = new Lettre('e', 1);
 		
-		plateauTest.plateau[9][7].setLettre(s);
-		plateauTest.plateau[8][7].setLettre(e);
-		plateauTest.plateau[7][7].setLettre(s);
-		plateauTest.plateau[7][8].setLettre(t);
-		plateauTest.plateau[7][9].setLettre(o);
-		plateauTest.plateau[7][10].setLettre(m);
+		plateauTest.getCase(9, 7).setLettre(s);
+		plateauTest.getCase(8, 7).setLettre(e);
+		plateauTest.getCase(7, 7).setLettre(s);
+		plateauTest.getCase(7, 8).setLettre(t);
+		plateauTest.getCase(7, 9).setLettre(o);
+		plateauTest.getCase(7, 10).setLettre(m);
 		
 		List<Case> returnList = new ArrayList<Case>();
-		returnList.add(plateauTest.plateau[7][10]);
-		returnList.add(plateauTest.plateau[7][9]);
-		returnList.add(plateauTest.plateau[7][8]);
+		returnList.add(plateauTest.getCase(7, 10));
+		returnList.add(plateauTest.getCase(7, 9));
+		returnList.add(plateauTest.getCase(7, 8));
 		
 		assertEquals(plateauTest.checkHaut(7, 7), returnList);
 		
@@ -179,17 +179,17 @@ public class PlateauTest {
 		Lettre s = new Lettre('s', 1);
 		Lettre e = new Lettre('e', 1);
 		
-		plateauTest.plateau[9][7].setLettre(s);
-		plateauTest.plateau[8][7].setLettre(e);
-		plateauTest.plateau[7][7].setLettre(s);
-		plateauTest.plateau[7][8].setLettre(t);
-		plateauTest.plateau[7][9].setLettre(o);
-		plateauTest.plateau[7][10].setLettre(m);
+		plateauTest.getCase(9, 7).setLettre(s);
+		plateauTest.getCase(8, 7).setLettre(e);
+		plateauTest.getCase(7, 7).setLettre(s);
+		plateauTest.getCase(7, 8).setLettre(t);
+		plateauTest.getCase(7, 9).setLettre(o);
+		plateauTest.getCase(7, 10).setLettre(m);
 		
 		List<Case> returnList = new ArrayList<Case>();
-		returnList.add(plateauTest.plateau[7][9]);
-		returnList.add(plateauTest.plateau[7][8]);
-		returnList.add(plateauTest.plateau[7][7]);
+		returnList.add(plateauTest.getCase(7, 9));
+		returnList.add(plateauTest.getCase(7, 8));
+		returnList.add(plateauTest.getCase(7, 7));
 		
 		assertEquals(plateauTest.checkBas(7, 10), returnList);
 	}
@@ -205,17 +205,17 @@ public class PlateauTest {
 		Lettre s = new Lettre('s', 1);
 		Lettre e = new Lettre('e', 1);
 		
-		plateauTest.plateau[10][5].setLettre(s);
-		plateauTest.plateau[10][6].setLettre(e);
-		plateauTest.plateau[10][7].setLettre(s);
-		plateauTest.plateau[9][7].setLettre(t);
-		plateauTest.plateau[8][7].setLettre(o);
-		plateauTest.plateau[7][7].setLettre(m);
+		plateauTest.getCase(10, 5).setLettre(s);
+		plateauTest.getCase(10, 6).setLettre(e);
+		plateauTest.getCase(10, 7).setLettre(s);
+		plateauTest.getCase(9, 7).setLettre(t);
+		plateauTest.getCase(8, 7).setLettre(o);
+		plateauTest.getCase(7, 7).setLettre(m);
 		
 		List<Case> returnList = new ArrayList<Case>();
-		returnList.add(plateauTest.plateau[7][7]);
-		returnList.add(plateauTest.plateau[8][7]);
-		returnList.add(plateauTest.plateau[9][7]);
+		returnList.add(plateauTest.getCase(7, 7));
+		returnList.add(plateauTest.getCase(8, 7));
+		returnList.add(plateauTest.getCase(9, 7));
 		
 		assertEquals(plateauTest.checkGauche(10, 7), returnList);
 	}
@@ -231,17 +231,17 @@ public class PlateauTest {
 		Lettre s = new Lettre('s', 1);
 		Lettre e = new Lettre('e', 1);
 		
-		plateauTest.plateau[10][5].setLettre(s);
-		plateauTest.plateau[10][6].setLettre(e);
-		plateauTest.plateau[10][7].setLettre(s);
-		plateauTest.plateau[9][7].setLettre(t);
-		plateauTest.plateau[8][7].setLettre(o);
-		plateauTest.plateau[7][7].setLettre(m);
+		plateauTest.getCase(10, 5).setLettre(s);
+		plateauTest.getCase(10, 6).setLettre(e);
+		plateauTest.getCase(10, 7).setLettre(s);
+		plateauTest.getCase(9, 7).setLettre(t);
+		plateauTest.getCase(8, 7).setLettre(o);
+		plateauTest.getCase(7, 7).setLettre(m);
 		
 		List<Case> returnList = new ArrayList<Case>();
-		returnList.add(plateauTest.plateau[8][7]);
-		returnList.add(plateauTest.plateau[9][7]);
-		returnList.add(plateauTest.plateau[10][7]);
+		returnList.add(plateauTest.getCase(8, 7));
+		returnList.add(plateauTest.getCase(9, 7));
+		returnList.add(plateauTest.getCase(10, 7));
 		
 		assertEquals(plateauTest.checkDroite(7, 7), returnList);
 	}
@@ -258,11 +258,11 @@ public class PlateauTest {
 		Lettre l5 = new Lettre('r', 2);
 		Lettre l6 = new Lettre('x', 10);
 		
-		plateauTest.plateau[7][7].setLettre(l1);
-		plateauTest.plateau[8][7].setLettre(l2);
-		plateauTest.plateau[9][7].setLettre(l3);
-		plateauTest.plateau[10][7].setLettre(l4);
-		plateauTest.plateau[11][7].setLettre(l5);
+		plateauTest.getCase(7, 7).setLettre(l1);
+		plateauTest.getCase(8, 7).setLettre(l2);
+		plateauTest.getCase(9, 7).setLettre(l3);
+		plateauTest.getCase(10, 7).setLettre(l4);
+		plateauTest.getCase(11, 7).setLettre(l5);
 		
 		motJoue.add(l1);
 		motJoue.add(l2);
@@ -272,15 +272,15 @@ public class PlateauTest {
 		
 		assertEquals(plateauTest.checkHautBas(8, 7, 1, motJoue), true);
 		
-		plateauTest.plateau[8][6].setLettre(l3);
+		plateauTest.getCase(8, 6).setLettre(l3);
 		
 		assertEquals(plateauTest.checkHautBas(8, 7, 1, motJoue), true);
 		
-		plateauTest.plateau[8][8].setLettre(l5);
+		plateauTest.getCase(8, 8).setLettre(l5);
 		
 		assertEquals(plateauTest.checkHautBas(8, 7, 1, motJoue), false);
 		
-		plateauTest.plateau[8][5].setLettre(l6);
+		plateauTest.getCase(8, 5).setLettre(l6);
 		
 		assertEquals(plateauTest.checkHautBas(8, 7, 1, motJoue), true);
 	}
@@ -297,11 +297,11 @@ public class PlateauTest {
 		Lettre l5 = new Lettre('r', 2);
 		Lettre l6 = new Lettre('x', 10);
 		
-		plateauTest.plateau[7][7].setLettre(l1);
-		plateauTest.plateau[7][6].setLettre(l2);
-		plateauTest.plateau[7][5].setLettre(l3);
-		plateauTest.plateau[7][4].setLettre(l4);
-		plateauTest.plateau[7][3].setLettre(l5);
+		plateauTest.getCase(7, 7).setLettre(l1);
+		plateauTest.getCase(7, 6).setLettre(l2);
+		plateauTest.getCase(7, 5).setLettre(l3);
+		plateauTest.getCase(7, 4).setLettre(l4);
+		plateauTest.getCase(7, 3).setLettre(l5);
 		
 		motJoue.add(l1);
 		motJoue.add(l2);
@@ -311,15 +311,15 @@ public class PlateauTest {
 		
 		assertEquals(plateauTest.checkGaucheDroite(7, 6, 1, motJoue), true);
 		
-		plateauTest.plateau[8][6].setLettre(l3);
+		plateauTest.getCase(8, 6).setLettre(l3);
 		
 		assertEquals(plateauTest.checkGaucheDroite(7, 6, 1, motJoue), true);
 		
-		plateauTest.plateau[6][6].setLettre(l5);
+		plateauTest.getCase(6, 6).setLettre(l5);
 		
 		assertEquals(plateauTest.checkGaucheDroite(7, 6, 1, motJoue), false);
 		
-		plateauTest.plateau[9][6].setLettre(l6);
+		plateauTest.getCase(9, 6).setLettre(l6);
 		
 		assertEquals(plateauTest.checkGaucheDroite(7, 6, 1, motJoue), true);
 	}
@@ -382,12 +382,9 @@ public class PlateauTest {
 	@Test
 	public void testGetCase() {
 		Plateau plateauTest = new Plateau();
-		Lettre a = new Lettre('a', 0);
+		Case testCase = new Case();
 		
-		plateauTest.plateau[10][5].setLettre(a);
-		Case testCase = plateauTest.plateau[10][5];
-		
-		assertEquals(plateauTest.getCase(10, 5), testCase);
+		assertEquals(plateauTest.getCase(10, 5).getBonus(), testCase.getBonus());
 	}
 	
 	@Test
@@ -403,7 +400,7 @@ public class PlateauTest {
 	public void testGetPlateauLabel() {
 		Plateau plateauTest = new Plateau();
 		Lettre b = new Lettre('b', 2);
-		plateauTest.plateau[7][7].setLettre(b);
+		plateauTest.getCase(7, 7).setLettre(b);
 		
 		assertEquals(plateauTest.getPlateauLabel(7, 7), 'b');
 		
@@ -414,7 +411,7 @@ public class PlateauTest {
 		Plateau plateauTest = new Plateau();
 		
 		Lettre test = new Lettre('$', 17);
-		plateauTest.plateau[7][8].setLettre(test);
+		plateauTest.getCase(7, 8).setLettre(test);
 		
 		assertEquals(plateauTest.getPlateauLettre(7, 8), test);
 	}
@@ -424,7 +421,7 @@ public class PlateauTest {
 		//fail("Not yet implemented"); 
 		Plateau plateauTest = new Plateau();
 		Plateau plateauCopie = new Plateau();
-		plateauCopie.plateau = plateauTest.copyPlateau();
+		plateauCopie.setPlateau(plateauTest.copyPlateau());
 		assertEquals(plateauTest.toString(), plateauCopie.toString());
 		
 	}
@@ -473,10 +470,10 @@ public class PlateauTest {
 		motMain.add(t);
 		motMain.add(s);
 		
-		plateauTest.plateau[5][7].setLettre(m);
-		plateauTest.plateau[6][7].setLettre(o);
-		plateauTest.plateau[7][7].setLettre(t);
-		plateauTest.plateau[8][7].setLettre(s);
+		plateauTest.getCase(5, 7).setLettre(m);
+		plateauTest.getCase(6, 7).setLettre(o);
+		plateauTest.getCase(7, 7).setLettre(t);
+		plateauTest.getCase(8, 7).setLettre(s);
 		
 		List<Lettre> motJoue = new ArrayList<Lettre>();
 		motJoue.addAll(motMain);
@@ -485,10 +482,10 @@ public class PlateauTest {
 		assertEquals(plateauTest.checkPremierMot(5, 7, 'h', joueur, motMain, motJoue), true);
 		
 		Plateau plateauTest2 = new Plateau();
-		plateauTest2.plateau[5][8].setLettre(m);
-		plateauTest2.plateau[6][8].setLettre(o);
-		plateauTest2.plateau[7][8].setLettre(t);
-		plateauTest2.plateau[8][8].setLettre(s);
+		plateauTest2.getCase(5, 8).setLettre(m);
+		plateauTest2.getCase(6, 8).setLettre(o);
+		plateauTest2.getCase(7, 8).setLettre(t);
+		plateauTest2.getCase(8, 8).setLettre(s);
 		assertEquals(plateauTest2.checkPremierMot(5, 8, 'h', joueur, motMain, motJoue), false);
 	}
 	
@@ -501,14 +498,14 @@ public class PlateauTest {
 		Lettre l = new Lettre('l', 1);
 		Lettre n = new Lettre('n', 1);
 		
-		plateauTest.plateau[7][5].setLettre(s);
-		plateauTest.plateau[8][5].setLettre(e);
-		plateauTest.plateau[9][5].setLettre(l);
-		plateauTest.plateau[10][5].setLettre(l);
-		plateauTest.plateau[11][5].setLettre(e);
+		plateauTest.getCase(7, 5).setLettre(s);
+		plateauTest.getCase(8, 5).setLettre(e);
+		plateauTest.getCase(9, 5).setLettre(l);
+		plateauTest.getCase(10, 5).setLettre(l);
+		plateauTest.getCase(11, 5).setLettre(e);
 		
-		plateauTest.plateau[10][4].setLettre(e);
-		plateauTest.plateau[11][4].setLettre(n);
+		plateauTest.getCase(10, 4).setLettre(e);
+		plateauTest.getCase(11, 4).setLettre(n);
 		
 		List<Lettre> motMain = new ArrayList<Lettre>();
 		List<Lettre> motJoue = new ArrayList<Lettre>();
@@ -538,10 +535,10 @@ public class PlateauTest {
 		Lettre t = new Lettre('t', 1);
 		Lettre z = new Lettre('z', 10);
 		
-		plateauTest.plateau[9][10].setLettre(z);
-		plateauTest.plateau[10][9].setLettre(m);
-		plateauTest.plateau[10][8].setLettre(o);
-		plateauTest.plateau[10][10].setLettre(t);
+		plateauTest.getCase(9, 10).setLettre(z);
+		plateauTest.getCase(10, 9).setLettre(m);
+		plateauTest.getCase(10, 8).setLettre(o);
+		plateauTest.getCase(10, 10).setLettre(t);
 		
 		motJoue.add(t);
 		motJoue.add(m);
@@ -605,7 +602,7 @@ public class PlateauTest {
 		//fail("Not yet implemented"); 
 		Plateau plateauTest = new Plateau();
 		Lettre testLettre = new Lettre('w', 10);
-		plateauTest.plateau[8][7].setLettre(testLettre);
+		plateauTest.getCase(8, 7).setLettre(testLettre);
 		String affichage = "14|4|0|0|1|0|0|0|4|0|0|0|1|0|0|4|\n";
 		affichage +=	 "13|0|3|0|0|0|2|0|0|0|2|0|0|0|3|0|\n";
 		affichage +=	 "12|0|0|3|0|0|0|1|0|1|0|0|0|3|0|0|\n";

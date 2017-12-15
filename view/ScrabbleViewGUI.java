@@ -678,7 +678,6 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 				controller.passer();
 				fenetrePasser.removeAll();
 				fenetrePasser.dispose();
-				//Vide car pas d'action encore implémenter
 			}
 		}
 		/**

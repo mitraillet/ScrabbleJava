@@ -108,7 +108,7 @@ public class Joueur extends Observable implements Serializable {
 	}
 
 	/**
-	 * actualise le tour du joueur
+	 * actualise le tour du joueur et les vues
 	 * @param tourJoueur true si le joueur doit jouer, sinon false
 	 */
 	public void setTourJoueur(boolean tourJoueur) {

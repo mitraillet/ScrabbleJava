@@ -43,6 +43,10 @@ public class gestionSocket {
 	 * Le plateau de jeu
 	 */
 	Plateau plateau;
+
+	/**
+	 * Le sac de jeu
+	 */
 	Sac sac;
 	
 	/**

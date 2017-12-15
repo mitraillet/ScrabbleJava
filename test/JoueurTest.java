@@ -264,12 +264,12 @@ public class JoueurTest {
 		int y = 7;
 		char orientation = 'h';
 		
-		joueur.verifierLettreMain(x, y, orientation, plateau.plateau, mot, motJoker1, motJoue, 0);
+		joueur.verifierLettreMain(x, y, orientation, plateau.getPlateau(), mot, motJoker1, motJoue, 0);
 		assertEquals(motJoue, motJoueCheck1);
 		
 		motJoue.removeAll(motJoue);
 		
-		joueur.verifierLettreMain(x, y, orientation, plateau.plateau, mot2, motJoker2, motJoue, 0);
+		joueur.verifierLettreMain(x, y, orientation, plateau.getPlateau(), mot2, motJoker2, motJoue, 0);
 		assertEquals(motJoue, motJoueCheck2);
 		
 	}
@@ -300,24 +300,24 @@ public class JoueurTest {
 		motJoue.add(s);
 		motJoue.add(t);
 		
-		joueur.poserMotPlateau(7, 7, motJoue, motMain, motArray, plateauSave, saveMain, 'h', plateau.plateau);
+		joueur.poserMotPlateau(7, 7, motJoue, motMain, motArray, plateauSave, saveMain, 'h', plateau.getPlateau());
 		
-		assertEquals(plateau.plateau[7][7].getLabelCase(), 't');
-		assertEquals(plateau.plateau[8][7].getLabelCase(), 'e');
-		assertEquals(plateau.plateau[9][7].getLabelCase(), 's');
-		assertEquals(plateau.plateau[10][7].getLabelCase(), 't');
-		assertEquals(plateau.plateau[11][7].getLettre(), null);
+		assertEquals(plateau.getPlateauLabel(7, 7), 't');
+		assertEquals(plateau.getPlateauLabel(8, 7), 'e');
+		assertEquals(plateau.getPlateauLabel(9, 7), 's');
+		assertEquals(plateau.getPlateauLabel(10, 7), 't');
+		assertEquals(plateau.getPlateauLettre(11, 7), null);
 		
-		assertFalse(joueur.poserMotPlateau(13, 13, motJoue, motMain, motArray, plateauSave, saveMain, 'h', plateau.plateau));
+		assertFalse(joueur.poserMotPlateau(13, 13, motJoue, motMain, motArray, plateauSave, saveMain, 'h', plateau.getPlateau()));
 		
-		joueur.poserMotPlateau(1, 14, motJoue, motMain, motArray, plateauSave, saveMain, 'v', plateau.plateau);
+		joueur.poserMotPlateau(1, 14, motJoue, motMain, motArray, plateauSave, saveMain, 'v', plateau.getPlateau());
 		
-		assertEquals(plateau.plateau[1][14].getLabelCase(), 't');
-		assertEquals(plateau.plateau[1][13].getLabelCase(), 'e');
-		assertEquals(plateau.plateau[1][12].getLabelCase(), 's');
-		assertEquals(plateau.plateau[1][11].getLabelCase(), 't');
-		assertEquals(plateau.plateau[1][10].getLettre(), null);
-		assertEquals(plateau.plateau[2][14].getLettre(), null);
+		assertEquals(plateau.getPlateauLabel(1, 14), 't');
+		assertEquals(plateau.getPlateauLabel(1, 13), 'e');
+		assertEquals(plateau.getPlateauLabel(1, 12), 's');
+		assertEquals(plateau.getPlateauLabel(1, 11), 't');
+		assertEquals(plateau.getPlateauLettre(1, 10), null);
+		assertEquals(plateau.getPlateauLettre(2, 14), null);
 		
 		motJoue.removeAll(motJoue);
 		motMain.removeAll(motMain);
@@ -326,7 +326,7 @@ public class JoueurTest {
 		motJoue.add(e);
 		motArray = "se".split("");
 		
-		assertFalse(joueur.poserMotPlateau(7, 7, motJoue, motMain, motArray, plateauSave, saveMain, 'v', plateau.plateau));
+		assertFalse(joueur.poserMotPlateau(7, 7, motJoue, motMain, motArray, plateauSave, saveMain, 'v', plateau.getPlateau()));
 	}
 
 	@Test

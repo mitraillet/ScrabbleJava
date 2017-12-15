@@ -21,13 +21,13 @@ public class JokerTest {
 	public void testSetJoker() {
 		Joker joker = new Joker();
 		
-		joker.setJoker("a");
+		joker.setJoker('a');
 		assertEquals(joker.getLabel(), 'a');
 		
-		joker.setJoker("Y");
+		joker.setJoker('Y');
 		assertEquals(joker.getLabel(), 'y');
 		
-		joker.setJoker("?");
+		joker.setJoker('?');
 		assertFalse(joker.getLabel() == '?');
 	}
 }
