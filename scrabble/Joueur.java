@@ -248,7 +248,6 @@ public class Joueur extends Observable implements Serializable {
 				}
 				else {
 					System.out.println("Lettre inexistante dans la main");
-					return;
 				}
 			}
 			this.pioche(sac);
