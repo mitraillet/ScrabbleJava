@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Observable;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 
 import controller.ScrabbleController;
 import scrabble.Joueur;
@@ -31,6 +32,7 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 	private JPanel container = new JPanel();
 	
 	private ImageIcon plateauIMG = new ImageIcon("ressource/image/plateau/PlateauScrabble.png");
+	private ImageIcon sacIMG = new ImageIcon("ressource/image/sacScrabble.png");
 	
 	private ImageIcon boutonJouer = new ImageIcon("ressource/image/BoutonJouer.png");
 	private ImageIcon boutonJouerHoover = new ImageIcon("ressource/image/BoutonJouerHoover.png");
@@ -67,16 +69,20 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 		fenetreJeu.setTitle("Scrabble");
 		fenetreJeu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		fenetreJeu.setLocationRelativeTo(null);
-		fenetreJeu.setResizable(false);
+		fenetreJeu.setResizable(true);
 		
 		updateBouton();
 
 		updatePlateau();
+
+		setEspaceVide();
 		
 		updateScore();
-
+		
 		updateMain();
 
+		updateSac();
+		
 		container.setBackground(color);
 		
 		fenetreJeu.setContentPane(container);
@@ -101,7 +107,7 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 		passerJButton.addActionListener(new Passer());
 		passerJButton.setEnabled(joueur.getTourJoueur());
 		buttonBox.add(passerJButton);
-		
+
 		container.add(buttonBox);
 	}
 	
@@ -163,6 +169,18 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 	    layeredPane.setPreferredSize(new Dimension(836, 836));
 		container.add(layeredPane);
 	}
+	
+	/**
+	 * Crée un espace vide pour aligner tout ce qui se trouve en dessous du plateau 
+	 * avec ce dernier
+	 */
+	private void setEspaceVide() {
+		JPanel espaceVide = new JPanel();
+		espaceVide.setBackground(new Color(0,0,0,0));
+		espaceVide.setPreferredSize(new Dimension(170, 20));
+		espaceVide.setSize(170, 20);
+		container.add(espaceVide);
+	}
 	/**
 	 * Création et mise à jour du score
 	 */
@@ -179,6 +197,7 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 		scoreBox.setPreferredSize(new Dimension(250, 60));
 		scoreBox.setSize(250, 60);
 		scoreBox.setBackground(new Color(0,0,0,0));
+
 		scoreBox.add(scoreAffiche);
 		scoreBox.add(scoreAfficheAdv);
 		container.add(scoreBox);
@@ -212,6 +231,54 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 	}
 	
 
+	/**
+	 * Affiche un sac et le nombre de lettre restante dans le sac
+	 */
+	private void updateSac() {
+		JLayeredPane layeredPaneSac = new JLayeredPane();
+		
+		JPanel sacGraphicBackground = new JPanel();
+		sacGraphicBackground.setLayout(new BorderLayout(00,0));
+		sacGraphicBackground.add(new JLabel(sacIMG));
+		sacGraphicBackground.setPreferredSize(new Dimension(80, 80));
+		sacGraphicBackground.setSize(80, 80);
+		
+		JPanel sacGraphic = new JPanel();
+		String sacTailleString = sac.tailleContenuSac() + "";
+		JLabel sacTaille = new JLabel (sacTailleString);
+		
+		sacTaille.setFont(font);
+		sacTaille.setHorizontalAlignment(JLabel.CENTER);
+		sacTaille.setVerticalAlignment(JLabel.CENTER);
+		sacTaille.setBackground(new Color(0,0,0,0));
+		sacTaille.setPreferredSize(new Dimension(80, 80));
+		
+		sacGraphic.add(sacTaille);
+		sacGraphic.setOpaque(false);
+		sacGraphic.setBackground(new Color(0,0,0,0));
+		sacGraphic.setPreferredSize(new Dimension(80, 80));
+		sacGraphic.setSize(80, 80);
+		
+		layeredPaneSac.add(sacGraphicBackground, JLayeredPane.DEFAULT_LAYER);
+		layeredPaneSac.add(sacGraphic, JLayeredPane.DRAG_LAYER);
+		layeredPaneSac.setPreferredSize(new Dimension(80, 80));
+		layeredPaneSac.setSize(80, 80);
+
+		// Pour faire un espace vide
+		Box boxbag = Box.createHorizontalBox();
+		JPanel vide = new JPanel();
+		vide.setPreferredSize(new Dimension(20, 80));
+		vide.setSize(20, 80);
+		vide.setBackground(new Color(0,0,0,0));
+		boxbag.add(vide);
+		
+		boxbag.add(layeredPaneSac);
+		boxbag.setPreferredSize(new Dimension(100, 80));
+		boxbag.setSize(100, 80);
+		container.add(boxbag);
+		
+	}
+	
 	@Override
 	public void affiche(String msg) {
 		JLabel msgLab = new JLabel(msg);
@@ -229,8 +296,10 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 		container.removeAll();
 		updateBouton();
 		updatePlateau();
+		setEspaceVide();
 		updateScore();
 		updateMain();
+		updateSac();
 		fenetreJeu.pack();
 	}
 
