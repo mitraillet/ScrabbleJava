@@ -141,9 +141,11 @@ public class gestionSocket {
 				sac.setSac(sacActuel);
 				
 				joueur.setTourJoueur(true);
-				plateau.debutPartie = true;
-					
-				System.out.println("Taille du sac : " + sac.tailleContenuSac());
+				
+				if(plateau.getPlateau()[7][7].getLettre() != null){
+					plateau.debutPartie = true;
+				}
+				
 				System.out.println("C'est à votre tour !");
 			}
 		} catch (ClassNotFoundException | IOException e) {

@@ -162,5 +162,12 @@ public class Sac implements Serializable {
 	         e.printStackTrace();
 	      }    
 	   }
+	
+	/**
+	 * Affiche le nombre de lettres restantes dans le sac
+	 */
+	public String toString() {
+		return "Il reste " + this.tailleContenuSac() + " lettre(s) dans le sac";
+	}
 
 }

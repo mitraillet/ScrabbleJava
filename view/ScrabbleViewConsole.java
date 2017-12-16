@@ -10,14 +10,15 @@ import java.util.Scanner;
 import scrabble.Joueur;
 import scrabble.Lettre;
 import scrabble.Plateau;
+import scrabble.Sac;
 import controller.ScrabbleController;
 
 
 public class ScrabbleViewConsole extends ScrabbleView implements Observer{
 	protected Scanner sc;
 	
-	public ScrabbleViewConsole(Plateau plateau, Joueur joueur, ScrabbleController controller) {
-		super(plateau, joueur, controller);
+	public ScrabbleViewConsole(Plateau plateau, Joueur joueur, Sac sac, ScrabbleController controller) {
+		super(plateau, joueur, sac, controller);
 		update(null, null);
 		sc = new Scanner(System.in);
 		new Thread (new ReadInput()).start();	
@@ -26,6 +27,7 @@ public class ScrabbleViewConsole extends ScrabbleView implements Observer{
 	@Override
 	public void update(Observable o, Object arg) {
 		System.out.println(plateau);
+		System.out.println(sac);
 		System.out.println(joueur);
 		printHelp();
 		
@@ -33,6 +35,7 @@ public class ScrabbleViewConsole extends ScrabbleView implements Observer{
 	
 	private void printPlateauMain(){
 		System.out.println(plateau);
+		System.out.println(sac);
 		System.out.println(joueur);
 		printHelp();
 	}
