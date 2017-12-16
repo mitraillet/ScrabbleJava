@@ -58,8 +58,8 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 	 * @param sac le sac dans lequel sont piochées toutes les lettres
 	 * @param controller le controller qui va permettre les vérifications
 	 */
-	public ScrabbleViewGUI(Plateau plateau, Joueur joueur, Sac sac,ScrabbleController controller) {
-		super(plateau, joueur, controller);
+	public ScrabbleViewGUI(Plateau plateau, Joueur joueur, Sac sac, ScrabbleController controller) {
+		super(plateau, joueur, sac, controller);
 		this.sac = sac;
 		
 		fenetreJeu.setSize(1050, 990);
