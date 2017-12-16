@@ -44,7 +44,6 @@ public class ScrabbleViewConsole extends ScrabbleView implements Observer{
 		public void run() { //TODO modif le code pour que les vérif se passe au niveau du controller
 			while(true){
 				try{
-					System.out.println(sac);
 					String c = sc.next();
 					String messageError;
 					
