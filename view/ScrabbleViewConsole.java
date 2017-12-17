@@ -48,104 +48,106 @@ public class ScrabbleViewConsole extends ScrabbleView implements Observer{
 					String messageError;
 					
 					if(joueur.getTourJoueur() == true) {
-					switch(c){
-					case "M" :
-						affiche("Mélanger");
-						String label = sc.next();
-						controller.melangeMain(label);
-						break;
-					case "P" :
-						affiche("Passer");
-						controller.passer();
-						break;
-					case "J" : 
-						affiche("Jouer"); 
-						String mot1 = sc.next();
-						List<Lettre> saveMain = joueur.copieMainJoueur();
-						
-						int joker = joueur.detecteJoker(mot1);
-						String motJoker = mot1;
-						
-						if(joker == 1) {
-							affiche("Veuillez entrer le label du joker :");
-							char joker1 = '/';
-							char joker2 = '/';
-							while(joker1 == '/') {
-								joker1 = joueur.testJoker(sc.next());
+						switch(c){
+						case "M" :
+							if(sac.tailleContenuSac() != 0) {
+								affiche("Mélanger");
+								String label = sc.next();
+								controller.melangeMain(label);
+								break;
 							}
-							mot1 = joueur.setJokerMain(joker1, joker2, mot1);
+						case "P" :
+							affiche("Passer");
+							controller.passer();
+							break;
+						case "J" : 
+							affiche("Jouer"); 
+							String mot1 = sc.next();
+							List<Lettre> saveMain = joueur.copieMainJoueur();
 							
-						} else if (joker == 2) {
-							affiche("Veuillez entrer le label du premier joker :");
-							char joker1 = '/';
-							char joker2 = '/';
-							while(joker1 == '/') {
-								joker1 = joueur.testJoker(sc.next());
+							int joker = joueur.detecteJoker(mot1);
+							String motJoker = mot1;
+							
+							if(joker == 1) {
+								affiche("Veuillez entrer le label du joker :");
+								char joker1 = '/';
+								char joker2 = '/';
+								while(joker1 == '/') {
+									joker1 = joueur.testJoker(sc.next());
+								}
+								mot1 = joueur.setJokerMain(joker1, joker2, mot1);
+								
+							} else if (joker == 2) {
+								affiche("Veuillez entrer le label du premier joker :");
+								char joker1 = '/';
+								char joker2 = '/';
+								while(joker1 == '/') {
+									joker1 = joueur.testJoker(sc.next());
+								}
+								affiche("Veuillez entrer le label du deuxième joker :");
+								while(joker2 == '/') {
+									joker2 = joueur.testJoker(sc.next());
+								}
+								mot1 = joueur.setJokerMain(joker1, joker2, mot1);
 							}
-							affiche("Veuillez entrer le label du deuxième joker :");
-							while(joker2 == '/') {
-								joker2 = joueur.testJoker(sc.next());
-							}
-							mot1 = joueur.setJokerMain(joker1, joker2, mot1);
-						}
-						
-						if(plateau.verification(mot1)) {
-							affiche("Mot Correct");
-							affiche("Veuillez entrer la position X");
 							
-							int intPosX = -1;
-							int intPosY = -1;
-							
-							while(true) {
-								try {
-									intPosX = sc.nextInt();
-									break;
-								} catch(InputMismatchException e){
-									affiche("Erreur, veuillez entrer un nombre valide");
-									sc.next(); // Vide le scanner 
-									continue;
+							if(plateau.verification(mot1)) {
+								affiche("Mot Correct");
+								affiche("Veuillez entrer la position X");
+								
+								int intPosX = -1;
+								int intPosY = -1;
+								
+								while(true) {
+									try {
+										intPosX = sc.nextInt();
+										break;
+									} catch(InputMismatchException e){
+										affiche("Erreur, veuillez entrer un nombre valide");
+										sc.next(); // Vide le scanner 
+										continue;
+									}
+								}
+								
+								affiche("Veuillez entrer la position Y");
+								
+								while(true) {
+									try {
+										intPosY = sc.nextInt();
+										break;
+									} catch(InputMismatchException e){
+										affiche("Erreur, veuillez entrer un nombre valide");
+										sc.next(); // Vide le scanner 
+										continue;
+									}
+								}
+								
+								affiche("Veuillez entrer l'orientation (h ou v)");
+								char orientation = '/';
+								
+								while(true) {
+									orientation = (sc.next()).charAt(0);
+									if(orientation == 'h' || orientation == 'v') {
+										break;
+									} else {
+										affiche("L'orientation est incorrecte. (h / v)");
+										continue;
+									}
+								}
+								
+								messageError = controller.poserMot(intPosX, intPosY, orientation, mot1, saveMain, joker, motJoker);
+								if(messageError != null){
+									affiche(messageError);
 								}
 							}
-							
-							affiche("Veuillez entrer la position Y");
-							
-							while(true) {
-								try {
-									intPosY = sc.nextInt();
-									break;
-								} catch(InputMismatchException e){
-									affiche("Erreur, veuillez entrer un nombre valide");
-									sc.next(); // Vide le scanner 
-									continue;
-								}
+							else {
+								joueur.setMainJoueur(saveMain);
+								printPlateauMain();
+								affiche(mot1 + " est un mot incorrect");
 							}
-							
-							affiche("Veuillez entrer l'orientation (h ou v)");
-							char orientation = '/';
-							
-							while(true) {
-								orientation = (sc.next()).charAt(0);
-								if(orientation == 'h' || orientation == 'v') {
-									break;
-								} else {
-									affiche("L'orientation est incorrecte. (h / v)");
-									continue;
-								}
-							}
-							
-							messageError = controller.poserMot(intPosX, intPosY, orientation, mot1, saveMain, joker, motJoker);
-							if(messageError != null){
-								affiche(messageError);
-							}
-						}
-						else {
-							joueur.setMainJoueur(saveMain);
-							printPlateauMain();
-							affiche(mot1 + " est un mot incorrect");
-						}
-						break;
-					default : 
-						affiche("Opération incorrecte");
+							break;
+						default : 
+							affiche("Opération incorrecte");
 				}
 				} else {
 					affiche("C'est le tour de l'autre joueur");
@@ -165,8 +167,10 @@ public class ScrabbleViewConsole extends ScrabbleView implements Observer{
 	 * Méthode pour afficher les lettres et les commandes associées
 	 */
 	private void printHelp(){ // TODO ajouté affichage si sac plein uniquement
-		affiche("Pour mélanger : M + lettre à mélanger.");
 		affiche("Pour jouer : J + mot à jouer.");
+		if(sac.tailleContenuSac() != 0) {
+			affiche("Pour mélanger : M + lettre à mélanger.");
+		}
 		affiche("Pour passer : P");
 	}
 	/**
