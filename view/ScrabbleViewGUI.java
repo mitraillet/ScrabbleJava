@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Observable;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 
 import controller.ScrabbleController;
 import scrabble.Joueur;
@@ -91,7 +90,6 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 	
 	/**
 	 * Création des boutons
-	 * @param sac utilisé pour disabled les boutons
 	 */
 	private void updateBouton() {
 		Box buttonBox = Box.createVerticalBox();
