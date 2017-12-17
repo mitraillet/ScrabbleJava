@@ -44,8 +44,16 @@ public class ScrabbleViewConsole extends ScrabbleView implements Observer{
 		public void run() { //TODO modif le code pour que les vérif se passe au niveau du controller
 			while(true){
 				try{
+					if(joueur.getFinPartie() == true) {
+						break;
+					}
+					
 					String c = sc.next();
 					String messageError;
+					
+					if(joueur.getFinPartie() == true) {
+						break;
+					}
 					
 					if(joueur.getTourJoueur() == true) {
 						switch(c){
@@ -159,10 +167,28 @@ public class ScrabbleViewConsole extends ScrabbleView implements Observer{
 					affiche("Format d'input incorrect");
 				}
 			}
+			
+			//Gestion fin de la partie
+			controller.checkFin();
+			afficheGagnant();
 		}
 
-
 	}
+	
+	/**
+	* Affiche le gagnant
+	*/
+	private void afficheGagnant() {
+		affiche("---------------------------------------------------------\n");
+		if(joueur.getScore() > joueur.getScoreAdverse()) {
+				affiche("Vous avez gagné !");
+		} else if (joueur.getScore() < joueur.getScoreAdverse()) {
+				affiche("Votre adversaire a gagné la partie.");
+		} else {
+				affiche("Egalité !");
+		}
+	}
+	
 	/**
 	 * Méthode pour afficher les lettres et les commandes associées
 	 */
@@ -173,6 +199,7 @@ public class ScrabbleViewConsole extends ScrabbleView implements Observer{
 		}
 		affiche("Pour passer : P");
 	}
+	
 	/**
 	 * Méthode pour afficher en console
 	 */

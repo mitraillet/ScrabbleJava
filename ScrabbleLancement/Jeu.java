@@ -33,7 +33,7 @@ public class Jeu {
 			joueur.pioche(sac);
 			socket.envoyerDonnee(joueur, plateau, sac);
 		}
-		
+	
 		ScrabbleController controller = new ScrabbleController(plateau, joueur, sac, socket);
 		ScrabbleViewConsole console = new ScrabbleViewConsole(plateau, joueur, sac, controller);
 		ScrabbleViewGUI GUI = new ScrabbleViewGUI(plateau, joueur, sac, controller);

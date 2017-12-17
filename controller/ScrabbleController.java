@@ -75,6 +75,7 @@ public class ScrabbleController {
 		}
 		
 		joueur.melanger(exitLettre, sac);
+		this.finDuJeu();
 		socket.envoyerDonnee(joueur, plateau, sac);
 	}
 
@@ -83,6 +84,7 @@ public class ScrabbleController {
 	 */
 	public void passer() {
 		joueur.passer();
+		this.finDuJeu();
 		socket.envoyerDonnee(joueur, plateau, sac);
 	}
 	
@@ -157,6 +159,7 @@ public class ScrabbleController {
 		}
 		
 		if(joueur.getTourJoueur() == false) {
+			this.finDuJeu();
 			socket.envoyerDonnee(joueur, plateau, sac);
 		}
 		
@@ -164,23 +167,27 @@ public class ScrabbleController {
 			
 	}
 	
+	/**
+	 * Vérifie si la partie est finie
+	 * @return true si elle est finie, sinon false
+	 */
+	public void checkFin() {
+		if(joueur.getFinPartie() == true) {
+			socket.envoyerDonnee(joueur, plateau, sac);
+			socket.recevoirDonnee(joueur);
+		} 
+	}
+	
+	/**
+	 * Détecte la fin de la partie
+	 * return true si la partie est finie, sinon false
+	 */
 	public void finDuJeu() {
-		if(joueur.getNbreTourPasser() == 6) {
-			System.out.println("Vous avez mis fin à la partie");
-			if(joueur.getScore() < joueur.getScoreAdverse()) {
-				System.out.println("L'adversaire a gagné!");
-			}
-			else if(joueur.getScore() > joueur.getScoreAdverse()) {
-				System.out.println("Vous avez gagné!!!");
-			}
-			else {
-				System.out.println("Egalité!");
-			}
-		}
-		else if(joueur.getMainJoueur().isEmpty()) {
-			
+		if(joueur.getNbreTourPasser() == 6 || joueur.getMainJoueur().isEmpty()) {
+			joueur.setFinPartie(true);
 		}
 	}
+	
 	/**
 	 * Active l'interaction entre la vue et le code
 	 * @param vue à ajouter au controller

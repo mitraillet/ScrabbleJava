@@ -12,6 +12,7 @@ import scrabble.Case;
 import scrabble.Joueur;
 import scrabble.Lettre;
 import scrabble.Sac;
+import controller.ScrabbleController;
 
 /**
  * Gère les interactions avec les sockets
@@ -110,6 +111,7 @@ public class gestionSocket {
 		try {
 			objectOut.reset();
 			
+			objectOut.writeBoolean(joueur.getFinPartie());
 			objectOut.writeInt(joueur.getScore());
 			objectOut.writeObject(plateau.getPlateau());
 			objectOut.writeObject(sac.getSac());
@@ -129,13 +131,17 @@ public class gestionSocket {
 	public void recevoirDonnee(Joueur joueur) {
 		try {
 			while(true) {
-				int scoreAdverse = (int) objectIn.readInt();
+				boolean finPartie = (boolean) objectIn.readBoolean();
+				
+				int scoreAdverse = (int)
+				objectIn.readInt();
 				
 				Case[][] plateauActuel = (Case[][]) objectIn.readObject();
 				
 				@SuppressWarnings("unchecked") //On est sûr que le paramètre est une liste de lettre
 				List<Lettre> sacActuel = (List<Lettre>) objectIn.readObject();
 				
+				joueur.setFinPartie(finPartie);
 				joueur.setScoreAdverse(scoreAdverse);
 				plateau.setPlateau(plateauActuel);
 				sac.setSac(sacActuel);
@@ -144,6 +150,11 @@ public class gestionSocket {
 				
 				if(plateau.getPlateau()[7][7].getLettre() != null){
 					plateau.debutPartie = true;
+				}
+				
+				if(finPartie == true) {
+					this.fermerConnexion();
+					break;
 				}
 				
 				System.out.println("C'est à votre tour !");
@@ -159,6 +170,7 @@ public class gestionSocket {
 	 */
 	public void recevoirSac(Joueur joueur) {
 		try {
+			boolean finPartie = (boolean) objectIn.readBoolean();
 			int scoreAdverse = (int) objectIn.readInt();
 			Case[][] plateauActuel = (Case[][]) objectIn.readObject();
 				

@@ -41,6 +41,11 @@ public class Joueur extends Observable implements Serializable {
 	private int nbreTourPasser = 0;
 	
 	/**
+	 * True si la partie est finie, sinon false
+	 */
+	boolean finPartie = false;
+	
+	/**
 	 * Génération d'un nombre random compris entre deux chiffres
 	 * @param minNum le nombre min
 	 * @param maxNum le nombre max
@@ -49,6 +54,25 @@ public class Joueur extends Observable implements Serializable {
 	public int generateNumber(int minNum, int maxNum) {
 		int random = (int)(Math.random() * maxNum + minNum);
 		return random;
+	}
+	
+	/**
+	 * Retourne true si la partie est finie
+	 * @return true si la partie est finie, sinon false
+	 */
+	public boolean getFinPartie() {
+		return this.finPartie;
+	}
+
+	/**
+	 * Actualise la valeur de la fin de partie et calcule le score final
+	 * @param finPartie true si la partie est finie, sinon false
+	 */
+	public void setFinPartie(boolean finPartie) {
+		this.finPartie = finPartie;
+		if(finPartie == true) {
+			this.scoreFinPartie();
+		}
 	}
 	
 	/**
@@ -477,6 +501,21 @@ public class Joueur extends Observable implements Serializable {
 		int newNbreTourPasser = this.getNbreTourPasser() + 1;
 		this.setNbreTourPasser(newNbreTourPasser);
 		this.setTourJoueur(false);
+	}
+	
+	/**
+	 * Soustrais la valeur des lettres restées dans la main à la fin de la partie
+	 */
+	public void scoreFinPartie() {
+		if(this.finPartie == true) {
+			for(int i = 0; i < this.getSizeMainJoueur(); i++) {
+				this.score -= this.getValeurLettreMain(i);
+			}
+			
+			if(this.score < 0) {
+				this.score = 0;
+			}
+		}
 	}
 	
 	/**

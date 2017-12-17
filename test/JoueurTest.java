@@ -455,6 +455,18 @@ public class JoueurTest {
 		assertEquals(joueur.getMainJoueur().get(6).getLabel(), joueur.copieMainJoueur().get(6).getLabel());
 	}
 	
+	public void scoreFinPartie() {
+		fail();
+	}
+	
+	public void getFinPartie() {
+		fail();
+	}
+	
+	public void setFinPartie() {
+		fail();
+	}
+	
 	@Test
 	public void testPasser() {
 		Joueur joueur = new Joueur();
