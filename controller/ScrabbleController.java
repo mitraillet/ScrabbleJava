@@ -174,7 +174,6 @@ public class ScrabbleController {
 	public void checkFin() {
 		if(joueur.getFinPartie() == true) {
 			socket.envoyerDonnee(joueur, plateau, sac);
-			socket.recevoirDonnee(joueur);
 		} 
 	}
 	
@@ -183,7 +182,8 @@ public class ScrabbleController {
 	 * return true si la partie est finie, sinon false
 	 */
 	public void finDuJeu() {
-		if(joueur.getNbreTourPasser() == 6 || joueur.getMainJoueur().isEmpty()) {
+		if((joueur.getNbreTourPasser() == 3 && joueur.getNbreTourPasserAdverse() == 3) 
+				|| joueur.getMainJoueur().isEmpty()) {
 			joueur.setFinPartie(true);
 		}
 	}

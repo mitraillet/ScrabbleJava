@@ -12,7 +12,6 @@ import scrabble.Case;
 import scrabble.Joueur;
 import scrabble.Lettre;
 import scrabble.Sac;
-import controller.ScrabbleController;
 
 /**
  * Gère les interactions avec les sockets
@@ -113,9 +112,10 @@ public class gestionSocket {
 			
 			objectOut.writeBoolean(joueur.getFinPartie());
 			objectOut.writeInt(joueur.getScore());
+			objectOut.writeInt(joueur.getNbreTourPasser());
 			objectOut.writeObject(plateau.getPlateau());
 			objectOut.writeObject(sac.getSac());
-			
+			objectOut.writeObject(joueur.getMainJoueur());
 			
 			objectOut.flush();
 			
@@ -128,36 +128,45 @@ public class gestionSocket {
 	 * Reçois les données de l'autres joueur
 	 * @return true si des données on été reçues, sinon false
 	 */
-	public void recevoirDonnee(Joueur joueur) {
+	public void recevoirDonnee(Joueur joueur, Plateau plateau, Sac sac) {
 		try {
 			while(true) {
+				if(objectIn.readObject() != null) {
+				
 				boolean finPartie = (boolean) objectIn.readBoolean();
 				
-				int scoreAdverse = (int)
-				objectIn.readInt();
+				int scoreAdverse = (int) objectIn.readInt();
+				
+				int tourPasser = (int) objectIn.readInt();
 				
 				Case[][] plateauActuel = (Case[][]) objectIn.readObject();
 				
 				@SuppressWarnings("unchecked") //On est sûr que le paramètre est une liste de lettre
 				List<Lettre> sacActuel = (List<Lettre>) objectIn.readObject();
 				
+				@SuppressWarnings("unchecked") //On est sûr que le paramètre est une liste de lettre
+				List<Lettre> mainAdverse = (List<Lettre>) objectIn.readObject();
+				
 				joueur.setFinPartie(finPartie);
 				joueur.setScoreAdverse(scoreAdverse);
+				joueur.setNbreTourPasserAdverse(tourPasser);
 				plateau.setPlateau(plateauActuel);
 				sac.setSac(sacActuel);
-				
-				joueur.setTourJoueur(true);
+				joueur.setMainJoueurAdverse(mainAdverse);
 				
 				if(plateau.getPlateau()[7][7].getLettre() != null){
 					plateau.debutPartie = true;
 				}
 				
 				if(finPartie == true) {
-					this.fermerConnexion();
+					joueur.setTourJoueur(false);
+					this.envoyerDonnee(joueur, plateau, sac);
 					break;
+				} else {
+					joueur.setTourJoueur(true);
+					System.out.println("C'est à votre tour !");
 				}
-				
-				System.out.println("C'est à votre tour !");
+				}
 			}
 		} catch (ClassNotFoundException | IOException e) {
 			System.out.println("Erreur lors de la réception des données.");
@@ -168,14 +177,20 @@ public class gestionSocket {
 	 * Reçois les données de l'autres joueur
 	 * @return true si des données on été reçues, sinon false
 	 */
+	@SuppressWarnings("unused")
 	public void recevoirSac(Joueur joueur) {
 		try {
 			boolean finPartie = (boolean) objectIn.readBoolean();
 			int scoreAdverse = (int) objectIn.readInt();
+			int tourPasser = (int) objectIn.readInt();
+			
 			Case[][] plateauActuel = (Case[][]) objectIn.readObject();
 				
 			@SuppressWarnings("unchecked") //On est sûr que le paramètre est une liste de lettre
 			List<Lettre> sacActuel = (List<Lettre>) objectIn.readObject();
+			
+			@SuppressWarnings("unchecked") //On est sûr que le paramètre est une liste de lettre
+			List<Lettre> mainAdverse = (List<Lettre>) objectIn.readObject();
 				
 			sac.setSac(sacActuel);
 		} catch (ClassNotFoundException | IOException e) {

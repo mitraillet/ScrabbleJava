@@ -33,12 +33,22 @@ public class Joueur extends Observable implements Serializable {
 	/**
 	 * Tableau de Lettre représentant les Lettres du joueur
 	 */
-	private transient List<Lettre> mainJoueur;
+	private List<Lettre> mainJoueur;
+	
+	/**
+	 * La main du joueur adverse (pour la fin de partie)
+	 */
+	private List<Lettre> mainJoueurAdverse;
 	
 	/**
 	 * Variable d'incrément pour arrêter le jeu une fois à 6
 	 */
 	private int nbreTourPasser = 0;
+	
+	/**
+	 * Variable d'incrément pour arrêter le jeu une fois à 6
+	 */
+	private int nbreTourPasserAdverse = 0;
 	
 	/**
 	 * True si la partie est finie, sinon false
@@ -57,6 +67,14 @@ public class Joueur extends Observable implements Serializable {
 	}
 	
 	/**
+	 * La main du joueur adverse (Pour la fin de partie)
+	 * @param mainJoueurAdverse la main du joueur adverse
+	 */
+	public void setMainJoueurAdverse(List<Lettre> mainJoueurAdverse) {
+		this.mainJoueurAdverse = mainJoueurAdverse;
+	}
+	
+	/**
 	 * Retourne true si la partie est finie
 	 * @return true si la partie est finie, sinon false
 	 */
@@ -69,8 +87,11 @@ public class Joueur extends Observable implements Serializable {
 	 * @param finPartie true si la partie est finie, sinon false
 	 */
 	public void setFinPartie(boolean finPartie) {
+		boolean estDejaFinis = this.finPartie;
 		this.finPartie = finPartie;
-		if(finPartie == true) {
+		
+		if(finPartie == true && estDejaFinis == false) {
+			//Pour ne pas faire le calcul des scores 2 fois
 			this.scoreFinPartie();
 		}
 	}
@@ -80,6 +101,22 @@ public class Joueur extends Observable implements Serializable {
 	 * @return le nombre de tour passer
 	 */
 	public int getNbreTourPasser() {
+		return this.nbreTourPasser;
+	}
+	
+	/**
+	 * actualise le nombre de tour passer par l'adversaire
+	 * @param tourPasser variable s'incrémentant à chaque fois que l'adversaire passe
+	 */
+	public void setNbreTourPasserAdverse(int nbreTourPasser) {
+		this.nbreTourPasser = nbreTourPasser;
+	}
+	
+	/**
+	 * renvoie le nombre de tour passer par l'adversaire
+	 * @return le nombre de tour passer par l'adversaire 
+	 */
+	public int getNbreTourPasserAdverse() {
 		return this.nbreTourPasser;
 	}
 	
@@ -508,8 +545,16 @@ public class Joueur extends Observable implements Serializable {
 	 */
 	public void scoreFinPartie() {
 		if(this.finPartie == true) {
-			for(int i = 0; i < this.getSizeMainJoueur(); i++) {
-				this.score -= this.getValeurLettreMain(i);
+			if(this.getMainJoueur().isEmpty() == true && this.mainJoueurAdverse.isEmpty() == false) {
+				for(int i = 0; i < this.mainJoueurAdverse.size(); i++) {
+					this.score += this.mainJoueurAdverse.get(i).getValeur();
+				}
+			} 
+			
+			if(this.getMainJoueur().isEmpty() == false) {
+				for(int i = 0; i < this.getSizeMainJoueur(); i++) {
+					this.score -= this.getValeurLettreMain(i);
+				}
 			}
 			
 			if(this.score < 0) {

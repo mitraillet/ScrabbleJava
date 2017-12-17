@@ -41,7 +41,7 @@ public class Jeu {
 		controller.addView(console);
 		controller.addView(GUI);
 		
-		socket.recevoirDonnee(joueur);
+		socket.recevoirDonnee(joueur, plateau, sac);
 	}
 	
 	public static void main(String args[]) throws IOException {

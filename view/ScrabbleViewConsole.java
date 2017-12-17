@@ -31,6 +31,10 @@ public class ScrabbleViewConsole extends ScrabbleView implements Observer{
 		System.out.println(joueur);
 		printHelp();
 		
+		if(joueur.getFinPartie() == true) {
+			afficheGagnant();
+		}
+		
 	}
 	
 	private void printPlateauMain(){
@@ -167,10 +171,6 @@ public class ScrabbleViewConsole extends ScrabbleView implements Observer{
 					affiche("Format d'input incorrect");
 				}
 			}
-			
-			//Gestion fin de la partie
-			controller.checkFin();
-			afficheGagnant();
 		}
 
 	}
@@ -179,7 +179,7 @@ public class ScrabbleViewConsole extends ScrabbleView implements Observer{
 	* Affiche le gagnant
 	*/
 	private void afficheGagnant() {
-		affiche("---------------------------------------------------------\n");
+		affiche("\n---------------------------------------------------------\n");
 		if(joueur.getScore() > joueur.getScoreAdverse()) {
 				affiche("Vous avez gagné !");
 		} else if (joueur.getScore() < joueur.getScoreAdverse()) {
