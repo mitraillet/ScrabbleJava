@@ -30,11 +30,9 @@ public abstract class ScrabbleView  implements Observer {
 		}
 
 	/**
-	 * La méthode permettant l'affichage des messages quand l'action est impossible
+	 * La méthode permettant l'affichage de message
 	 * @param string le message à afficher
 	 */
-		public abstract void affiche(String string) ; {
-		// TODO Auto-generated constructor stub
-	}
+		public abstract void affiche(String string);
 
 }
