@@ -3,6 +3,7 @@ package ScrabbleLancement;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.OptionalDataException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.List;
@@ -130,8 +131,8 @@ public class gestionSocket {
 	 */
 	public void recevoirDonnee(Joueur joueur, Plateau plateau, Sac sac) {
 		try {
+				//if(objectIn.readObject() != null) {
 			while(true) {
-				if(objectIn.readObject() != null) {
 				
 				boolean finPartie = (boolean) objectIn.readBoolean();
 				
@@ -166,9 +167,9 @@ public class gestionSocket {
 					joueur.setTourJoueur(true);
 					System.out.println("C'est à votre tour !");
 				}
-				}
 			}
 		} catch (ClassNotFoundException | IOException e) {
+			e.printStackTrace();
 			System.out.println("Erreur lors de la réception des données.");
 		}
 	}
