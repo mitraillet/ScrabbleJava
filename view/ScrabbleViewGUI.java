@@ -26,6 +26,7 @@ import scrabble.Sac;
 public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 	
 	private JFrame fenetreJeu = new JFrame();
+	private FenetreFinDePartie FenetreFinDePartie;
 	private JPanel container = new JPanel();
 	
 	private ImageIcon plateauIMG = new ImageIcon("ressource/image/plateau/PlateauScrabble.png");
@@ -296,6 +297,9 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 		updateMain();
 		updateSac();
 		fenetreJeu.pack();
+		if(joueur.getFinPartie()) {
+			FenetreFinDePartie = new FenetreFinDePartie();
+		}
 	}
 
 
@@ -762,4 +766,153 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 		}
 		
 	}
+	
+	/**
+	 * 
+	 * @author Fauconnier/Henriquet
+	 * Classe contenant la fenêtre de fin de partie
+	 */
+	public class FenetreFinDePartie {
+		JFrame fenetreFinDePartie;
+		private	Font font = new Font("Serif", Font.BOLD, 20);
+		private Color color = new Color(253, 245, 230);
+		
+		/**
+		 * Initialise la fenêtre de fin de partie
+		 */
+		public FenetreFinDePartie() {
+			fenetreFinDePartie = new JFrame();
+			fenetreFinDePartie.setSize(550, 330);
+			fenetreFinDePartie.setPreferredSize(new Dimension(550, 330));
+			fenetreFinDePartie.setTitle("Fin de la partie");
+			fenetreFinDePartie.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			fenetreFinDePartie.setLocationRelativeTo(null);
+			fenetreFinDePartie.setResizable(false);
+			fenetreFinDePartie.setVisible(true);
+			
+			JPanel finDePartieJPanel = new JPanel();
+			finDePartieJPanel.setSize(550, 330);
+			finDePartieJPanel.setPreferredSize(new Dimension(550, 330));
+			Box affichageResteMain = Box.createHorizontalBox();
+			affichageResteMain.setPreferredSize(new Dimension(400, 55));
+			affichageResteMain.setSize(400, 55);
+			
+			JLabel msgVictoire = new JLabel();
+			msgVictoire.setFont(font);
+			JLabel resteMainMsg;
+			
+			if(joueur.getNbreTourPasser() >= 3 && joueur.getNbreTourPasserAdverse() >= 3) { //Si les joueurs passe leur tour
+				String msgVictoireString = "<html> Vous et votre adversaire ne pouvez plus jouer.<br> La partie est donc terminées. <br> Résultat: ";
+				if(joueur.getScore() > joueur.getScoreAdverse()) {
+					msgVictoireString += "Vous avez gagné !<br>";
+				} 
+				else if (joueur.getScore() < joueur.getScoreAdverse()) {
+					msgVictoireString += "Votre adversaire a gagné la partie...<br>";
+				} 
+				else {
+					msgVictoireString += "Egalité !<br>";
+				}
+				msgVictoireString += "Votre score est de " + joueur.getScore() + " points.<br>";
+				msgVictoireString += "Le score de votre adversaire est de " + joueur.getScoreAdverse() + " points.<br>";
+				msgVictoireString += "</html>";
+				
+				msgVictoire.setText(msgVictoireString);
+				
+				
+				resteMainMsg = new JLabel("<html>Vous aviez encore dans votre main : <br></html>");
+				JPanel mainPanel = new JPanel(new GridLayout(1,7));
+				mainPanel.setBackground(color);
+				
+				for(int i = 0; i < joueur.getSizeMainJoueur(); i++) {
+					JLabel img;
+					char labelIMG = joueur.getLabelLettreMain(i);
+					
+					if(labelIMG == '?') {
+						img = new JLabel(new ImageIcon("ressource/image/lettre/joker.png", "joker"));
+					}
+					else {
+						img = new JLabel(new ImageIcon("ressource/image/lettre/" + labelIMG + ".png", labelIMG +""));
+					}
+					mainPanel.add(img);
+				}
+				affichageResteMain.add(mainPanel);
+				
+			}
+			else {
+				String msgVictoireString ;
+				if(joueur.getMainJoueur().isEmpty()) { // si la main du joueur est vide
+					msgVictoireString = "<html> Vous avez vidé votre main. <br> Résultat: ";
+				}
+				else {
+					msgVictoireString = "<html> Vous adversaire a vidé sa main. <br> Résultat: ";
+				}
+				if(joueur.getScore() > joueur.getScoreAdverse()) {
+					msgVictoireString += "Vous avez gagné !<br>";
+				} 
+				else if (joueur.getScore() < joueur.getScoreAdverse()) {
+					msgVictoireString += "Votre adversaire a gagné la partie...<br>";
+				} 
+				else {
+					msgVictoireString += "Egalité !<br>";
+				}
+				msgVictoireString += "Votre score est de " + joueur.getScore() + "points.<br>";
+				msgVictoireString += "Le score de votre adversaire est de" + joueur.getScoreAdverse() + "points.<br>";
+				msgVictoireString += "</html>";
+				
+				msgVictoire.setText(msgVictoireString);
+				
+				if(joueur.getMainJoueur().isEmpty()) {
+					resteMainMsg = new JLabel("<html>Votre adversaire avait encore en main : <br></html>");
+					JPanel mainPanel = new JPanel(new GridLayout(1,7));
+					mainPanel.setBackground(color);
+					
+					for(int i = 0; i < joueur.getMainJoueurAdverse().size(); i++) {
+						JLabel img;
+						char labelIMG = joueur.getLabelLettreMainAdverse(i);
+						
+						if(labelIMG == '?') {
+							img = new JLabel(new ImageIcon("ressource/image/lettre/joker.png", "joker"));
+						}
+						else {
+							img = new JLabel(new ImageIcon("ressource/image/lettre/" + labelIMG + ".png", labelIMG +""));
+						}
+						mainPanel.add(img);
+					}
+					affichageResteMain.add(mainPanel);
+				}
+				else {
+					resteMainMsg = new JLabel("<html>Vous aviez encore en main : <br></html>");
+					JPanel mainPanel = new JPanel(new GridLayout(1,7));
+					mainPanel.setBackground(color);
+					
+					for(int i = 0; i < joueur.getSizeMainJoueur(); i++) {
+						JLabel img;
+						char labelIMG = joueur.getLabelLettreMain(i);
+						
+						if(labelIMG == '?') {
+							img = new JLabel(new ImageIcon("ressource/image/lettre/joker.png", "joker"));
+						}
+						else {
+							img = new JLabel(new ImageIcon("ressource/image/lettre/" + labelIMG + ".png", labelIMG +""));
+						}
+						mainPanel.add(img);
+					}
+					affichageResteMain.add(mainPanel);
+				}
+			}
+			finDePartieJPanel.add(msgVictoire);
+			resteMainMsg.setFont(font);
+			finDePartieJPanel.add(resteMainMsg);
+			finDePartieJPanel.add(affichageResteMain);
+			finDePartieJPanel.setBackground(color);
+			JLabel remarque = new JLabel();
+			remarque.setText("<html>* Si vous fermez cette fenêtre, le jeu s'arrêtera.<br> Pour rejouer, relancer le jeu.</html>");
+			remarque.setFont(font);
+			finDePartieJPanel.add(remarque);
+			finDePartieJPanel.setBackground(color);
+			fenetreFinDePartie.setContentPane(finDePartieJPanel);
+		}
+
+	}
+
 }
