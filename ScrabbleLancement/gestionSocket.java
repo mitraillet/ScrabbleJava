@@ -3,7 +3,6 @@ package ScrabbleLancement;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.OptionalDataException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.List;
@@ -17,7 +16,6 @@ import scrabble.Sac;
 /**
  * Gère les interactions avec les sockets
  * @author Fauconnier/Henriquet
- *
  */
 public class gestionSocket {
 	/**
@@ -169,7 +167,6 @@ public class gestionSocket {
 				}
 			}
 		} catch (ClassNotFoundException | IOException e) {
-			e.printStackTrace();
 			System.out.println("Erreur lors de la réception des données.");
 		}
 	}
