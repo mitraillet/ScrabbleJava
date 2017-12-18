@@ -168,6 +168,7 @@ public class gestionSocket {
 			}
 		} catch (ClassNotFoundException | IOException e) {
 			System.out.println("Erreur lors de la réception des données.");
+			this.fermerConnexion();
 		}
 	}
 	
