@@ -108,8 +108,8 @@ public class Joueur extends Observable implements Serializable {
 	 * actualise le nombre de tour passer par l'adversaire
 	 * @param tourPasser variable s'incrémentant à chaque fois que l'adversaire passe
 	 */
-	public void setNbreTourPasserAdverse(int nbreTourPasser) {
-		this.nbreTourPasser = nbreTourPasser;
+	public void setNbreTourPasserAdverse(int nbreTourPasserAdverse) {
+		this.nbreTourPasserAdverse = nbreTourPasserAdverse;
 	}
 	
 	/**
@@ -117,7 +117,7 @@ public class Joueur extends Observable implements Serializable {
 	 * @return le nombre de tour passer par l'adversaire 
 	 */
 	public int getNbreTourPasserAdverse() {
-		return this.nbreTourPasser;
+		return this.nbreTourPasserAdverse;
 	}
 	
 	/**
