@@ -344,11 +344,11 @@ public class Joueur extends Observable implements Serializable {
 			j = 0;
 			
 			//Tant qu' on n'a pas itéré toute la main et que la lettre n'est pas trouvée
-			while(j < this.mainJoueur.size() && lettreTrouve == false) {
+			while(j < this.mainJoueur.size() && !lettreTrouve) {
 				if(mot[i].charAt(0) != (this.getLabelLettreMain(j))) { //Si la lettre n'est pas dans la main
 					tempLettre = null;
 				} else { 
-					if(plateau.checkCaseRemplie(x, y, orientation, i) == true) {//Si la case du plateau est remplie
+					if(plateau.checkCaseRemplie(x, y, orientation, i)) {//Si la case du plateau est remplie
 						tempLettre = null;
 					} else if(lettrePrise.contains(j)) {//Si la lettre de la main est déja prise
 						tempLettre = null;
@@ -545,13 +545,13 @@ public class Joueur extends Observable implements Serializable {
 	 */
 	public void scoreFinPartie() {
 		if(this.finPartie == true) {
-			if(this.getMainJoueur().isEmpty() == true && this.mainJoueurAdverse.isEmpty() == false) {
+			if(this.getMainJoueur().isEmpty()) {
 				for(int i = 0; i < this.mainJoueurAdverse.size(); i++) {
 					this.score += this.mainJoueurAdverse.get(i).getValeur();
 				}
 			} 
 			
-			if(this.getMainJoueur().isEmpty() == false) {
+			else if(this.mainJoueurAdverse.isEmpty()) {
 				for(int i = 0; i < this.getSizeMainJoueur(); i++) {
 					this.score -= this.getValeurLettreMain(i);
 				}

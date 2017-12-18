@@ -132,7 +132,7 @@ public class ScrabbleController {
 		}
 		
 		//Vérifie les mots
-		if(plateau.debutPartie == true) {
+		if(plateau.debutPartie) {
 			if(plateau.verificationPeripherique(x, y, orientation, motMain, motJoue)) {
 				score = plateau.calculScore(x, y, orientation, motMain, motJoue);
 				plateau.setScoreJoueur(joueur, score);
@@ -158,7 +158,7 @@ public class ScrabbleController {
 			}
 		}
 		
-		if(joueur.getTourJoueur() == false) {
+		if(!joueur.getTourJoueur()) {
 			this.finDuJeu();
 			socket.envoyerDonnee(joueur, plateau, sac);
 		}
@@ -172,7 +172,7 @@ public class ScrabbleController {
 	 * @return true si elle est finie, sinon false
 	 */
 	public void checkFin() {
-		if(joueur.getFinPartie() == true) {
+		if(joueur.getFinPartie()) {
 			socket.envoyerDonnee(joueur, plateau, sac);
 		} 
 	}
@@ -182,7 +182,7 @@ public class ScrabbleController {
 	 * return true si la partie est finie, sinon false
 	 */
 	public void finDuJeu() {
-		if((joueur.getNbreTourPasser() == 3 && joueur.getNbreTourPasserAdverse() == 3) 
+		if((joueur.getNbreTourPasser() >= 3 && joueur.getNbreTourPasserAdverse() >= 3) 
 				|| joueur.getMainJoueur().isEmpty()) {
 			joueur.setFinPartie(true);
 		}

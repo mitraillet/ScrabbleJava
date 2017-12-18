@@ -25,8 +25,6 @@ import scrabble.Sac;
  */
 public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 	
-	private Sac sac;
-	
 	private JFrame fenetreJeu = new JFrame();
 	private JPanel container = new JPanel();
 	
@@ -61,14 +59,13 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 	 */
 	public ScrabbleViewGUI(Plateau plateau, Joueur joueur, Sac sac, ScrabbleController controller) {
 		super(plateau, joueur, sac, controller);
-		this.sac = sac;
 		
 		fenetreJeu.setSize(1050, 990);
 		fenetreJeu.setPreferredSize(new Dimension(1050, 990));
 		fenetreJeu.setTitle("Scrabble");
 		fenetreJeu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		fenetreJeu.setLocationRelativeTo(null);
-		fenetreJeu.setResizable(true);
+		fenetreJeu.setResizable(false);
 		
 		updateBouton();
 
@@ -210,8 +207,8 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 		boxMain.setPreferredSize(new Dimension(400, 80));
 		boxMain.setSize(400, 80);
 		
-		JPanel mainBox11 = new JPanel(new GridLayout(1,7));
-		mainBox11.setBackground(color);
+		JPanel mainPanel = new JPanel(new GridLayout(1,7));
+		mainPanel.setBackground(color);
 		for(int i = 0; i < joueur.getSizeMainJoueur(); i++) {
 			JLabel img;
 			char labelIMG = joueur.getLabelLettreMain(i);
@@ -222,9 +219,9 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 			else {
 				img = new JLabel(new ImageIcon("ressource/image/lettre/" + labelIMG + ".png", labelIMG +""));
 			}
-			mainBox11.add(img);
+			mainPanel.add(img);
 		}
-	 	boxMain.add(mainBox11);
+	 	boxMain.add(mainPanel);
 	 	container.add(boxMain);
 	}
 	

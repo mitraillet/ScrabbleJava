@@ -46,18 +46,18 @@ public class ScrabbleViewConsole extends ScrabbleView implements Observer{
 	
 	private class ReadInput implements Runnable {
 		public void run() { //TODO modif le code pour que les vérif se passe au niveau du controller
-			while(true){
+			while(!joueur.getFinPartie()){
 				try{
-					if(joueur.getFinPartie() == true) {
+					/*if(joueur.getFinPartie() == true) {
 						break;
-					}
+					}*/
 					
 					String c = sc.next();
 					String messageError;
 					
-					if(joueur.getFinPartie() == true) {
+					/*if(joueur.getFinPartie() == true) {
 						break;
-					}
+					}*/
 					
 					if(joueur.getTourJoueur() == true) {
 						switch(c){
