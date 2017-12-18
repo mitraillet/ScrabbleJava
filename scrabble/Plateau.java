@@ -88,7 +88,7 @@ public class Plateau implements Serializable {
 	 */
 	private void construireDico() {
 		try {
-			File dico = new File("ressource/MotValideScrabble.txt"); //Path du dictionnaire.txt
+			File dico = new File("ressource/LexiqueODS7.txt"); //Path du dictionnaire.txt
 			BufferedReader br = new BufferedReader(new FileReader(dico)); //Crétation du buffer
 			String line; //Variable pour les lignes
 			while ((line = br.readLine()) != null) { //Pour chaque ligne exécute la boucle
