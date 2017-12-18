@@ -75,6 +75,14 @@ public class Joueur extends Observable implements Serializable {
 	}
 	
 	/**
+	 * La main du joueur adverse (Pour la fin de partie)
+	 * @return la main du joueur adverse
+	 */
+	public List<Lettre> getMainJoueurAdverse() {
+		return this.mainJoueurAdverse;
+	}
+	
+	/**
 	 * Retourne true si la partie est finie
 	 * @return true si la partie est finie, sinon false
 	 */
@@ -219,6 +227,15 @@ public class Joueur extends Observable implements Serializable {
 	* @return Le label de la lettre
 	*/
 	public char getLabelLettreMain(int positionMain) {
+		return getLettreMain(positionMain).getLabel();
+	}
+	
+	/**
+	* Récupère le label d'une lettre (se situant dans la main du joueur adverse)
+	* @param positionMain la position de la lettre
+	* @return Le label de la lettre
+	*/
+	public char getLabelLettreMainAdverse(int positionMain) {
 		return getLettreMain(positionMain).getLabel();
 	}
 	
