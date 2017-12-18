@@ -98,7 +98,7 @@ public class Joueur extends Observable implements Serializable {
 		boolean estDejaFinis = this.finPartie;
 		this.finPartie = finPartie;
 		
-		if(finPartie == true && estDejaFinis == false) {
+		if(finPartie && !estDejaFinis) {
 			//Pour ne pas faire le calcul des scores 2 fois
 			this.scoreFinPartie();
 		}
