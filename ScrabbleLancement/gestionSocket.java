@@ -3,6 +3,7 @@ package ScrabbleLancement;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.List;
@@ -64,11 +65,11 @@ public class gestionSocket {
 	 * @param addr l'adresse
 	 * @throws IOException Gère les exceptions
 	 */
-	public void setSocket(boolean estServeur, int port, String addr) throws IOException {
+	public void setSocket(boolean estServeur, int port, String ip) throws IOException {	
 		if(estServeur) {
-			this.setServeur(port, addr);
+			this.setServeur(port, ip);
 		} else {
-			this.setClient(port, addr);
+			this.setClient(port, ip);
 		}
 	}
 	
@@ -80,6 +81,7 @@ public class gestionSocket {
 	 */
 	public void setServeur(int port, String addr) throws IOException {
 		s = new ServerSocket(port);
+		System.out.println("Votre adresse ip : " + InetAddress.getLocalHost ().getHostAddress());
 		System.out.println("En attente du joueur 2...");
 		socket = s.accept();
 		System.out.println("Joueur 2 Connecté");
@@ -99,6 +101,7 @@ public class gestionSocket {
 		
 		objectOut = new ObjectOutputStream(socket.getOutputStream());
 		objectIn = new ObjectInputStream(socket.getInputStream());
+		System.out.println("Connexion établie");
 	}
 	
 	/**
