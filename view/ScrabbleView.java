@@ -33,6 +33,6 @@ public abstract class ScrabbleView  implements Observer {
 	 * La méthode permettant l'affichage de message
 	 * @param string le message à afficher
 	 */
-		public abstract void affiche(String string);
+	public abstract void affiche(String string);
 
 }

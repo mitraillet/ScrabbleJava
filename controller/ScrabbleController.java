@@ -1,5 +1,6 @@
 package controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +10,6 @@ import scrabble.Plateau;
 import scrabble.Sac;
 import scrabble.Case;
 import view.ScrabbleView;
-
 import ScrabbleLancement.gestionSocket;
 
 public class ScrabbleController {
@@ -45,11 +45,48 @@ public class ScrabbleController {
 	 * @param sac le sac
 	 * @param socket la gestion des sockets
 	 */
-	public ScrabbleController(Plateau plateau, Joueur joueur, Sac sac, gestionSocket socket) {
+	public ScrabbleController(Plateau plateau, Joueur joueur, Sac sac, List<Object> paramSocket) {
 		this.plateau = plateau;
 		this.joueur = joueur;
 		this.sac = sac;
-		this.socket = socket;
+		
+		this.startSocket(paramSocket);
+	}
+	
+	/**
+	 * Gestion des sockets
+	 * @param Une liste contenant : 1) true si c'est le serveur, sinon false. 2) l'ip
+	 */
+	public void startSocket(List<Object> paramSocket) {
+		socket = new gestionSocket(plateau, sac);
+		boolean estServeur = (boolean) paramSocket.get(0);
+		String ip = (String) paramSocket.get(1);
+		
+		try {
+			socket.setSocket(estServeur, 12345, ip);
+		} catch (IOException e) {
+			System.out.println("Erreur lors de l'initilisation de la connexion");
+		}
+		
+		//Les 2 joueurs piochent leurs premières lettres dans le même sac.
+		if(estServeur) {
+			joueur.pioche(sac);
+			socket.envoyerDonnee(joueur, plateau, sac);
+			socket.recevoirSac(joueur);
+			joueur.setTourJoueur(true);
+		} else {
+			socket.recevoirSac(joueur);
+			joueur.pioche(sac);
+			socket.envoyerDonnee(joueur, plateau, sac);
+			joueur.setTourJoueur(false);
+		}
+	}
+	
+	/**
+	 * Lance la réception des données
+	 */
+	public void socketRecevoir() {
+		socket.recevoirDonnee(joueur, plateau, sac);
 	}
 	
 	/**

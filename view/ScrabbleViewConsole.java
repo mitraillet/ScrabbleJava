@@ -23,7 +23,7 @@ public class ScrabbleViewConsole extends ScrabbleView implements Observer{
 		sc = new Scanner(System.in);
 		new Thread (new ReadInput()).start();	
 	}
-
+	
 	@Override
 	public void update(Observable o, Object arg) {
 		System.out.println(plateau);
@@ -187,6 +187,16 @@ public class ScrabbleViewConsole extends ScrabbleView implements Observer{
 		} else {
 				affiche("Egalité !");
 		}
+		
+		affiche("\n" + "Votre score : " + joueur.getScore());
+		affiche("Le score de votre adversaire : " + joueur.getScoreAdverse() + "\n");
+		affiche("Vous aviez encore dans votre main : ");
+		
+		String main = "";
+		for(int i = 0; i < joueur.getSizeMainJoueur(); i++) {
+			main += joueur.getMainJoueur().get(i).getLabel() + " ";
+		}
+		affiche(main);
 	}
 	
 	/**
