@@ -177,7 +177,7 @@ public class ScrabbleController {
 		}
 		
 		//Vérifie les mots
-		if(plateau.debutPartie) {
+		if(plateau.isDebutPartie()) {
 			if(plateau.verificationPeripherique(x, y, orientation, motMain, motJoue)) {
 				score = plateau.calculScore(x, y, orientation, motMain, motJoue);
 				plateau.setScoreJoueur(joueur, score);

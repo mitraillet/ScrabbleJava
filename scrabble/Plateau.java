@@ -46,7 +46,7 @@ public class Plateau implements Serializable {
 	/**
 	 * True si partie déjà commencée, sinon false;
 	 */
-	public boolean debutPartie = false;
+	private boolean debutPartie = false;
 	
 	/**
 	* Contructeur par défaut du plateau
@@ -519,6 +519,23 @@ public class Plateau implements Serializable {
 	public char getPlateauLabel(int x, int y) {
 		return this.plateau[x][y].getLabelCase();
 	}
+	
+	/**
+	 * Méthode pemettant de récuperer si la partie vient de commencer
+	 * @return le debutPartie si c'est true la partie vient de commencer, si false
+	 */
+	public boolean isDebutPartie() {
+		return debutPartie;
+	}
+
+	/**
+	 * Méthode permettant de modifier debutPartie
+	 * @param debutPartie change la valeur de debutPartie
+	 */
+	public void setDebutPartie(boolean debutPartie) {
+		this.debutPartie = debutPartie;
+	}	
+	
 	/**
 	 * Copie le plateau
 	 * @return le tableau copié
@@ -583,7 +600,7 @@ public class Plateau implements Serializable {
 			
 			//Si le mot est au centre
 			if (estCentre) {
-				this.debutPartie = true;
+				this.setDebutPartie(true);
 			}
 			return estCentre;
 	}
@@ -872,5 +889,6 @@ public class Plateau implements Serializable {
 		}
 		string += "\n";
 		return string;
-	}	
+	}
+
 }

@@ -133,7 +133,6 @@ public class gestionSocket {
 	 */
 	public void recevoirDonnee(Joueur joueur, Plateau plateau, Sac sac) {
 		try {
-				//if(objectIn.readObject() != null) {
 			while(true) {
 				
 				boolean finPartie = (boolean) objectIn.readBoolean();
@@ -158,7 +157,7 @@ public class gestionSocket {
 				joueur.setMainJoueurAdverse(mainAdverse);
 				
 				if(plateau.getPlateau()[7][7].getLettre() != null){
-					plateau.debutPartie = true;
+					plateau.setDebutPartie(true);
 				}
 				
 				if(finPartie == true) {
@@ -168,6 +167,7 @@ public class gestionSocket {
 				} else {
 					joueur.setTourJoueur(true);
 					MessageDErreur.setMsgDErreur("C'est à votre tour !");
+					System.out.println("C'est à votre tour !");
 				}
 			}
 		} catch (ClassNotFoundException | IOException e) {

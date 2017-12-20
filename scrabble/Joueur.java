@@ -53,7 +53,7 @@ public class Joueur extends Observable implements Serializable {
 	/**
 	 * True si la partie est finie, sinon false
 	 */
-	boolean finPartie = false;
+	private boolean finPartie = false;
 	
 	/**
 	 * Génération d'un nombre random compris entre deux chiffres
@@ -309,7 +309,7 @@ public class Joueur extends Observable implements Serializable {
 	public void melanger(List<Lettre> exitLettre, Sac sac){
 		
 		if(!getMainJoueur().isEmpty()) {
-			for(int i = exitLettre.size() - 1 ; i >= 0 ; i--) {
+			for(int i = 0 ; i <  exitLettre.size(); i++) {
 	            Object o = exitLettre.get(i);
 				if(getMainJoueur().contains(o)) {
 					sac.addLettreAuSac(exitLettre.get(i)); 
