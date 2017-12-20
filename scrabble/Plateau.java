@@ -1,5 +1,5 @@
 /**
- * 
+ * Package Modèle
  */
 package scrabble;
 
@@ -27,9 +27,9 @@ import org.xml.sax.SAXParseException;
 import java.util.*;
 
 /**
- * @author Fauconnier/Henriquet
  * Classe de gestion du plateau. 
  * Contient la vérification des mots et le calcul des scores
+ * @author Fauconnier/Henriquet
  */
 public class Plateau implements Serializable {
 	

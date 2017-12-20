@@ -1,5 +1,5 @@
 /**
- * 
+ * Package Modèle
  */
 package scrabble;
 import java.util.ArrayList;

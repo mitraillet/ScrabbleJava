@@ -1,3 +1,6 @@
+/**
+ * Package view gérant les vues
+ */
 package view;
 
 import java.awt.*;
@@ -20,9 +23,8 @@ import scrabble.Plateau;
 import scrabble.Sac;
 
 /**
- * 
- * @author Fauconnier/Henriquet
  * Classe contenant toute l'interface Graphique du Scrabble
+ * @author Fauconnier/Henriquet
  */
 public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 	

@@ -1,13 +1,13 @@
 /**
- * Classe case
+ * Package Modèle
  */
 package scrabble;
 
 import java.io.Serializable;
 
 /**
+ * Classe case
  * @author Fauconnier/Henriquet
- *
  */
 public class Case implements Serializable {
 	

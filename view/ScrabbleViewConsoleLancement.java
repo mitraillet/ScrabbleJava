@@ -1,13 +1,27 @@
+/**
+ * Package view gérant les vues
+ */
 package view;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Classe gérant l'initialisation des sockets
+ * @author Fauconnier/Henriquet
+ */
 public class ScrabbleViewConsoleLancement {
 	
+	/**
+	 * Scanner pour récupérer les inputs de l'utilisateur
+	 */
 	static Scanner scan;
 	
+	/**
+	 * Demande l'état et l'adresse ip pour la connexion des sockets
+	 * @return une liste contenant True si c'est le serveur, sinon false et L'adresse IP
+	 */
 	public List<Object> setSocket() {
 		scan = new Scanner(System.in);
 		String bool;

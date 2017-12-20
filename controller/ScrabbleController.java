@@ -1,3 +1,6 @@
+/**
+ * Package Scrabble
+ */
 package controller;
 
 import java.io.IOException;
@@ -13,6 +16,10 @@ import scrabble.Case;
 import view.ScrabbleView;
 import ScrabbleLancement.gestionSocket;
 
+/**
+ * Controller du jeu
+ * @author Fauconnier/Henriquet
+ */
 public class ScrabbleController {
 	/**
 	 * Le plateau de jeu

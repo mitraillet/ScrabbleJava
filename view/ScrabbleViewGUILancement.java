@@ -1,3 +1,6 @@
+/**
+ * Package view gérant les vues
+ */
 package view;
 
 import java.awt.Color;
@@ -14,6 +17,10 @@ import java.util.List;
 
 import javax.swing.*;
 
+/**
+ * Vue qui gère l'initialisation des sockets en GUI
+ * @author Fauconnier
+ */
 public class ScrabbleViewGUILancement {
 		List<Object> listRetour ;
 		Boolean okServeur = false;

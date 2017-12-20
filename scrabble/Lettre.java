@@ -1,15 +1,15 @@
 /**
- * Classe permettant la création des Pièces
- * du scrabble représentant les lettres 
- * er leur valeur associée
+ * Package Modèle
  */
 package scrabble;
 
 import java.io.Serializable;
 
 /**
+ * Classe permettant la création des Pièces
+ * du scrabble représentant les lettres 
+ * et leur valeur associée
  * @author Fauconnier/Henriquet
- *
  */
 public class Lettre implements Serializable {
 

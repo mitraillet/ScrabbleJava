@@ -1,3 +1,6 @@
+/**
+ * Package view gérant les vues
+ */
 package view;
 
 import javax.swing.ImageIcon;

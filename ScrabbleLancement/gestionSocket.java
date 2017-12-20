@@ -1,3 +1,6 @@
+/**
+ * Package qui gère le lancement du jeu
+ */
 package ScrabbleLancement;
 
 import java.io.IOException;
@@ -53,6 +56,7 @@ public class gestionSocket {
 	/**
 	 * Le constructeur de la classe
 	 * @param plateau le plateau de jeu
+	 * @param sac le sac
 	 */
 	public gestionSocket(Plateau plateau, Sac sac) {
 		this.plateau = plateau;
@@ -63,7 +67,7 @@ public class gestionSocket {
 	 * Détermine le socket à initialiser, serveur ou client
 	 * @param estServeur true si serveur, false pour client
 	 * @param port le port
-	 * @param addr l'adresse
+	 * @param ip l'adresse ip du serveur
 	 * @throws IOException Gère les exceptions
 	 */
 	public void setSocket(boolean estServeur, int port, String ip) throws IOException {	
@@ -77,7 +81,7 @@ public class gestionSocket {
 	/**
 	 * Initialise le serveur
 	 * @param port le port
-	 * @param addr l'adresse
+	 * @param addr l'adresse ip du serveur
 	 * @throws IOException Gère les exceptions
 	 */
 	public void setServeur(int port, String addr) throws IOException {
@@ -94,7 +98,7 @@ public class gestionSocket {
 	/**
 	 * Initialise le client
 	 * @param port le port
-	 * @param addr l'adresse
+	 * @param addr l'adresse ip du serveur
 	 * @throws IOException Gère les exceptions
 	 */
 	public void setClient(int port, String addr) throws IOException {
@@ -107,7 +111,9 @@ public class gestionSocket {
 	
 	/**
 	 * Envoie les données à l'autre joueur
-	 * @param objet les données à envoyer
+	 * @param joueur le joueur
+	 * @param plateau le plateau de jeu
+	 * @param sac le sac
 	 */
 	public void envoyerDonnee(Joueur joueur, Plateau plateau, Sac sac) {
 		try {
@@ -129,7 +135,9 @@ public class gestionSocket {
 	
 	/**
 	 * Reçois les données de l'autres joueur
-	 * @return true si des données on été reçues, sinon false
+	 * @param joueur le joueur
+	 * @param plateau le plateau de jeu
+	 * @param sac le sac
 	 */
 	public void recevoirDonnee(Joueur joueur, Plateau plateau, Sac sac) {
 		try {
@@ -177,7 +185,7 @@ public class gestionSocket {
 	
 	/**
 	 * Reçois les données de l'autres joueur
-	 * @return true si des données on été reçues, sinon false
+	 * @param joueur le joueur
 	 */
 	@SuppressWarnings("unused")
 	public void recevoirSac(Joueur joueur) {

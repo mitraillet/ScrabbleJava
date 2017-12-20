@@ -1,13 +1,13 @@
 /**
- * Instanciation du joker objet étendu de Lettre
+ * Package Modèle
  */
 package scrabble;
 
 import java.io.Serializable;
 
 /**
+ * Instanciation du joker objet étendu de Lettre
  * @author Fauconnier/Henriquet
- *
  */
 public class Joker extends Lettre implements Serializable {
 
@@ -20,6 +20,9 @@ public class Joker extends Lettre implements Serializable {
 			this.setLabel(label);
 	}
 	
+	/**
+	 * Constructeur par défaut, hérité de Lettre
+	 */
 	public Joker() {
 		super();
 	}

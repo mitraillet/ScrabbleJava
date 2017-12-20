@@ -1,5 +1,5 @@
 /**
- * Package scrabble
+ * Package Modèle
  */
 package scrabble;
 
@@ -10,8 +10,8 @@ import java.util.List;
 import java.util.Observable;
 
 /**
- * @author Fauconnier/Henriquet
  * Classe gérant les joueurs
+ * @author Fauconnier/Henriquet
  */
 public class Joueur extends Observable implements Serializable {
 

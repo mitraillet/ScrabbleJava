@@ -1,13 +1,34 @@
+/**
+ * Package Modèle
+ */
 package scrabble;
 
+/**
+ * Classe gérant les messages d'erreur
+ */
 public final class MessageDErreur {
 	
+	/**
+	 * Création du message d'erreur
+	 */
 	private static MessageDErreur instance = new MessageDErreur();
+	
+	/**
+	 * Contient le message d'erreur le plus pertinent
+	 */
 	private static String msgDErreur;
+	
+	/**
+	 * Retourne le MessageDErreur
+	 * @return l'instance de MessageDErreur
+	 */
 	public static MessageDErreur getlnstance() {
 		return instance;
 	}
 	
+	/**
+	 * Récupère le message d'erreur
+	 */
 	private MessageDErreur() {
 		MessageDErreur.msgDErreur ="";
 	}

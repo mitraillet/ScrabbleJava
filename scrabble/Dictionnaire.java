@@ -1,5 +1,5 @@
 /**
- * 
+ * Package Modèle
  */
 package scrabble;
 
@@ -11,8 +11,8 @@ import java.io.IOException;
 import java.util.HashSet;
 
 /**
+ * Classe initialisant et gérant le dictionnaire
  * @author Fauconnier/Henriquet
- *
  */
 public class Dictionnaire {
 

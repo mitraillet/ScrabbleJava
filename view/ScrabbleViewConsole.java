@@ -1,3 +1,6 @@
+/**
+ * Package modèle
+ */
 package view;
 
 import java.util.InputMismatchException;

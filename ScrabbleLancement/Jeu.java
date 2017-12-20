@@ -1,6 +1,8 @@
+/**
+ * Package qui gère le lancement du jeu
+ */
 package ScrabbleLancement;
 
-import java.io.IOException;
 import java.util.List;
 
 import controller.ScrabbleController;
@@ -12,9 +14,16 @@ import view.ScrabbleViewGUI;
 import view.ScrabbleViewConsole;
 import view.ScrabbleViewConsoleLancement;
 
+/**
+ * Classe qui lance le jeu
+ * @author Fauconnier
+ */
 public class Jeu {
 	
-	public Jeu() throws IOException {
+	/**
+	 * Initialise la partie
+	 */
+	public Jeu() {
 		
 		Plateau plateau = new Plateau();
 		Joueur joueur = new Joueur();
@@ -33,7 +42,11 @@ public class Jeu {
 		controller.socketRecevoir();
 	}
 	
-	public static void main(String args[]) throws IOException {
+	/**
+	 * Lance le jeu
+	 * @param args inutilisé
+	 */
+	public static void main(String args[]) {
 		new Jeu();
 		
 	}
