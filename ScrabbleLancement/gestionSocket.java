@@ -165,9 +165,8 @@ public class gestionSocket {
 					this.envoyerDonnee(joueur, plateau, sac);
 					break;
 				} else {
-					joueur.setTourJoueur(true);
 					MessageDErreur.setMsgDErreur("C'est à votre tour !");
-					System.out.println("C'est à votre tour !");
+					joueur.setTourJoueur(true);
 				}
 			}
 		} catch (ClassNotFoundException | IOException e) {
