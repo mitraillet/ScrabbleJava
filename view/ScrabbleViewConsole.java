@@ -14,10 +14,24 @@ import scrabble.Plateau;
 import scrabble.Sac;
 import controller.ScrabbleController;
 
-
+/**
+ * Classe gérant le jeu en console
+ * @author Fauconnier/Henriquet
+ */
 public class ScrabbleViewConsole extends ScrabbleView implements Observer{
+	
+	/**
+	 * Scanner pour récupérer les entrées de l'utilisateurs
+	 */
 	protected Scanner sc;
 	
+	/**
+	 * Constructeur de la classe ScrabbleViewConsole
+	 * @param plateau le plateau de jeu
+	 * @param joueur le joueur
+	 * @param sac le sac
+	 * @param controller le controller
+	 */
 	public ScrabbleViewConsole(Plateau plateau, Joueur joueur, Sac sac, ScrabbleController controller) {
 		super(plateau, joueur, sac, controller);
 		update(null, null);
@@ -45,6 +59,9 @@ public class ScrabbleViewConsole extends ScrabbleView implements Observer{
 		
 	}
 	
+	/**
+	 * Affiche le jeu en console (plateau + lettres restantes dans le sac + main/joueur + commandes)
+	 */
 	private void printPlateauMain(){
 		System.out.println(plateau);
 		System.out.println(sac);
@@ -52,20 +69,16 @@ public class ScrabbleViewConsole extends ScrabbleView implements Observer{
 		printHelp();
 	}
 	
+	/**
+	 * Gère la partie en console
+	 * @author Fauconnier/Henriquet
+	 */
 	private class ReadInput implements Runnable {
 		public void run() { //TODO modif le code pour que les vérif se passe au niveau du controller
 			while(!joueur.getFinPartie()){
 				try{
-					/*if(joueur.getFinPartie() == true) {
-						break;
-					}*/
 					
 					String c = sc.next();
-					String messageError;
-					
-					/*if(joueur.getFinPartie() == true) {
-						break;
-					}*/
 					
 					if(joueur.getTourJoueur() == true) {
 						switch(c){
