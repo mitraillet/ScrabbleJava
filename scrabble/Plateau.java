@@ -96,7 +96,7 @@ public class Plateau implements Serializable {
 			}
 			br.close(); //Ferme le fichier
 		} catch(FileNotFoundException e) {
-			System.out.println("Impossible de trouver les ressources pour le Dictionnaire");
+			MessageDErreur.setMsgDErreur("Impossible de trouver les ressources pour le Dictionnaire");
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
@@ -147,7 +147,7 @@ public class Plateau implements Serializable {
 	            			y = ((Double)path.evaluate(expressionY, root, XPathConstants.NUMBER)).intValue();
 	            			bonus = ((Double)path.evaluate(expressionBonus, root, XPathConstants.NUMBER)).intValue();
 	            		} catch(XPathExpressionException e) {
-	            			System.out.println("Erreur Système : vérifier ressource plateau");
+	            			MessageDErreur.setMsgDErreur("Erreur Système : vérifier ressource plateau");
 	            		}
 	            		
 	            		Case caseNouvelle = new Case(bonus);
@@ -162,11 +162,11 @@ public class Plateau implements Serializable {
 	                  
 	         } catch (SAXParseException e){}  
 	      } catch (ParserConfigurationException e) {
-	    	  		System.out.println("Erreur de configuration XML");
+	    	  		MessageDErreur.setMsgDErreur("Erreur de configuration XML");
 	      } catch (SAXException e) {
-	    	  		System.out.println("Erreur lors de la lecture du fichier XML");
+	    	  		MessageDErreur.setMsgDErreur("Erreur lors de la lecture du fichier XML");
 	      } catch (IOException e) {
-	    	  		System.out.println("Erreur lors de la lecture du fichier XML");
+	    	  		MessageDErreur.setMsgDErreur("Erreur lors de la lecture du fichier XML");
 	      } 
 	}
 	
@@ -212,7 +212,7 @@ public class Plateau implements Serializable {
 			
 		//Si le mot principal est faux
 		if (this.verification(motPrincipal) == false) {
-			System.out.println("Le mot " + motPrincipal + " est incorrect");
+			MessageDErreur.setMsgDErreur("Le mot " + motPrincipal + " est incorrect");
 			return false;
 		}
 			
@@ -224,7 +224,7 @@ public class Plateau implements Serializable {
 				
 			if(orientation =='h') {
 				if(this.checkHautBas(x+i, y, i, motJoue) != true) {
-					System.out.println("Le mot vertical n'est pas correct");
+					MessageDErreur.setMsgDErreur("Le mot vertical n'est pas correct");
 					return false;
 				}
 				
@@ -238,7 +238,7 @@ public class Plateau implements Serializable {
 				
 			if(orientation =='v') {
 				if(this.checkGaucheDroite(x, y-i, i, motJoue) != true) {
-					System.out.println("Le mot horizontal n'est pas correct");
+					MessageDErreur.setMsgDErreur("Le mot horizontal n'est pas correct");
 					return false;
 				}
 				
@@ -251,7 +251,7 @@ public class Plateau implements Serializable {
 		}
 		
 		if(estAdjacentV == false && estAdjacentH == false && motPrincipal.length() <= motMain.size()) {
-			System.out.println("Erreur : Placez le mot adjacent à un autre");
+			MessageDErreur.setMsgDErreur("Erreur : Placez le mot adjacent à un autre");
 			return false;
 		} else {
 			return true;
@@ -377,19 +377,19 @@ public class Plateau implements Serializable {
 		if(motHaut != "" && motBas != "") {
 			String tempMot = motHaut + labelLettre + motBas;
 			if(this.verification(tempMot) == false) {
-				System.out.println("Mot incorrect");
+				MessageDErreur.setMsgDErreur("Mot incorrect");
 				return false;
 			}
 			
 		} else if(motHaut != "") {
 			if(this.verification(motHaut + labelLettre) == false) {
-				System.out.println("Le mot en haut est incorrect");
+				MessageDErreur.setMsgDErreur("Le mot en haut est incorrect");
 				return false;
 			}
 			
 		} else if(motBas != "") {
 			if(this.verification(labelLettre + motBas) == false) {
-				System.out.println("Le mot en bas est incorrect");
+				MessageDErreur.setMsgDErreur("Le mot en bas est incorrect");
 				return false;
 			}
 		}
@@ -419,17 +419,17 @@ public class Plateau implements Serializable {
 		if(motGauche != "" && motDroit != "") {
 			String tempMot = motGauche + labelLettre + motDroit;
 			if(this.verification(tempMot) == false) {
-				System.out.println("Mot incorrect");
+				MessageDErreur.setMsgDErreur("Mot incorrect");
 				return false;
 			}
 		} else if(motGauche != "") {
 			if(this.verification(motGauche + labelLettre) == false) {
-				System.out.println("Le mot à droite est incorrect");
+				MessageDErreur.setMsgDErreur("Le mot à droite est incorrect");
 				return false;
 			}
 		} else if(motDroit != "") {
 			if(this.verification(labelLettre + motDroit) == false) {
-				System.out.println("Le mot à gauche est incorrect");
+				MessageDErreur.setMsgDErreur("Le mot à gauche est incorrect");
 				return false;
 			}
 		}

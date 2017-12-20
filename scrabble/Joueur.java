@@ -277,17 +277,8 @@ public class Joueur extends Observable implements Serializable {
 	 * @param sac l'objet sac qui contient les lettres
 	 */
 	public void pioche(Sac sac){
-		System.out.println("Pioche");
 		
-		if(sac.tailleContenuSac() == 0) { //Si le sac est vide
-			if( this.getSizeMainJoueur() > 1) {
-				System.out.println("L'adversaire n'a plus que " + this.getSizeMainJoueur() + " lettres dans sa main.");
-			}
-			else {
-				System.out.println("L'adversaire n'a plus qu'une lettre dans sa main.");
-			}
-		}
-		else {
+		if(sac.tailleContenuSac() > 0) { //Si le sac n'est pas vide
 			if(this.getSizeMainJoueur() < 7 ) { //Si il y a moins de 7 lettres dans la main du joueur
 				
 				int nombrePieceAPrendre = 7 - getMainJoueur().size();
@@ -302,7 +293,7 @@ public class Joueur extends Observable implements Serializable {
 				}
 			}
 			else{
-				System.out.println("Pioche impossible");
+				MessageDErreur.setMsgDErreur("Pioche impossible");
 			}
 		}
 		nbreTourPasser = 0;
@@ -316,22 +307,22 @@ public class Joueur extends Observable implements Serializable {
 	 * @param sac l'objet sac qui récupère les lettres
 	 */
 	public void melanger(List<Lettre> exitLettre, Sac sac){
-		System.out.println("Melange");
 		
 		if(!getMainJoueur().isEmpty()) {
-			for(int i = 0; i < exitLettre.size(); i++) {
-				if(getMainJoueur().contains(exitLettre.get(i))) {
+			for(int i = exitLettre.size() - 1 ; i >= 0 ; i--) {
+	            Object o = exitLettre.get(i);
+				if(getMainJoueur().contains(o)) {
 					sac.addLettreAuSac(exitLettre.get(i)); 
 					getMainJoueur().remove(exitLettre.get(i));
 				}
 				else {
-					System.out.println("Lettre inexistante dans la main");
+					MessageDErreur.setMsgDErreur("Lettre inexistante dans la main");
 				}
 			}
 			this.pioche(sac);
 		}
 		else {
-			System.out.println("Main vide rien à mélanger");
+			MessageDErreur.setMsgDErreur("Main vide rien à mélanger");
 		}
 	}
 	
@@ -418,7 +409,7 @@ public class Joueur extends Observable implements Serializable {
 		for(int i = 0; i < motArray.length; i++) {
 			try {
 				if(plateau[x + xPos][y - yPos].getLettre() == null && motJoue.get(i) == null) {
-					System.out.println("Vous ne possédez pas les lettres requises.");
+					MessageDErreur.setMsgDErreur("Vous ne possédez pas les lettres requises.");
 					return false;
 				}
 				
@@ -427,14 +418,14 @@ public class Joueur extends Observable implements Serializable {
 					motMain.add(motJoue.get(i));
 				} else {
 					if(plateau[x + xPos][y - yPos].getLabelCase() != motArray[i].charAt(0)) {
-						System.out.println("Impossible de poser le mot");
+						MessageDErreur.setMsgDErreur("Impossible de poser le mot");
 						return false;
 					}
 				}
 			} catch (ArrayIndexOutOfBoundsException e) {
 				this.setMainJoueur(saveMain);
 				plateau = plateauSave;
-				System.out.println("Erreur : votre mot sort du plateau");
+				MessageDErreur.setMsgDErreur("Erreur : votre mot sort du plateau");
 				return false;
 			}
 
@@ -443,7 +434,7 @@ public class Joueur extends Observable implements Serializable {
 			} else if (orientation == 'v') {
 				yPos ++;
 			} else {
-				System.out.println("Erreur d'orientation");
+				MessageDErreur.setMsgDErreur("Erreur d'orientation");
 				plateau = plateauSave;
 				return false;
 			}
@@ -522,7 +513,7 @@ public class Joueur extends Observable implements Serializable {
 			labelChar = labelString.charAt(0);
 		}
 		else {
-			System.out.println("Caractère non authorisé !");
+			MessageDErreur.setMsgDErreur("Caractère non authorisé !");
 			return '/';
 		}
 		return labelChar;

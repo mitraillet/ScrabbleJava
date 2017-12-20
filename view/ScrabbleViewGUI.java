@@ -15,6 +15,7 @@ import javax.swing.*;
 import controller.ScrabbleController;
 import scrabble.Joueur;
 import scrabble.Lettre;
+import scrabble.MessageDErreur;
 import scrabble.Plateau;
 import scrabble.Sac;
 
@@ -297,9 +298,19 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 		updateMain();
 		updateSac();
 		fenetreJeu.pack();
+		
+		if(MessageDErreur.getMsgDErreur().length() != 0){
+			affiche(MessageDErreur.getMsgDErreur());
+			MessageDErreur.setMsgDErreur("");
+		}
+		else {
+			MessageDErreur.setMsgDErreur("");
+		}
+		
 		if(joueur.getFinPartie()) {
 			FenetreFinDePartie = new FenetreFinDePartie();
 		}
+		
 	}
 
 
@@ -411,7 +422,7 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 								joker1TxtF.setVisible(false);
 								joker2TxtF.setVisible(false);
 								joker1TxtF.setText("");
-								joker2TxtF.setText("");								joker2TxtF.setText("");
+								joker2TxtF.setText("");
 
 					    	}
 					    }
@@ -479,7 +490,6 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				List<Lettre> saveMainJoueur = joueur.copieMainJoueur();
-				String messageError;
 				
 				char orient;
 				int abscisse = (int)x.getSelectedItem();
@@ -504,13 +514,15 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 						}
 						mot = joueur.setJokerMain(joker1, joker2, mot);
 					}
-					messageError = controller.poserMot(abscisse, ordonnee, orient, mot, saveMainJoueur, joker, motJoker);
-					if(messageError == null){
-						fenetreJoue.removeAll();
-						fenetreJoue.dispose();
+					controller.poserMot(abscisse, ordonnee, orient, mot, saveMainJoueur, joker, motJoker);
+					if(MessageDErreur.getMsgDErreur().length() != 0){
+						affiche(MessageDErreur.getMsgDErreur());
+						MessageDErreur.setMsgDErreur("");
 					}
 					else {
-						affiche(messageError);
+						fenetreJoue.removeAll();
+						fenetreJoue.dispose();
+						MessageDErreur.setMsgDErreur("");
 					}
 				}
 			}

@@ -12,6 +12,7 @@ import scrabble.Plateau;
 import scrabble.Case;
 import scrabble.Joueur;
 import scrabble.Lettre;
+import scrabble.MessageDErreur;
 import scrabble.Sac;
 
 /**
@@ -166,7 +167,7 @@ public class gestionSocket {
 					break;
 				} else {
 					joueur.setTourJoueur(true);
-					System.out.println("C'est à votre tour !");
+					MessageDErreur.setMsgDErreur("C'est à votre tour !");
 				}
 			}
 		} catch (ClassNotFoundException | IOException e) {

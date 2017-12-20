@@ -9,6 +9,7 @@ import java.util.Scanner;
 
 import scrabble.Joueur;
 import scrabble.Lettre;
+import scrabble.MessageDErreur;
 import scrabble.Plateau;
 import scrabble.Sac;
 import controller.ScrabbleController;
@@ -31,6 +32,13 @@ public class ScrabbleViewConsole extends ScrabbleView implements Observer{
 		System.out.println(joueur);
 		printHelp();
 		
+		if(MessageDErreur.getMsgDErreur().length() != 0){
+			affiche(MessageDErreur.getMsgDErreur());
+			MessageDErreur.setMsgDErreur("");
+		}
+		else {
+			MessageDErreur.setMsgDErreur("");
+		}
 		if(joueur.getFinPartie() == true) {
 			afficheGagnant();
 		}
@@ -147,9 +155,13 @@ public class ScrabbleViewConsole extends ScrabbleView implements Observer{
 									}
 								}
 								
-								messageError = controller.poserMot(intPosX, intPosY, orientation, mot1, saveMain, joker, motJoker);
-								if(messageError != null){
-									affiche(messageError);
+								controller.poserMot(intPosX, intPosY, orientation, mot1, saveMain, joker, motJoker);
+								if(MessageDErreur.getMsgDErreur().length() != 0){
+									affiche(MessageDErreur.getMsgDErreur());
+									MessageDErreur.setMsgDErreur("");
+								}
+								else {
+									MessageDErreur.setMsgDErreur("");
 								}
 							}
 							else {

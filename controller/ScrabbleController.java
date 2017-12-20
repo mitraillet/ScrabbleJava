@@ -6,6 +6,7 @@ import java.util.List;
 
 import scrabble.Joueur;
 import scrabble.Lettre;
+import scrabble.MessageDErreur;
 import scrabble.Plateau;
 import scrabble.Sac;
 import scrabble.Case;
@@ -87,6 +88,14 @@ public class ScrabbleController {
 	 */
 	public void socketRecevoir() {
 		socket.recevoirDonnee(joueur, plateau, sac);
+		if(sac.tailleContenuSac() == 0) { //Si le sac est vide
+			if( joueur.getSizeMainJoueur() > 1) {
+				MessageDErreur.setMsgDErreur("L'adversaire n'a plus que " + joueur.getMainJoueurAdverse().size() + " lettres dans sa main.");
+			}
+			else {
+				MessageDErreur.setMsgDErreur("L'adversaire n'a plus qu'une lettre dans sa main.");
+			}
+		}
 	}
 	
 	/**
@@ -137,9 +146,8 @@ public class ScrabbleController {
 	 * @param motJoker le mot avec les jokers (joker = ?)
 	 * @return un Array d'oBjet pour pouvoir faire passer les messages d'erreurs et si l'opération s'est bien passé
 	 */
-	public String poserMot(int x, int y, char orientation, String mot, List<Lettre> saveMainJoueur, int nbrJoker, String motJoker){
+	public void poserMot(int x, int y, char orientation, String mot, List<Lettre> saveMainJoueur, int nbrJoker, String motJoker){
 		//TODO modif le code pour que les vérif se passe au niveau du controller
-		String messageErreur = null;
 		
 		Case[][] plateauJeu = plateau.getPlateau(); //Plateau de jeu
 		Case[][] plateauSave = plateau.copyPlateau(); //Sauvegarde du plateau
@@ -154,16 +162,16 @@ public class ScrabbleController {
 		
 		joueur.verifierLettreMain(x, y, orientation, plateau, motArray, jokerArray, motJoue, nbrJoker);
 		if(!plateau.verification(mot)) {
-			messageErreur = "Mot incorrect";
-			return messageErreur;
+			MessageDErreur.setMsgDErreur("Mot incorrect");
+			return;
 		}
 		
 		if(joueur.poserMotPlateau(x, y, motJoue, motMain, motArray, plateauSave, 
 				saveMain, orientation, plateauJeu) == false) {
 			joueur.setMainJoueur(saveMain);
 			plateau.setPlateau(plateauSave);
-			messageErreur = "Mot impossible à placer";
-			return messageErreur;
+			//MessageDErreur.setMsgDErreur("Mot impossible à placer");
+			return;
 		} else {
 			plateau.setPlateau(plateauJeu);
 		}
@@ -177,8 +185,8 @@ public class ScrabbleController {
 			} else {
 				joueur.setMainJoueur(saveMain);
 				plateau.setPlateau(plateauSave);
-				messageErreur = "Placement du Mot incorrect";
-				return messageErreur;
+				//MessageDErreur.setMsgDErreur("Placement du Mot incorrect");
+				return;
 			}
 			
 		} else {
@@ -190,8 +198,8 @@ public class ScrabbleController {
 			} else {
 				joueur.setMainJoueur(saveMain);
 				plateau.setPlateau(plateauSave);
-				messageErreur = "Placement du Premier Mot incorrect";
-				return messageErreur;
+				MessageDErreur.setMsgDErreur("Placement du Premier Mot incorrect");
+				return;
 			}
 		}
 		
@@ -199,8 +207,6 @@ public class ScrabbleController {
 			this.finDuJeu();
 			socket.envoyerDonnee(joueur, plateau, sac);
 		}
-		
-		return messageErreur;
 			
 	}
 	
