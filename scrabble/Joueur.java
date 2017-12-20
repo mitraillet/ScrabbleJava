@@ -309,16 +309,25 @@ public class Joueur extends Observable implements Serializable {
 	public void melanger(List<Lettre> exitLettre, Sac sac){
 		
 		if(!getMainJoueur().isEmpty()) {
-			for(int i = 0 ; i <  exitLettre.size(); i++) {
-	            Object o = exitLettre.get(i);
-				if(getMainJoueur().contains(o)) {
-					sac.addLettreAuSac(exitLettre.get(i)); 
-					getMainJoueur().remove(exitLettre.get(i));
-				}
-				else {
+
+			boolean stopperRecherche = false;
+			
+			for(int i = 0; i < exitLettre.size(); i++) {	 
+				for(int j = 0; j < this.getSizeMainJoueur(); j++) {
+	        	   		if(exitLettre.get(i).getLabel() == this.getMainJoueur().get(j).getLabel()) {
+	        	   			if(!stopperRecherche) {
+	        	   				sac.addLettreAuSac(exitLettre.get(i)); 
+		    					this.getMainJoueur().remove(this.getMainJoueur().get(j));
+		    					stopperRecherche = true;
+	        	   			}
+	        	   		}
+	            }
+				if(!stopperRecherche) {
 					MessageDErreur.setMsgDErreur("Lettre inexistante dans la main");
 				}
+				stopperRecherche = false;
 			}
+			
 			this.pioche(sac);
 		}
 		else {

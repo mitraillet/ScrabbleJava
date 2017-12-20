@@ -75,6 +75,7 @@ public class ScrabbleController {
 			socket.envoyerDonnee(joueur, plateau, sac);
 			socket.recevoirSac(joueur);
 			joueur.setTourJoueur(true);
+			
 		} else {
 			socket.recevoirSac(joueur);
 			joueur.pioche(sac);
