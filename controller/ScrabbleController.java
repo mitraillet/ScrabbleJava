@@ -47,11 +47,11 @@ public class ScrabbleController {
 	ScrabbleView vue;
 	
 	/**
-	 * 
+	 * Constructeur du Controller
 	 * @param plateau le plateau de jeu
 	 * @param joueur le joueur
 	 * @param sac le sac
-	 * @param socket la gestion des sockets
+	 * @param paramSocket la gestion des sockets
 	 */
 	public ScrabbleController(Plateau plateau, Joueur joueur, Sac sac, List<Object> paramSocket) {
 		this.plateau = plateau;
@@ -63,7 +63,7 @@ public class ScrabbleController {
 	
 	/**
 	 * Gestion des sockets
-	 * @param Une liste contenant : 1) true si c'est le serveur, sinon false. 2) l'ip
+	 * @param paramSocket Une liste contenant : 1) true si c'est le serveur, sinon false. 2) l'ip
 	 */
 	public void startSocket(List<Object> paramSocket) {
 		socket = new gestionSocket(plateau, sac);
@@ -152,10 +152,8 @@ public class ScrabbleController {
 	 * @param saveMainJoueur Une sauvegarde de la main pour éviter une perte de Lettre
 	 * @param nbrJoker le nombre de joker joué
 	 * @param motJoker le mot avec les jokers (joker = ?)
-	 * @return un Array d'oBjet pour pouvoir faire passer les messages d'erreurs et si l'opération s'est bien passé
 	 */
 	public void poserMot(int x, int y, char orientation, String mot, List<Lettre> saveMainJoueur, int nbrJoker, String motJoker){
-		//TODO modif le code pour que les vérif se passe au niveau du controller
 		
 		Case[][] plateauJeu = plateau.getPlateau(); //Plateau de jeu
 		Case[][] plateauSave = plateau.copyPlateau(); //Sauvegarde du plateau
@@ -219,8 +217,7 @@ public class ScrabbleController {
 	}
 	
 	/**
-	 * Vérifie si la partie est finie
-	 * @return true si elle est finie, sinon false
+	 * Si la partie est finie envoie les données en vue du calcul des scores
 	 */
 	public void checkFin() {
 		if(joueur.getFinPartie()) {

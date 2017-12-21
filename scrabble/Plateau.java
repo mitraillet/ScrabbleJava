@@ -400,6 +400,7 @@ public class Plateau {
 	 * @param x la position x de la lettre
 	 * @param y la position y de la lettre
 	 * @param getNum le numéro de la lettre dans motJoue
+	 * @param motJoue la List<Lettre> contenant le mot jouer
 	 * @return true si tous est juste, sinon false
 	 */
 	public boolean checkGaucheDroite(int x, int y, int getNum, List<Lettre> motJoue) {
@@ -790,6 +791,7 @@ public class Plateau {
 	 * @param lettreDouble les lettres doublées
 	 * @param lettreTriple les lettres triplées
 	 * @param lettreScore les lettres sans bonus
+	 * @return score avec le calcul des bonus de mot
 	 */
 	public int calculScoreMot(List<Lettre> motMain, List<Lettre> lettreDouble, 
 			List<Lettre> lettreTriple, List<Lettre> lettreScore) {
@@ -824,7 +826,6 @@ public class Plateau {
 	 * @param x la position x de départ du mot
 	 * @param y la position y de départ du mot
 	 * @param orientation l'orientation du mot
-	 * @param plateau le plateau à vérifier
 	 * @param nbrCase le numéro de la case
 	 * @return true si la case est remplie, sinon false
 	 */

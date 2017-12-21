@@ -71,7 +71,6 @@ public class Lettre implements Serializable {
 	 * Constructeur de la classe Lettre
 	 * @param label le label de la lettre
 	 * @param valeur la valeur de la lettre
-	 * @param instance le nombre de fois que la lettre se trouve dans le sac
 	 */
 	public Lettre(char label, int valeur) {
 		this.label = label;

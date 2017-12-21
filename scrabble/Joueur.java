@@ -113,7 +113,7 @@ public class Joueur extends Observable {
 	
 	/**
 	 * actualise le nombre de tour passer par l'adversaire
-	 * @param tourPasser variable s'incrémentant à chaque fois que l'adversaire passe
+	 * @param nbreTourPasserAdverse variable s'incrémentant à chaque fois que l'adversaire passe
 	 */
 	public void setNbreTourPasserAdverse(int nbreTourPasserAdverse) {
 		this.nbreTourPasserAdverse = nbreTourPasserAdverse;
@@ -129,7 +129,7 @@ public class Joueur extends Observable {
 	
 	/**
 	 * actualise le nombre de tour passer
-	 * @param tourPasser variable s'incrémentant à chaque fois que l'on passe
+	 * @param nbreTourPasser variable s'incrémentant à chaque fois que l'on passe
 	 */
 	public void setNbreTourPasser(int nbreTourPasser) {
 		this.nbreTourPasser = nbreTourPasser;
@@ -265,7 +265,7 @@ public class Joueur extends Observable {
 	
 	/**
 	 * Utilisé pour créer des copies de main 
-	 * @param mainJoueur
+	 * @param mainJoueur main a attribué au joueur
 	 */
 	public void setMainJoueur(List<Lettre> mainJoueur) {
 		this.mainJoueur = mainJoueur;
@@ -344,7 +344,6 @@ public class Joueur extends Observable {
 	 * @param motJoker le mot à jouer avec la position des jokers (joker == ?)
 	 * @param motJoue La liste de lettre du mots sur le plateau
 	 * @param nbrJoker le nombre de joker joués (1-2)
-	 * @return Une liste de lettre constituée de : La lettre, si touvée dans la main sinon null
 	 */
 	public void verifierLettreMain(int x , int y, char orientation, Plateau plateau, String[] mot, 
 			String[] motJoker, List<Lettre> motJoue, int nbrJoker) {
@@ -454,6 +453,7 @@ public class Joueur extends Observable {
 	/**
 	 * Enlève les mots posés sur le plateau (de la main)
 	 * @param motMain Les lettres venant de la main
+	 * @param sac le sac du jeu
 	 */
 	public void viderLaMain(List<Lettre> motMain, Sac sac) {
 		for (int i = 0; i < motMain.size(); i++) {
@@ -466,8 +466,8 @@ public class Joueur extends Observable {
 	
 	/**
 	 * Détecte le nombre de joker dans le mot à jouer
-	 * @param motArray le mot à jouer
-	 * @return le nombre de joker
+	 * @param mot le mot à jouer
+	 * @return nbrJoker le nombre de joker
 	 */
 	public int detecteJoker(String mot) {
 		int nbrJoker = 0;
