@@ -1,9 +1,6 @@
-<<<<<<< HEAD
 /**
  * Package view gérant les vues
  */
-=======
->>>>>>> master
 package view;
 
 import java.awt.*;
@@ -11,19 +8,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-<<<<<<< HEAD
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.List;
-=======
->>>>>>> master
 import java.util.Observable;
 
 import javax.swing.*;
 
 import controller.ScrabbleController;
 import scrabble.Joueur;
-<<<<<<< HEAD
 import scrabble.Lettre;
 import scrabble.MessageDErreur;
 import scrabble.Plateau;
@@ -74,39 +67,11 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 		
 		fenetreJeu.setSize(1050, 990);
 		fenetreJeu.setPreferredSize(new Dimension(1050, 990));
-=======
-import scrabble.Plateau;
-import scrabble.Sac;
-
-public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
-	
-	private Sac sac;
-	
-	private JFrame fenetreJeu = new JFrame();
-	private JPanel container = new JPanel();
-	private JLabel message = new JLabel(" ");
-	
-	private ImageIcon plateauIMG = new ImageIcon("ressource/image/plateau/PlateauScrabblePerso.png");
-	private ImageIcon boutonJouer = new ImageIcon("ressource/image/BoutonJouer.png");
-	private ImageIcon boutonJouerHoover = new ImageIcon("ressource/image/BoutonJouerHoover.png");
-	private ImageIcon boutonMelanger = new ImageIcon("ressource/image/BoutonMelanger.png");
-	private ImageIcon boutonMelangerHoover = new ImageIcon("ressource/image/BoutonMelangerHoover.png");
-	private ImageIcon boutonPasser = new ImageIcon("ressource/image/BoutonPasser.png");
-	private ImageIcon boutonPasserHoover = new ImageIcon("ressource/image/BoutonPasserHoover.png");
-	
-	public ScrabbleViewGUI(Plateau plateau, Joueur joueur, Sac sac,ScrabbleController controller) {
-		super(plateau, joueur, controller);
-		this.sac = sac;
-		
-		fenetreJeu.setSize(1000, 940);
-		fenetreJeu.setPreferredSize(new Dimension(1000, 940));
->>>>>>> master
 		fenetreJeu.setTitle("Scrabble");
 		fenetreJeu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		fenetreJeu.setLocationRelativeTo(null);
 		fenetreJeu.setResizable(false);
 		
-<<<<<<< HEAD
 		updateBouton();
 
 		updatePlateau();
@@ -120,17 +85,6 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 		updateSac();
 		
 		container.setBackground(color);
-=======
-		updateBouton(sac);
-
-		updatePlateau();
-		
-		updateScore();
-
-		updateMain();
-
-		container.setBackground(new Color(253, 245, 230));
->>>>>>> master
 		
 		fenetreJeu.setContentPane(container);
 		fenetreJeu.setVisible(true);
@@ -138,7 +92,6 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 	
 	/**
 	 * Création des boutons
-<<<<<<< HEAD
 	 */
 	private void updateBouton() {
 		Box buttonBox = Box.createVerticalBox();
@@ -155,21 +108,6 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 		passerJButton.setEnabled(joueur.getTourJoueur());
 		buttonBox.add(passerJButton);
 
-=======
-	 * @param sac utilisé pour disabled les boutons
-	 */
-	private void updateBouton(Sac sac) {
-		Box buttonBox = Box.createVerticalBox();
-		Bouton jouerJButton = new Bouton(boutonJouer, boutonJouerHoover);
-		Bouton melangeJButton = new Bouton(boutonMelanger, boutonMelangerHoover);
-		Bouton passerJButton = new Bouton(boutonPasser, boutonPasserHoover);
-		buttonBox.add(jouerJButton);
-		melangeJButton.addActionListener(new Melanger());
-		melangeJButton.setEnabled(sac.tailleContenuSac() != 0);
-		buttonBox.add(melangeJButton);
-		buttonBox.add(passerJButton);
-		
->>>>>>> master
 		container.add(buttonBox);
 	}
 	
@@ -183,7 +121,6 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 		JPanel plateauGraphicBackground = new JPanel();
 		plateauGraphicBackground.setLayout(new BorderLayout(0,0));
 		plateauGraphicBackground.add(new JLabel(plateauIMG));
-<<<<<<< HEAD
 		plateauGraphicBackground.setPreferredSize(new Dimension(836, 836));
 		plateauGraphicBackground.setSize(836, 836);
 		
@@ -203,17 +140,6 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 	    	vide.setOpaque(false);
 			vide.setBackground(new Color(0,0,0,0));
 			plateauGraphic.add(vide);
-=======
-		plateauGraphicBackground.setPreferredSize(new Dimension(784, 784));
-		plateauGraphicBackground.setSize(784, 784);
-		
-		JPanel plateauGraphic = new JPanel(new GridLayout(15,15));
-		plateauGraphic.setPreferredSize(new Dimension(784, 784));
-		plateauGraphic.setSize(784, 784);
-		
-	    int j = 14;
-	    for(int i = 0; i < 15; i++) {
->>>>>>> master
 			for(int h = 0; h < 15; h++) {
 				JLabel pic;
 				if(plateau.getCase(h, j).getLettre() == null) {
@@ -239,7 +165,6 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 	    plateauGraphic.setBackground(new Color(0,0,0,0));
 	    layeredPane.add(plateauGraphicBackground, JLayeredPane.DEFAULT_LAYER);
 	    layeredPane.add(plateauGraphic, JLayeredPane.DRAG_LAYER);
-<<<<<<< HEAD
 	    layeredPane.setSize(836, 836);
 	    layeredPane.setPreferredSize(new Dimension(836, 836));
 		container.add(layeredPane);
@@ -256,17 +181,10 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 		espaceVide.setSize(170, 20);
 		container.add(espaceVide);
 	}
-=======
-	    layeredPane.setSize(784, 784);
-	    layeredPane.setPreferredSize(new Dimension(784, 784));
-		container.add(layeredPane);
-	}
->>>>>>> master
 	/**
 	 * Création et mise à jour du score
 	 */
 	private void updateScore() {
-<<<<<<< HEAD
 		Box scoreBox = Box.createVerticalBox();
 		String scoreMsg = "Votre score : " + joueur.getScore();
 		String scoreMsgAdv = "Score de l'adversaire : " + joueur.getScoreAdverse();
@@ -283,18 +201,6 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 		scoreBox.add(scoreAffiche);
 		scoreBox.add(scoreAfficheAdv);
 		container.add(scoreBox);
-=======
-		String scoreMsg = "Score : " + joueur.getScore();
-		Font font = new Font("Serif", Font.BOLD, 20);
-		JLabel  scoreAffiche = new JLabel (scoreMsg);
-		scoreAffiche.setPreferredSize(new Dimension(150, 40));
-		scoreAffiche.setSize(150, 40);
-		scoreAffiche.setFont(font);
-		scoreAffiche.setBackground(new Color(0,0,0,0));
-		scoreAffiche.setHorizontalAlignment(2);
-		
-		container.add(scoreAffiche);
->>>>>>> master
 	}
 	
 	/**
@@ -306,13 +212,8 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 		boxMain.setPreferredSize(new Dimension(400, 80));
 		boxMain.setSize(400, 80);
 		
-<<<<<<< HEAD
 		JPanel mainPanel = new JPanel(new GridLayout(1,7));
 		mainPanel.setBackground(color);
-=======
-		JPanel mainBox11 = new JPanel(new GridLayout(1,7));
-		mainBox11.setBackground(new Color(253, 245, 230));
->>>>>>> master
 		for(int i = 0; i < joueur.getSizeMainJoueur(); i++) {
 			JLabel img;
 			char labelIMG = joueur.getLabelLettreMain(i);
@@ -323,7 +224,6 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 			else {
 				img = new JLabel(new ImageIcon("ressource/image/lettre/" + labelIMG + ".png", labelIMG +""));
 			}
-<<<<<<< HEAD
 			mainPanel.add(img);
 		}
 	 	boxMain.add(mainPanel);
@@ -389,23 +289,11 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 		dialog.setAlwaysOnTop(true);
 		dialog.setVisible(true);
 
-=======
-			mainBox11.add(img);
-		}
-	 	boxMain.add(mainBox11);
-	 	container.add(boxMain);
-	}
-
-	@Override
-	public void affiche(String msg) {
-		message.setText(msg);
->>>>>>> master
 	}
 	
 	@Override
 	public void update(Observable o, Object arg) {
 		container.removeAll();
-<<<<<<< HEAD
 		updateBouton();
 		updatePlateau();
 		setEspaceVide();
@@ -426,19 +314,11 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 			FenetreFinDePartie = new FenetreFinDePartie();
 		}
 		
-=======
-		updateBouton(sac);
-		updatePlateau();
-		updateScore();
-		updateMain();
-		fenetreJeu.pack();
->>>>>>> master
 	}
 
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-<<<<<<< HEAD
 		//Vide car pas d'action à y implémenter
 	}
 	
@@ -676,20 +556,11 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 	/**
 	 * 
 	 * @author Fauconnier/Henriquet
-=======
-		// TODO Auto-generated method stub
-		
-	}
-	/**
-	 * 
-	 * @author Mitraillet
->>>>>>> master
 	 * Classe pour le bouton melanger qui va ouvrir une fenêtre pour pouvoir mélanger la main
 	 */
 	class Melanger implements ActionListener{
 		JWindow fenetreMelange;
 		JPanel copyMain;
-<<<<<<< HEAD
 		JLabel text;
 		JButton melange;
 		JButton annuler;
@@ -728,38 +599,10 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 				melange.addActionListener(new Melange());
 				annuler.addActionListener(new Annule());
 
-=======
-		JButton melange;
-		JButton annuler;
-		String label = "";
-		Boolean isUp = false;
-		
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			if(!isUp) {
-				fenetreMelange = new JWindow();
-				copyMain = new JPanel();
-				melange = new JButton("Mélanger");
-				annuler = new JButton("Annuler");
-				
-				fenetreMelange.setSize(500, 100);
-				fenetreMelange.setPreferredSize(new Dimension(500, 100));
-				fenetreMelange.setLocationRelativeTo(null);
-				fenetreMelange.setAlwaysOnTop(true);
-				fenetreMelange.setVisible(true);
-				
-				melange.addActionListener(new Melange());
-				annuler.addActionListener(new Annule());
-				
-				ajouteMainMelange(copyMain);
-				
-				copyMain.setBackground(new Color(253, 245, 230));
->>>>>>> master
 				copyMain.add(melange);
 				copyMain.add(annuler);
 				
 				fenetreMelange.setContentPane(copyMain);
-<<<<<<< HEAD
 		}
 		/**
 		 * Crée une copie de la main utilisable pour le mélange
@@ -770,17 +613,6 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 		private void ajouteMainMelange(JPanel box) {
 			
 			JPanel boxMain = new JPanel(new GridLayout(1,7));	
-=======
-				isUp = true;
-			}
-		}
-		
-		private void ajouteMainMelange(JPanel box) {
-			
-			Box boxMain = Box.createHorizontalBox();
-			
-			JPanel mainBox11 = new JPanel(new GridLayout(1,7));	
->>>>>>> master
 			
 			JCheckBox img;
 			
@@ -796,7 +628,6 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 					img.setSelectedIcon(new ImageIcon("ressource/image/lettre/" + labelIMG + "Selected.png", labelIMG +""));
 				}
 			
-<<<<<<< HEAD
 				img.setBackground(color);
 				img.addItemListener(e);
 				
@@ -817,22 +648,6 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 			 */
 			@Override
 			public void itemStateChanged(ItemEvent e) {
-=======
-				img.setBackground(new Color(253, 245, 230));
-				img.addItemListener(e);
-				
-
-				mainBox11.add(img);
-			}
-		 	boxMain.add(mainBox11);
-		 	box.add(boxMain);
-		}
-		class event implements ItemListener {
-
-			@Override
-			public void itemStateChanged(ItemEvent e) {
-				// TODO Auto-generated method stub
->>>>>>> master
 				if(e.getStateChange() == 1) {
 					label += ((AbstractButton) e.getItemSelectable()).getSelectedIcon().toString();
 				}
@@ -851,11 +666,7 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 		
 		/**
 		 * 
-<<<<<<< HEAD
 		 * @author Fauconnier/Henriquet
-=======
-		 * @author Mitraillet
->>>>>>> master
 		 * Classe du bouton annule pour fermer la fenêtre
 		 */
 		class Annule implements ActionListener{
@@ -865,29 +676,20 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 				fenetreMelange.removeAll();
 				fenetreMelange.dispose();
 				label = "";
-<<<<<<< HEAD
 				jouerJButton.setEnabled(true);
 				melangeJButton.setEnabled(true);
 				passerJButton.setEnabled(true);
-=======
-				isUp = false;
->>>>>>> master
 			}
 		}
 		/**
 		 * 
-<<<<<<< HEAD
 		 * @author Fauconnier/Henriquet
-=======
-		 * @author Mitraillet
->>>>>>> master
 		 * Permettra de mélanger la main suivant les lettres choisies
 		 */
 		class Melange implements ActionListener{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-<<<<<<< HEAD
 				if(label.length() != 0){
 					controller.melangeMain(label);
 					fenetreMelange.removeAll();
@@ -1122,16 +924,4 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 
 	}
 
-=======
-				// TODO Auto-generated method stub
-				controller.melangeMain(label);
-				fenetreMelange.removeAll();
-				fenetreMelange.dispose();
-				label = "";
-				isUp = false;
-			}
-			
-		}
-	}
->>>>>>> master
 }

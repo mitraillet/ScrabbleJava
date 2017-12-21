@@ -1,9 +1,6 @@
-<<<<<<< HEAD
 /**
  * Package view gérant les vues
  */
-=======
->>>>>>> master
 package view;
 
 import java.util.Observer;
@@ -11,7 +8,6 @@ import java.util.Observer;
 import controller.ScrabbleController;
 import scrabble.Joueur;
 import scrabble.Plateau;
-<<<<<<< HEAD
 import scrabble.Sac;
 
 /**
@@ -47,21 +43,10 @@ public abstract class ScrabbleView  implements Observer {
 	 * @param controller le controller qui va permettre les vérifications
 	 */
 	public ScrabbleView(Plateau plateau, Joueur joueur, Sac sac, ScrabbleController controller){
-=======
-
-public abstract class ScrabbleView  implements Observer {
-	
-	protected Joueur joueur;
-	protected ScrabbleController controller;
-	protected Plateau plateau;
-
-	public ScrabbleView(Plateau plateau, Joueur joueur, ScrabbleController controller){
->>>>>>> master
 
 			this.plateau = plateau;
 			this.joueur = joueur;
 			this.controller = controller;
-<<<<<<< HEAD
 			this.sac = sac;
 			joueur.addObserver(this);
 		}
@@ -71,14 +56,5 @@ public abstract class ScrabbleView  implements Observer {
 	 * @param string le message à afficher
 	 */
 	public abstract void affiche(String string);
-=======
-			//plateau.addObserver(this);
-			joueur.addObserver(this);
-		}
-
-		public abstract void affiche(String string) ; {
-		// TODO Auto-generated constructor stub
-	}
->>>>>>> master
 
 }

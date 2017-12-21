@@ -13,10 +13,7 @@ import scrabble.Lettre;
 import scrabble.Plateau;
 import scrabble.Sac;
 import scrabble.Case;
-<<<<<<< HEAD
 import scrabble.Joker;
-=======
->>>>>>> master
 
 public class JoueurTest {
 
@@ -191,11 +188,8 @@ public class JoueurTest {
 		Joueur joueur = new Joueur();
 		List<Lettre> lettreSacTestChangement = new ArrayList<Lettre>();
 		List<Lettre> lettreMainTestChangement = new ArrayList<Lettre>();
-<<<<<<< HEAD
 		
 		
-=======
->>>>>>> master
 		//Vérif si main vide
 		lettreSacTestChangement.add(sac.getPositionLettreDansSac(83));
 		lettreSacTestChangement.add(sac.getPositionLettreDansSac(48));
@@ -221,7 +215,6 @@ public class JoueurTest {
 		lettreMainTestChangement.add(new Lettre('y', 86));
 		joueur.melanger(lettreMainTestChangement, sac);
 		assertEquals(joueur.getMainJoueur(), mainTest);
-<<<<<<< HEAD
 		
 		//Vérif si plusieurs fois la même lettre
 		Lettre e = new Lettre('e' ,1);
@@ -273,28 +266,20 @@ public class JoueurTest {
 		for(int f = 0; f < sac.getSac().size(); f++) {
 			System.out.println(sac.getSac().get(f).getLabel());
 		}
-=======
->>>>>>> master
 
 	}
 
 	@Test
 	public void testVerifierLettreMain() {
 		Joueur joueur = new Joueur();
-<<<<<<< HEAD
 		Plateau plateau = new Plateau();
-=======
->>>>>>> master
 		
 		String [] mot = "arbre".split("");
 		String [] mot2 = "aride".split("");
 		
-<<<<<<< HEAD
 		String [] motJoker1 = mot;
 		String [] motJoker2 = mot2;
 		
-=======
->>>>>>> master
 		List<Lettre> motJoue = new ArrayList<Lettre>();
 		
 		Lettre a = new Lettre('a', 15);
@@ -329,24 +314,16 @@ public class JoueurTest {
 		motJoueCheck2.add(d);
 		motJoueCheck2.add(e);
 		
-<<<<<<< HEAD
 		int x = 7;
 		int y = 7;
 		char orientation = 'h';
 		
 		joueur.verifierLettreMain(x, y, orientation, plateau, mot, motJoker1, motJoue, 0);
-=======
-		joueur.verifierLettreMain(mot, motJoue);
->>>>>>> master
 		assertEquals(motJoue, motJoueCheck1);
 		
 		motJoue.removeAll(motJoue);
 		
-<<<<<<< HEAD
 		joueur.verifierLettreMain(x, y, orientation, plateau, mot2, motJoker2, motJoue, 0);
-=======
-		joueur.verifierLettreMain(mot2, motJoue);
->>>>>>> master
 		assertEquals(motJoue, motJoueCheck2);
 		
 	}
@@ -372,7 +349,6 @@ public class JoueurTest {
 		motJoue.add(s);
 		motJoue.add(t);
 		
-<<<<<<< HEAD
 		joueur.poserMotPlateau(7, 7, motJoue, motMain, motArray, plateauSave, saveMain, 'h', plateau.getPlateau());
 		
 		assertEquals(plateau.getPlateauLabel(7, 7), 't');
@@ -391,26 +367,6 @@ public class JoueurTest {
 		assertEquals(plateau.getPlateauLabel(1, 11), 't');
 		assertEquals(plateau.getPlateauLettre(1, 10), null);
 		assertEquals(plateau.getPlateauLettre(2, 14), null);
-=======
-		joueur.poserMotPlateau(7, 7, motJoue, motMain, motArray, plateauSave, saveMain, 'h', plateau.plateau);
-		
-		assertEquals(plateau.plateau[7][7].getLabelCase(), 't');
-		assertEquals(plateau.plateau[8][7].getLabelCase(), 'e');
-		assertEquals(plateau.plateau[9][7].getLabelCase(), 's');
-		assertEquals(plateau.plateau[10][7].getLabelCase(), 't');
-		assertEquals(plateau.plateau[11][7].getLettre(), null);
-		
-		assertFalse(joueur.poserMotPlateau(13, 13, motJoue, motMain, motArray, plateauSave, saveMain, 'h', plateau.plateau));
-		
-		joueur.poserMotPlateau(1, 14, motJoue, motMain, motArray, plateauSave, saveMain, 'v', plateau.plateau);
-		
-		assertEquals(plateau.plateau[1][14].getLabelCase(), 't');
-		assertEquals(plateau.plateau[1][13].getLabelCase(), 'e');
-		assertEquals(plateau.plateau[1][12].getLabelCase(), 's');
-		assertEquals(plateau.plateau[1][11].getLabelCase(), 't');
-		assertEquals(plateau.plateau[1][10].getLettre(), null);
-		assertEquals(plateau.plateau[2][14].getLettre(), null);
->>>>>>> master
 		
 		motJoue.removeAll(motJoue);
 		motMain.removeAll(motMain);
@@ -419,11 +375,7 @@ public class JoueurTest {
 		motJoue.add(e);
 		motArray = "se".split("");
 		
-<<<<<<< HEAD
 		assertFalse(joueur.poserMotPlateau(7, 7, motJoue, motMain, motArray, plateauSave, saveMain, 'v', plateau.getPlateau()));
-=======
-		assertFalse(joueur.poserMotPlateau(7, 7, motJoue, motMain, motArray, plateauSave, saveMain, 'v', plateau.plateau));
->>>>>>> master
 	}
 
 	@Test
@@ -525,7 +477,6 @@ public class JoueurTest {
 	}
 
 	@Test
-<<<<<<< HEAD
 	public void testCopieMainJoueur() {
 		Joueur joueur = new Joueur();
 		
@@ -637,10 +588,6 @@ public class JoueurTest {
 		joueur.passer();
 		
 		assertEquals(joueur.getNbreTourPasser(), 2);
-=======
-	public void testPasser() {
-		fail("Not yet implemented"); // TODO
->>>>>>> master
 	}
 
 }

@@ -27,14 +27,10 @@ import javax.xml.xpath.XPathFactory;
  */
 public class Sac {
 	
-<<<<<<< HEAD
 	/**
 	 * Collection contenant l'entièreté des objets Lettres du scrabble à l'initialisation
 	 */
 	private List<Lettre> contenuSac;
-=======
-	private final List<Lettre> contenuSac;
->>>>>>> master
 	
 	/**
 	 * Retourne le sac
@@ -45,7 +41,6 @@ public class Sac {
 	}
 	
 	/**
-<<<<<<< HEAD
 	 * Actualise le contenu du sac
 	 * @param sac le nouveau contenu du sac
 	 */
@@ -54,8 +49,6 @@ public class Sac {
 	}
 	
 	/**
-=======
->>>>>>> master
 	* Retourne une lettre du sac
 	* @param positionSac la position de la lettre a récuperer
 	* @return la lettre selon la position
@@ -101,11 +94,7 @@ public class Sac {
 	}
 
 	/**
-<<<<<<< HEAD
 	 * Récupère les donnees des lettres dans le fichier dataLettre.XML et remplis la variable sac
-=======
-	 * Récupère les donnees des lettre dans le fichier dataLettre.XML et remplis la variable sac
->>>>>>> master
 	 */
 	private void remplissageSac() {
 	      DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -172,7 +161,6 @@ public class Sac {
 	         e.printStackTrace();
 	      }    
 	   }
-<<<<<<< HEAD
 	
 	/**
 	 * Affiche le nombre de lettres restantes dans le sac
@@ -180,7 +168,5 @@ public class Sac {
 	public String toString() {
 		return "Il reste " + this.tailleContenuSac() + " lettre(s) dans le sac";
 	}
-=======
->>>>>>> master
 
 }

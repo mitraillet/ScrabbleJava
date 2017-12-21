@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
  * Package Modèle
-=======
- * Package scrabble
->>>>>>> master
  */
 package scrabble;
 
@@ -13,17 +9,10 @@ import java.util.List;
 import java.util.Observable;
 
 /**
-<<<<<<< HEAD
  * Classe gérant les joueurs
  * @author Fauconnier/Henriquet
  */
 public class Joueur extends Observable {
-=======
- * @author Fauconnier/Henriquet
- * Classe gérant les joueurs
- */
-public class Joueur extends Observable{
->>>>>>> master
 
 	/**
 	 * Score total du joueur
@@ -31,7 +20,6 @@ public class Joueur extends Observable{
 	private int score;
 	
 	/**
-<<<<<<< HEAD
 	 * Score total du joueur adverse
 	 */
 	private int scoreAdverse;
@@ -40,16 +28,10 @@ public class Joueur extends Observable{
 	 * True si c'est le tour du joueur, sinon False
 	 */
 	private boolean tourJoueur = false;
-=======
-	 * True si c'est le tour du joueur, sinon False
-	 */
-	private boolean doitJouer = false;
->>>>>>> master
 	
 	/**
 	 * Tableau de Lettre représentant les Lettres du joueur
 	 */
-<<<<<<< HEAD
 	private List<Lettre> mainJoueur;
 	
 	/**
@@ -71,10 +53,6 @@ public class Joueur extends Observable{
 	 * True si la partie est finie, sinon false
 	 */
 	private boolean finPartie = false;
-=======
-	private  List<Lettre> mainJoueur;
-	
->>>>>>> master
 	
 	/**
 	 * Génération d'un nombre random compris entre deux chiffres
@@ -85,7 +63,6 @@ public class Joueur extends Observable{
 	public int generateNumber(int minNum, int maxNum) {
 		int random = (int)(Math.random() * maxNum + minNum);
 		return random;
-<<<<<<< HEAD
 	}
 	
 	/**
@@ -161,31 +138,20 @@ public class Joueur extends Observable{
 	/**
 	 * actualise le score du joueur
 	 * @param score le nouveau score
-=======
-		}
-	
-	/**
-	 * @param actualise le score du joueur
->>>>>>> master
 	 */
 	public void setScore(int score) {
 		this.score = score;
 	}
 	
 	/**
-<<<<<<< HEAD
 	 * renvoie le score du joueur
 	 * @return le score du joueur
-=======
-	 * @param actualise le score du joueur
->>>>>>> master
 	 */
 	public int getScore() {
 		return this.score;
 	}
 	
 	/**
-<<<<<<< HEAD
 	 * actualise le score du joueur adverse
 	 * @param score le nouveau score adverse
 	 */
@@ -204,16 +170,12 @@ public class Joueur extends Observable{
 	/**
 	 * Ajoute le score d'un mot au joueur
 	 * @param score le score à rajouter
-=======
-	 * @param ajoute le score d'un mot au joueur
->>>>>>> master
 	 */
 	public void addScore(int score) {
 		this.score += score;
 	}
 
 	/**
-<<<<<<< HEAD
 	 * actualise le tour du joueur et les vues
 	 * @param tourJoueur true si le joueur doit jouer, sinon false
 	 */
@@ -232,8 +194,6 @@ public class Joueur extends Observable{
 	}
 	
 	/**
-=======
->>>>>>> master
 	* Constructeur par défaut de la classe Joueur
 	*/
 	public Joueur(){
@@ -247,42 +207,29 @@ public class Joueur extends Observable{
 	 */
 	public Joueur(int score, boolean tour) {
 		this.score = score;
-<<<<<<< HEAD
 		this.tourJoueur = tour;
-=======
-		this.doitJouer = tour;
->>>>>>> master
 		this.setMainJoueur(new ArrayList<Lettre>());
 	}
 
 	/**
 	* Récupère une lettre dans la main du joueur
 	* @param positionMain la position de la lettre à récupérer
-<<<<<<< HEAD
 	* @return la lettre tirée de la main
-=======
->>>>>>> master
 	*/
 	public Lettre getLettreMain(int positionMain) {
 		return this.getMainJoueur().get(positionMain);
 	}
 	
 	/**
-<<<<<<< HEAD
 	* Récupère le label d'une lettre (se situant dans la main du joueur)
 	* @param positionMain la position de la lettre
 	* @return Le label de la lettre
-=======
-	* Récupère le label d'un lettre (se situant dans la main du joueur)
-	* @param positionMain la position de la lettre
->>>>>>> master
 	*/
 	public char getLabelLettreMain(int positionMain) {
 		return getLettreMain(positionMain).getLabel();
 	}
 	
 	/**
-<<<<<<< HEAD
 	* Récupère le label d'une lettre (se situant dans la main du joueur adverse)
 	* @param positionMain la position de la lettre
 	* @return Le label de la lettre
@@ -301,8 +248,6 @@ public class Joueur extends Observable{
 	}
 	
 	/**
-=======
->>>>>>> master
 	* Récupère la taille de la main du joueur 
 	* @return la taille (int)
 	*/
@@ -312,11 +257,7 @@ public class Joueur extends Observable{
 	
 	/**
 	* Retourne toute la main du joueur
-<<<<<<< HEAD
 	* @return la main du joueur
-=======
-	* @return the mainJoueur
->>>>>>> master
 	*/
 	public List<Lettre> getMainJoueur() {
 		return this.mainJoueur;
@@ -324,11 +265,7 @@ public class Joueur extends Observable{
 	
 	/**
 	 * Utilisé pour créer des copies de main 
-<<<<<<< HEAD
 	 * @param mainJoueur main a attribué au joueur
-=======
-	 * @param mainJoueur
->>>>>>> master
 	 */
 	public void setMainJoueur(List<Lettre> mainJoueur) {
 		this.mainJoueur = mainJoueur;
@@ -339,33 +276,12 @@ public class Joueur extends Observable{
 	 * @param sac l'objet sac qui contient les lettres
 	 */
 	public void pioche(Sac sac){
-<<<<<<< HEAD
 		
 		if(sac.tailleContenuSac() > 0) { //Si le sac n'est pas vide
 			if(this.getSizeMainJoueur() < 7 ) { //Si il y a moins de 7 lettres dans la main du joueur
 				
 				int nombrePieceAPrendre = 7 - getMainJoueur().size();
 				
-=======
-		System.out.println("Pioche");
-		
-		if(sac.tailleContenuSac() == 0) {
-			if( this.getSizeMainJoueur() > 1) {
-				System.out.println("L'adversaire n'a plus que " + this.getSizeMainJoueur() + " lettres dans sa main.");
-				setChanged();
-				notifyObservers();
-			}
-			else {
-				System.out.println("L'adversaire n'a plus qu'une lettre dans sa main.");
-				setChanged();
-				notifyObservers();
-			}
-		}
-		else {
-			if(this.getSizeMainJoueur() < 7 ) {
-				
-				int nombrePieceAPrendre = 7 - getMainJoueur().size();
->>>>>>> master
 				if(sac.tailleContenuSac() < nombrePieceAPrendre) {
 					nombrePieceAPrendre = sac.tailleContenuSac();
 				}
@@ -374,7 +290,6 @@ public class Joueur extends Observable{
 					getMainJoueur().add(sac.getPositionLettreDansSac(positionSac));
 					sac.removeLettreDuSac(positionSac);
 				}
-<<<<<<< HEAD
 			}
 			else{
 				MessageDErreur.setMsgDErreur("Pioche impossible");
@@ -382,15 +297,6 @@ public class Joueur extends Observable{
 		}
 		nbreTourPasser = 0;
 		setTourJoueur(!getTourJoueur());
-=======
-				setChanged();
-				notifyObservers();
-			}
-			else{
-				System.out.println("Pioche impossible");
-			}
-		}
->>>>>>> master
 	}
 
 
@@ -400,7 +306,6 @@ public class Joueur extends Observable{
 	 * @param sac l'objet sac qui récupère les lettres
 	 */
 	public void melanger(List<Lettre> exitLettre, Sac sac){
-<<<<<<< HEAD
 		
 		if(!getMainJoueur().isEmpty()) {
 
@@ -426,29 +331,11 @@ public class Joueur extends Observable{
 		}
 		else {
 			MessageDErreur.setMsgDErreur("Main vide rien à mélanger");
-=======
-		System.out.println("Melange");
-		if(!getMainJoueur().isEmpty()) {
-			for(int i = 0; i < exitLettre.size(); i++) {
-				if(getMainJoueur().contains(exitLettre.get(i))) {
-					sac.addLettreAuSac(exitLettre.get(i)); 
-					getMainJoueur().remove(exitLettre.get(i));
-				}
-				else {
-					System.out.println("Lettre inexistante dans la main");
-				}
-			}
-			this.pioche(sac);
-		}
-		else {
-			System.out.println("Main vide rien à mélanger");
->>>>>>> master
 		}
 	}
 	
 	/**
 	 * Vérifie que les lettres rentrées en console sont dans la main
-<<<<<<< HEAD
 	 * @param x la position x de la première lettre du mot posé
 	 * @param y la position x de la première lettre du mot posé
 	 * @param orientation l'orientation du mot
@@ -460,13 +347,6 @@ public class Joueur extends Observable{
 	 */
 	public void verifierLettreMain(int x , int y, char orientation, Plateau plateau, String[] mot, 
 			String[] motJoker, List<Lettre> motJoue, int nbrJoker) {
-=======
-	 * @param mot le mot à  jouer
-	 * @param motJoue La liste de lettre du mots sur le plateau
-	 * @return Une liste de lettre récupérée depuis la main
-	 */
-	public void verifierLettreMain(String[] mot, List<Lettre> motJoue) {
->>>>>>> master
 		//Gère les lettres de la main
 		Lettre tempLettre = null; //Lettre temporaire
 		int j = 0; //variable incrémentale 
@@ -479,7 +359,6 @@ public class Joueur extends Observable{
 			j = 0;
 			
 			//Tant qu' on n'a pas itéré toute la main et que la lettre n'est pas trouvée
-<<<<<<< HEAD
 			while(j < this.mainJoueur.size() && !lettreTrouve) {
 				if(mot[i].charAt(0) != (this.getLabelLettreMain(j))) { //Si la lettre n'est pas dans la main
 					tempLettre = null;
@@ -503,14 +382,6 @@ public class Joueur extends Observable{
 							tempLettre = this.getLettreMain(j);
 							lettreTrouve = true;
 						}
-=======
-			while(j < 7 && lettreTrouve == false) {
-				if(mot[i].charAt(0) != (this.getLabelLettreMain(j))) {
-					tempLettre = null;
-				} else { 
-					if(lettrePrise.contains(j)) {
-						tempLettre = null;
->>>>>>> master
 					} else {
 						lettrePrise.add(j);
 						tempLettre = this.getLettreMain(j);
@@ -534,11 +405,7 @@ public class Joueur extends Observable{
 	 * @param plateauSave la sauvegarde du plateau
 	 * @param saveMain la sauvegarde de la main
 	 * @param orientation l'orienation du mot
-<<<<<<< HEAD
 	 * @param plateau le plateau sur lequel poser le mot
-=======
-	 * @param plateau le plateau sur lequel posé le mot
->>>>>>> master
 	 * @return true si le mot est posé sans erreur, sinon false
 	 */
 	public boolean poserMotPlateau(int x, int y, List<Lettre> motJoue, List<Lettre> motMain, 
@@ -549,11 +416,7 @@ public class Joueur extends Observable{
 		for(int i = 0; i < motArray.length; i++) {
 			try {
 				if(plateau[x + xPos][y - yPos].getLettre() == null && motJoue.get(i) == null) {
-<<<<<<< HEAD
 					MessageDErreur.setMsgDErreur("Vous ne possédez pas les lettres requises.");
-=======
-					System.out.println("Vous ne possèdez pas les lettres requises.");
->>>>>>> master
 					return false;
 				}
 				
@@ -562,23 +425,14 @@ public class Joueur extends Observable{
 					motMain.add(motJoue.get(i));
 				} else {
 					if(plateau[x + xPos][y - yPos].getLabelCase() != motArray[i].charAt(0)) {
-<<<<<<< HEAD
 						MessageDErreur.setMsgDErreur("Impossible de poser le mot");
-=======
-						System.out.println("Impossible de poser le mot");
->>>>>>> master
 						return false;
 					}
 				}
 			} catch (ArrayIndexOutOfBoundsException e) {
 				this.setMainJoueur(saveMain);
 				plateau = plateauSave;
-<<<<<<< HEAD
 				MessageDErreur.setMsgDErreur("Erreur : votre mot sort du plateau");
-=======
-				System.out.println(plateau);
-				System.out.println("Erreur : votre mot sort du plateau");
->>>>>>> master
 				return false;
 			}
 
@@ -587,11 +441,7 @@ public class Joueur extends Observable{
 			} else if (orientation == 'v') {
 				yPos ++;
 			} else {
-<<<<<<< HEAD
 				MessageDErreur.setMsgDErreur("Erreur d'orientation");
-=======
-				System.out.println("Erreur");
->>>>>>> master
 				plateau = plateauSave;
 				return false;
 			}
@@ -603,10 +453,7 @@ public class Joueur extends Observable{
 	/**
 	 * Enlève les mots posés sur le plateau (de la main)
 	 * @param motMain Les lettres venant de la main
-<<<<<<< HEAD
 	 * @param sac le sac du jeu
-=======
->>>>>>> master
 	 */
 	public void viderLaMain(List<Lettre> motMain, Sac sac) {
 		for (int i = 0; i < motMain.size(); i++) {
@@ -619,13 +466,8 @@ public class Joueur extends Observable{
 	
 	/**
 	 * Détecte le nombre de joker dans le mot à jouer
-<<<<<<< HEAD
 	 * @param mot le mot à jouer
 	 * @return nbrJoker le nombre de joker
-=======
-	 * @param motArray le mot à jouer
-	 * @return le nombre de joker
->>>>>>> master
 	 */
 	public int detecteJoker(String mot) {
 		int nbrJoker = 0;
@@ -647,11 +489,7 @@ public class Joueur extends Observable{
 	 */
 	public String setJokerMain(char joker1, char joker2, String mot) {
 		
-<<<<<<< HEAD
 		boolean joker1ok = false; //flag, true si le 1er joker est set
-=======
-		boolean joker1ok = false;
->>>>>>> master
 		for(int i = 0; i < this.mainJoueur.size(); i++) {
 			
 			if(this.mainJoueur.get(i).getLabel() == '?') {
@@ -673,11 +511,7 @@ public class Joueur extends Observable{
 	/**
 	 * Vérifie le label rentré par l'utilisateur
 	 * @param joker le label rentré par le joueur
-<<<<<<< HEAD
 	 * @return le label vérifié ou '/' si incorrect
-=======
-	 * @return le label vérifié ou '$' si incorrect
->>>>>>> master
 	 */
 	public char testJoker(String joker) {
 		char labelChar;
@@ -687,18 +521,13 @@ public class Joueur extends Observable{
 			labelChar = labelString.charAt(0);
 		}
 		else {
-<<<<<<< HEAD
 			MessageDErreur.setMsgDErreur("Caractère non authorisé !");
-=======
-			System.out.println("Caractère non authorisé !");
->>>>>>> master
 			return '/';
 		}
 		return labelChar;
 	}
 	
 	/**
-<<<<<<< HEAD
 	 * Copie la main du joueur
 	 * @return la copie de la main
 	 */
@@ -748,12 +577,6 @@ public class Joueur extends Observable{
 				this.score = 0;
 			}
 		}
-=======
-	 * Permet au joueur de passer le tour
-	 */
-	public void passer() {
-		System.out.println("Passer");
->>>>>>> master
 	}
 	
 	/**
@@ -762,22 +585,14 @@ public class Joueur extends Observable{
 	 */
 	public String toString() {
 		String joueur;
-<<<<<<< HEAD
 		String score = "Vous avez : " + this.score + " point(s).";
 		String scoreAdverse = "Votre adversaire à : " + this.scoreAdverse + " point(s).";
-=======
-		String score = "Score : " + this.score;
->>>>>>> master
 		String string = "Votre main : ";
 		for(int i = 0; i < this.getSizeMainJoueur(); i++)
 	    {
 			string +=this.getLabelLettreMain(i) + " ";
 	    }
-<<<<<<< HEAD
 		joueur = score + '\n' + scoreAdverse + '\n' + string;
-=======
-		joueur = score + '\n' + string;
->>>>>>> master
 		return joueur;
 	}
 

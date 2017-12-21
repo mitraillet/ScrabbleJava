@@ -1,9 +1,6 @@
-<<<<<<< HEAD
 /**
  * Package modèle
  */
-=======
->>>>>>> master
 package view;
 
 import java.util.InputMismatchException;
@@ -15,7 +12,6 @@ import java.util.Scanner;
 
 import scrabble.Joueur;
 import scrabble.Lettre;
-<<<<<<< HEAD
 import scrabble.MessageDErreur;
 import scrabble.Plateau;
 import scrabble.Sac;
@@ -41,23 +37,10 @@ public class ScrabbleViewConsole extends ScrabbleView implements Observer{
 	 */
 	public ScrabbleViewConsole(Plateau plateau, Joueur joueur, Sac sac, ScrabbleController controller) {
 		super(plateau, joueur, sac, controller);
-=======
-import scrabble.Plateau;
-import controller.ScrabbleController;
-
-
-public class ScrabbleViewConsole extends ScrabbleView implements Observer{
-	protected Scanner sc;
-	
-	public ScrabbleViewConsole(Plateau plateau, Joueur joueur, ScrabbleController controller) {
-		// TODO Auto-generated constructor stub
-		super(plateau, joueur, controller);
->>>>>>> master
 		update(null, null);
 		sc = new Scanner(System.in);
 		new Thread (new ReadInput()).start();	
 	}
-<<<<<<< HEAD
 	
 	@Override
 	public void update(Observable o, Object arg) {
@@ -85,24 +68,10 @@ public class ScrabbleViewConsole extends ScrabbleView implements Observer{
 	private void printPlateauMain(){
 		System.out.println(plateau);
 		System.out.println(sac);
-=======
-
-	@Override
-	public void update(Observable o, Object arg) {
-		System.out.println(plateau);
-		System.out.println(joueur);
-		printHelp();
-		
-	}
-	
-	private void printPlateauMain(){
-		System.out.println(plateau);
->>>>>>> master
 		System.out.println(joueur);
 		printHelp();
 	}
 	
-<<<<<<< HEAD
 	/**
 	 * Gère la partie en console
 	 * @author Fauconnier/Henriquet
@@ -224,71 +193,6 @@ public class ScrabbleViewConsole extends ScrabbleView implements Observer{
 					affiche("C'est le tour de l'autre joueur");
 				}
 					
-=======
-	private class ReadInput implements Runnable {
-		public void run() {
-			while(true){
-				try{
-					String c = sc.next();
-					switch(c){
-					case "M" :
-						affiche("Mélanger");
-						String label = sc.next();
-						controller.melangeMain(label);
-						break;
-					case "P" :
-						affiche("Passer");
-						break;
-					case "J" : 
-						affiche("Jouer"); 
-						String mot1 = sc.next();
-						List<Lettre> saveMain = joueur.getMainJoueur(); //Sauvegarde de la main
-						
-						int joker = joueur.detecteJoker(mot1);
-						
-						if(joker == 1) {
-							affiche("Veuillez entrer le label du joker :");
-							char joker1 = '/';
-							char joker2 = '/';
-							while(joker1 == '/') {
-								joker1 = joueur.testJoker(sc.next());
-							}
-							mot1 = joueur.setJokerMain(joker1, joker2, mot1);
-							
-						} else if (joker == 2) {
-							affiche("Veuillez entrer le label du premier joker :");
-							char joker1 = '/';
-							char joker2 = '/';
-							while(joker1 == '/') {
-								joker1 = joueur.testJoker(sc.next());
-							}
-							affiche("Veuillez entrer le label du deuxième joker :");
-							while(joker2 == '/') {
-								joker2 = joueur.testJoker(sc.next());
-							}
-							mot1 = joueur.setJokerMain(joker1, joker2, mot1);
-						}
-						
-						if(plateau.verification(mot1)) {
-							affiche("Mot Correct");
-							affiche("Veuillez entrer la position X");
-							int intPosX = Integer.parseInt((sc.next()));
-							affiche("Veuillez entrer la position Y");
-							int intPosY = Integer.parseInt((sc.next()));
-							affiche("Veuillez entrer l'orientation (h ou v)");
-							char orientation = (sc.next()).charAt(0);
-							
-							controller.poserMot(intPosX, intPosY, orientation, mot1, saveMain);
-						}
-						else {
-							printPlateauMain();
-							affiche(mot1 + " est un mot incorrect");
-						}
-						break;
-					default : 
-						affiche("Opération incorrecte");
-				}
->>>>>>> master
 				}
 				catch(InputMismatchException e){
 					printPlateauMain();
@@ -297,7 +201,6 @@ public class ScrabbleViewConsole extends ScrabbleView implements Observer{
 			}
 		}
 
-<<<<<<< HEAD
 	}
 	
 	/**
@@ -335,18 +238,6 @@ public class ScrabbleViewConsole extends ScrabbleView implements Observer{
 		affiche("Pour passer : P");
 	}
 	
-=======
-
-	}
-	/**
-	 * Méthode pour afficher les lettres et les commandes associées
-	 */
-	private void printHelp(){
-		affiche("Pour mélanger : M + lettre à mélanger.");
-		affiche("Pour jouer : J + mot à jouer.");
-		affiche("Pour passer : P");
-	}
->>>>>>> master
 	/**
 	 * Méthode pour afficher en console
 	 */
