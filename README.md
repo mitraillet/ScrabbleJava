@@ -3,7 +3,7 @@ Projet en Java pour le cours de "Développement informatique avancé : applicati
 
 # Pour bien lancer l’application, veuillez respecter ces instructions : 
 
-Pour pouvoir lancer le jeu sur Windows, il suffit d’utiliser l’exécutable « Exécutable du Scrabble.bat » et de toujours avoir le fichier « Scrabble.jar » 
+Pour pouvoir lancer le jeu sur Windows, il suffit d’utiliser l’exécutable « Exécutable du Scrabble.bat » se trouvant dans le dossier « ScrabbleJavaExecutable » et de toujours avoir le fichier « Scrabble.jar » 
 et le dossier « ressource » dans le même dossier que le fichier « .bat » et d’éviter de modifier les documents dans le dossier « ressources », à l’exception des « .PSD »,
 car cela entrainerait des problèmes d’affichages ou pire des problèmes lors de l’utilisation du jeu.
 
