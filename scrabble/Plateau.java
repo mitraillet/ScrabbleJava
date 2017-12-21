@@ -29,6 +29,7 @@ import java.util.*;
  * Classe de gestion du plateau. 
  * Contient la vérification des mots et le calcul des scores
  * @author Fauconnier/Henriquet
+<<<<<<< HEAD
  */
 public class Plateau {
 	
@@ -49,6 +50,32 @@ public class Plateau {
 	
 	/**
 	* Contructeur par défaut du plateau
+=======
+ * Classe de gestion du plateau. 
+ * Contient la vérification des mots et le calcul des scores
+ */
+public class Plateau {
+
+	/**
+	* dictionnaire Contient tous les mots de la langues française 
+	*/
+	public HashSet<String> dictionnaire = new HashSet<String>();
+	
+	/**
+	* Tableau à double entrée représentant le plateau
+	*/
+	public Case[][] plateau;
+	
+	/**
+	 * True si début de la partie, sinon false;
+	 */
+	public boolean debutPartie;
+	
+	public List<Lettre> motJoue = new ArrayList<Lettre>();
+	
+	/**
+	* Contructeur par défaut du sac
+>>>>>>> master
 	*/
 	public Plateau() {
 		this.construireDico();
@@ -57,6 +84,7 @@ public class Plateau {
 	}
 	
 	/**
+<<<<<<< HEAD
 	 * Permet de changer le plateau par un autre
 	 * @param newPlateau variable contenant un double array de Case
 	 */
@@ -75,6 +103,9 @@ public class Plateau {
 	/**
 	* Place un objet case à une position donnée du plateau (XY)
 	* @param caseSet la case à placer dans le plateau
+=======
+	* Place un objet case à une position donnée du plateau (XY)
+>>>>>>> master
 	* @param x la position x du plateau
 	* @param y la position y du plateau
 	*/
@@ -87,7 +118,11 @@ public class Plateau {
 	 */
 	private void construireDico() {
 		try {
+<<<<<<< HEAD
 			File dico = new File("ressource/LexiqueODS7.txt"); //Path du dictionnaire.txt
+=======
+			File dico = new File("ressource/MotValideScrabble.txt"); //Path du dictionnaire.txt
+>>>>>>> master
 			BufferedReader br = new BufferedReader(new FileReader(dico)); //Crétation du buffer
 			String line; //Variable pour les lignes
 			while ((line = br.readLine()) != null) { //Pour chaque ligne exécute la boucle
@@ -146,7 +181,11 @@ public class Plateau {
 	            			y = ((Double)path.evaluate(expressionY, root, XPathConstants.NUMBER)).intValue();
 	            			bonus = ((Double)path.evaluate(expressionBonus, root, XPathConstants.NUMBER)).intValue();
 	            		} catch(XPathExpressionException e) {
+<<<<<<< HEAD
 	            			MessageDErreur.setMsgDErreur("Erreur Système : vérifier ressource plateau");
+=======
+	            			System.out.println("Erreur Système : vérifier ressource plateau");
+>>>>>>> master
 	            		}
 	            		
 	            		Case caseNouvelle = new Case(bonus);
@@ -179,12 +218,27 @@ public class Plateau {
 		return dictionnaire.contains(mot);
 	}
 	
+<<<<<<< HEAD
 	/**
+=======
+	/**
+	 * Flag, un mot est-il adjacent (mot horizontal) ? Si oui --> true
+	 */
+	private boolean	estAdjacentH;
+	
+	/**
+	 * Flag, un mot est-il adjacent (Mot vertical) ? Si oui --> true
+	 */
+	private boolean estAdjacentV;
+	
+	/**
+>>>>>>> master
 	 * Recherche des mots périphériques à celui placé par le joueur
 	 * qui se seraient créés et appel de la méthode vérification
 	 * @param x La position x de la première lettre
 	 * @param y La position y de la première lettre
 	 * @param orientation l'orientation du mot, h = horizontal, v = vertical
+<<<<<<< HEAD
 	 * @param motMain Les lettres tirées de la main
 	 * @param motJoue Les lettres à mettre sur le plateau
 	 * @return true si les vérifications sont correctes, sinon false
@@ -253,6 +307,88 @@ public class Plateau {
 			MessageDErreur.setMsgDErreur("Erreur : Placez le mot adjacent à un autre");
 			return false;
 		} else {
+=======
+	 */
+	public boolean verificationPeripherique(int x, int y, char orientation, List<Lettre> motMain, List<Lettre> motJoue) {
+		estAdjacentH = false;
+		estAdjacentV = false;
+		
+		if(motJoue.size() == 1) {
+			
+			if(this.checkGaucheDroite(x, y, 0, motJoue) != true) {
+				return false;
+			}
+			
+			if(this.checkHautBas(x, y, 0, motJoue) != true) {
+				return false;
+			}
+			
+			
+			if(estAdjacentH == true || estAdjacentV == true) {
+				System.out.println("Le mot est correct");
+				this.calculScore(x, y, orientation, motMain);
+				return true;
+			} else {
+				System.out.println("Erreur : Placez le mot adjacent à un autre");
+				return false;
+			}
+
+		} else {
+			
+			String motPrincipal = "";
+			
+			char labelLettre;
+			if(motJoue.get(0) != null) {
+				labelLettre = motJoue.get(0).getLabel();
+			} else {
+				labelLettre = this.plateau[x][y].getLabelCase();
+			}
+			
+			if(orientation == 'v') {
+				motPrincipal += getLabelToList(checkHaut(x, y)) + labelLettre + getLabelToList(checkBas(x, y));
+			} else if (orientation == 'h') {
+				motPrincipal += getLabelToList(checkGauche(x, y)) + labelLettre + getLabelToList(checkDroite(x, y));
+			} else {
+				System.out.println("Orientation incorrecte");
+				return false;
+			}
+			
+			if (this.verification(motPrincipal) == false) {
+				System.out.println("Le mot " + motPrincipal + " est incorrect");
+				return false;
+			}
+			
+			for(int i = 0; i < (motJoue.size()); i++) {
+				
+				if(orientation =='h') {
+					if(this.checkHautBas(x+i, y, i, motJoue) != true) {
+						System.out.println("Le mot vertical n'est pas correct");
+						return false;
+					}
+				}
+				
+				if(orientation =='v') {
+					if(this.checkGaucheDroite(x, y-i, i, motJoue) != true) {
+						System.out.println("Le mot horizontal n'est pas correct");
+						return false;
+					}
+				}
+			}
+			
+			if(orientation =='h') {
+				if(estAdjacentH != true && motPrincipal.length() <= motMain.size()) {
+					System.out.println("Placez le mot adjacent à un autre");
+					return false;
+				}
+			} else {
+				if(estAdjacentV != true && motPrincipal.length() <= motMain.size()) {
+					System.out.println("Placez le mot adjacent à un autre");
+					return false;
+				}
+			}
+			
+			this.calculScore(x, y, orientation, motMain);
+>>>>>>> master
 			return true;
 		}
 
@@ -272,11 +408,20 @@ public class Plateau {
 		List<Case> contientLettre = new ArrayList<Case>();
 		int j = 1;
 		try {
+<<<<<<< HEAD
 			if(this.getPlateauLettre(x, y + 1) != null) {
 				while(this.getPlateauLettre(x, y + j) != null) {
 					contientLettre.add(this.getCase(x, y + j));
 					j++;
 				}
+=======
+			if(plateau[x][y+1].lettre != null) {
+				while(plateau[x][y+j].lettre != null) {
+					contientLettre.add(plateau[x][y+j]);
+					j++;
+				}
+				estAdjacentH = true;
+>>>>>>> master
 			} 
 		} catch(IndexOutOfBoundsException e) {
 			//Empêche le crash, si le mot est au bord du plateau
@@ -295,11 +440,20 @@ public class Plateau {
 		List<Case> contientLettre = new ArrayList<Case>();
 		int j = 1;
 		try {
+<<<<<<< HEAD
 			if(this.getPlateauLettre(x, y - 1) != null) {
 				while(this.getPlateauLettre(x, y - j) != null) {
 					contientLettre.add(this.getCase(x, y - j));
 					j++;
 				}
+=======
+			if(plateau[x][y-1].lettre != null) {
+				while(plateau[x][y-j].lettre != null) {
+					contientLettre.add(plateau[x][y-j]);
+					j++;
+				}
+				estAdjacentH = true;
+>>>>>>> master
 			} 
 		} catch(IndexOutOfBoundsException e) {
 			//Empêche le crash, si le mot est au bord du plateau
@@ -317,11 +471,20 @@ public class Plateau {
 		List<Case> contientLettre = new ArrayList<Case>();
 		int j = 1;
 		try {
+<<<<<<< HEAD
 			if(this.getPlateauLettre(x - 1, y) != null) {
 				while(this.getPlateauLettre(x - j, y) != null) {
 					contientLettre.add(this.getCase(x - j, y));
 					j++;
 				}
+=======
+			if(plateau[x-1][y].lettre != null) {
+				while(plateau[x-j][y].lettre != null) {
+					contientLettre.add(plateau[x-j][y]);
+					j++;
+				}
+				estAdjacentV = true;
+>>>>>>> master
 			} 
 		} catch(IndexOutOfBoundsException e) {
 			//Empêche le crash, si le mot est au bord du plateau
@@ -340,11 +503,20 @@ public class Plateau {
 		List<Case> contientLettre = new ArrayList<Case>();
 		int j = 1;
 		try {
+<<<<<<< HEAD
 			if(this.getPlateauLettre(x + 1, y) != null) {
 				while(this.getPlateauLettre(x + j, y) != null) {
 					contientLettre.add(this.getCase(x + j, y));
 					j++;
 				}
+=======
+			if(this.plateau[x+1][y].lettre != null) {
+				while(this.plateau[x+j][y].lettre != null) {
+					contientLettre.add(plateau[x+j][y]);
+					j++;
+				}
+				estAdjacentV = true;
+>>>>>>> master
 			} 	
 		} catch(IndexOutOfBoundsException e) {
 			//Empêche le crash, si le mot est au bord du plateau
@@ -357,6 +529,7 @@ public class Plateau {
 	 * @param x la position x de la lettre
 	 * @param y la position y de la lettre
 	 * @param getNum le numéro de la lettre dans motJoue
+<<<<<<< HEAD
 	 * @param motJoue le mot joué par le joueur
 	 * @return true si tous est juste, sinon false
 	 */
@@ -377,18 +550,47 @@ public class Plateau {
 			String tempMot = motHaut + labelLettre + motBas;
 			if(this.verification(tempMot) == false) {
 				MessageDErreur.setMsgDErreur("Mot incorrect");
+=======
+	 * @return true si tous est juste, sinon false
+	 */
+	public boolean checkHautBas(int x, int y, int getNum, List<Lettre> motJoue) {
+		char labelLettre;
+		if(motJoue.get(getNum) != null) {
+			labelLettre = motJoue.get(getNum).getLabel();
+		} else {
+			labelLettre = this.plateau[x][y].getLabelCase();
+		}
+		
+		String motHaut = this.getLabelToList(checkHaut(x, y));
+		String motBas = this.getLabelToList(checkBas(x, y));
+		
+		
+		
+		if(motHaut != "" && motBas != "") {
+			String tempMot = motHaut + labelLettre + motBas;
+			if(this.verification(tempMot) == false) {
+				System.out.println("Mot incorrect");
+>>>>>>> master
 				return false;
 			}
 			
 		} else if(motHaut != "") {
 			if(this.verification(motHaut + labelLettre) == false) {
+<<<<<<< HEAD
 				MessageDErreur.setMsgDErreur("Le mot en haut est incorrect");
+=======
+				System.out.println("Le mot en haut est incorrect");
+>>>>>>> master
 				return false;
 			}
 			
 		} else if(motBas != "") {
 			if(this.verification(labelLettre + motBas) == false) {
+<<<<<<< HEAD
 				MessageDErreur.setMsgDErreur("Le mot en bas est incorrect");
+=======
+				System.out.println("Le mot en bas est incorrect");
+>>>>>>> master
 				return false;
 			}
 		}
@@ -400,6 +602,7 @@ public class Plateau {
 	 * @param x la position x de la lettre
 	 * @param y la position y de la lettre
 	 * @param getNum le numéro de la lettre dans motJoue
+<<<<<<< HEAD
 	 * @param motJoue la List<Lettre> contenant le mot jouer
 	 * @return true si tous est juste, sinon false
 	 */
@@ -538,16 +741,135 @@ public class Plateau {
 	
 	/**
 	 * Copie le plateau
+=======
+	 * @return true si tous est juste, sinon false
+	 */
+	public boolean checkGaucheDroite(int x, int y, int getNum, List<Lettre> motJoue) {
+		char labelLettre;
+		if(motJoue.get(getNum) != null) {
+			labelLettre = motJoue.get(getNum).getLabel();
+		} else {
+			labelLettre = this.plateau[x][y].getLabelCase();
+		}
+		
+		String motGauche = this.getLabelToList(checkGauche(x, y));
+		String motDroit = this.getLabelToList(checkDroite(x, y));
+		
+		
+		if(motGauche != "" && motDroit != "") {
+			String tempMot = motGauche + labelLettre + motDroit;
+			if(this.verification(tempMot) == false) {
+				System.out.println("Mot incorrect");
+				return false;
+			}
+		} else if(motGauche != "") {
+			if(this.verification(motGauche + labelLettre) == false) {
+				System.out.println("Le mot à droite est incorrect");
+				return false;
+			}
+		} else if(motDroit != "") {
+			if(this.verification(labelLettre + motDroit) == false) {
+				System.out.println("Le mot à gauche est incorrect");
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	//----------------------------------------------------------------------------------
+	
+	//Utilitaire
+	
+	/**
+	 * Récupère le label d'une liste de lettre dans des cases
+	 * @param listCase la liste de case
+	 * @return le mot formé par les labels
+	 */
+	public String getLabelToList(List<Case> listCase) {
+		String tempMot = "";
+		for(int i = 0; i < listCase.size(); i++) {
+			tempMot += listCase.get(i).getLabelCase();
+		}
+		return tempMot;
+	}
+	
+	/**
+	 * Récupère le score d'une liste de lettre dans des cases sans prendre
+	 * en compte les bonus
+	 * @param listCase la liste de case
+	 * @return le score
+	 */
+	public int getScoreToList(List<Case> listCase) {
+		int tempScore = 0;
+		for(int i = 0; i < listCase.size(); i++) {
+			tempScore += listCase.get(i).getValeurCase();
+		}
+		return tempScore;
+	}
+	
+	/**
+	 * Récupère les labels d'une liste de lettre
+	 * @param listLettre la liste de lettre
+	 * @return le mot 
+	 */
+	public String getMotToList(List<Lettre> listLettre) {
+		String tempMot = "";
+		for(int i = 0; i < listLettre.size(); i++) {
+			tempMot += listLettre.get(i).getLabel();
+		}
+		return tempMot;
+	}
+	
+	/**
+	 * Récupère les objets Case du plateau en fonction des coordonées de celle-ci
+	 * @param x La position x de la première case
+	 * @param y La position y de la première case
+	 * @return la case du plateau en (x,y)
+	 */
+	public Case getCase(int x, int y) {
+		return this.plateau[x][y];
+	}
+	
+	/**
+	 * Récupère les bonus de Case du plateau en fonction des coordonées de celle-ci
+	 * @param x La position x de la première case
+	 * @param y La position y de la première case
+	 * @return le bonus de la case du plateau en (x,y)
+	 */
+	public int getPlateauBonus(int x, int y) {
+		return this.plateau[x][y].getBonus();
+	}
+	
+	/**
+	 * Récupère les labels des lettres contenues dans la Case du plateau en fonction des coordonées de celle-ci
+	 * @param x La position x de la première case
+	 * @param y La position y de la première case
+	 * @return les labels des lettres contenues dans la case du plateau en (x,y)
+	 */
+	public char getPlateauLabel(int x, int y) {
+		return this.plateau[x][y].getLabelCase();
+	}
+	/**
+	 * Copie le plateau, pour la sauvegarde
+	 * @param tab le tableau à copier
+>>>>>>> master
 	 * @return le tableau copié
 	 */
 	public Case[][] copyPlateau() {
 		Case[][] tempArray = new Case [15][15];
 		for(int i = 0; i < 15; i++) { //X
 			for(int h = 0; h < 15; h++) { //Y
+<<<<<<< HEAD
 				if(this.getPlateauLettre(0 + i, 0 + h) != null) {
 					tempArray[0 + i][0 + h] = new Case(this.getPlateauBonus(0 + i, 0 + h), this.getPlateauLettre(0 + i, 0 + h));
 				} else {
 					tempArray[0 + i][0 + h] = new Case(this.getPlateauBonus(0 + i, 0 + h), null);
+=======
+				if(this.plateau[0 + i][0 + h].getLettre() != null) {
+					tempArray[0 + i][0 + h] = new Case(this.plateau[0 + i][0 + h].getBonus(), this.plateau[0 + i][0 + h].getLettre());
+				} else {
+					tempArray[0 + i][0 + h] = new Case(this.plateau[0 + i][0 + h].getBonus(), null);
+>>>>>>> master
 				}
 			}
 		}
@@ -570,6 +892,7 @@ public class Plateau {
 	//----------------------------------------------------------------------------------
 	
 	/**
+<<<<<<< HEAD
 	 * Test si le  premier mot est correct
 	 * @param x La position x de la première lettre
 	 * @param y La position y de la première lettre
@@ -601,16 +924,75 @@ public class Plateau {
 			//Si le mot est au centre
 			if (estCentre) {
 				this.setDebutPartie(true);
+=======
+	 * Test du premier mot
+	 * @param x La position x de la première lettre
+	 * @param y La position y de la première lettre
+	 */
+	public boolean checkPremierMot(int x, int y, char orientation, Joueur joueurActuel, List<Lettre> motMain){
+			int j = 0;
+			boolean estCentre = false; //Si c'est OK  --> true = au milieu du plateau
+			switch (orientation) {
+				case 'v' :
+					while(plateau[x][y - j].lettre != null) {
+						if(plateau[x][y - j].getBonus() == 5) {
+							estCentre = true;
+						}
+						j++;
+					} 
+					
+					break;
+				case 'h' : 
+					while(plateau[x + j][y].lettre != null) {
+						if(plateau[x + j][y].getBonus() == 5) {
+							estCentre = true;
+						}
+						j++;
+					} 
+					
+					break;
+				default : 
+					System.out.println("Erreur, orientation incorrecte");
+					estCentre = false;
+			}
+			if (estCentre) {
+				this.calculScore(x, y, orientation, motMain);
+				this.debutPartie = true;
+>>>>>>> master
 			}
 			return estCentre;
 	}
 	
 	/**
+<<<<<<< HEAD
+=======
+	 * Contient le score temporaire lors du calcul de score
+	 */
+	public int tempScore = 0;
+	
+	/**
+	 * Toutes les lettres doublées
+	 */
+	public List<Lettre> lettreDouble = new ArrayList<Lettre>();
+	
+	/**
+	 * Toutes les lettres triplées
+	 */
+	public List<Lettre> lettreTriple = new ArrayList<Lettre>();
+	
+	/**
+	 * Lettre sans bonus
+	 */
+	public List<Lettre> lettreScore = new ArrayList<Lettre>();
+	
+	/**
+>>>>>>> master
 	 * Calcul le score du mot posé
 	 * @param x la postion x de la première lettre posée
 	 * @param y la postion y de la première lettre posée
 	 * @param orientation l'orientation du mot (h ou v)
 	 * @param motMain le nombre de lettre jouée depuis la main (en cas de scrabble)
+<<<<<<< HEAD
 	 * @param motJoue le mot joué
 	 * @return le score du mot
 	 */
@@ -621,12 +1003,23 @@ public class Plateau {
 		List<Lettre> lettreDouble = new ArrayList<Lettre>();
 		List<Lettre> lettreTriple = new ArrayList<Lettre>();
 		List<Lettre> lettreScore = new ArrayList<Lettre>();
+=======
+	 */
+	public void calculScore(int x, int y, char orientation, List<Lettre> motMain) {
+		List<Lettre> scorePrincipal = new ArrayList<Lettre>();
+		
+		//Vide les listes
+		lettreTriple.removeAll(lettreTriple);
+		lettreDouble.removeAll(lettreDouble);
+		lettreScore.removeAll(lettreScore);
+>>>>>>> master
 		
 		int doubleMot = 0;
 		int tripleMot = 0;
 		
 		int xDebut = x;
 		int yDebut = y;
+<<<<<<< HEAD
 		boolean estScrabble = false;
 		Lettre scrabble = new Lettre('/', 0);
 		
@@ -640,13 +1033,24 @@ public class Plateau {
 		if(orientation == 'h') {
 			scorePrincipal.addAll(this.convertListCaseToListLettre(this.checkGauche(x, y)));
 			scorePrincipal.add(this.getPlateauLettre(x, y));
+=======
+		
+		//Calcul le score du mot posé
+		if(orientation == 'h') {
+			scorePrincipal.addAll(this.convertListCaseToListLettre(this.checkGauche(x, y)));
+			scorePrincipal.add(this.plateau[x][y].getLettre());
+>>>>>>> master
 			scorePrincipal.addAll(this.convertListCaseToListLettre(this.checkDroite(x, y)));
 			
 			xDebut = x - this.checkGauche(x, y).size();
 			
 		} else { //orientation == 'v'
 			scorePrincipal.addAll(this.convertListCaseToListLettre(this.checkHaut(x, y)));
+<<<<<<< HEAD
 			scorePrincipal.add(this.getPlateauLettre(x, y));
+=======
+			scorePrincipal.add(this.plateau[x][y].getLettre());
+>>>>>>> master
 			scorePrincipal.addAll(this.convertListCaseToListLettre(this.checkBas(x, y)));
 			
 			yDebut = y + this.checkHaut(x, y).size();
@@ -658,7 +1062,11 @@ public class Plateau {
 		
 		//Comptabilise les bonus
 		for(int i = 0; i < scorePrincipal.size(); i++) {
+<<<<<<< HEAD
 			switch (this.getPlateauBonus(xDebut + h, yDebut - v)) {
+=======
+			switch (this.plateau[xDebut + h][yDebut - v].getBonus()) {
+>>>>>>> master
 				case 3:
 					doubleMot += 1;
 					break;
@@ -669,7 +1077,11 @@ public class Plateau {
 					doubleMot += 1;
 					break;
 				default:
+<<<<<<< HEAD
 					break;
+=======
+				
+>>>>>>> master
 			}
 		
 			if(orientation == 'h') {
@@ -685,7 +1097,11 @@ public class Plateau {
 		//Ajoute les lettres dans les listes de score suivant les bonus
 		for(int i = 0; i < scorePrincipal.size(); i++) {
 			
+<<<<<<< HEAD
 			Case caseActuel = this.getCase(xDebut + h, yDebut - v);
+=======
+			Case caseActuel = this.plateau[xDebut + h][yDebut - v];
+>>>>>>> master
 			
 			int bonusActuel = caseActuel.getBonus();
 			boolean flagEstCompte = false; //Flag, true si la lettre est comptabilisé
@@ -712,6 +1128,7 @@ public class Plateau {
 				v++;
 			}
 		}
+<<<<<<< HEAD
 		
 		if(doubleMot == 0 && tripleMot == 0 && estScrabble == true) {
 			lettreScore.add(scrabble);
@@ -724,6 +1141,10 @@ public class Plateau {
 		tempScore += this.calculScorePeripherique(x, y, orientation, motJoue);
 		tempScore += this.calculScoreMot(motMain, lettreDouble, lettreTriple, lettreScore);
 		return tempScore;
+=======
+		this.calculScoreMot(motMain);
+		this.calculScorePeripherique(x, y, orientation);
+>>>>>>> master
 	}
 	
 	/**
@@ -731,16 +1152,24 @@ public class Plateau {
 	 * @param x la position x de la première lettre posée
 	 * @param y la position y de la première lettre posée
 	 * @param orientation l'orientation du mot (h ou v)
+<<<<<<< HEAD
 	 * @param motJoue le mot joué
 	 * @return le score des mots périphérique
 	 */
 	public int calculScorePeripherique(int x, int y, char orientation, List<Lettre> motJoue) {
+=======
+	 */
+	public void calculScorePeripherique(int x, int y, char orientation) {
+>>>>>>> master
 		int scoreSecondaireTemp = 0;
 		int h = 0;
 		int v = 0;
 		
+<<<<<<< HEAD
 		int tempScore = 0;
 		
+=======
+>>>>>>> master
 		for(int i = 0; i < motJoue.size(); i++) { //motJoue, la longueur du mot posé
 			scoreSecondaireTemp = 0;
 			
@@ -756,6 +1185,7 @@ public class Plateau {
 				}
 				
 				if(scoreSecondaireTemp != 0) {
+<<<<<<< HEAD
 					if(this.getPlateauBonus(x + h, y - v) == 1) {
 						scoreSecondaireTemp += (this.getCase(x + h, y - v).getValeurCase())*2;
 					} else if (this.getPlateauBonus(x + h, y - v) == 2) {
@@ -783,11 +1213,35 @@ public class Plateau {
 		}
 		
 		return tempScore;
+=======
+					scoreSecondaireTemp += this.plateau[x + h][y - v].getValeurCase();
+				}
+				
+				if(this.plateau[x + h][y - v].getBonus() == 3) {
+					this.tempScore += (scoreSecondaireTemp)*2;
+				} else if (this.plateau[x + h][y - v].getBonus() == 4) {
+					this.tempScore += (scoreSecondaireTemp)*3;
+				} else {
+					this.tempScore += scoreSecondaireTemp;
+				}
+				
+				if(orientation == 'h') {
+					h++;
+				} else {
+					v++;
+				}
+
+			}
+		}
+		
+		this.deleteBonus(x, y, orientation);
+>>>>>>> master
 	}
 	
 	/**
 	 * Calcule le score d'un mot en comptant les mots doubles et triples
 	 * @param motMain le nombre de lettre jouées depuis la main (en cas de scrabble)
+<<<<<<< HEAD
 	 * @param lettreDouble les lettres doublées
 	 * @param lettreTriple les lettres triplées
 	 * @param lettreScore les lettres sans bonus
@@ -797,6 +1251,17 @@ public class Plateau {
 			List<Lettre> lettreTriple, List<Lettre> lettreScore) {
 		int score = 0;
 		
+=======
+	 */
+	public void calculScoreMot(List<Lettre> motMain) {
+		int score = 0;
+		
+		if(motMain.size() == 7) {
+			Lettre scrabble = new Lettre('$', 50); //Création d'une lettre de 50points pour le scrabble
+			lettreScore.add(scrabble);
+		}
+		
+>>>>>>> master
 		for(int i = 0; i < lettreDouble.size(); i++) {
 			score += (lettreDouble.get(i).getValeur() * 2);
 		}
@@ -809,6 +1274,7 @@ public class Plateau {
 			score += lettreScore.get(i).getValeur();
 		}
 		
+<<<<<<< HEAD
 		return score;
 	}
 	
@@ -846,6 +1312,40 @@ public class Plateau {
 			}
 		}
 		return false;
+=======
+		this.tempScore += score;
+	}
+	
+	/**
+	 * Enlève du plateau les bonus déjà utilisés
+	 * @param x la position x de départ du mot posé
+	 * @param y la position y de départ du mot posé
+	 * @param orientation l'orientation du mot posé
+	 */
+	public void deleteBonus(int x, int y, char orientation) {
+		int h = 0;
+		int v = 0;
+		
+		for(int i = 0; i < motJoue.size(); i++) {
+			this.plateau[x + h][y - v].setBonus(0);
+			
+			if(orientation == 'h') {
+				h++;
+			} else {
+				v++;
+			}
+			
+		}
+	}
+	
+	/**
+	 * Actualise le score du joueur passé en paramètre
+	 * @param joueurActuel le joueur qu'on actualise
+	 */
+	public void setScoreJoueur(Joueur joueurActuel) {
+		joueurActuel.addScore(tempScore);
+		this.tempScore = 0;
+>>>>>>> master
 	}
 	
 	/**
@@ -863,6 +1363,7 @@ public class Plateau {
 				string += j + "|";
 			}
 			for(int h = 0; h < 15; h++) {
+<<<<<<< HEAD
 				if(this.getPlateauLettre(h, j) == null) {
 					if(this.getPlateauBonus(h, j) == 0) {
 						string += (" |");
@@ -873,6 +1374,13 @@ public class Plateau {
 				}
 				else {
 					string += (this.getPlateauLabel(h, j) + "|" );
+=======
+				if(plateau[h][j].getLettre() == null) {
+						string += (plateau[h][j].getBonus() + "|");
+				}
+				else {
+					string += (plateau[h][j].getLabelCase() + "|");
+>>>>>>> master
 				}
 			}
 			string += "\n";
@@ -889,6 +1397,10 @@ public class Plateau {
 		}
 		string += "\n";
 		return string;
+<<<<<<< HEAD
 	}
 
+=======
+	}	
+>>>>>>> master
 }

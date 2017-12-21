@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Package Modèle
+=======
+ * 
+>>>>>>> master
  */
 package scrabble;
 
@@ -11,8 +15,13 @@ import java.io.IOException;
 import java.util.HashSet;
 
 /**
+<<<<<<< HEAD
  * Classe initialisant et gérant le dictionnaire
  * @author Fauconnier/Henriquet
+=======
+ * @author Fauconnier/Henriquet
+ *
+>>>>>>> master
  */
 public class Dictionnaire {
 
@@ -24,7 +33,10 @@ public class Dictionnaire {
 	/**
 	 * Itération d'un dictionnaire pour trouver concordance 
 	 * avec le mot entré par le joueur et vérifier s'il existe
+<<<<<<< HEAD
 	 * @param mot Le mot à vérifier s'il est bien présent dans le dictionnaire
+=======
+>>>>>>> master
 	 * @return true si mot est dans le dictionnaire sinon false
 	 */
 	public boolean verification(String mot) {

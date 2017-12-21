@@ -1,4 +1,11 @@
+<<<<<<< HEAD
 
 .DS_Store
 view/DragPictureDemo2.java
 view/GUISave.java
+=======
+
+view/GUISave.java
+view/DragPictureDemo2.java
+.DS_Store
+>>>>>>> master

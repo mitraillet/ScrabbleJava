@@ -21,6 +21,7 @@ public class JokerTest {
 	public void testSetJoker() {
 		Joker joker = new Joker();
 		
+<<<<<<< HEAD
 		joker.setJoker('a');
 		assertEquals(joker.getLabel(), 'a');
 		
@@ -28,6 +29,15 @@ public class JokerTest {
 		assertEquals(joker.getLabel(), 'y');
 		
 		joker.setJoker('?');
+=======
+		joker.setJoker("a");
+		assertEquals(joker.getLabel(), 'a');
+		
+		joker.setJoker("Y");
+		assertEquals(joker.getLabel(), 'y');
+		
+		joker.setJoker("?");
+>>>>>>> master
 		assertFalse(joker.getLabel() == '?');
 	}
 }

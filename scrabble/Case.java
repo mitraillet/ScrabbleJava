@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Package Modèle
+=======
+ * Classe case
+>>>>>>> master
  */
 package scrabble;
 
@@ -86,11 +90,24 @@ public class Case implements Serializable {
 	 */
 	public Case() {
 		this(0);
+<<<<<<< HEAD
+=======
 	}
 	
 	/**
 	 * Constructeur de l'objet Case
 	 * @param bonus le bonus associé à la case
+	 */
+	public Case(int bonus) {
+		this.lettre = null;
+		this.bonus = bonus;
+>>>>>>> master
+	}
+	
+	/**
+	 * Constructeur de l'objet Case
+	 * @param bonus le bonus associé à la case
+<<<<<<< HEAD
 	 */
 	public Case(int bonus) {
 		this.lettre = null;
@@ -107,5 +124,14 @@ public class Case implements Serializable {
 		this.bonus = bonus;
 	}
 	
+=======
+	 * @param lettre la lettre associé à la case
+	 */
+	public Case(int bonus, Lettre lettre) {
+		this.lettre = lettre;
+		this.bonus = bonus;
+	}
+	
+>>>>>>> master
 	
 }
