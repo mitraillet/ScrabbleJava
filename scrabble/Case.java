@@ -12,6 +12,11 @@ import java.io.Serializable;
 public class Case implements Serializable {
 	
 	/**
+	 * Numéro de version de la classe
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	/**
 	 * Contient la lettre "posée" sur la case
 	 */
 	protected Lettre lettre;

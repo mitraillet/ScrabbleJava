@@ -29,6 +29,7 @@ import scrabble.Sac;
 public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 	
 	private JFrame fenetreJeu = new JFrame();
+	@SuppressWarnings("unused") //Utilisée ligne 314
 	private FenetreFinDePartie FenetreFinDePartie;
 	private JPanel container = new JPanel();
 	
@@ -353,7 +354,6 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 		
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			// TODO Auto-generated method stub
 			jouerJButton.setEnabled(false);
 			melangeJButton.setEnabled(false);
 			passerJButton.setEnabled(false);
@@ -717,7 +717,6 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 		
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			// TODO Auto-generated method stub
 			jouerJButton.setEnabled(false);
 			melangeJButton.setEnabled(false);
 			passerJButton.setEnabled(false);
@@ -749,12 +748,10 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 		}
 		
 		/**
-		 * 
 		 * @author Fauconnier/Henriquet
 		 * Classe du bouton Passer
 		 */
 		class Passe implements ActionListener{
-			//TODO
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				controller.passer();
@@ -763,7 +760,6 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 			}
 		}
 		/**
-		 * 
 		 * @author Fauconnier/Henriquet
 		 * Classe du bouton annule pour fermer la fenêtre
 		 */
@@ -782,7 +778,6 @@ public class ScrabbleViewGUI extends ScrabbleView implements ActionListener{
 	}
 	
 	/**
-	 * 
 	 * @author Fauconnier/Henriquet
 	 * Classe contenant la fenêtre de fin de partie
 	 */

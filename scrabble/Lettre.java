@@ -14,6 +14,11 @@ import java.io.Serializable;
 public class Lettre implements Serializable {
 
 	/**
+	 * Numéro de version de la classe
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
 	 * Le libellé du caractère
 	 */
 	private char label;

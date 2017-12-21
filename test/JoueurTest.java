@@ -188,6 +188,8 @@ public class JoueurTest {
 		Joueur joueur = new Joueur();
 		List<Lettre> lettreSacTestChangement = new ArrayList<Lettre>();
 		List<Lettre> lettreMainTestChangement = new ArrayList<Lettre>();
+		
+		
 		//Vérif si main vide
 		lettreSacTestChangement.add(sac.getPositionLettreDansSac(83));
 		lettreSacTestChangement.add(sac.getPositionLettreDansSac(48));
@@ -213,6 +215,57 @@ public class JoueurTest {
 		lettreMainTestChangement.add(new Lettre('y', 86));
 		joueur.melanger(lettreMainTestChangement, sac);
 		assertEquals(joueur.getMainJoueur(), mainTest);
+		
+		//Vérif si plusieurs fois la même lettre
+		Lettre e = new Lettre('e' ,1);
+		Lettre r = new Lettre('r', 1);
+		Lettre a = new Lettre('a', 1);
+		Lettre v = new Lettre('v', 1);
+		Lettre k = new Lettre('k', 1);
+		
+		joueur.getMainJoueur().removeAll(joueur.getMainJoueur());
+		
+		joueur.getMainJoueur().add(e);
+		joueur.getMainJoueur().add(e);
+		joueur.getMainJoueur().add(r);
+		joueur.getMainJoueur().add(a);
+		joueur.getMainJoueur().add(v);
+		joueur.getMainJoueur().add(e);
+		joueur.getMainJoueur().add(k);
+		
+		lettreMainTestChangement.removeAll(lettreMainTestChangement);
+		lettreMainTestChangement.add(r);
+		lettreMainTestChangement.add(a);
+		lettreMainTestChangement.add(v);
+		lettreMainTestChangement.add(k);
+		lettreMainTestChangement.add(k);
+		lettreMainTestChangement.add(k);
+		lettreMainTestChangement.add(k);
+		
+		lettreSacTestChangement.removeAll(lettreSacTestChangement);
+		lettreSacTestChangement.add(k);
+		lettreSacTestChangement.add(k);
+		lettreSacTestChangement.add(k);
+		lettreSacTestChangement.add(k);
+		lettreSacTestChangement.add(k);
+		
+		List<Lettre> lettreEnleve = new ArrayList<Lettre>();
+		lettreEnleve.add(e);
+		lettreEnleve.add(e);
+		lettreEnleve.add(e);
+		
+		sac.setSac(lettreSacTestChangement);
+		sac.getSac().removeAll(lettreEnleve);
+		
+		joueur.melanger(lettreEnleve, sac);
+		
+		for(int f = 0; f < joueur.getSizeMainJoueur(); f++) {
+			System.out.println(joueur.getMainJoueur().get(f).getLabel());
+		}
+		
+		for(int f = 0; f < sac.getSac().size(); f++) {
+			System.out.println(sac.getSac().get(f).getLabel());
+		}
 
 	}
 
@@ -455,16 +508,74 @@ public class JoueurTest {
 		assertEquals(joueur.getMainJoueur().get(6).getLabel(), joueur.copieMainJoueur().get(6).getLabel());
 	}
 	
-	public void scoreFinPartie() {
-		fail();
+	@Test
+	public void testScoreFinPartie() {
+		Joueur joueur = new Joueur();
+		Joueur joueur2 = new Joueur();
+		
+		List<Lettre> main = new ArrayList<Lettre>();
+		List<Lettre> mainAdverseTest = new ArrayList<Lettre>();
+		mainAdverseTest.add(new Lettre('z', 10));
+		mainAdverseTest.add(new Lettre('a', 1));
+		mainAdverseTest.add(new Lettre('b', 2));
+		
+		joueur.setMainJoueur(main);
+		joueur.setMainJoueurAdverse(mainAdverseTest);
+		
+		joueur.setScore(128);
+		joueur.setScoreAdverse(135);
+		
+		joueur.setFinPartie(true);
+		
+		assertEquals(joueur.getScore(), 141);
+	
+		joueur2.setMainJoueur(mainAdverseTest);
+		joueur2.setMainJoueurAdverse(main);
+		joueur2.setScore(135);
+		joueur2.setScoreAdverse(138);
+		
+		joueur2.setFinPartie(true);
+		
+		assertEquals(joueur2.getScore(), 122);
+		
 	}
 	
-	public void getFinPartie() {
-		fail();
+	@Test
+	public void testGetFinPartie() {
+		Joueur joueur = new Joueur();
+		joueur.setFinPartie(false);
+		
+		assertEquals(joueur.getFinPartie(), false);
 	}
 	
-	public void setFinPartie() {
-		fail();
+	@Test
+	public void testSetFinPartie() {
+		Joueur joueur = new Joueur();
+		
+		List<Lettre> main = new ArrayList<Lettre>();
+		List<Lettre> mainAdverseTest = new ArrayList<Lettre>();
+		mainAdverseTest.add(new Lettre('z', 10));
+		mainAdverseTest.add(new Lettre('a', 1));
+		mainAdverseTest.add(new Lettre('b', 2));
+		joueur.setScore(128);
+		joueur.setScoreAdverse(135);
+		
+		joueur.setMainJoueur(main);
+		joueur.setMainJoueurAdverse(mainAdverseTest);
+		
+		joueur.setFinPartie(false);
+		
+		assertEquals(joueur.getFinPartie(), false);
+		
+		joueur.setFinPartie(true);
+		
+		assertEquals(joueur.getFinPartie(), true);
+		
+		assertEquals(joueur.getScore(), 141);
+		
+		joueur.setFinPartie(true); //Pas de recalcul du score si 2 fois fin de partie
+		
+		assertEquals(joueur.getScore(), 141);
 	}
 	
 	@Test

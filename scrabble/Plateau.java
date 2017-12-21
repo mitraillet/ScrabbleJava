@@ -9,7 +9,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.Serializable;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -31,7 +30,7 @@ import java.util.*;
  * Contient la vérification des mots et le calcul des scores
  * @author Fauconnier/Henriquet
  */
-public class Plateau implements Serializable {
+public class Plateau {
 	
 	/**
 	* Dictionnaire contenant tous les mots éligibles au scrabble

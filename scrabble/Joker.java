@@ -12,6 +12,11 @@ import java.io.Serializable;
 public class Joker extends Lettre implements Serializable {
 
 	/**
+	 * Numéro de version de la classe
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	/**
 	 * Permet de définir la valeur du label du joker 
 	 * et ce seulement si c'est une lettre
 	 * @param label de la lettre de type String pour plus de flexibilité
